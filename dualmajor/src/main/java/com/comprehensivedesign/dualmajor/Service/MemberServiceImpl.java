@@ -2,6 +2,7 @@ package com.comprehensivedesign.dualmajor.Service;
 
 
 import com.comprehensivedesign.dualmajor.domain.Member;
+import com.comprehensivedesign.dualmajor.dto.MemberDto;
 import com.comprehensivedesign.dualmajor.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,16 @@ public class MemberServiceImpl implements MemberService{
 
     @Transactional
     @Override
-    public Long join(Member member) {
+    public Long join(MemberDto memberDto) {
+        //새로운 Member 엔티티 객체를 생성
+        //Member 엔티티 객체에 memberDto로 넘어온 웹 계층 데이터를 옮기는 작업
+        Member member = new Member();
+        member.CreateMember(memberDto.getName()
+                ,memberDto.getEmail()
+                ,memberDto.getPassword()
+                ,memberDto.getFirstMajor()
+                ,memberDto.getGrade()
+        );
         Member saveMember = memberRepository.save(member);
         return saveMember.getId();
     }

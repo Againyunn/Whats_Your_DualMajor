@@ -38,17 +38,8 @@ public class Controller {
     @PostMapping("/join")
     @ResponseBody
     public String join(MemberDto memberDto) {
-        Member member = new Member();
-        member.CreateMember(memberDto.getName()
-                        ,memberDto.getEmail()
-                        ,memberDto.getPassword()
-                        ,memberDto.getFirstMajor()
-                        ,memberDto.getGrade()
-                        );
         //view를 통해 넘어온 web 계층 데이터를 MemberDto에 저장
-        //Controller에 새로운 Member 엔티티 객체를 생성
-        //Member 엔티티 객체에 memberDto로 넘어온 웹 계층 데이터 옮기는 작업
-        memberService.join(member);
+        memberService.join(memberDto);
         return "joinForm";
     }
 

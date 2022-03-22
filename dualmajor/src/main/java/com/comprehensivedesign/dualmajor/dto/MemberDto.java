@@ -8,7 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처리 클래스
-    /*폼으로 읽은 데이터를 이 DTO(Data Transfer Object에 저장하여 사용하게 된다.*/
+    /*도메인 클래스를 직접 주고받으면 그 과정에서 불필요한 데이터 처리가 될 수 있고, 엔티티 객체가 움직이는 것이기에 주요한 정보가 노출 될 수 있다.
+    * 따라서 데이터 전송만을 목적으로 하는 캡슐화 된 데이터 캡슐처럼 사용하는 것이라 생각하면 될듯*/
+    /*Spring의 MVC 패턴에서, Controller가 view와 model 사이에서 데이터를 주고받을 때 DTO를 주로 사용한다.
+    * DTO에는 엔티터의 모든 정보를 담는 것이 아닌, 필요한 정보만을 취급하여 전송할 수 있다.*/
 
     //회원 이름(닉네임)
     private String name;
