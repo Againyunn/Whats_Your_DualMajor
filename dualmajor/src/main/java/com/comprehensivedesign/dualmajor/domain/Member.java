@@ -3,9 +3,7 @@ package com.comprehensivedesign.dualmajor.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 //@Setter --> Entity는 외부로부터 절대 보존되어야하기 때문에 최대한 setter사용 제한
 @Entity
@@ -25,8 +23,52 @@ public class Member {
     //회원 학년
     private int grade;
     //회원 유형(멘토 or 멘티)
+    @Enumerated(EnumType.STRING)
     private Type type;
     //서비스 내 회원 지위
     private String role;
 
+    //Getter
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFirstMajor() {
+        return firstMajor;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    /*Member 저장 로직*/
+    public void CreateMember(String name, String email, String password, String firstMajor, int grade) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.firstMajor = firstMajor;
+        this.grade = grade;
+        //this.type = type;
+        //this.role = role;
+    }
 }
