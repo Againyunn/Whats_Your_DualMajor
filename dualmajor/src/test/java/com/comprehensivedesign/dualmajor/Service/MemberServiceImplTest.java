@@ -28,17 +28,17 @@ class MemberServiceImplTest {
     void join() throws Exception{
         //given
         MemberDto memberDto = new MemberDto();
-        memberDto.setName("test");
         memberDto.setEmail("email");
-        memberDto.setPassword("1234");
-        memberDto.setFirstMajor("a");
-        memberDto.setGrade(1);
+        MemberDto memberDto2 = new MemberDto();
+        memberDto2.setEmail("email2");
 
         //when
-        Long join = memberService.join(memberDto);
+        memberService.join(memberDto);
+        memberService.join(memberDto2);
 
         //then
-        assertThat(memberRepository.findById(join).get().getName()).isEqualTo("test");
+        //중복 아이디 처리 되지 않고 정상 회원가입 되는지
+        assertThat(memberRepository.findById(2L).get().getEmail()).isEqualTo("email2@hufs.ac.kr");
 
     }
     @Test
@@ -54,7 +54,7 @@ class MemberServiceImplTest {
         try {
             memberService.join(memberDto2);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("error Test");
         }
 
         //then
