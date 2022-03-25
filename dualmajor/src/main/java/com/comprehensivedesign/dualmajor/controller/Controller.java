@@ -43,7 +43,6 @@ public class Controller {
         return "joinForm";
     }
 
-
     @GetMapping("/member")
     @ResponseBody
     public String member() {

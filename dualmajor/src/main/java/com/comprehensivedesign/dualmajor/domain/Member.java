@@ -62,13 +62,18 @@ public class Member {
     }
 
     /*Member 저장 로직*/
-    public void CreateMember(String name, String email, String password, String firstMajor, int grade) {
+    public void CreateMember(String name, String email, String password, String firstMajor, int grade/*, int type*/) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.firstMajor = firstMajor;
         this.grade = grade;
-        //this.type = type;
+        /*if (type == 1) {
+            this.type = Type.MENTEE;
+        }
+        else{
+            this.type = Type.MENTOR;
+        }*/
         //this.role = role;
     }
 }

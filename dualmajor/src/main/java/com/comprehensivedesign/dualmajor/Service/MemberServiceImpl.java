@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
@@ -21,17 +23,25 @@ public class MemberServiceImpl implements MemberService{
 
     @Transactional
     @Override
-    public Long join(MemberDto memberDto) {
+    public Long join(MemberDto memberDto) throws Exception {
+        //필요한 유저 아이디는 학교 메일
+        //but 클라이언트측에서는 "   "@hufs.ac.kr 이런 식으로 보이게 되며, 학번만 입력하게끔 설계
+        //따라서 입력받은 학번에 "@hufs.ac.kr" 을 자동으로 달아주는 작업 필요
+        String stdNum = memberDto.getEmail();
+        String stdEmail = stdNum + "@hufs.ac.kr";
+        //중복 로그인 판별
+        validateDuplicateEmail(stdEmail);
         //새로운 Member 엔티티 객체를 생성
         //Member 엔티티 객체에 memberDto로 넘어온 웹 계층 데이터를 옮기는 작업
         Member member = new Member();
-        member.CreateMember(memberDto.getName()
-                ,memberDto.getEmail()
-                ,memberDto.getPassword()
-                ,memberDto.getFirstMajor()
-                ,memberDto.getGrade()
-        );
-        Member saveMember = memberRepository.save(member);
-        return saveMember.getId();
+        member.CreateMember(memberDto.getName(), stdEmail, memberDto.getPassword(), memberDto.getFirstMajor(), memberDto.getGrade());
+        return memberRepository.save(member).getId();
+    }
+
+    private void validateDuplicateEmail(String stdEmail) throws Exception{
+        Optional<Member> byEmail = memberRepository.findByEmail(stdEmail);
+        if(byEmail!=null){
+            throw new Exception("already exists Email . . .");
+        }
     }
 }
