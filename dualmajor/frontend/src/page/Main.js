@@ -2,57 +2,106 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import List from "./List"
 import styled from "styled-components";
+import MainFrame from "./component/MainFrame";
+import Header from "../common/component/Header";
+import Footer from "../common/Footer";
 
 function Main() {
     // const [rows, setRows]= useState(1)
 
 
   return (
-
-     <div>
-
-    </div>
+    <>
+      <MainBlockStyle>
+        <div className="mainContainer">
+        
+          <div className="header"><Header/></div>
+          <div className="mainBody"><MainFrame/></div>
+          <div className="footer"><Footer/></div>
+        </div>
+      </MainBlockStyle>
+      
+    </>
 
   );
 }
 
 export default Main;
 
-const Form = styled.form`
-  div.container{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+const MainBlockStyle = styled.div`
+
+  div.mainContainer{
+    display: grid;
+    grid-template-rows: 0.9fr 6fr 1fr;
+    background-color: white;
+    text-align: center;
+    justify-content: center;
+    vertical-align: middle;
     
-    margin-top: 20px;
-    margin-bottom: 10px;
-    align-items: left;
+    /*border: solid 1px #002F5A;*/
+
+    z-index:0;
   }
 
-  input.small{
-    flex-basis: 50%;
 
-    &:hover {
-      background-color: #EEEEEE;
-      color: black;
-    }
+  div.header{
+    gird-row-start: 0;
+    grid-row-start: 1;
+
+    z-index:1;
   }
 
-  input.body{
-    flex-basis: 100%;
-
-    &:hover {
-      background-color: #EEEEEE;
-      color: black;
-    }
+  div.mainBody{
+    gird-row-start: 1;
+    grid-row-start: 2;
   }
 
-  button{
-    background-color: #AAF0FF;
-    color: black;
-
-    &:hover {
-      background-color: #87CEFA;
-    }
+  div.footer{
+    margin-top:10px;
+    bottom:0px;
+    gird-row-start: 2;
+    grid-row-start: 3;
+    z-index:1;
   }
 `
+
+
+
+// const Form = styled.form`
+//   div.container{
+//     display: flex;
+//     flex-direction: column;
+//     flex-wrap: wrap;
+    
+//     margin-top: 20px;
+//     margin-bottom: 10px;
+//     align-items: left;
+//   }
+
+//   input.small{
+//     flex-basis: 50%;
+
+//     &:hover {
+//       background-color: #EEEEEE;
+//       color: black;
+//     }
+//   }
+
+//   input.body{
+//     flex-basis: 100%;
+
+//     &:hover {
+//       background-color: #EEEEEE;
+//       color: black;
+//     }
+//   }
+
+//   button{
+//     background-color: #AAF0FF;
+//     color: black;
+
+//     &:hover {
+//       background-color: #87CEFA;
+//     }
+//   }
+// `
