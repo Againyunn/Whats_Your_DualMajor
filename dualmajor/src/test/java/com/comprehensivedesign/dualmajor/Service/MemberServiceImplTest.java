@@ -11,6 +11,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -24,7 +25,7 @@ class MemberServiceImplTest {
 
     @Test
     @Rollback(value = false)
-    void join() {
+    void join() throws Exception{
         //given
         MemberDto memberDto = new MemberDto();
         memberDto.setName("test");
@@ -37,7 +38,26 @@ class MemberServiceImplTest {
         Long join = memberService.join(memberDto);
 
         //then
-        Assertions.assertThat(memberRepository.findById(join).get().getName()).isEqualTo("test");
+        assertThat(memberRepository.findById(join).get().getName()).isEqualTo("test");
+
+    }
+    @Test
+    @Rollback(value = false)
+    void validateDuplicateEmail() throws Exception{
+        //given
+        MemberDto memberDto = new MemberDto();
+        memberDto.setEmail("email");
+        MemberDto memberDto2 = new MemberDto();
+        memberDto2.setEmail("email");
+        //when
+        memberService.join(memberDto);
+        try {
+            memberService.join(memberDto2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //then
 
     }
 

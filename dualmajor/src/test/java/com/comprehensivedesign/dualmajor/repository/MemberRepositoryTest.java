@@ -10,6 +10,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,6 +37,20 @@ class MemberRepositoryTest {
 
         //then
         assertThat(memberRepository.findById(1L).get()).isEqualTo(member);
+    }
+
+    @Test
+    void findByEmail() {
+        //given
+        Member member = new Member();
+        member.CreateMember("test","email","1234","a",1);
+
+        //when
+        memberRepository.save(member);
+        //then
+        Optional<Member> email = memberRepository.findByEmail("email");
+
+        assertThat(email.get().getId()).isEqualTo(1);
     }
 
 }

@@ -37,7 +37,7 @@ public class Controller {
 
     @PostMapping("/join")
     @ResponseBody
-    public String join(MemberDto memberDto) {
+    public String join(MemberDto memberDto) throws Exception{
         //view를 통해 넘어온 web 계층 데이터를 MemberDto에 저장
         memberService.join(memberDto);
         return "joinForm";

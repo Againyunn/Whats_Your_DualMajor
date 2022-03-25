@@ -40,7 +40,7 @@ public class MemberServiceImpl implements MemberService{
 
     private void validateDuplicateEmail(String stdEmail) throws Exception{
         Optional<Member> byEmail = memberRepository.findByEmail(stdEmail);
-        if(byEmail!=null){
+        if(!byEmail.isEmpty()){
             throw new Exception("already exists Email . . .");
         }
     }
