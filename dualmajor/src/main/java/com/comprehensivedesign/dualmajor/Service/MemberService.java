@@ -7,5 +7,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 public interface MemberService {
     //회원가입
     Long join(MemberDto memberDto) throws Exception;
-    UserDetails login(String stdNum, String password);
+    UserDetails login(String stdNum, String password) throws Exception;
 }

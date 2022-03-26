@@ -1,14 +1,22 @@
 package com.comprehensivedesign.dualmajor.config;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration // 해당 클래스를 Spring container에서 관리할 수 있는 구성 요소(component)로 등록함.
 @EnableWebSecurity //Spring web security를 활성화 시키기
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     /*요청 URL에 따른 접근 권한, 로그인 요청 등에 대한 기본 설정*/
     /*해당 설정에서 각 URL 요청에 따른 접근 권한(일반 사용자, admin 등)을 설정할 수 있고,

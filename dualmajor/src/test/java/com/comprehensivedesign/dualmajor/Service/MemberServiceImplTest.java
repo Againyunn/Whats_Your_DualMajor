@@ -30,8 +30,10 @@ class MemberServiceImplTest {
         //given
         MemberDto memberDto = new MemberDto();
         memberDto.setEmail("email");
+        memberDto.setPassword("1234");
         MemberDto memberDto2 = new MemberDto();
         memberDto2.setEmail("email2");
+        memberDto2.setPassword("5678");
 
         //when
         memberService.join(memberDto);
@@ -68,10 +70,18 @@ class MemberServiceImplTest {
         memberDto.setEmail("email");
         memberDto.setPassword("1234");
         memberService.join(memberDto);
+
+        MemberDto memberDto2 = new MemberDto();
+        memberDto2.setName("test2");
+        memberDto2.setEmail("email2");
+        memberDto2.setPassword("5678");
+        memberService.join(memberDto2);
         //when
         UserDetails member = memberService.login("email", "1234");
+        UserDetails member2 = memberService.login("email2", "5678");
         //then
         assertThat(member.getUsername()).isEqualTo("test");
+        assertThat(member2.getUsername()).isEqualTo("test2");
     }
 
 
