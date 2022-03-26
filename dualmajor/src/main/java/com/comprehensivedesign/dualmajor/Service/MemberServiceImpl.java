@@ -1,11 +1,14 @@
 package com.comprehensivedesign.dualmajor.Service;
 
 
+import com.comprehensivedesign.dualmajor.config.auth.MemberDetails;
+import com.comprehensivedesign.dualmajor.config.auth.MemberDetailsService;
 import com.comprehensivedesign.dualmajor.domain.Member;
 import com.comprehensivedesign.dualmajor.dto.MemberDto;
 import com.comprehensivedesign.dualmajor.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,7 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService{
 
     @Autowired MemberRepository memberRepository;
+    @Autowired MemberDetailsService memberDetailsService;
 
     @Transactional
     @Override
@@ -37,11 +41,16 @@ public class MemberServiceImpl implements MemberService{
         member.CreateMember(memberDto.getName(), stdEmail, memberDto.getPassword(), memberDto.getFirstMajor(), memberDto.getGrade());
         return memberRepository.save(member).getId();
     }
-
     private void validateDuplicateEmail(String stdEmail) throws Exception{
         Optional<Member> byEmail = memberRepository.findByEmail(stdEmail);
         if(!byEmail.isEmpty()){
             throw new Exception("already exists Email . . .");
         }
+    }
+
+    public UserDetails login(String stdNum, String password) {
+        String stdEmail = stdNum + "@hufs.ac.kr";
+        UserDetails memberDetails = memberDetailsService.loadUserByUsername(stdEmail);
+        return memberDetails;
     }
 }
