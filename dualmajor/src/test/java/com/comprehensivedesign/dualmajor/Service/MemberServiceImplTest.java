@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,9 +57,22 @@ class MemberServiceImplTest {
         } catch (Exception e) {
             System.out.println("error Test");
         }
-
         //then
-
     }
+
+    @Test
+    void login() throws Exception{
+        //given
+        MemberDto memberDto = new MemberDto();
+        memberDto.setName("test");
+        memberDto.setEmail("email");
+        memberDto.setPassword("1234");
+        memberService.join(memberDto);
+        //when
+        UserDetails member = memberService.login("email", "1234");
+        //then
+        assertThat(member.getUsername()).isEqualTo("test");
+    }
+
 
 }
