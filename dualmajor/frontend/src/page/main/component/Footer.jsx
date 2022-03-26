@@ -1,3 +1,4 @@
+//메인 화면의 footer (기획, 개발자 명과 문의 시 이메일)
 import React from 'react'
 import styled from 'styled-components'
 
@@ -7,6 +8,10 @@ export default function Footer() {
     div.containerHeader{
 
       /*min-height: 5vh;*/
+      margin-top: 20px;
+      border-top: solid 2px #002F5A;
+      padding-top: 10px;
+
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;

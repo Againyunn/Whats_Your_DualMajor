@@ -1,10 +1,11 @@
+//메인 홈 화면
 import {useState, useEffect} from "react";
 import axios from "axios";
-import List from "./List"
 import styled from "styled-components";
+import Header from "./component/Header";
+import Footer from "./component/Footer"
 import MainFrame from "./component/MainFrame";
-import Header from "../common/component/Header";
-import Footer from "../common/Footer";
+
 
 function Main() {
     // const [rows, setRows]= useState(1)

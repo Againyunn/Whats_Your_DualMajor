@@ -1,4 +1,4 @@
-//앱 전체의 Header
+//메인 화면의 header (메뉴 버튼 있음)
 import React from 'react'
 import styled from 'styled-components'
 
@@ -22,6 +22,12 @@ export default function Header() {
       flex-basis: 10%;
       flex-grow: 1;
       background-color: white;
+
+      /*메뉴 호버*/
+      &:hover {
+          background-color: #A7A7A7;
+          /*opacity: 0.67;*/
+        }
     }
 
     div.blank{
@@ -46,9 +52,9 @@ export default function Header() {
   return (
     <BackgroundBlock>
       <div className='containerHeader'>
-        <div className='logo'><img src={require('../../media/structure/로고.png')} alt='로고' style={{width:'40px', height:'40px'}}/></div>
+        <div className='logo'><img src={require('../../../media/structure/로고.png')} alt='로고' style={{width:'35px', height:'35px'}}/></div>
         <div className='blank'>너의 이중전공은?</div>
-        <div className='menu'></div>
+        <div className='menu'><img src={require('../../../media/tab/메뉴.png')} alt='메뉴' style={{width:'35px', height:'px'}}/></div>
       </div>
     </BackgroundBlock>
   )

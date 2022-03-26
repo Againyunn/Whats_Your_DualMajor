@@ -1,6 +1,7 @@
 //메인 프레임(틀) component
 import React from 'react'
 import styled from 'styled-components'
+import ReactTypingEffect from 'react-typing-effect';
 
 export default function MainFrame() {
     
@@ -17,9 +18,7 @@ export default function MainFrame() {
             row-gap: 10px;
 
             height: 75vh;
-            width: 40vh;
-
-
+            width: 45vh;
         }
 
         /*상단 배너*/
@@ -49,7 +48,7 @@ export default function MainFrame() {
 
             /*글씨*/
             padding-top: 5%;
-            font-size: 21px;
+            font-size: 20px;
             color: white;
             font-weight: bold;
 
@@ -74,7 +73,7 @@ export default function MainFrame() {
 
             /*글씨*/
             padding-top: 5%;
-            font-size: 21px;
+            font-size: 20px;
             color: white;
             font-weight: bold; 
             
@@ -181,7 +180,14 @@ export default function MainFrame() {
                     </div>
                     <div className='write'>우리학과 자랑하기</div>
                     <div className='review'>학우들의 생생 후기</div>
-                    <div className='notice'>공지사항</div>
+                    <div className='notice'>
+                        <span><b>공지사항</b></span>
+                        <br/><br/>
+                        <ReactTypingEffect
+                            text={["안녕하세요.\n너의 이중전공은? 운영진입니다."]}
+                            speed={80}
+                        />
+                    </div>
                 </div>
             </BodyBlock>
         );

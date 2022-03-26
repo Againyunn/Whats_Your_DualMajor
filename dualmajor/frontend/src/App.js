@@ -1,7 +1,7 @@
-import logo from './logo.svg';
+
 //라우터 설정
 import { HashRouter as BrowserRouter, Route, Routes } from 'react-router-dom';
-import Main from './page/Main';
+import Main from './page/main/Main';
 
 
 function App() {
