@@ -18,8 +18,18 @@ public class MemberDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member byEmail = memberRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("not exists member"));
-        return new MemberDetails(byEmail);
+        String stdEmail = username + "@hufs.ac.kr";
+        System.out.println(stdEmail);
+
+        /*Member byEmail = memberRepository.findByEmail(stdEmail).orElseThrow(() -> new UsernameNotFoundException("not exists member"));
+        System.out.println(byEmail);*/
+        Optional<Member> byEmail = memberRepository.findByEmail(stdEmail);
+        System.out.println(byEmail.get());
+        if (byEmail.isPresent()) {
+            System.out.println(new MemberDetails(byEmail.get()));
+            return new MemberDetails(byEmail.get());
+        }
+        return null;
     }
 
 }
