@@ -1,4 +1,4 @@
-//메인 화면의 header (메뉴 버튼 있음)
+//앱 전체의 Header
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -72,12 +72,13 @@ export default function Header() {
   }
   `
 
+
   return (
     <BackgroundBlock>
       <div className='containerHeader'>
         <div className='logo'>
           <Link to={'/'}>
-            <img src={require('../../../media/structure/로고.png')} alt='로고' style={{width: "40px", height: "40px"}}/>
+            <img src={require('../../media/structure/로고.png')} alt='로고' style={{width: "40px", height: "40px"}}/>
           </Link>
         </div>
         <div className='blank'>
@@ -86,13 +87,10 @@ export default function Header() {
           </Link>
         </div>
         <Link style={{textDecoration: 'none' }} to={'/choose'}>
-          <div className='menu'><img src={require('../../../media/tab/메뉴.png')} alt='메뉴'/></div>
+          <div className='menu'><img src={require('../../media/tab/백메뉴.png')} alt='메뉴'/></div>
         </Link>
       </div>
     </BackgroundBlock>
   )
 }
 
-
-
-// ={process.env.PUBLIC_URL +`${'/media/structure/메뉴2.jpg'}`

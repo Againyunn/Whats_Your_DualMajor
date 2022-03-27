@@ -1,8 +1,9 @@
 //로그인 or 회원가입 선택창
 import React from 'react'
 import styled from 'styled-components';
-import Header from '../../../common/component/Header';
-
+import Header from '../../../common/header/Header';
+import MainBlock from './component/MainBlock';
+import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter'
 
 export default function Choose() {
 
@@ -11,8 +12,8 @@ export default function Choose() {
         <MainBlockStyle>
             <div className="mainContainer">
                 <div className="header"><Header/></div>
-                <div className='mainBody'></div>
-                <div className='footer'></div>
+                <div className='mainBody'><MainBlock/></div>
+                <div className='footer'><OnlyPrevFooter/></div>
             </div>
         </MainBlockStyle>
     </>

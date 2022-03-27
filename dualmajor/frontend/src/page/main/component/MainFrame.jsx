@@ -128,7 +128,7 @@ export default function MainFrame() {
             border-radius: 10px;
 
             /*글씨*/
-            padding-top: 22%;
+            padding-top: 10%;
             font-size: 19.5px;
             color: white;
             font-weight: bold;
@@ -138,6 +138,12 @@ export default function MainFrame() {
                 background-color: #002F5A;
                 opacity: 0.9;
               }
+
+            /*이미지*/
+            img{
+                width: 45px;
+                height: 45px;
+            }
         }
 
         div.compete{
@@ -153,8 +159,8 @@ export default function MainFrame() {
             border-radius: 10px;
 
             /*글씨*/
-            padding-top: 22%;
-            font-size: 21px;
+            padding-top: 10%;
+            font-size: 19.5px;
             color: white;
             font-weight: bold;
 
@@ -163,6 +169,12 @@ export default function MainFrame() {
                 background-color: #028799;
                 opacity: 1;
               }
+            
+            /*이미지*/
+            img{
+                width: 45px;
+                height: 45px;
+            }
         }
     `
 
@@ -173,8 +185,8 @@ export default function MainFrame() {
                     <div className='choose'>
                         <ChooseBlock>
                             <div className='containerFlex'>
-                                <div className='recommend'>이중전공 추천</div>
-                                <div className='compete'>예상 경쟁률</div>
+                                <div className='recommend'><img src={require('../../../media/tab/백이중추천.png')} alt="추천"/><br/><br/><span>이중전공 추천</span></div>
+                                <div className='compete'><img src={require('../../../media/tab/백경쟁률.png')} alt="추천"/><br/><br/><span>&nbsp;예상 경쟁률&nbsp;</span></div>
                             </div>
                         </ChooseBlock>
                     </div>
