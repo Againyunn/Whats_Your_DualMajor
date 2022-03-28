@@ -34,12 +34,12 @@ public class Controller {
         return "join";
     }
 
-    @PostMapping("/join")
-    @ResponseBody
+    @PostMapping("/join") //<-
+    //@ResponseBody
     public String join(MemberDto memberDto) throws Exception{
         //view를 통해 넘어온 web 계층 데이터를 MemberDto에 저장
         memberService.join(memberDto);
-        return "home";
+        return "필요한 데이터를 프론트로!";
     }
 
     @GetMapping("/member")
