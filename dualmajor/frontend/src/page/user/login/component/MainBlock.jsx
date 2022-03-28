@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import bootstrap from 'bootstrap/dist/css/bootstrap.css';
 
 export default function MainBlock() {
   return (
@@ -8,24 +9,39 @@ export default function MainBlock() {
 }
 //CSS
 const MainBlockStyle = styled.div`
-div.container{
+form.container{
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    grid-template-rows: 3fr 1fr 1fr 1fr 3fr;
+    grid-template-columns: 1fr 1fr 3fr 1fr;
+    grid-template-rows: 3fr 0.7fr 0.7fr 1fr 3fr;
     background-color: white;
     text-align: center;
 
-    row-gap: 10px;
+    row-gap: 15px;
     
     height: 75vh;
     width: 45vh;
   }
 
   /*아이디*/
-  input.ID{
-    /*레이아웃*/
+  .ID{
     grid-column-start: 2;
     grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+
+    padding-top:20%;
+
+    /*글씨*/
+    font-size: 19.5px;
+    color: black;
+    font-weight: bold;
+  }
+
+  /*아이디입력칸*/
+  .IDBlock{
+    /*레이아웃*/
+    grid-column-start: 3;
+    grid-column-end: 4;
     grid-row-start: 2;
     grid-row-end: 3;
 
@@ -34,24 +50,39 @@ div.container{
     border-radius: 10px;
 
     /*글씨*/
-    padding-top: 10%;
-    font-size: 19.5px;
+    font-size: 18px;
     color: black;
     font-weight: bold;
 
     /*호버*/
     &:hover {
-        border: solid 2px #002F5A;
+        border: solid 1px #002F5A;
         opacity: 0.9;
     }
-
   }
 
   /*패스워드*/
-  input.PW{
-    /*레이아웃*/
+  .PW{
     grid-column-start: 2;
     grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
+
+    padding-top:20%;
+
+    /*글씨*/
+    font-size: 19.5px;
+    color: black;
+    font-weight: bold;
+
+
+  }
+
+  /*패스워드입력칸*/
+  .PWBlock{
+    /*레이아웃*/
+    grid-column-start: 3;
+    grid-column-end: 4;
     grid-row-start: 3;
     grid-row-end: 4;
 
@@ -61,14 +92,13 @@ div.container{
     border-radius: 10px;
 
     /*글씨*/
-    padding-top: 10%;
-    font-size: 19.5px;
+    font-size: 18px;
     color: black;
     font-weight: bold;
 
     /*호버*/
     &:hover {
-        border: solid 2px #002F5A;
+        border: solid 1px #002F5A;
         opacity: 0.9;
     }
   }
@@ -77,7 +107,7 @@ div.container{
   button.Login{
     /*레이아웃*/
     grid-column-start: 2;
-    grid-column-end: 3;
+    grid-column-end: 4;
     grid-row-start: 4;
     grid-row-end: 5;
 
@@ -105,11 +135,15 @@ div.container{
 function BodyBlock(){
     return(
       <MainBlockStyle>
-        <div className='container'>
-          <input className='ID'></input>
-          <input className='PW'></input>
-          <button className='Login'>Log in</button>
-        </div>
+        <form className='container' method='post' action='/join중원,승기 백엔드 API'>
+          <span className='ID'>ID</span>
+          <input className='IDBlock' type={"email"} size={"15"} 
+            placeholder="학번@hufs.ac.kr" pattern="[0-9]{5-9}@hufs.ac.kr"
+          ></input>
+          <span className='PW'>PW</span>
+          <input className='PWBlock' type={"password"} size={"15"}></input>
+          <button className='Login' type='submit'>Log in</button>
+        </form>
       </MainBlockStyle>
     );
   }

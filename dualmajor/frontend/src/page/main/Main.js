@@ -15,7 +15,6 @@ function Main() {
     <>
       <MainBlockStyle>
         <div className="mainContainer">
-        
           <div className="header"><Header/></div>
           <div className="mainBody"><MainFrame/></div>
           <div className="footer"><Footer/></div>
