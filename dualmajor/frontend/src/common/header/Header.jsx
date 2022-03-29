@@ -8,9 +8,8 @@ export default function Header() {
   const BackgroundBlock = styled.div`
   div.containerHeader{
     min-height: 5vh;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
     background-color: white;
 
     
@@ -19,9 +18,11 @@ export default function Header() {
   }
 
   div.menu{
+    grid-column-start: 3;
+    grid-column-end: 4;
     padding-top: 10px;
-    flex-basis: 10%;
-    flex-grow: 1;
+
+
     background-color: white;
 
     /*이미지*/
@@ -38,7 +39,8 @@ export default function Header() {
   }
 
   div.blank{
-    flex-grow: 4;
+    grid-column-start: 2;
+    grid-column-end: 3;
 
     /*글씨*/
     padding-top: 5%;
@@ -54,9 +56,10 @@ export default function Header() {
   }
 
   div.logo{
+    grid-column-start: 1;
+    grid-column-end: 2;
     padding-top: 10px;
-    flex-grow: 1;
-    flex-basis: 7%;
+
     background-color: white;
 
     img{

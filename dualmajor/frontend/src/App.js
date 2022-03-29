@@ -1,5 +1,6 @@
 
 //라우터 설정
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { HashRouter as BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from './page/main/Main';
 import Choose from './page/user/choose/Choose';
