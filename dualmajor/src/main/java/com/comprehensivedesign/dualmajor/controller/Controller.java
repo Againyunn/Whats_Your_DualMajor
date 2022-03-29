@@ -12,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -29,8 +32,15 @@ public class Controller {
 
     /*=========Mapping for Test Spring Security==============*/
     @GetMapping({"","/"})
-    public String home() {
-        return "home";
+    @ResponseBody
+    public Object home() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        //MemberDetails details = (MemberDetails)authentication.getDetails();
+        if (principal == null) {
+            return "no authenticated member";
+        }
+        return principal;
     }
 
     @GetMapping("/login")
@@ -38,18 +48,38 @@ public class Controller {
         return "login";
     }
 
-   /* @PostMapping("/loginProc")
+   /* @PostMapping("/login")
     @ResponseBody
-    public String memberAPI(Authentication authentication) {
-        UserDetails member = (UserDetails)authentication.getDetails();
-        return member.getUsername();
+    public Object login(Model model, @AuthenticationPrincipal MemberDetails memberDetails) {
+        //System.out.println(memberDetails.getUsername());
+        if (memberDetails == null) {
+            System.out.println("null");
+            model.addAttribute("issuccess","null");
+            return model;
+        }
+        System.out.println("not null");
+        return memberDetails.getUsername();
     }*/
 
-    @GetMapping("/loginSuccess")
-    public String loginSuccess(Authentication authentication) {
-        UserDetails principal = (UserDetails)authentication.getPrincipal();
-        return principal.getUsername();
-    }
+    /*@PostMapping("/loginProc")
+    @ResponseBody
+    public String memberAPI() {
+        System.out.println("loginProcPost");
+
+        return "loginProc";
+    }*/
+
+   @GetMapping("/loginSuccess")
+   @ResponseBody
+   public Object loginSuccess() {
+       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+       Object principal = authentication.getPrincipal();
+       //MemberDetails details = (MemberDetails)authentication.getDetails();
+       if (principal == null) {
+           return "no authenticated member";
+       }
+       return principal;
+   }
 
     @GetMapping("/join")
     public String joinForm() {
