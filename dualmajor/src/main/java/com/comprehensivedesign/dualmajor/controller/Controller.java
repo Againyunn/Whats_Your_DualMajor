@@ -10,11 +10,14 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @org.springframework.stereotype.Controller
@@ -55,11 +58,20 @@ public class Controller {
 
     @PostMapping("/join")
     @ResponseBody
-    public String join(@RequestBody MemberDto memberDto) throws Exception{
+    public Object join(@RequestBody MemberDto memberDto) throws Exception{
+        Map<Object, Object> map = new HashMap<>();
+        Long memberId;
         //view를 통해 넘어온 web 계층 데이터를 MemberDto에 저장
-        Long join = memberService.join(memberDto);
-        Member member = memberService.findById(join);
-        return member.getEmail();
+        try{
+            memberId = memberService.join(memberDto);
+        }
+        catch (Exception e){
+            map.put("is_success", false);
+            return map;
+        }
+        map.put("is_success", true);
+        map.put("email", memberRepository.findById(memberId).get().getEmail());
+        return map;
     }
 
     @GetMapping("/member")
