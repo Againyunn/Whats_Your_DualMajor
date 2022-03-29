@@ -53,4 +53,19 @@ public class MemberServiceImpl implements MemberService{
         }
         return memberDetails;
     }
+
+    @Override
+    public Member find(String email) {
+        Optional<Member> member = memberRepository.findByEmail(email);
+        if (member.isPresent()) {
+            return member.get();
+        }
+        return null;
+    }
+
+    @Override
+    public Member findById(Long id) {
+        return memberRepository.findById(id).get();
+    }
+
 }
