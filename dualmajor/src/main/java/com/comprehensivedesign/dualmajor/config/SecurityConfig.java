@@ -2,6 +2,7 @@ package com.comprehensivedesign.dualmajor.config;
 
 
 import com.comprehensivedesign.dualmajor.config.filter.CustomUsernamePasswordAuthenticationFilter;
+import com.comprehensivedesign.dualmajor.config.handler.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 @Configuration // 해당 클래스를 Spring container에서 관리할 수 있는 구성 요소(component)로 등록함.
 @EnableWebSecurity //Spring web security를 활성화 시키기
@@ -42,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .defaultSuccessUrl("/loginSuccess"); //인증 성공 시 자동으로 redirect할 주소. 만약 특정 페이지에서 로그인 요청을 하고 성공하면 다시 그 페이지로 넘어감.*/
         http.addFilterAt(getAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.logout().logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(false);
     }
 
     protected CustomUsernamePasswordAuthenticationFilter getAuthenticationFilter() {
@@ -51,8 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             filter.setAuthenticationManager(this.authenticationManagerBean());
             filter.setUsernameParameter("email");
             filter.setPasswordParameter("password");
-            /*filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
-            filter.setAuthenticationFailureHandler(authenticationFailureHandler);*/
+            filter.setAuthenticationSuccessHandler(new LoginSuccessHandler("/"));
+            //filter.setAuthenticationFailureHandler(authenticationFailureHandler);
         }
         catch (Exception e) {
             e.printStackTrace();

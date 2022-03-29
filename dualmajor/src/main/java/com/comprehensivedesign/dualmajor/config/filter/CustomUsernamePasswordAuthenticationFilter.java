@@ -50,7 +50,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 
         return this.getAuthenticationManager().authenticate(token);
     }
-    
+
     @Override
     protected void setDetails(HttpServletRequest request, UsernamePasswordAuthenticationToken authRequest) {
         super.setDetails(request, authRequest);

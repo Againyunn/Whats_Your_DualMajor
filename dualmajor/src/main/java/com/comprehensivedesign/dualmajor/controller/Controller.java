@@ -69,7 +69,7 @@ public class Controller {
         return "loginProc";
     }*/
 
-   @GetMapping("/loginSuccess")
+ /*  @GetMapping("/loginSuccess")
    @ResponseBody
    public Object loginSuccess() {
        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -79,7 +79,7 @@ public class Controller {
            return "no authenticated member";
        }
        return principal;
-   }
+   }*/
 
     @GetMapping("/join")
     public String joinForm() {
