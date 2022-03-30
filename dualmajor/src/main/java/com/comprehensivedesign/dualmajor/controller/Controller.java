@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -37,15 +38,22 @@ public class Controller {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         //MemberDetails details = (MemberDetails)authentication.getDetails();
-        if (principal == null) {
-            return "no authenticated member";
-        }
         return principal;
     }
 
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @GetMapping("/logoutSuccess")
+    @ResponseBody
+    public String logoutStatus() {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() ==  "anonymousUser") {
+            return "logout Success";
+        }
+        return "error";
     }
 
    /* @PostMapping("/login")

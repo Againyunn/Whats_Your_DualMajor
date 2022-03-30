@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .defaultSuccessUrl("/loginSuccess"); //인증 성공 시 자동으로 redirect할 주소. 만약 특정 페이지에서 로그인 요청을 하고 성공하면 다시 그 페이지로 넘어감.*/
         http.addFilterAt(getAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-        http.logout().logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(false);
+        http.logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccess").invalidateHttpSession(true);
     }
 
     protected CustomUsernamePasswordAuthenticationFilter getAuthenticationFilter() {
