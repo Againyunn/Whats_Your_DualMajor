@@ -1,22 +1,56 @@
-import React from 'react'
+import React, {useState} from 'react';
 import styled from 'styled-components'
 import bootstrap from 'bootstrap/dist/css/bootstrap.css';
+import { Link } from 'react-router-dom';
+import { useForm, Controller} from 'react-hook-form';
+import { Form, Button } from 'react-bootstrap';
 
 export default function MainBlock() {
+  //상태값 처리
+  var username=""
+  var password=""
+
+  function handleSubmit(){
+
+  }
+
+
+
+
   return (
-    <BodyBlock/>
-  )
+
+    
+
+
+
+  <MainBlockStyle>
+    <Form className='container' method='post'>
+   
+        <Form.Label className='ID'>ID</Form.Label>
+        <Form.Control className='IDBlock' type="text" size="25" placeholder="학번/사번을 입력해주세요."  pattern="[0-9]{5-9}"/>
+
+        <Form.Label className='PW'>PW</Form.Label>
+        <Form.Control  className='PWBlock' type="password" size="25" placeholder="비밀번호를 입력해주세요." />
+
+      <Button  className='Login' variant="primary" type="submit">
+        Login
+      </Button>
+    </Form>
+
+  </MainBlockStyle>
+);
 }
 //CSS
 const MainBlockStyle = styled.div`
 form.container{
     display: grid;
-    grid-template-columns: 1fr 1fr 3fr 1fr;
+    grid-template-columns: 1fr 1fr 4fr 1fr;
     grid-template-rows: 3fr 0.7fr 0.7fr 1fr 3fr;
     background-color: white;
     text-align: center;
 
     row-gap: 15px;
+    column-gap: 1px;
     
     height: 75vh;
     width: 45vh;
@@ -32,7 +66,7 @@ form.container{
     padding-top:20%;
 
     /*글씨*/
-    font-size: 19.5px;
+    font-size: 17px;
     color: black;
     font-weight: bold;
   }
@@ -46,18 +80,16 @@ form.container{
     grid-row-end: 3;
 
     /*모양*/
-    margin-right: 5px;
-    border-radius: 10px;
+    border-radius: 5px;
 
     /*글씨*/
-    font-size: 18px;
+    font-size: 14px;
     color: black;
-    font-weight: bold;
+    font-weight: normal;
 
     /*호버*/
     &:hover {
-        border: solid 1px #002F5A;
-        opacity: 0.9;
+        opacity: 0.7;
     }
   }
 
@@ -71,10 +103,9 @@ form.container{
     padding-top:20%;
 
     /*글씨*/
-    font-size: 19.5px;
+    font-size: 17px;
     color: black;
     font-weight: bold;
-
 
   }
 
@@ -88,18 +119,17 @@ form.container{
 
 
     /*모양*/
-    margin-right: 5px;
-    border-radius: 10px;
+==
+    border-radius: 5px;
 
     /*글씨*/
-    font-size: 18px;
+    font-size: 14px;
     color: black;
-    font-weight: bold;
+    font-weight: normal;
 
     /*호버*/
     &:hover {
-        border: solid 1px #002F5A;
-        opacity: 0.9;
+        opacity: 0.7;
     }
   }
 
@@ -116,8 +146,7 @@ form.container{
     opacity: 0.8;
 
     /*모양*/
-    margin-right: 5px;
-    border-radius: 10px;
+    border-radius: 5px;
 
     /*글씨*/
     font-size: 19.5px;
@@ -131,19 +160,3 @@ form.container{
     }
   }
 `
-
-function BodyBlock(){
-    return(
-      <MainBlockStyle>
-        <form className='container' method='post' action='/join중원,승기 백엔드 API'>
-          <span className='ID'>ID</span>
-          <input className='IDBlock' type={"email"} size={"15"} 
-            placeholder="학번@hufs.ac.kr" pattern="[0-9]{5-9}@hufs.ac.kr"
-          ></input>
-          <span className='PW'>PW</span>
-          <input className='PWBlock' type={"password"} size={"15"}></input>
-          <button className='Login' type='submit'>Log in</button>
-        </form>
-      </MainBlockStyle>
-    );
-  }

@@ -8,8 +8,10 @@ import axios from 'axios'
 
 export default function Header() {
   //로그인 여부 확인(기본 값: 로그인 false)
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true); //테스트 후 false로 전환하기
   const [thisUser, setThisUser] = useState('');
+
+  const [modalShow, setModalShow] = useState(false); //모달을 통해 유저 정보 화면에 랜더링
 
   //Login값이 바뀔 때만 로그인 정보 받아오기
   useEffect( ()=>{
@@ -65,6 +67,7 @@ export default function Header() {
 
 
   return (
+    <>
     <BackgroundBlock>
       <div className='containerHeader'>
         <div className='logo'>
@@ -77,9 +80,26 @@ export default function Header() {
             <span>너의 이중전공은?</span>
           </Link>
         </div>
-        <ChooseOption/>
+        {
+          login === false?
+          <div className='menu'>
+            <Link style={{textDecoration: 'none' }} to={'/choose'}>
+              <img src={require('../../../media/tab/메뉴.png')} alt='메뉴'/>
+            </Link>
+          </div>
+          :
+          <div className='menu' onClick={()=> setModalShow(true)}>
+            <img src={require('../../../media/tab/메뉴.png')} alt='메뉴'/>
+          </div>
+
+
+        }
       </div>
+      <MyModal show={modalShow} onHide={() => setModalShow(false)} />
     </BackgroundBlock>
+
+    
+    </>
   )
 }
 // login? MyModal(thisUser): location.href='http://localhost:3000/#/choose'

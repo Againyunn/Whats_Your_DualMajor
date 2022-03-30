@@ -32,7 +32,7 @@ const MainBlockStyle = styled.div`
 
   div.mainContainer{
     display: grid;
-    grid-template-rows: 0.9fr 6fr 1fr;
+    grid-template-rows: 1.3fr 6fr 0.5fr;
     background-color: white;
     text-align: center;
     justify-content: center;

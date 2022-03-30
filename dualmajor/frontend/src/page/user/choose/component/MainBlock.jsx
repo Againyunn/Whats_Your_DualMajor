@@ -1,6 +1,6 @@
 //로그인 or 회원가입 선택 박스
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 
 export default function MainBlock() {
@@ -92,11 +92,15 @@ const MainBlockStyle = styled.div`
       <MainBlockStyle>
         <div className='container'>
           <div className='login'>
-            <Link to={'/login'} style={{textDecoration: 'none', color: 'white'}}>
+            <Link to={{ pathname:'/login', state: { from: '/'}}} style={{textDecoration: 'none', color: 'white'}}>
               Log in
             </Link>
           </div>
-          <div className='signUp'>Sign up</div>
+          <div className='signUp'>
+          <Link to={{ pathname:'/signup', state: { from: '/'}}} style={{textDecoration: 'none', color: 'white'}}>
+            Sign up
+          </Link>
+          </div>
         </div>
       </MainBlockStyle>
     );
