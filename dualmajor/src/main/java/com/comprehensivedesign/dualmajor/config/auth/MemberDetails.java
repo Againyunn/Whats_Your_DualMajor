@@ -36,11 +36,12 @@ public class MemberDetails implements UserDetails {
     public String getPassword() {
         return member.getPassword();
     }
-
     @Override
     public String getUsername() {
         return member.getEmail();
     }
+
+    public String getName() {return member.getName();}
 
     @Override
     public boolean isAccountNonExpired() {

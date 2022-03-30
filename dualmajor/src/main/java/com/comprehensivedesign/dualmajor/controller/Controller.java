@@ -2,8 +2,10 @@ package com.comprehensivedesign.dualmajor.controller;
 
 
 import com.comprehensivedesign.dualmajor.Service.MemberService;
+import com.comprehensivedesign.dualmajor.config.auth.MemberAdapter;
 import com.comprehensivedesign.dualmajor.config.auth.MemberDetails;
 import com.comprehensivedesign.dualmajor.domain.Member;
+import com.comprehensivedesign.dualmajor.domain.Type;
 import com.comprehensivedesign.dualmajor.dto.MemberDto;
 import com.comprehensivedesign.dualmajor.repository.MemberRepository;
 import com.fasterxml.jackson.annotation.JsonAlias;
@@ -32,13 +34,18 @@ public class Controller {
     @Autowired private final MemberRepository memberRepository;
 
     /*=========Mapping for Test Spring Security==============*/
-    @GetMapping({"","/"})
+    @GetMapping({"", "/"})
     @ResponseBody
-    public Object home() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = authentication.getPrincipal();
-        //MemberDetails details = (MemberDetails)authentication.getDetails();
-        return principal;
+    public Object home(@AuthenticationPrincipal MemberAdapter memberAdapter) {
+        MemberDto memberDto = new MemberDto();
+        memberDto.setLoginInfo(
+                memberAdapter.getMember().getName(),
+                "201703616",
+                memberAdapter.getMember().getFirstMajor(),
+                memberAdapter.getMember().getGrade()
+                ,"MENTEE"
+                );
+        return memberDto.getLoginInfo();
     }
 
     @GetMapping("/login")

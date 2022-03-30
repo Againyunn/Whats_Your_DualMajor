@@ -68,6 +68,7 @@ public class Member {
         this.password = password;
         this.firstMajor = firstMajor;
         this.grade = grade;
+        this.role = "ROLE_USER";
         /*if (type == 1) {
             this.type = Type.MENTEE;
         }

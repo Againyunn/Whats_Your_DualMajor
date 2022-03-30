@@ -5,6 +5,9 @@ import com.comprehensivedesign.dualmajor.domain.Type;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
 @Setter
 public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처리 클래스
@@ -27,4 +30,20 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     private Type type;
     //서비스 내 회원 지위
     private String role;
+
+
+    public void setLoginInfo(String name, String stdNum, String firstMajor, int grade, String type) {
+        this.name = name;
+        this.firstMajor = firstMajor;
+        this.grade = grade;
+        this.type = Type.MENTOR; //임의 고정값
+    }
+
+    public Map getLoginInfo() {
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("name", name);
+        map.put("firstMajor", firstMajor);
+        map.put("grade", grade);
+        return map;
+    }
 }
