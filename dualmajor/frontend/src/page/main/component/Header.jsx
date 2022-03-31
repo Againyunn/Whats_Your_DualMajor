@@ -8,36 +8,21 @@ import axios from 'axios'
 
 export default function Header() {
   //로그인 여부 확인(기본 값: 로그인 false)
-  const [login, setLogin] = useState(true); //테스트 후 false로 전환하기
+  const [login, setLogin] = useState(false);
   const [thisUser, setThisUser] = useState('');
 
   const [modalShow, setModalShow] = useState(false); //모달을 통해 유저 정보 화면에 랜더링
 
-  //Login값이 바뀔 때만 로그인 정보 받아오기
-  useEffect( ()=>{
-    //axios로 백엔드에서 로그인 정보 API받아오기
-    axios.get('백엔드 로그인 API 주소') //get방식
-          .then(Response => {
+  //로그인 되어있는 지 확인
+  useEffect( () =>{
+    if(sessionStorage.getItem("user")!=null){
+      setLogin(true);
+    }
+    else{
+      setLogin(false);
+    }
 
-            if(Response.data == false){ //falsy한 값인 경우
-              setThisUser('');
-              setLogin(false);
-            }
-            else{
-              setThisUser(Response.data);   //data안에 여러 내부 객체 값 지정해서 백엔드에서 넘기기
-              setLogin(true);
-              
-              //유저 확인
-              console.login("this User ID : ",thisUser);
-            }
-            //로그인 확인
-            console.log("login status:",login);
-
-          })
-          .catch((Error) =>{
-              console.log(Error);
-          })
-  }, [setThisUser]) 
+  })
 
   //메뉴 버튼이 눌리면 작동
   function ChooseOption(){
@@ -91,8 +76,6 @@ export default function Header() {
           <div className='menu' onClick={()=> setModalShow(true)}>
             <img src={require('../../../media/tab/메뉴.png')} alt='메뉴'/>
           </div>
-
-
         }
       </div>
       <MyModal show={modalShow} onHide={() => setModalShow(false)} />
