@@ -48,12 +48,9 @@ export default function MainBlock() {
       form.current.validateAll(); //모든 유효성검사 통과 시
 
       if (checkBtn.current.context._errors.length === 0) {
-        AuthService.login(username, password).then(
+        AuthService.login(username, password).then( //login(id, password)
           () => {
-            //로그인 성공 시:
-            //세션에 저장
-            //sessionStorage.setItem('id', username);
-
+ 
             //main page로 이동
             navigate("/");
             window.location.reload();

@@ -1,20 +1,24 @@
 import axios from "axios";
 const API_URL = "https://81e0af5c-fa2e-4ea9-b93f-8d63072a71dc.mock.pstmn.io/";
 
-const register = (username, email, password) => {
+const register = (id, password, nickName, grade, userType, firstMajor, daulMajor) => {
   return axios.post(API_URL + "signup", {
-    username,
-    email,
+    id, //문제가 있으면username으로 바꾸기
     password,
+    nickName,
+    grade,
+    userType,
+    firstMajor,
+    daulMajor
   });
 };
 
 //POST(username, password) & JWT를 LocalStorage에 저장
-const login = (username, password) => {
+const login = (id, password) => {
   return axios
     .post(API_URL + "login", {
-      username,
-      password,
+        id, //문제가 있으면username으로 바꾸기
+        password,
     })
     .then((response) => {
         sessionStorage.setItem("user", JSON.stringify(response.data));

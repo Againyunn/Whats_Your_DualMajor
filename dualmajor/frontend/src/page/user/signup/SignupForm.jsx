@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { useForm, Controller} from 'react-hook-form';
 import styled from 'styled-components'
 import axios from 'axios'
@@ -6,7 +6,58 @@ import ShowContract from './component/ShowContract';
 import Header from '../../../common/header/Header';
 import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal} from 'react-bootstrap';
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+import AuthService from '../../../services/auth.service';
+import { isEmail } from "validator";
+import { useNavigate } from 'react-router-dom';
+
+
+//input 값에 대한 유효성 검사
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        값을 입력해주세요!
+      </div>
+    );
+  }
+};
+
+//id(학번)
+const vuserid = (value) => {
+  if (value.length < 4 || value.length > 9) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        학번/사번을 입력해주세요.
+      </div>
+    );
+  }
+};
+
+//nickName
+const vusername = (value) => {
+  if (value.length < 2 || value.length > 10) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        닉네임은 4~10글자로 구성해주세요.
+      </div>
+    );
+  }
+};
+
+//password
+const vpassword = (value) => {
+  if (value.length < 6 || value.length > 20) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        비밀번호는 6~20자로 구성해주세요.
+      </div>
+    );
+  }
+};
 
 
 export default function SignupForm() {
@@ -17,6 +68,79 @@ export default function SignupForm() {
   const [dualmajor, setDualmajor] = useState('희망이중전공');//멘토 멘티 값에 따른 이중전공 노출 변경
   const [show, setShow] = useState(false);//회원가입 약관 모달
   const [confirm, setConfirm] = useState(true); //이용약관 동의여부 확인
+
+  const form = useRef();
+  const checkBtn = useRef();
+  const [username, setUsername] = useState("");
+  const [userid, setUserid] = useState("");
+  const [password, setPassword] = useState("");
+  const [grade, setGrade] = useState("");
+  const [firstMajor,  setFirstMajor] = useState("");
+  const [dualMajor, setDaulMajor] = useState("");
+  const [successful, setSuccessful] = useState(false);
+  const [message, setMessage] = useState("");
+
+  let navigate = useNavigate();
+
+  //입력값에 대한 유효성 검사
+  const onChangeUsername = (e) => {
+    const username = e.target.value;
+    setUsername(username);
+  };
+
+  const onChangeUserid = (e) => {
+    const userid = e.target.value;
+    setUserid(userid);
+  };
+
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
+
+
+  //추가 작업 필요한 것들
+  //select문의 상태값 저장 로직만 구현
+
+
+  //레이아웃 디자인, select의 디자인 적용
+
+
+  //회원가입폼 유효성 검사 후 API 전송 함수
+  const handleRegister = (e) => {
+    e.preventDefault();
+    setMessage("");
+    setSuccessful(false);
+    form.current.validateAll();
+    if (checkBtn.current.context._errors.length === 0) {
+      AuthService.register(userid, password, username, grade, userType, firstMajor, dualMajor).then(
+        (response) => {
+          setMessage(response.data.message);
+          setSuccessful(true);
+          
+          let newUser = {"id":userid, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "daulMajor": dualMajor};
+          //세션에 저장
+          sessionStorage.setItem("user", JSON.stringify(newUser));
+
+          //main page로 이동
+          navigate("/");
+          window.location.reload();
+        },
+        (error) => {
+          const resMessage =
+            "입력값들을 다시 확인해주세요."
+            // (error.response &&
+            //   error.response.data &&
+            //   error.response.data.message) ||
+            // error.message ||
+            // error.toString();
+          setMessage(resMessage);
+          setSuccessful(false);
+        }
+      );
+    }
+  };
+
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -62,80 +186,107 @@ export default function SignupForm() {
       <div className="mainContainer">
         <div className="header"><Header/></div>
         <FormBlockStyle>
-          <Form method="post" className= "container">
-          <span className='comment'>안녕하세요,<br/>
-              너의 이중전공은 서비스 회원 가입을 환영합니다!</span>
-            <table className='formMain' style={{tableLayout: "fixed"}}>
-              <tbody>
-                <tr>
-                  <td className='titleStyle'>학번/사번</td>
-                  <td><Form.Control className='inputStyle' size="25" placeholder="학번/사번을 입력해주세요."/></td>
-                </tr>
-                <tr>
-                  <td className='titleStyle'>닉네임</td>
-                  <td><Form.Control className='inputStyle' size="25" placeholder="닉네임을 입력해주세요."/></td>
-                </tr>
-                <tr className='titleStyle'>
-                  <td>비밀번호</td>
-                  <td><Form.Control className='inputStyle' type="password" size="25" placeholder="비밀번호를 입력해주세요."/></td>
-                </tr>
-                <br/>
-                <tr>
-                  <td className='titleStyle'>본전공</td>
-                  <td> 
-                    <Form.Select className='inputStyle'>
-                    {
-                      !totalMajor?  
-                      <option value="1">학과 없음</option>:
-                      totalMajor.map(thisMajor => (
-                        <option key={thisMajor.id} value={thisMajor.id}>
-                          {thisMajor.name}
-                        </option>
-                      ))
-                    }
-                    </Form.Select>
-                  </td>
-                </tr>
-                <tr>
-                  <td className='titleStyle'>학년</td>
-                  <td>
-                    <Form.Select className='inputStyle'>
-                      <option value="1">1학년</option>
-                      <option value="2">2학년</option>
-                      <option value="3">3학년</option>
-                      <option value="4">4학년</option>
-                    </Form.Select>
-                  </td>
-                </tr>
-                <tr>
-                  <td className='titleStyle'>이용유형</td>
-                  <td>
-                    <Form.Select className='inputStyle' onChange={SelectedUserType}>
-                      <option value="mentee">멘티</option>
-                      <option value="mento">멘토</option>
-                    </Form.Select>
-                  </td>
-                </tr>
-                <tr>
-                  <td className='titleStyle'>{dualmajor}</td>
-                  <td>
-                    <Form.Select className='inputStyle'>
-                    {
-                      !totalMajor?  
-                      <option value="1">학과 없음</option>:
-                      totalMajor.map(thisMajor => (
-                        <option key={thisMajor.id} value={thisMajor.id}>
-                          {thisMajor.name}
-                        </option>
-                      ))
-                    }
-                    </Form.Select>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+
+          <Form className= "container" onSubmit={handleRegister} ref={form}>
+            {!successful && (
+              <div>
+                <span className='comment'>안녕하세요,<br/>
+                  너의 이중전공은 서비스 회원 가입을 환영합니다!</span>
+ 
+
+                      <div className='titleStyle'>학번/사번</div>
+
+                          <Input
+                            type="userid"
+                            className="form-control"
+                            name="userid"
+                            value={userid}
+                            onChange={onChangeUserid}
+                            validations={[required, vuserid]}
+                          />
+
+
+
+
+                        <div className='titleStyle'>닉네임</div>
+
+                          <Input
+                              type="username"
+                              className="form-control"
+                              name="username"
+                              value={username}
+                              onChange={onChangeUsername}
+                              validations={[required, vusername]}
+                            /> 
+
+
+
+                        <div className='titleStyle'>비밀번호</div>
+                        <Input
+                          type="password"
+                          className="form-control"
+                          name="password"
+                          value={password}
+                          onChange={onChangePassword}
+                          validations={[required, vpassword]}
+                        />
+ 
+      
+  
+                        <div className='titleStyle'>본전공</div>
+
+                          <select className='inputStyle'>
+                          {
+                            !totalMajor?  
+                            <option value="1">학과 없음</option>:
+                            totalMajor.map(thisMajor => (
+                              <option key={thisMajor.id} value={thisMajor.id}>
+                                {thisMajor.name}
+                              </option>
+                            ))
+                          }
+                          </select>
+
+
+
+                        <div className='titleStyle'>학년</div>
+
+                          <select className='inputStyle'>
+                            <option value="1">1학년</option>
+                            <option value="2">2학년</option>
+                            <option value="3">3학년</option>
+                            <option value="4">4학년</option>
+                          </select>
+
+
+                        <div className='titleStyle'>이용유형</div>
+
+                          <select className='inputStyle' onChange={SelectedUserType}>
+                            <option value="mentee">멘티</option>
+                            <option value="mento">멘토</option>
+                          </select>
+
+
+                        <div className='titleStyle'>{dualmajor}</div>
+
+                          <select className='inputStyle'>
+                          {
+                            !totalMajor?  
+                            <option value="1">학과 없음</option>:
+                            totalMajor.map(thisMajor => (
+                              <option key={thisMajor.id} value={thisMajor.id}>
+                                {thisMajor.name}
+                              </option>
+                            ))
+                          }
+                          </select>
+
+
+              </div>
+            )}
+
             <div className='contract'>이용약관
-            <br/>
+ 
             <Button type='button' className='buttonContract' onClick={handleShow}>
               보기
             </Button>
@@ -143,8 +294,19 @@ export default function SignupForm() {
             
             <span className='registerNotice'>이용약관에 동의해야 가입하기 버튼이 활성화됩니다.</span>
             <Button className='buttonRegister' type="submit" disabled={confirm}>가입하기</Button>
+            
+            {message && (
+              <div className="form-group">
+                <div
+                  className={ successful ? "alert alert-success" : "alert alert-danger" }
+                  role="alert"
+                >
+                  {message}
+                </div>
+              </div>
+            )}
+            <CheckButton style={{ display: "none" }} ref={checkBtn} />
           </Form>
-
 
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -174,7 +336,6 @@ export default function SignupForm() {
   )
 }
 
-// onClick={ShowContract}
 
 const FormBlockStyle = styled.div`
 .container{
