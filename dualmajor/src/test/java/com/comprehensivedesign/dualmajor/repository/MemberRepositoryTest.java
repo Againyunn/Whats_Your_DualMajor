@@ -30,7 +30,7 @@ class MemberRepositoryTest {
         * DB에 정상적으로 저장이 되었는지 확인*/
         //given
         Member member = new Member();
-        member.CreateMember("test","email","1234","a",1);
+        member.CreateMember("test","email","1234","111","a","b","1","MENTEE");
 
         //when
         memberRepository.save(member);
@@ -43,7 +43,7 @@ class MemberRepositoryTest {
     void findByEmail() {
         //given
         Member member = new Member();
-        member.CreateMember("test","email","1234","a",1);
+        member.CreateMember("test","email","1234","111","a","b","1","MENTEE");
 
         //when
         memberRepository.save(member);

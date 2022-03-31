@@ -31,11 +31,11 @@ public class MemberServiceImpl implements MemberService{
     @Transactional
     @Override
     public Long join(MemberDto memberDto) throws Exception {
-        String stdEmail = memberDto.getEmail() + "@hufs.ac.kr";
+        String stdEmail = memberDto.getStdNum() + "@hufs.ac.kr";
         String password = bCryptPasswordEncoder.encode(memberDto.getPassword());
         validateDuplicateEmail(stdEmail);
         Member member = new Member();
-        member.CreateMember(memberDto.getName(), stdEmail, password, memberDto.getFirstMajor(), memberDto.getGrade());
+        member.CreateMember(memberDto.getName(), stdEmail, password, memberDto.getStdNum(), memberDto.getFirstMajor(), memberDto.getDualMajor(), memberDto.getGrade(),memberDto.getType());
         return memberRepository.save(member).getId();
     }
     private void validateDuplicateEmail(String stdEmail) throws Exception{

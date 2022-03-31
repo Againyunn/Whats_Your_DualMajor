@@ -36,22 +36,30 @@ public class Controller {
     /*=========Mapping for Test Spring Security==============*/
     @GetMapping({"", "/"})
     @ResponseBody
-    public Object home(@AuthenticationPrincipal MemberAdapter memberAdapter) {
-        MemberDto memberDto = new MemberDto();
-        memberDto.setLoginInfo(
-                memberAdapter.getMember().getName(),
-                "201703616",
-                memberAdapter.getMember().getFirstMajor(),
-                memberAdapter.getMember().getGrade()
-                ,"MENTEE"
-                );
-        return memberDto.getLoginInfo();
+    public String home() {
+        return "home";
     }
 
     @GetMapping("/login")
     public String login() {
         return "login";
     }
+
+    @GetMapping("/loginSuccess")
+    @ResponseBody
+    public Object loginSuccess(@AuthenticationPrincipal MemberAdapter memberAdapter) {
+        MemberDto memberDto = new MemberDto();
+        memberDto.setLoginInfo(
+                memberAdapter.getMember().getName(),
+                memberAdapter.getMember().getStdNum(),
+                memberAdapter.getMember().getFirstMajor(),
+                memberAdapter.getMember().getDualMajor(),
+                memberAdapter.getMember().getGrade(),
+                memberAdapter.getMember().getType()
+        );
+        return memberDto.getLoginInfo();
+    }
+
 
     @GetMapping("/logoutSuccess")
     @ResponseBody
@@ -62,39 +70,6 @@ public class Controller {
         }
         return "error";
     }
-
-   /* @PostMapping("/login")
-    @ResponseBody
-    public Object login(Model model, @AuthenticationPrincipal MemberDetails memberDetails) {
-        //System.out.println(memberDetails.getUsername());
-        if (memberDetails == null) {
-            System.out.println("null");
-            model.addAttribute("issuccess","null");
-            return model;
-        }
-        System.out.println("not null");
-        return memberDetails.getUsername();
-    }*/
-
-    /*@PostMapping("/loginProc")
-    @ResponseBody
-    public String memberAPI() {
-        System.out.println("loginProcPost");
-
-        return "loginProc";
-    }*/
-
- /*  @GetMapping("/loginSuccess")
-   @ResponseBody
-   public Object loginSuccess() {
-       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-       Object principal = authentication.getPrincipal();
-       //MemberDetails details = (MemberDetails)authentication.getDetails();
-       if (principal == null) {
-           return "no authenticated member";
-       }
-       return principal;
-   }*/
 
     @GetMapping("/join")
     public String joinForm() {

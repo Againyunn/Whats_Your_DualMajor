@@ -20,30 +20,39 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     private String name;
     //회원 이메일(학교이메일?)
     private String email;
+    //회원 학번/사번
+    private String stdNum;
     //회원 비밀번호
     private String password;
     //회원 본전공(제 1전공)
     private String firstMajor;
+    //회원 이중/부전공(제 2전공)
+    private String dualMajor;
     //회원 학년
-    private int grade;
+    private String grade;
     //회원 유형(멘토 or 멘티)
-    private Type type;
-    //서비스 내 회원 지위
-    private String role;
+    private String type;
 
 
-    public void setLoginInfo(String name, String stdNum, String firstMajor, int grade, String type) {
+
+    public void setLoginInfo(String name, String stdNum, String firstMajor, String dualMajor, String grade, String type) {
         this.name = name;
+        this.stdNum = stdNum;
         this.firstMajor = firstMajor;
+        this.dualMajor = dualMajor;
         this.grade = grade;
-        this.type = Type.MENTOR; //임의 고정값
+        this.type = type;
+
     }
 
     public Map getLoginInfo() {
         HashMap<Object, Object> map = new HashMap<>();
         map.put("name", name);
+        map.put("stdNum", stdNum);
         map.put("firstMajor", firstMajor);
+        map.put("dualMajor", dualMajor);
         map.put("grade", grade);
+        map.put("type", type);
         return map;
     }
 }
