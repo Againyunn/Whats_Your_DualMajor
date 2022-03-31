@@ -63,12 +63,15 @@ public class Controller {
 
     @GetMapping("/logoutSuccess")
     @ResponseBody
-    public String logoutStatus() {
+    public Map logoutStatus() {
+        Map<Object, Object> map = new HashMap<>();
         System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() ==  "anonymousUser") {
-            return "logout Success";
+            map.put("is_success", true);
+            return map;
         }
-        return "error";
+        map.put("is_success", false);
+        return map;
     }
 
     @GetMapping("/join")
