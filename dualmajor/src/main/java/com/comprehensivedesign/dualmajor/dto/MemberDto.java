@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Getter
@@ -46,13 +47,13 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     }
 
     public Map getLoginInfo() {
-        HashMap<Object, Object> map = new HashMap<>();
-        map.put("name", name);
-        map.put("stdNum", stdNum);
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
+        map.put("id", stdNum);
+        map.put("nickName", name);
+        map.put("grade", grade);
+        map.put("userType", type);
         map.put("firstMajor", firstMajor);
         map.put("dualMajor", dualMajor);
-        map.put("grade", grade);
-        map.put("type", type);
         return map;
     }
 }
