@@ -64,6 +64,21 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public Member update(MemberDto memberDto) {
+        /*회원가입 -> 폼에서 몇개의 정보만 수정하는 것처럼 보이지만.
+        사실 폼에 value에 박혀있는 모든 정보들이 다시 백으로 넘어오는 것*/
+        Member member = find(memberDto.getEmail());//로그인 된 회원의 이메일이므로 학교 주소가 붙어서 저장된 형태
+        member.updateMember(memberDto.getName()
+                , memberDto.getPassword()
+                , memberDto.getStdNum()
+                , memberDto.getFirstMajor()
+                , memberDto.getDualMajor()
+                , memberDto.getGrade()
+                , memberDto.getType());
+        return member;
+    }
+
+    @Override
     public Member findById(Long id) {
         return memberRepository.findById(id).get();
     }

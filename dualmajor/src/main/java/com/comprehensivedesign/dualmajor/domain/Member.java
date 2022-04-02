@@ -77,4 +77,15 @@ public class Member {
         this.role = "ROLE_USER";
         this.type = type;
     }
+
+    /*Member 수정 로직*/
+    public void updateMember(String name, String password, String stdNum, String firstMajor, String dualMajor,String grade, String type) {
+        this.name = name;
+        this.password = password;
+        this.stdNum = stdNum;
+        this.firstMajor = firstMajor;
+        this.dualMajor = dualMajor;
+        this.grade = grade;
+        this.type = type;
+    }
 }
