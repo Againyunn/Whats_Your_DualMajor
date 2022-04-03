@@ -32,7 +32,7 @@ const vuserstdNum = (value) => {
   if (value.length < 4 || value.length > 9) {
     return (
       <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
-        학번/사번을 입력해주세요.
+        올바른 학번/사번을 입력해주세요.
       </div>
     );
   }
@@ -81,6 +81,8 @@ export default function SignupForm() {
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
+  const [checkStdNum, setCheckStdNum] = useState(false);
+
   let navigate = useNavigate();
 
   //입력값에 대한 유효성 검사
@@ -92,6 +94,7 @@ export default function SignupForm() {
   const onChangeUserstdNum = (e) => {
     const userstdNum = e.target.value;
     setUserstdNum(userstdNum);
+    
   };
 
   const onChangePassword = (e) => {
@@ -131,19 +134,56 @@ export default function SignupForm() {
     setDualMajor(userDualMajor);
   }
 
+  //stdNum 중복검사
+  const stdNumCheckDuplicate = () => {
+    //stdNum이 입력되지 않은 경우
+    if(userstdNum === ''){
+      required(userstdNum);
+    }
+    //stdNum의 자리수가 올바르지 않는 경우
+    else if(userstdNum.length < 4 || userstdNum.length > 9){
+      vuserstdNum(userstdNum);
+    }
+    //stdNum의 자리수가 정상적인 경우
+    else{
+      AuthService.checkDuplicate(userstdNum).then(
+        (response) => {
+          //입력된 stdNum으로 상태값 변경
+          console.log(response.data.joinPossible)
+          if(response.data.joinPossible === "true"){
+            setCheckStdNum(true);
+            alert("가입가능한 학번/사번입니다.");
+          }
+          else
+            alert("이미 가입된 학번/사번입니다.");
+        },
+        (error) => {
+          alert("오류가 발생했습니다.");
+        }
+      );
+    }
+  }
+
   //회원가입폼 유효성 검사 후 API 전송 함수
   const handleRegister = (e) => {
     e.preventDefault();
     setMessage("");
     setSuccessful(false);
     form.current.validateAll();
+    
+    //학번/사번 중복확인 여부 검사
+    if (checkStdNum === false){
+      alert("학번/사번 중복확인 해주세요.");
+    }
+
+
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.register(userstdNum, password, username, grade, userType, firstMajor, dualMajor).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);
           
-          let newUser = {"stdNum":userstdNum, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "daulMajor": dualMajor};
+          let newUser = {"stdNum":userstdNum, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "dualMajor": dualMajor};
           //세션에 저장
           sessionStorage.setItem("user", JSON.stringify(newUser));
 
@@ -166,7 +206,6 @@ export default function SignupForm() {
     }
   };
 
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -174,7 +213,7 @@ export default function SignupForm() {
   useEffect(  () =>{
     //백엔드 서버로부터 본전공/이중전공 정보받고 값을 찾아서 반환
     AuthService.firstMajorList();
-    AuthService.dualMajorList()
+    AuthService.dualMajorList();
 
     let allFirstMajor = false;
     let allDualMajor = false;
@@ -234,10 +273,17 @@ export default function SignupForm() {
                       value={userstdNum}
                       onChange={onChangeUserstdNum}
                       validations={[required, vuserstdNum]}
-
                     />
                   </Col>
                 </Row>
+                <Row>
+                <Col md={5} xs={5}>
+                    <Button type='button' className='buttonDuplicate' onClick={stdNumCheckDuplicate} >중복확인</Button>
+                  </Col>
+                <Col md={7} xs={7}></Col>
+                </Row>
+                <br/>
+
                 <Row>
                   <Col md={5} xs={5}>
                     <span className='titleStyle'>닉네임</span>
@@ -478,6 +524,26 @@ const FormBlockStyle = styled.div`
         opacity: 0.7;
     }
 
+  }
+
+  /*stdNum 중복확인 버튼*/
+  .buttonDuplicate{
+
+    /*모양*/
+
+    border-radius: 5px;
+
+    font-size: 12px;
+    color: white;
+
+    /*색*/
+    background-color: #5a5a5a;
+    opacity: 1;
+
+    /*호버*/
+    &:hover {
+        opacity: 0.9;
+    }
   }
 
   /*이용약관 창*/

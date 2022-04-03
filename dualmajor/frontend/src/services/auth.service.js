@@ -1,7 +1,7 @@
 import axios from "axios";
 const API_URL = "https://81e0af5c-fa2e-4ea9-b93f-8d63072a71dc.mock.pstmn.io/";
 
-//회원가입
+//POST 회원가입
 const register = (stdNum, password, nickName, grade, userType, firstMajorId, dualMajorId) => {
   return axios.post(API_URL + "join/", {
     stdNum, //문제가 있으면username으로 바꾸기
@@ -19,7 +19,7 @@ const login = (stdNum, password) => {
   return axios
     .post(API_URL + "login/", {
       stdNum, //문제가 있으면username으로 바꾸기
-        password,
+      password,
     })
     .then((response) => {
         sessionStorage.setItem("user", JSON.stringify(response.data));
@@ -74,12 +74,19 @@ const dualMajorList = () =>{
   });
 }
 
-//서비스 탈퇴 신청
+//POST 서비스 탈퇴 신청
 const applyResign = (stdNum) =>{
   return axios.post(API_URL + "resign/", {
     stdNum, //문제가 있으면username으로 바꾸기
   });
 } 
+
+//POST 아이디 중복확인
+const checkDuplicate = (stdNum) => {
+  return axios.post(API_URL + "checkEmail/", {
+    stdNum, 
+  })
+}
 
 //쿠키 값 불러오기(로그인 자동저장)
 const getCurrentUser = () => {
@@ -94,6 +101,7 @@ const AuthService = {
   firstMajorList,
   dualMajorList,
   applyResign,
+  checkDuplicate,
   getCurrentUser,
 };
 export default AuthService;
