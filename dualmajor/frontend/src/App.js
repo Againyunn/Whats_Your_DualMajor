@@ -121,7 +121,7 @@ import Main from './page/main/Main';
 import Choose from './page/user/choose/Choose';
 import Login from './page/user/login/Login';
 import SignupForm from './page/user/signup/SignupForm';
-
+import EditInfo from './page/user/editInfo/EditInfo';
 
 function App() {
   return (
@@ -132,6 +132,7 @@ function App() {
         <Route path='/choose' element={<Choose/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<SignupForm/>} />
+        <Route path='/editInfo' element={<EditInfo/>} />
       </Routes>
     </BrowserRouter>
   </>
