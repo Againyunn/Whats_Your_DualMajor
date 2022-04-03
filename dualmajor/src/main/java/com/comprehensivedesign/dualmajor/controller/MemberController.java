@@ -24,7 +24,7 @@ public class MemberController {
     }
     /*============================*/
 
-    @PostMapping("/member/edit")
+    @PostMapping("/editInfo")
     public Map editMember(@RequestBody MemberDto memberDto) {
         Member updatedMember = memberService.update(memberDto);
         MemberDto updatedMemberDto = new MemberDto();
