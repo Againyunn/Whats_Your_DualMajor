@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import { Link } from 'react-router-dom';
 import { useForm, Controller} from 'react-hook-form';
-import { Button, Alert} from 'react-bootstrap';
+import { Button, Alert, FormControl} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../../../../services/auth.service';
 import Form from "react-validation/build/form";
@@ -21,16 +21,44 @@ const required = (value) => {
 };
 
 
+//필수 값 누락 시 alert
+// function AlertDismissibleExample() {
+//   const [show, setShow] = useState(true);
+
+//   if (show) {
+//     return (
+//       <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+//         <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+//         <p>
+//           Change this and that and try again. Duis mollis, est non commodo
+//           luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+//           Cras mattis consectetur purus sit amet fermentum.
+//         </p>
+//       </Alert>
+//     );
+//   }
+//   return <Button onClick={() => setShow(true)}>Show Alert</Button>;
+// }
+
+
+
+//html render칸에 id와 ps 각각이 입력되지 않았을 때 띄울 얼럿 <div>로 작성하기
 export default function MainBlock() {
   //상태값 처리
     let navigate = useNavigate();
     const form = useRef();
     const checkBtn = useRef();
   
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+
+    const [checkUserName, setCheckUserName] = useState('');
+    const [checkPassword, setCheckPassword] = useState('');
+
+    //alert창(id, pw 검증용)
+    const [show, setShow] = useState(true);
   
     const onChangeUsername = (e) => {
       const username = e.target.value;
@@ -41,71 +69,113 @@ export default function MainBlock() {
       const password = e.target.value;
       setPassword(password);
     };
+
+    const inputCheck = () =>{
+      if(!username===false&&!password===false){
+        setCheckUserName(true);
+        setCheckPassword(true);
+        return null;
+      }
+
+      //id와 pw 중 하나라도 값이 비어있는 경우
+      else{
+        //id와 pw 둘 다 없는 경우
+        if(!username===true && !password===true){
+          alert("id와 pw를 입력해주세요.");
+          setCheckUserName(false);
+          setCheckPassword(false);
+
+        }
+
+        //id값이 없는 경우
+        else if(!username===true){
+          alert("id를 입력해주세요.");
+          setCheckUserName(false);
+        }
+
+        //pw값이 없는 경우
+        else if(!password===true){
+          alert("pw를 입력해주세요.");
+          setCheckPassword(false);
+        }
+      }
+    }
+
     const handleLogin = (e) => {
       e.preventDefault();
       setMessage("");
       setLoading(true);
       form.current.validateAll(); //모든 유효성검사 통과 시
 
-      if (checkBtn.current.context._errors.length === 0) {
-        AuthService.login(username, password).then( //login(id, password)
-          () => {
- 
-            //main page로 이동
-            navigate("/");
-            window.location.reload();
-          },
-          (error) => {
-            const resMessage =
-              "로그인 정보를 확인해주세요."
-              // (error.response &&
-              //   error.response.data &&
-              //   error.response.data.message) ||
-              // error.message ||
-              // error.toString();
-            setLoading(false);
-            setMessage(resMessage);
-          }
-        );
-      } else {
-        setLoading(false);
+      //id와 pw 모두 입력된 경우
+      if(checkUserName === true && checkPassword === true){
+
+        //백엔드 서버와 통신
+        if (checkBtn.current.context._errors.length === 0) {
+          AuthService.login(username, password).then( //login(id, password)
+            () => {
+   
+              //main page로 이동
+              navigate("/");
+              window.location.reload();
+            },
+            (error) => {
+              const resMessage =
+                "로그인 정보를 확인해주세요."
+                // (error.response &&
+                //   error.response.data &&
+                //   error.response.data.message) ||
+                // error.message ||
+                // error.toString();
+              setLoading(false);
+              setMessage(resMessage);
+            }
+          );
+
+        } else {
+          setLoading(false);
+        }
       }
     };
-
 
   return (
     <MainBlockStyle>
         <Form className='container' onSubmit={handleLogin} ref={form}>
 
             <label htmlFor="username" className='ID'>ID</label>
-            <div className='IDBlock'>
-            <Input
+            <span className='IDBlock'>
+   
+            <FormControl
+              className="FormControl"
               type="text"
               name="username"
               value={username}
               onChange={onChangeUsername}
-              validations={[required]}
-              placeholder="학번/사번을 입력해주세요." 
+              // required
+              // validations={[required]}
+              placeholder="학번/사번" 
               size="25"
               style={{borderRadius: "5px", fontSize: "14px"}}
             />
-            </div>
-
+            </span>
 
             <label htmlFor="password" className='PW'>PW</label>
-            <div className='PWBlock'>
-            <Input
+            <span className='PWBlock'>
+            <FormControl
               type="password"
               name="password"
               value={password}
               onChange={onChangePassword}
-              validations={[required]}
-              placeholder="비밀번호를 입력해주세요."
+              // validations={[required]}
+              placeholder="비밀번호"
               size="25"
               style={{borderRadius: "5px", fontSize: "14px"}}
-            /></div>
+            /></span>
 
-          <CheckButton className='Login' ref={checkBtn} >Login</CheckButton>
+          <CheckButton className='Login' ref={checkBtn} onClick={inputCheck}>Login</CheckButton>
+{/* 
+          <UsernameRequired checkUserName={checkUserName}/>
+          <PasswordRequired checkPassword={checkPassword}/> */}
 
           {message && (
             <div className="error">
@@ -115,12 +185,9 @@ export default function MainBlock() {
             </div>
           )}
         </Form>
-
     </MainBlockStyle>
   );
 }
-
-
 
 // <Form className='container' method='post' onSubmit={handleLogin}>
     
@@ -150,11 +217,6 @@ export default function MainBlock() {
 //   </div>
 // )}
 // </Form>
-
-
-
-
-
 
 //CSS
 const MainBlockStyle = styled.div`

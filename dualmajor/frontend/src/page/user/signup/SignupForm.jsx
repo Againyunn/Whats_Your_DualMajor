@@ -6,20 +6,21 @@ import ShowContract from './component/ShowContract';
 import Header from '../../../common/header/Header';
 import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Modal} from 'react-bootstrap';
+import { Button, Col,  Container, Modal, Row} from 'react-bootstrap';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from '../../../services/auth.service';
 import { isEmail } from "validator";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
+import Select from 'react-bootstrap/FormSelect'//bootstrap 경로에서 직접 Select만 빼오기(공식문서 상으로는 Form.select로만 사용 가능한 제약 극복)
 
 
 //input 값에 대한 유효성 검사
 const required = (value) => {
   if (!value) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
         값을 입력해주세요!
       </div>
     );
@@ -30,7 +31,7 @@ const required = (value) => {
 const vuserid = (value) => {
   if (value.length < 4 || value.length > 9) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
         학번/사번을 입력해주세요.
       </div>
     );
@@ -41,7 +42,7 @@ const vuserid = (value) => {
 const vusername = (value) => {
   if (value.length < 2 || value.length > 10) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
         닉네임은 4~10글자로 구성해주세요.
       </div>
     );
@@ -52,18 +53,18 @@ const vusername = (value) => {
 const vpassword = (value) => {
   if (value.length < 6 || value.length > 20) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
         비밀번호는 6~20자로 구성해주세요.
       </div>
     );
   }
 };
 
-
 export default function SignupForm() {
   //상태값 데이터 처리
 
-  const [totalMajor, setTotalMajor] = useState(''); //전체 본전공 학과 데이터 리스트 저장
+  const [totalFirstMajor, setTotalFirstMajor] = useState(''); //전체 본전공 학과 데이터 리스트 저장
+  const [totalDualMajor, setTotalDualMajor] = useState(''); //전체 본전공 학과 데이터 리스트 저장
   const [userType, setUserType] = useState('mentee'); //멘토 멘티 유형 값
   const [dualmajor, setDualmajor] = useState('희망이중전공');//멘토 멘티 값에 따른 이중전공 노출 변경
   const [show, setShow] = useState(false);//회원가입 약관 모달
@@ -74,9 +75,9 @@ export default function SignupForm() {
   const [username, setUsername] = useState("");
   const [userid, setUserid] = useState("");
   const [password, setPassword] = useState("");
-  const [grade, setGrade] = useState("");
-  const [firstMajor,  setFirstMajor] = useState("");
-  const [dualMajor, setDaulMajor] = useState("");
+  const [grade, setGrade] = useState("1학년");
+  const [firstMajor,  setFirstMajor] = useState("GBT학부");
+  const [dualMajor, setDualMajor] = useState("없음");
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -98,13 +99,37 @@ export default function SignupForm() {
     setPassword(password);
   };
 
-
   //추가 작업 필요한 것들
   //select문의 상태값 저장 로직만 구현
+  const onChangeUserGrade = (e) => {
+    const userGrade = e.target.value;
+    setGrade(userGrade);
+  }
 
+  const SelectedUserType= (selected) => {
+    //멘토로 유저 타입 변경
+    if(selected.target.value === "mento"){
+      setUserType("mento");
+      setDualmajor('이중(부)전공');
+    }
 
-  //레이아웃 디자인, select의 디자인 적용
+    //멘티로 유저 타입 변경
+    else{
+      setUserType("mentee");
+      setDualmajor('희망이중전공');
+    }
+  }
 
+  const onChangeUserFirstMajor = (e) =>{
+    const userFirstMajor = e.target.value;
+    setFirstMajor(userFirstMajor);
+
+  }
+
+  const onChangeUserDualMajor = (e) =>{
+    const userDualMajor = e.target.value;
+    setDualMajor(userDualMajor);
+  }
 
   //회원가입폼 유효성 검사 후 API 전송 함수
   const handleRegister = (e) => {
@@ -145,41 +170,39 @@ export default function SignupForm() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  //선택가능한 본전공 리스트 생성
   useEffect(  () =>{
-    axios.get('백엔드 본전공 학과 리스트 API')
-    .then(Response => {
-      setTotalMajor(Response.data)
-    })
-    .catch((Error) =>{
-        console.log(Error);
-    })
+    //백엔드 서버로부터 본전공/이중전공 정보받고 값을 찾아서 반환
+    AuthService.firstMajorList();
+    AuthService.dualMajorList()
+
+    let allFirstMajor = false;
+    let allDualMajor = false;
+    if(localStorage.getItem('firstMajor') !== null){
+        allFirstMajor = Object.values(JSON.parse(localStorage.getItem('firstMajor')));
+    }
+    if(localStorage.getItem('dualMajor') !== null){
+        allDualMajor = Object.values(JSON.parse(localStorage.getItem('dualMajor')));
+    }
+
+    
+    //전체 본전공 정보 저장
+    setTotalFirstMajor(allFirstMajor);
+    //전체 이중전공 정보 저장
+    setTotalDualMajor(allDualMajor);             
+    
 
     //임시 학과 처리용 백엔드 연결 후 삭제 예정
-    setTotalMajor(exampleMajor);
+    // setTotalFirstMajor(exampleFirstMajor);
+    // setTotalDualMajor(exampleDualMajor);
   },[])
 
 
   //임시 학과 처리용 백엔드 연결 후 삭제 예정
-  const exampleMajor = [{id: '1', name: "GBT학부"}, {id: '2', name:"브라질학과"}, {id: '3', name:"세르비아 크로아티아어과"} ]
+  // const exampleFirstMajor = [{id: '1', name: "GBT학부"}, {id: '2', name:"브라질학과"}, {id: '3', name:"세르비아 크로아티아어과"} ]
+  // const exampleDualMajor = [{id: '0', name: "없음"}, {id: '1', name: "GBT학부"}, {id: '2', name:"브라질학과"}, {id: '3', name:"세르비아 크로아티아어과"} ]
   
-  const SelectedUserType= (selected) => {
-    //멘토로 유저 타입 변경
-    if(selected.target.value === "mento"){
-      setUserType("mento");
-      setDualmajor('이중(부)전공');
-    }
 
-    //멘티로 유저 타입 변경
-    else{
-      setUserType("mentee");
-      setDualmajor('희망이중전공');
-    }
-  }
-
-  //회원가입 약관 모달
-  // const Modal = new Modal();
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
 
   return (
     <MainBlockStyle>
@@ -189,123 +212,169 @@ export default function SignupForm() {
 
           <Form className= "container" onSubmit={handleRegister} ref={form}>
             {!successful && (
+              <Container>
               <div>
-                <span className='comment'>안녕하세요,<br/>
-                  너의 이중전공은 서비스 회원 가입을 환영합니다!</span>
- 
+                <Row>
+                  <Col  md={12} xs={12}>
+                  <span className='comment'>안녕하세요,<br/>
+                    너의 이중전공은 서비스 회원 가입을 환영합니다!</span>
+                  </Col>
+                </Row>
+                
+                <hr/>
+                <Row>
+                  <Col md={5} xs={5}>
+                    <span className='titleStyle'>학번/사번</span>
+                  </Col>
+                  <Col md={7} xs={7}>
+                    <Input
+                      type="userid"
+                      className="form-control"
+                      name="userid"
+                      value={userid}
+                      onChange={onChangeUserid}
+                      validations={[required, vuserid]}
 
-                      <div className='titleStyle'>학번/사번</div>
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={5} xs={5}>
+                    <span className='titleStyle'>닉네임</span>
+                  </Col>
+                  <Col md={7} xs={7}>
+                    <Input
+                        type="username"
+                        className="form-control"
+                        name="username"
+                        value={username}
+                        onChange={onChangeUsername}
+                        validations={[required, vusername]}
+                      />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={5} xs={5}>
+                    <span className='titleStyle'>비밀번호</span>
+                  </Col>
+                  <Col md={7} xs={7}>
+                    <Input
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      value={password}
+                      onChange={onChangePassword}
+                      validations={[required, vpassword]}
+                    />
+                  </Col>
+                </Row>
 
-                          <Input
-                            type="userid"
-                            className="form-control"
-                            name="userid"
-                            value={userid}
-                            onChange={onChangeUserid}
-                            validations={[required, vuserid]}
-                          />
+                <br/>
+                <Row>
+                  <Col md={5} xs={12}>
+                    <span className='titleStyle'>본전공</span>
+                  </Col>
+                  <Col md={7} xs={12}>
+                    <Select className='inputStyle' onChange={onChangeUserFirstMajor}>
+                    {
+                      !totalFirstMajor?  
+                      <option value="0">학과 없음</option>:
+                      totalFirstMajor.map(thisMajor => (
+                        <option key={thisMajor.id} value={thisMajor.id}>
+                          {thisMajor.name}
+                        </option>
+                      ))
+                    }
+                    </Select>
+                  </Col>
+                </Row>
 
+                <Row>
+                  <Col md={5} xs={12}>
+                    <span className='titleStyle'>학년</span>
+                  </Col>
+                  <Col md={7} xs={12}>
+                    <Select className='inputStyle' onChange={onChangeUserGrade}>
+                      <option value="1학년">1학년</option>
+                      <option value="2학년">2학년</option>
+                      <option value="3학년">3학년</option>
+                      <option value="4학년 이상">4학년 이상</option>
+                    </Select>
+                  </Col>
+                </Row>
 
+                <Row>
+                  <Col md={5} xs={12}>
+                    <span className='titleStyle'>이용유형</span>
+                  </Col>
+                  <Col md={7} xs={12}>
+                    <Select className='inputStyle' onChange={SelectedUserType}>
+                      <option value="mentee">멘티</option>
+                      <option value="mento">멘토</option>
+                    </Select>
+                  </Col>
+                </Row>
 
-
-                        <div className='titleStyle'>닉네임</div>
-
-                          <Input
-                              type="username"
-                              className="form-control"
-                              name="username"
-                              value={username}
-                              onChange={onChangeUsername}
-                              validations={[required, vusername]}
-                            /> 
-
-
-
-                        <div className='titleStyle'>비밀번호</div>
-                        <Input
-                          type="password"
-                          className="form-control"
-                          name="password"
-                          value={password}
-                          onChange={onChangePassword}
-                          validations={[required, vpassword]}
-                        />
- 
-      
-  
-                        <div className='titleStyle'>본전공</div>
-
-                          <select className='inputStyle'>
-                          {
-                            !totalMajor?  
-                            <option value="1">학과 없음</option>:
-                            totalMajor.map(thisMajor => (
-                              <option key={thisMajor.id} value={thisMajor.id}>
-                                {thisMajor.name}
-                              </option>
-                            ))
-                          }
-                          </select>
-
-
-
-                        <div className='titleStyle'>학년</div>
-
-                          <select className='inputStyle'>
-                            <option value="1">1학년</option>
-                            <option value="2">2학년</option>
-                            <option value="3">3학년</option>
-                            <option value="4">4학년</option>
-                          </select>
-
-
-                        <div className='titleStyle'>이용유형</div>
-
-                          <select className='inputStyle' onChange={SelectedUserType}>
-                            <option value="mentee">멘티</option>
-                            <option value="mento">멘토</option>
-                          </select>
-
-
-                        <div className='titleStyle'>{dualmajor}</div>
-
-                          <select className='inputStyle'>
-                          {
-                            !totalMajor?  
-                            <option value="1">학과 없음</option>:
-                            totalMajor.map(thisMajor => (
-                              <option key={thisMajor.id} value={thisMajor.id}>
-                                {thisMajor.name}
-                              </option>
-                            ))
-                          }
-                          </select>
-
-
+                <Row>
+                  <Col md={5} xs={12}>
+                    <span className='titleStyle'>{dualmajor}</span>
+                  </Col>
+                  <Col md={7} xs={12}>
+                    <Select className='inputStyle' onChange={onChangeUserDualMajor}>
+                    {
+                      !totalDualMajor?  
+                      <option value="0">학과 없음</option>:
+                      totalDualMajor.map(thisMajor => (
+                        <option key={thisMajor.id} value={thisMajor.id}>
+                          {thisMajor.name}
+                        </option>
+                      ))
+                    }
+                    </Select> 
+                  </Col>
+                </Row>
               </div>
+              </Container>
             )}
 
-            <div className='contract'>이용약관
- 
-            <Button type='button' className='buttonContract' onClick={handleShow}>
-              보기
-            </Button>
-            </div>
-            
-            <span className='registerNotice'>이용약관에 동의해야 가입하기 버튼이 활성화됩니다.</span>
-            <Button className='buttonRegister' type="submit" disabled={confirm}>가입하기</Button>
-            
-            {message && (
-              <div className="form-group">
-                <div
-                  className={ successful ? "alert alert-success" : "alert alert-danger" }
-                  role="alert"
-                >
-                  {message}
+            <br/>
+            <Container>
+              <Row>
+                <Col md={8} xs={6}></Col>
+                <Col md={4} xs={6}>
+                  <span className='contract'>이용약관</span>
+                </Col>
+                <Col md={8} xs={6}></Col>
+                <Col md={4} xs={6}>
+                  <Button type='button' className='buttonContract' onClick={handleShow}>
+                    보기
+                  </Button>
+                </Col>
+              </Row>
+
+              <br/>
+              <Row>
+                <Col md={12} xs={12}>
+                  <span className='registerNotice'>이용약관에 동의해주셔야 가입이 가능합니다.</span>
+                </Col>
+                <Col md={12} xs={12}>
+                  <Button className='buttonRegister' type="submit" disabled={confirm}>가입하기</Button>
+                </Col>
+              </Row>
+
+              {message && (
+                <div className="form-group">
+                  <div
+                    className={ successful ? "alert alert-success" : "alert alert-danger" }
+                    role="alert"
+                  >
+                    {message}
+                  </div>
                 </div>
-              </div>
-            )}
-            <CheckButton style={{ display: "none" }} ref={checkBtn} />
+              )}
+              <CheckButton style={{ display: "none" }} ref={checkBtn} />
+
+            </Container>
           </Form>
 
           <Modal show={show} onHide={handleClose}>
@@ -329,7 +398,7 @@ export default function SignupForm() {
             </Modal.Footer>
           </Modal>
           
-        </FormBlockStyle>
+          </FormBlockStyle>
         <div className='footer'><OnlyPrevFooter/></div>
       </div>
     </MainBlockStyle>
@@ -337,26 +406,18 @@ export default function SignupForm() {
 }
 
 
+
+
 const FormBlockStyle = styled.div`
 .container{
-    display: grid;
-    grid-template-columns: 2.8fr 4fr 1.5fr;
-    grid-template-rows: 1fr 5fr 1fr 0.7fr 1fr;
-    background-color: white;
-    text-align: center;
 
-    row-gap: 15px;
-    
-    height: 75vh;
-    width: 45vh;
+    background-color: white;
+
+
   }
 
   /*환영 글*/
   .comment{
-    grid-column-start: 1;
-    grid-column-end: 4;
-    grid-row-start: 1;
-    grid-row-end: 2;
 
     /*padding-top:;*/
     padding-left: 20px;
@@ -370,21 +431,12 @@ const FormBlockStyle = styled.div`
 
   /*form 입력 레이아웃*/
   .formMain{
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
 
     text-align: left;
   }
 
 
   .formBlock{
-    /*레이아웃*/
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
 
     /*모양*/
 
@@ -397,11 +449,6 @@ const FormBlockStyle = styled.div`
   }
   /*입력 칸 명*/
   .titleStyle{
-    /*레이아웃*/
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 2;
-    grid-row-end: 3;
 
     /*글씨*/
     font-size: 12px;
@@ -435,10 +482,6 @@ const FormBlockStyle = styled.div`
 
   /*이용약관 창*/
   .contract{
-    grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row-start: 3;
-    grid-row-end: 4;
 
     /*글씨*/
     font-size: 12px;
@@ -450,17 +493,11 @@ const FormBlockStyle = styled.div`
 
   /*이용약관 진입 버튼*/
   .buttonContract{
-    grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row-start: 3;
-    grid-row-end: 4;
 
     /*모양*/
     margin-right: 5px;
     border-radius: 5px;
 
-    width: 100%;
-    height: 40%;
 
     font-size: 12px;
     color: white;
@@ -477,10 +514,6 @@ const FormBlockStyle = styled.div`
 
   /*가입하기 버튼 활성화 안내 문구 */
   .registerNotice{
-    grid-column-start: 1;
-    grid-column-end: 4;
-    grid-row-start: 4;
-    grid-row-end: 5;
 
     font-size: 11px;
     color: #C4C4C4;
@@ -491,18 +524,12 @@ const FormBlockStyle = styled.div`
   /*가입하기 버튼*/
   .buttonRegister{
     /*레이아웃*/
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: 5;
-    grid-row-end: 6;
 
     background-color: #002F5A;
     opacity: 0.8;
 
     /*모양*/
     border-radius: 5px;
-    width: 70%;
-    height: 50%;
 
     /*글씨*/
     font-size: 15px;
