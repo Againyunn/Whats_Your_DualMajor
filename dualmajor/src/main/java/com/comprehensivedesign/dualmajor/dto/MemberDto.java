@@ -18,11 +18,11 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     * DTO에는 엔티터의 모든 정보를 담는 것이 아닌, 필요한 정보만을 취급하여 전송할 수 있다.*/
 
     //회원 이름(닉네임)
-    private String name;
-    //회원 이메일(학교이메일?)
-    private String email;
+    private String nickName;
     //회원 학번/사번
     private String stdNum;
+    //회원 이메일(학교이메일?)
+    private String email;
     //회원 비밀번호
     private String password;
     //회원 본전공(제 1전공)
@@ -32,26 +32,26 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     //회원 학년
     private String grade;
     //회원 유형(멘토 or 멘티)
-    private String type;
+    private String userType;
 
 
 
-    public void setLoginInfo(String name, String stdNum, String firstMajor, String dualMajor, String grade, String type) {
-        this.name = name;
+    public void setLoginInfo(String nickName, String stdNum, String firstMajor, String dualMajor, String grade, String userType) {
+        this.nickName = nickName;
         this.stdNum = stdNum;
         this.firstMajor = firstMajor;
         this.dualMajor = dualMajor;
         this.grade = grade;
-        this.type = type;
+        this.userType = userType;
 
     }
 
     public Map getLoginInfo() {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
         map.put("id", stdNum);
-        map.put("nickName", name);
+        map.put("nickName", nickName);
         map.put("grade", grade);
-        map.put("userType", type);
+        map.put("userType", userType);
         map.put("firstMajor", firstMajor);
         map.put("dualMajor", dualMajor);
         return map;

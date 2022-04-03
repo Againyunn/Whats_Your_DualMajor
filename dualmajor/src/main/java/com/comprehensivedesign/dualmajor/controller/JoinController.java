@@ -50,7 +50,7 @@ public class JoinController {
     @PostMapping("/checkEmail") // 회원가입 시 아이디 중복확인
     public Object checkMemberEmail(@RequestBody MemberDto memberDto) {
         HashMap<String, Boolean> map = new HashMap<>();
-        Optional<Member> byEmail = memberRepository.findByEmail(memberDto.getEmail() + "@hufs.ac.kr");
+        Optional<Member> byEmail = memberRepository.findByEmail(memberDto.getStdNum() + "@hufs.ac.kr");
         if (byEmail.isEmpty()) {
             map.put("joinPossible", true);
             return map;

@@ -13,7 +13,7 @@ public class Member {
     @Id @GeneratedValue //자동 증가시켜준다는 의미
     private Long id;
     //회원 이름(닉네임)
-    private String name;
+    private String nickName;
     //회원 이메일(학교이메일?)
     private String email;
     //회원 비밀번호
@@ -31,7 +31,7 @@ public class Member {
     //회원 유형(멘토 or 멘티)
     //@Enumerated(EnumType.STRING)
     //private Type type;
-    private String type;
+    private String userType;
     //서비스 내 회원 지위
     private String role;
 
@@ -41,7 +41,7 @@ public class Member {
     }
 
     public String getName() {
-        return name;
+        return nickName;
     }
 
     public String getEmail() {
@@ -58,16 +58,16 @@ public class Member {
 
     public String getGrade() {return grade;}
 
-    /*public Type getType() {
-        return type;
-    }*/
+    public String getType() {
+        return userType;
+    }
     public String getRole() {
         return role;
     }
 
     /*Member 저장 로직*/
-    public void CreateMember(String name, String email, String password, String stdNum, String firstMajor, String dualMajor,String grade, String type) {
-        this.name = name;
+    public void CreateMember(String nickName, String email, String password, String stdNum, String firstMajor, String dualMajor,String grade, String userType) {
+        this.nickName = nickName;
         this.email = email;
         this.password = password;
         this.stdNum = stdNum;
@@ -75,17 +75,17 @@ public class Member {
         this.dualMajor = dualMajor;
         this.grade = grade;
         this.role = "ROLE_USER";
-        this.type = type;
+        this.userType = userType;
     }
 
     /*Member 수정 로직*/
-    public void updateMember(String name, String password, String stdNum, String firstMajor, String dualMajor,String grade, String type) {
-        this.name = name;
+    public void updateMember(String nickName, String password, String stdNum, String firstMajor, String dualMajor,String grade, String userType) {
+        this.nickName = nickName;
         this.password = password;
         this.stdNum = stdNum;
         this.firstMajor = firstMajor;
         this.dualMajor = dualMajor;
         this.grade = grade;
-        this.type = type;
+        this.userType = userType;
     }
 }

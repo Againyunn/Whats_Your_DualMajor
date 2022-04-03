@@ -35,7 +35,7 @@ public class MemberServiceImpl implements MemberService{
         String password = bCryptPasswordEncoder.encode(memberDto.getPassword());
         validateDuplicateEmail(stdEmail);
         Member member = new Member();
-        member.CreateMember(memberDto.getName(), stdEmail, password, memberDto.getStdNum(), memberDto.getFirstMajor(), memberDto.getDualMajor(), memberDto.getGrade(),memberDto.getType());
+        member.CreateMember(memberDto.getNickName(), stdEmail, password, memberDto.getStdNum(), memberDto.getFirstMajor(), memberDto.getDualMajor(), memberDto.getGrade(),memberDto.getUserType());
         return memberRepository.save(member).getId();
     }
     private void validateDuplicateEmail(String stdEmail) throws Exception{
@@ -68,13 +68,13 @@ public class MemberServiceImpl implements MemberService{
         /*회원가입 -> 폼에서 몇개의 정보만 수정하는 것처럼 보이지만.
         사실 폼에 value에 박혀있는 모든 정보들이 다시 백으로 넘어오는 것*/
         Member member = find(memberDto.getEmail());//로그인 된 회원의 이메일이므로 학교 주소가 붙어서 저장된 형태
-        member.updateMember(memberDto.getName()
+        member.updateMember(memberDto.getNickName()
                 , memberDto.getPassword()
                 , memberDto.getStdNum()
                 , memberDto.getFirstMajor()
                 , memberDto.getDualMajor()
                 , memberDto.getGrade()
-                , memberDto.getType());
+                , memberDto.getUserType());
         return member;
     }
 
