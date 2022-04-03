@@ -27,8 +27,8 @@ const required = (value) => {
   }
 };
 
-//id(학번)
-const vuserid = (value) => {
+//stdNum(학번)
+const vuserstdNum = (value) => {
   if (value.length < 4 || value.length > 9) {
     return (
       <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
@@ -73,7 +73,7 @@ export default function SignupForm() {
   const form = useRef();
   const checkBtn = useRef();
   const [username, setUsername] = useState("");
-  const [userid, setUserid] = useState("");
+  const [userstdNum, setUserstdNum] = useState("");
   const [password, setPassword] = useState("");
   const [grade, setGrade] = useState("1학년");
   const [firstMajor,  setFirstMajor] = useState("GBT학부");
@@ -89,9 +89,9 @@ export default function SignupForm() {
     setUsername(username);
   };
 
-  const onChangeUserid = (e) => {
-    const userid = e.target.value;
-    setUserid(userid);
+  const onChangeUserstdNum = (e) => {
+    const userstdNum = e.target.value;
+    setUserstdNum(userstdNum);
   };
 
   const onChangePassword = (e) => {
@@ -138,12 +138,12 @@ export default function SignupForm() {
     setSuccessful(false);
     form.current.validateAll();
     if (checkBtn.current.context._errors.length === 0) {
-      AuthService.register(userid, password, username, grade, userType, firstMajor, dualMajor).then(
+      AuthService.register(userstdNum, password, username, grade, userType, firstMajor, dualMajor).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);
           
-          let newUser = {"id":userid, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "daulMajor": dualMajor};
+          let newUser = {"stdNum":userstdNum, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "daulMajor": dualMajor};
           //세션에 저장
           sessionStorage.setItem("user", JSON.stringify(newUser));
 
@@ -228,12 +228,12 @@ export default function SignupForm() {
                   </Col>
                   <Col md={7} xs={7}>
                     <Input
-                      type="userid"
+                      type="userstdNum"
                       className="form-control"
-                      name="userid"
-                      value={userid}
-                      onChange={onChangeUserid}
-                      validations={[required, vuserid]}
+                      name="userstdNum"
+                      value={userstdNum}
+                      onChange={onChangeUserstdNum}
+                      validations={[required, vuserstdNum]}
 
                     />
                   </Col>

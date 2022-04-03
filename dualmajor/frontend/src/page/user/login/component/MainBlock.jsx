@@ -49,20 +49,20 @@ export default function MainBlock() {
     const form = useRef();
     const checkBtn = useRef();
   
-    const [username, setUsername] = useState(null);
+    const [userstdNum, setUserstdNum] = useState(null);
     const [password, setPassword] = useState(null);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
-    const [checkUserName, setCheckUserName] = useState('');
+    const [checkUserstdNum, setCheckUserstdNum] = useState('');
     const [checkPassword, setCheckPassword] = useState('');
 
     //alert창(id, pw 검증용)
     const [show, setShow] = useState(true);
   
-    const onChangeUsername = (e) => {
-      const username = e.target.value;
-      setUsername(username);
+    const onChangeUserstdNum = (e) => {
+      const userstdNum = e.target.value;
+      setUserstdNum(userstdNum);
     };
   
     const onChangePassword = (e) => {
@@ -71,26 +71,26 @@ export default function MainBlock() {
     };
 
     const inputCheck = () =>{
-      if(!username===false&&!password===false){
-        setCheckUserName(true);
+      if(!userstdNum===false&&!password===false){
+        setCheckUserstdNum(true);
         setCheckPassword(true);
         return null;
       }
 
-      //id와 pw 중 하나라도 값이 비어있는 경우
+      //stdNum와 pw 중 하나라도 값이 비어있는 경우
       else{
-        //id와 pw 둘 다 없는 경우
-        if(!username===true && !password===true){
+        //stdNum와 pw 둘 다 없는 경우
+        if(!userstdNum===true && !password===true){
           alert("id와 pw를 입력해주세요.");
-          setCheckUserName(false);
+          setCheckUserstdNum(false);
           setCheckPassword(false);
 
         }
 
-        //id값이 없는 경우
-        else if(!username===true){
+        //stdNum값이 없는 경우
+        else if(!userstdNum===true){
           alert("id를 입력해주세요.");
-          setCheckUserName(false);
+          setCheckUserstdNum(false);
         }
 
         //pw값이 없는 경우
@@ -108,11 +108,11 @@ export default function MainBlock() {
       form.current.validateAll(); //모든 유효성검사 통과 시
 
       //id와 pw 모두 입력된 경우
-      if(checkUserName === true && checkPassword === true){
+      if(checkUserstdNum === true && checkPassword === true){
 
         //백엔드 서버와 통신
         if (checkBtn.current.context._errors.length === 0) {
-          AuthService.login(username, password).then( //login(id, password)
+          AuthService.login(userstdNum, password).then( //login(stdNum, password)
             () => {
    
               //main page로 이동
@@ -148,9 +148,9 @@ export default function MainBlock() {
             <FormControl
               className="FormControl"
               type="text"
-              name="username"
-              value={username}
-              onChange={onChangeUsername}
+              name="userstdNum"
+              value={userstdNum}
+              onChange={onChangeUserstdNum}
               // required
               // validations={[required]}
               placeholder="학번/사번" 

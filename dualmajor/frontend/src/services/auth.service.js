@@ -2,9 +2,9 @@ import axios from "axios";
 const API_URL = "https://81e0af5c-fa2e-4ea9-b93f-8d63072a71dc.mock.pstmn.io/";
 
 //회원가입
-const register = (id, password, nickName, grade, userType, firstMajorId, dualMajorId) => {
+const register = (stdNum, password, nickName, grade, userType, firstMajorId, dualMajorId) => {
   return axios.post(API_URL + "join/", {
-    id, //문제가 있으면username으로 바꾸기
+    stdNum, //문제가 있으면username으로 바꾸기
     password,
     nickName,
     grade,
@@ -15,10 +15,10 @@ const register = (id, password, nickName, grade, userType, firstMajorId, dualMaj
 };
 
 //POST(username, password) & JWT를 LocalStorage에 저장
-const login = (id, password) => {
+const login = (stdNum, password) => {
   return axios
     .post(API_URL + "login/", {
-        id, //문제가 있으면username으로 바꾸기
+      stdNum, //문제가 있으면username으로 바꾸기
         password,
     })
     .then((response) => {
@@ -37,9 +37,9 @@ const logout = () => {
 };
 
 //POST 유저정보 수정
-const changeInfo = (id, password, nickName, grade, userType, firstMajorId, dualMajorId) => {
+const changeInfo = (stdNum, password, nickName, grade, userType, firstMajorId, dualMajorId) => {
   return axios.post(API_URL + "editInfo/", {
-    id, //문제가 있으면username으로 바꾸기
+    stdNum, //문제가 있으면username으로 바꾸기
     password,
     nickName,
     grade,
@@ -75,9 +75,9 @@ const dualMajorList = () =>{
 }
 
 //서비스 탈퇴 신청
-const applyResign = (id) =>{
+const applyResign = (stdNum) =>{
   return axios.post(API_URL + "resign/", {
-    id, //문제가 있으면username으로 바꾸기
+    stdNum, //문제가 있으면username으로 바꾸기
   });
 } 
 

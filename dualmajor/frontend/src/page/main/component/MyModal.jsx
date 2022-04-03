@@ -12,8 +12,8 @@ export default function MyModal(props) {
   
   //유저의 상세 데이터
   const [userName, setUserName] = useState('닉네임')// 사용자 닉네임 
-  const [userType, setUserType] = useState('멘티')// 유저유형(멘토/ 멘티)
-  const [userStudentNum, setUserStudentNum] = useState('202200001')//사용자 학번(이메일의 앞부분)
+  const [userType, setUserType] = useState('mentee')// 유저유형(멘토/ 멘티)
+  const [userstdNum, setUserstdNum] = useState('202200001')//사용자 학번(이메일의 앞부분)
   const [userMajor, setUserMajor] = useState('GBT학부'); //사용자 본전공
   const [userGrade, setUserGrade] = useState('1학년'); //사용자 학년
   const [dualMajor, setDualMajor] = useState('컴퓨터공학'); //이중전공
@@ -38,7 +38,7 @@ export default function MyModal(props) {
     //세션에 저장된 유저 데이터의 value값만 배열로 반환하여 thisUser에 저장
     if (thisUser !== false){
       //각 항목별로 데이터 저장(순서변경되면 값이 깨지니 주의!)
-      setUserStudentNum(thisUser[0]); //학번/사번
+      setUserstdNum(thisUser[0]); //학번/사번
       setUserName(thisUser[1]); //닉네임
       setUserGrade(thisUser[2]);  //학년
       setUserType(thisUser[3]);   //사용자 유형
@@ -51,7 +51,7 @@ export default function MyModal(props) {
 
   //userType이 바뀌면 dualMajorType을 바꾸기
   useEffect(()=>{
-    if(userType === '멘토'){
+    if(userType === 'mento'){
       setDualMajorType('이중(부)전공');
     }
     else{
@@ -83,7 +83,7 @@ export default function MyModal(props) {
               <small><b>학번/사번:</b></small>
             </Col>
             <Col xs={6} md={6}>
-            <small>{userStudentNum}</small>
+            <small>{userstdNum}</small>
             </Col>
 
             <Col xs={6} md={6}>

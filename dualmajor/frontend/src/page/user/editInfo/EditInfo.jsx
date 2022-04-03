@@ -26,7 +26,7 @@ const required = (value) => {
 };
 
 //id(학번)
-const vuserid = (value) => {
+const vuserstdNum = (value) => {
   if (value.length < 4 || value.length > 9) {
     return (
       <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
@@ -75,7 +75,7 @@ export default function SignupForm() {
     const form = useRef();
     const checkBtn = useRef();
     const [username, setUsername] = useState("");
-    const [userid, setUserid] = useState("");
+    const [userstdNum, setUserstdNum] = useState("");
     const [password, setPassword] = useState("");
     const [grade, setGrade] = useState("1학년");
     const [firstMajor,  setFirstMajor] = useState("GBT학부");
@@ -114,7 +114,7 @@ export default function SignupForm() {
         //세션에 저장된 유저 데이터의 value값만 배열로 반환하여 thisUser에 저장
         if (thisUser !== false){
             //각 항목별로 데이터 저장(순서변경되면 값이 깨지니 주의!)
-            setUserid(thisUser[0]); //학번/사번
+            setUserstdNum(thisUser[0]); //학번/사번
             setUsername(thisUser[1]);   //닉네임
             setGrade(thisUser[2]);      //학년
             setUserType(thisUser[3]);   //사용자 유형
@@ -142,7 +142,7 @@ export default function SignupForm() {
 
         //서비스 탈퇴 신청 true인 경우
         if( resign === true){
-            AuthService.applyResign(userid).then(
+            AuthService.applyResign(userstdNum).then(
                 (response)=>{
                     //테스트 용
                     console.log("서비스 탈퇴 신청");
@@ -171,9 +171,9 @@ export default function SignupForm() {
         setUsername(username);
     };
 
-    const onChangeUserid = (e) => {
-        const userid = e.target.value;
-        setUserid(userid);
+    const onChangeUserstdNum = (e) => {
+        const userstdNum = e.target.value;
+        setUserstdNum(userstdNum);
     };
 
     const onChangePassword = (e) => {
@@ -218,12 +218,12 @@ export default function SignupForm() {
         setSuccessful(false);
         form.current.validateAll();
         if (checkBtn.current.context._errors.length === 0) {
-        AuthService.changeInfo(userid, password, username, grade, userType, firstMajor, dualMajor).then(
+        AuthService.changeInfo(userstdNum, password, username, grade, userType, firstMajor, dualMajor).then(
             (response) => {
             setMessage(response.data.message);
             setSuccessful(true);
             
-            let newUser = {"id":userid, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "daulMajor": dualMajor};
+            let newUser = {"stdNum":userstdNum, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "daulMajor": dualMajor};
             //세션에 저장
             sessionStorage.setItem("user", JSON.stringify(newUser));
 
@@ -272,12 +272,12 @@ export default function SignupForm() {
                     </Col>
                     <Col md={7} xs={7}>
                         <Input
-                        type="userid"
+                        type="userstdNum"
                         className="form-control"
-                        name="userid"
-                        value={userid}
-                        onChange={onChangeUserid}
-                        validations={[required, vuserid]}
+                        name="userstdNum"
+                        value={userstdNum}
+                        onChange={onChangeUserstdNum}
+                        validations={[required, vuserstdNum]}
                         disabled
                         />
                     </Col>
@@ -384,12 +384,12 @@ export default function SignupForm() {
                 <br/>
                 <Container>
                 <Row>
-                    <Col md={4} xs={6}>
+                    <Col md={6} xs={6}>
                         <Button type='button' className='buttonContract' onClick={handleShow}>
                             탈퇴하기
                         </Button>
                     </Col>
-                    <Col md={8} xs={6}>
+                    <Col md={6} xs={6}>
                         <Button className='buttonRegister' type="submit">
                             수정하기
                         </Button>
