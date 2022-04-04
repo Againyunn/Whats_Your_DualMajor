@@ -88,4 +88,9 @@ public class Member {
         this.grade = grade;
         this.userType = userType;
     }
+
+    /*Member 비밀번호 재설정 로직*/
+    public void editPassword(String password) {
+        this.password = password;
+    }
 }

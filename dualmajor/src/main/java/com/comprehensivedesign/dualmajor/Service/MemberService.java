@@ -13,4 +13,5 @@ public interface MemberService {
     Member update(MemberDto memberDto); //회원 정보 수정
 
     Member findById(Long id);
+    String editPassword(MemberDto memberDto);
 }

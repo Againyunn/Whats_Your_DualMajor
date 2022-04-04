@@ -28,6 +28,19 @@ public class MemberServiceImpl implements MemberService{
     @Autowired private MemberDetailsService memberDetailsService;
     @Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Override
+    public Member find(String email) {
+        Optional<Member> member = memberRepository.findByEmail(email);
+        if (member.isPresent()) {
+            return member.get();
+        }
+        return null;
+    }
+    @Override
+    public Member findById(Long id) {
+        return memberRepository.findById(id).get();
+    }
+
     @Transactional
     @Override
     public Long join(MemberDto memberDto) throws Exception {
@@ -55,15 +68,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public Member find(String email) {
-        Optional<Member> member = memberRepository.findByEmail(email);
-        if (member.isPresent()) {
-            return member.get();
-        }
-        return null;
-    }
-
-    @Override
+    @Transactional
     public Member update(MemberDto memberDto) {
         /*회원가입 -> 폼에서 몇개의 정보만 수정하는 것처럼 보이지만.
         사실 폼에 value에 박혀있는 모든 정보들이 다시 백으로 넘어오는 것*/
@@ -78,9 +83,21 @@ public class MemberServiceImpl implements MemberService{
         return member;
     }
 
+
     @Override
-    public Member findById(Long id) {
-        return memberRepository.findById(id).get();
+    @Transactional
+    public String editPassword(MemberDto memberDto) {
+        Member member = find(memberDto.getEmail());
+        if (member == null) {
+            return "error";
+        }
+        member.editPassword(bCryptPasswordEncoder.encode(memberDto.getPassword()));
+        if(bCryptPasswordEncoder.matches(memberDto.getPassword(), member.getPassword())){
+            return "success";
+        }
+        else{
+            return "error";
+        }
     }
 
 }
