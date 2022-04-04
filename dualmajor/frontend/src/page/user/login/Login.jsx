@@ -31,7 +31,8 @@ export default function Login() {
         vertical-align: middle;
         
         /*border: solid 1px #002F5A;*/
-    
+
+
         z-index:0;
       }
     
