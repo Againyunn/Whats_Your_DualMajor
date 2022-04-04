@@ -111,7 +111,8 @@ const Login = () => {
               <span>Login</span>
             </button>
           </div>
-          {message && (
+          {
+          message && (
             <div className="form-group">
               <div className="alert alert-danger" role="alert">
                 {message}

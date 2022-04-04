@@ -70,22 +70,22 @@ export default function MainBlock() {
     const form = useRef();
     const checkBtn = useRef();
   
-    const [userstdNum, setUserstdNum] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [userstdNum, setUserstdNum] = useState("");
+    const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
-    const [checkUserstdNum, setCheckUserstdNum] = useState('');
-    const [checkPassword, setCheckPassword] = useState('');
+    // const [checkUserstdNum, setCheckUserstdNum] = useState('');
+    // const [checkPassword, setCheckPassword] = useState('');
 
     //alert창(id, pw 검증용)
     const [show, setShow] = useState(true);
 
     //비밀번호 찾기
     const [resetPw, setResetPW] = useState(false);
-    const [validID, setValidID] = useState(null);
+    const [validID, setValidID] = useState("");
     const [activateResetPW, setActivateResetPW] = useState(false);
-    const [newPW, setNewPW] = useState(null);
+    const [newPW, setNewPW] = useState("");
   
     const onChangeUserstdNum = (e) => {
       const userstdNum = e.target.value;
@@ -167,7 +167,7 @@ export default function MainBlock() {
       form.current.validateAll(); //모든 유효성검사 통과 시
 
       //id와 pw 모두 입력된 경우
-      if(checkUserstdNum === true && checkPassword === true){
+      // if(checkUserstdNum === true && checkPassword === true){
 
         //백엔드 서버와 통신
         if (checkBtn.current.context._errors.length === 0) {
@@ -176,7 +176,7 @@ export default function MainBlock() {
    
               //main page로 이동
               navigate("/");
-              window.location.reload();
+              // window.location.reload();
             },
             (error) => {
               const resMessage =
@@ -191,9 +191,9 @@ export default function MainBlock() {
             }
           );
 
-        } else {
-          setLoading(false);
-        }
+        // } else {
+        //   setLoading(false);
+        // }
       }
     };
 
@@ -221,7 +221,7 @@ export default function MainBlock() {
             <label htmlFor="password" className='PW'>PW</label>
             <span className='PWBlock'>
             <Input
-              className="form-control"
+             className="form-control"
               type="password"
               name="password"
               value={password}
@@ -232,7 +232,7 @@ export default function MainBlock() {
               style={{borderRadius: "5px", fontSize: "14px"}}
             /></span>
 
-          <CheckButton className='Login' ref={checkBtn} >Login</CheckButton>
+          <CheckButton className='Login' ref={checkBtn}>Login</CheckButton>
 
           <Button type='button' variant="secondary" className='resetPW'  onClick={handleShow}>비밀번호 재설정</Button>
 
@@ -285,14 +285,13 @@ export default function MainBlock() {
                       </Col>
                       <Col md={4} xs={4}>
                         <Button 
-                          style={{      backgroundColor: "#028799", opacity: "0.9", fontSize: "12px"}} 
+                          style={{  backgroundColor: "#028799", opacity: "0.9", fontSize: "12px"}} 
                           onClick={() => saveNewPW(validID, newPW)}
                         >확인</Button>
                       </Col>
                     </Row>
                   </>
                 }
-
               </Container>
             </Modal.Body>
             <Modal.Footer>
