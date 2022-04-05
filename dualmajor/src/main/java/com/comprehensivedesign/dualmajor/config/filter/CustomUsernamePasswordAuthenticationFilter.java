@@ -35,7 +35,6 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         UsernamePasswordAuthenticationToken token;
-        System.out.println("TSETSETSETESTSET");
         if (request == null) {
             System.out.println("request is null");
         }

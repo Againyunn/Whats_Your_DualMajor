@@ -30,7 +30,7 @@ public class MemberController {
     @PostMapping("/checkJoinedEmail")
     //email 입력받은 후 가입된 회원인지 확인
     //비밀번호 찾기 기능중 회원 확인 절차용
-    public Map checkJoinedMember(@RequestBody MemberDto memberDto) {
+    public Map checkJoinedMember(@RequestBody MemberDto memberDto) throws Exception{
         HashMap<String, Object> map = new HashMap<>();
         Member member = memberService.find(memberDto.getEmail());
         if (member == null) {
@@ -43,7 +43,7 @@ public class MemberController {
         return map;
     }
     @PostMapping("/editPW") //비밀번호 수정 성공 여부 API
-    public Map editPW(@RequestBody MemberDto memberDto) {
+    public Map editPW(@RequestBody MemberDto memberDto) throws Exception{
         HashMap<String, Object> map = new HashMap<>();
         String status = memberService.editPassword(memberDto);
         if (status == "success") {
@@ -57,7 +57,7 @@ public class MemberController {
 
     /*회원정보 수정 API*/
     @PostMapping("/editInfo")
-    public Map editMember(@RequestBody MemberDto memberDto) {
+    public Map editMember(@RequestBody MemberDto memberDto) throws Exception{
         Member updatedMember = memberService.update(memberDto);
         MemberDto updatedMemberDto = new MemberDto();
         updatedMemberDto.setLoginInfo(

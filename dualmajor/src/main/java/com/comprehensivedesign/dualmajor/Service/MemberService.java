@@ -9,9 +9,9 @@ public interface MemberService {
     //회원가입
     Long join(MemberDto memberDto) throws Exception; //회원가입
     UserDetails login(String stdNum, String password) throws Exception; //로그인
-    Member find(String email); // 회원 찾기
-    Member update(MemberDto memberDto); //회원 정보 수정
+    Member find(String email) throws Exception; // 회원 찾기
+    Member update(MemberDto memberDto) throws Exception; //회원 정보 수정
 
     Member findById(Long id);
-    String editPassword(MemberDto memberDto);
+    String editPassword(MemberDto memberDto) throws Exception;
 }
