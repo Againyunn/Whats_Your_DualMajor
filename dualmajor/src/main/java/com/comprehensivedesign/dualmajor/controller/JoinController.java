@@ -23,11 +23,11 @@ public class JoinController {
     private final MemberRepository memberRepository;
 
     /*=========Mapping for Test Spring Security==============*/
-    @GetMapping({"", "/"})
+   /* @GetMapping({"", "/"})
     @ResponseBody
     public String home() {
         return "home";
-    }
+    }*/
 
 
     @PostMapping("/join")
