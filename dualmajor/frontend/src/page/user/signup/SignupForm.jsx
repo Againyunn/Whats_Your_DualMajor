@@ -3,7 +3,7 @@ import { useForm, Controller} from 'react-hook-form';
 import styled from 'styled-components'
 import axios from 'axios'
 import ShowContract from './component/ShowContract';
-import Header from '../../../common/header/Header';
+import Header from '../../main/component/Header';
 import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Col,  Container, Modal, Row} from 'react-bootstrap';
@@ -82,6 +82,9 @@ export default function SignupForm() {
   const [message, setMessage] = useState("");
 
   const [checkStdNum, setCheckStdNum] = useState(false);
+
+  //메뉴바 노출 상태관리
+  const showMenu = false;
 
   let navigate = useNavigate();
 
@@ -246,14 +249,12 @@ export default function SignupForm() {
   return (
     <MainBlockStyle>
       <div className="mainContainer">
-        <div className="header"><Header/></div>
+        <div className="header"><Header showMenu={showMenu}/></div>
         <FormBlockStyle>
-
           <Form className= "container" onSubmit={handleRegister} ref={form}>
             {!successful && (
               <Container>
-              <div>
-                <Row>
+                <Row className='tableRow'>
                   <Col  md={12} xs={12}>
                   <span className='comment'>안녕하세요,<br/>
                     너의 이중전공은 서비스 회원 가입을 환영합니다!</span>
@@ -261,7 +262,7 @@ export default function SignupForm() {
                 </Row>
                 
                 <hr/>
-                <Row>
+                <Row  className='tableRow'>
                   <Col md={5} xs={5}>
                     <span className='titleStyle'>학번/사번</span>
                   </Col>
@@ -276,7 +277,7 @@ export default function SignupForm() {
                     />
                   </Col>
                 </Row>
-                <Row>
+                <Row  className='tableRow'>
                 <Col md={5} xs={5}>
                     <Button type='button' className='buttonDuplicate' onClick={stdNumCheckDuplicate} >중복확인</Button>
                   </Col>
@@ -284,7 +285,7 @@ export default function SignupForm() {
                 </Row>
                 <br/>
 
-                <Row>
+                <Row className='tableRow'>
                   <Col md={5} xs={5}>
                     <span className='titleStyle'>닉네임</span>
                   </Col>
@@ -299,7 +300,7 @@ export default function SignupForm() {
                       />
                   </Col>
                 </Row>
-                <Row>
+                <Row  className='tableRow'>
                   <Col md={5} xs={5}>
                     <span className='titleStyle'>비밀번호</span>
                   </Col>
@@ -316,7 +317,7 @@ export default function SignupForm() {
                 </Row>
 
                 <br/>
-                <Row>
+                <Row  className='tableRow'>
                   <Col md={5} xs={12}>
                     <span className='titleStyle'>본전공</span>
                   </Col>
@@ -335,7 +336,7 @@ export default function SignupForm() {
                   </Col>
                 </Row>
 
-                <Row>
+                <Row  className='tableRow'>
                   <Col md={5} xs={12}>
                     <span className='titleStyle'>학년</span>
                   </Col>
@@ -349,7 +350,7 @@ export default function SignupForm() {
                   </Col>
                 </Row>
 
-                <Row>
+                <Row  className='tableRow'>
                   <Col md={5} xs={12}>
                     <span className='titleStyle'>이용유형</span>
                   </Col>
@@ -361,7 +362,7 @@ export default function SignupForm() {
                   </Col>
                 </Row>
 
-                <Row>
+                <Row  className='tableRow'>
                   <Col md={5} xs={12}>
                     <span className='titleStyle'>{dualmajor}</span>
                   </Col>
@@ -379,13 +380,12 @@ export default function SignupForm() {
                     </Select> 
                   </Col>
                 </Row>
-              </div>
               </Container>
             )}
 
             <br/>
             <Container>
-              <Row>
+              <Row className='tableRow'>
                 <Col md={8} xs={6}></Col>
                 <Col md={4} xs={6}>
                   <span className='contract'>이용약관</span>
@@ -399,7 +399,7 @@ export default function SignupForm() {
               </Row>
 
               <br/>
-              <Row>
+              <Row  className='tableRow'>
                 <Col md={12} xs={12}>
                   <span className='registerNotice'>이용약관에 동의해주셔야 가입이 가능합니다.</span>
                 </Col>
@@ -455,12 +455,16 @@ export default function SignupForm() {
 
 
 const FormBlockStyle = styled.div`
-.container{
 
-    background-color: white;
+width: 45vh;
 
-
+  .tableRow{
+    margin-bottom:5px;
   }
+
+  .container{
+      background-color: white;
+    }
 
   /*환영 글*/
   .comment{
@@ -477,10 +481,8 @@ const FormBlockStyle = styled.div`
 
   /*form 입력 레이아웃*/
   .formMain{
-
     text-align: left;
   }
-
 
   .formBlock{
 
@@ -517,15 +519,12 @@ const FormBlockStyle = styled.div`
     font-weight: bold;
     text-align: left;
 
-
-
     /*호버*/
     &:hover {
         opacity: 0.7;
     }
 
   }
-
   /*stdNum 중복확인 버튼*/
   .buttonDuplicate{
 
@@ -612,9 +611,11 @@ const FormBlockStyle = styled.div`
 `
 const MainBlockStyle = styled.div`
     
-div.mainContainer{
+height: 70vh;
+
+.mainContainer{
   display: grid;
-  grid-template-rows: 0.9fr 6fr 1fr;
+  grid-template-rows: 1fr 7fr 1fr;
   background-color: white;
   text-align: center;
   justify-content: center;
@@ -622,7 +623,10 @@ div.mainContainer{
   
   /*border: solid 1px #002F5A;*/
 
-  z-index:0;
+
+  // z-index:0;
+
+
 }
 
 
@@ -630,7 +634,6 @@ div.header{
   gird-row-start: 0;
   grid-row-start: 1;
 
-  z-index:1;
 }
 
 div.mainBody{
@@ -639,11 +642,10 @@ div.mainBody{
 }
 
 div.footer{
-  margin-top:10px;
-  bottom:0px;
+
   gird-row-start: 2;
   grid-row-start: 3;
-  z-index:1;
+
 }
 `
 

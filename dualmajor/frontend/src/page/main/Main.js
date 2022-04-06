@@ -8,14 +8,15 @@ import MainFrame from "./component/MainFrame";
 
 
 function Main() {
-    // const [rows, setRows]= useState(1)
-
+  // const [rows, setRows]= useState(1)
+  //메뉴바 노출 상태관리
+  const showMenu = true;
 
   return (
     <>
       <MainBlockStyle>
         <div className="mainContainer">
-          <div className="header"><Header/></div>
+          <div className="header"><Header showMenu={showMenu}/></div>
           <div className="mainBody"><MainFrame/></div>
           <div className="footer"><Footer/></div>
         </div>

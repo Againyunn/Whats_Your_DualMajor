@@ -1,16 +1,19 @@
 //로그인 창
 import React from 'react'
 import styled from 'styled-components';
-import Header from '../../../common/header/Header'
+import Header from '../../main/component/Header';
 import MainBlock from './component/MainBlock';
 import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter'
 
 export default function Login() {
+    //메뉴바 노출 상태관리
+    const showMenu = false;
+
     return (
         <>
             <MainBlockStyle>
                 <div className="mainContainer">
-                    <div className="header"><Header/></div>
+                    <div className="header"><Header showMenu={showMenu}/></div>
                     <div className='mainBody'><MainBlock/></div>
                     <div className='footer'><OnlyPrevFooter/></div>
                 </div>
@@ -19,9 +22,7 @@ export default function Login() {
       )
     }
     
-    
     const MainBlockStyle = styled.div`
-    
       div.mainContainer{
         display: grid;
         grid-template-rows: 0.9fr 6fr 1fr;

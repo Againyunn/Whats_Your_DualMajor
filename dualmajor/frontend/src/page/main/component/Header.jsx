@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import MyModal from './MyModal';
 import axios from 'axios'
 
-export default function Header() {
+export default function Header({showMenu}) {
   //로그인 여부 확인(기본 값: 로그인 false)
   const [login, setLogin] = useState(false);
   const [thisUser, setThisUser] = useState('');
@@ -21,7 +21,6 @@ export default function Header() {
     else{
       setLogin(false);
     }
-
   })
 
   //메뉴 버튼이 눌리면 작동
@@ -66,22 +65,26 @@ export default function Header() {
           </Link>
         </div>
         {
-          login === false?
-          <div className='menu'>
-            <Link style={{textDecoration: 'none' }} to={'/choose'}>
-              <img src={require('../../../media/tab/메뉴.png')} alt='메뉴'/>
-            </Link>
-          </div>
-          :
-          <div className='menu' onClick={()=> setModalShow(true)}>
-            <img src={require('../../../media/tab/메뉴.png')} alt='메뉴'/>
-          </div>
+        !showMenu?
+          <></>:
+          <>
+            {
+              login === false ?
+              <div className='menu'>
+                <Link style={{textDecoration: 'none' }} to={'/choose'}>
+                  <img src={require('../../../media/tab/메뉴.png')} alt='메뉴'/>
+                </Link>
+              </div>
+              :
+              <div className='menu' onClick={()=> setModalShow(true)}>
+                <img src={require('../../../media/tab/메뉴.png')} alt='메뉴'/>
+              </div>
+            }
+          </>
         }
       </div>
       <MyModal show={modalShow} onHide={() => setModalShow(false)} />
     </BackgroundBlock>
-
-    
     </>
   )
 }

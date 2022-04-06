@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import { useForm, Controller} from 'react-hook-form';
 import styled from 'styled-components';
 import axios from 'axios';
-import Header from '../../../common/header/Header';
+import Header from '../../main/component/Header';
 import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Col,  Container, Modal, Row} from 'react-bootstrap';
@@ -82,6 +82,9 @@ export default function SignupForm() {
     const [dualMajor, setDualMajor] = useState("없음");
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
+
+    //메뉴바 노출 상태관리
+    const showMenu = false;
 
     //페이지 이동(call-back함수)
     let navigate = useNavigate();
@@ -252,7 +255,7 @@ export default function SignupForm() {
     return (
         <MainBlockStyle>
         <div className="mainContainer">
-            <div className="header"><Header/></div>
+            <div className="header"><Header showMenu={showMenu}/></div>
             <FormBlockStyle>
 
             <Form className= "container" onSubmit={handleRegister} ref={form}>
@@ -441,7 +444,9 @@ export default function SignupForm() {
 
 
 const FormBlockStyle = styled.div`
+width: 45vh;
 .container{
+
 
     background-color: white;
 
@@ -577,7 +582,8 @@ const FormBlockStyle = styled.div`
 
 `
 const MainBlockStyle = styled.div`
-    
+height: 70vh;
+
 div.mainContainer{
   display: grid;
   grid-template-rows: 0.9fr 6fr 1fr;
