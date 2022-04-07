@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import Header from '../../main/component/Header';
 import Footer from '../../main/component/Footer';
+import '../../../media/css/formFrame.css'
 // import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Col,  Container, Modal, Row} from 'react-bootstrap';
@@ -265,8 +266,8 @@ export default function SignupForm() {
             <div className="header"><Header showMenu={showMenu}/></div>
             
             <div className='mainBody'>
-            <FormBlockStyle>
-            <Form className= "container" onSubmit={handleRegister} ref={form}>
+            <div className='formFrame'>
+            <Form onSubmit={handleRegister} ref={form}>
                 {!successful && (
                 <Container>
                 <div>
@@ -443,7 +444,7 @@ export default function SignupForm() {
                 </Modal.Footer>
             </Modal>
 
-            </FormBlockStyle>
+              </div>
             </div>
             <div className='footer'><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
         </div>
@@ -452,144 +453,140 @@ export default function SignupForm() {
     }
 
 
-const FormBlockStyle = styled.div`
-width: 45vh;
-.container{
+// const FormBlockStyle = styled.div`
+// width: 45vh;
+// .container{
+//     background-color: white;
+//   }
+
+//   /*환영 글*/
+//   .comment{
+
+//     /*padding-top:;*/
+//     padding-left: 20px;
+//     padding-right: 20px;
+
+//     /*글씨*/
+//     font-size: 12px;
+//     color: black;
+//     font-weight: bold;
+//   }
+
+//   /*form 입력 레이아웃*/
+//   .formMain{
+
+//     text-align: left;
+//   }
 
 
-    background-color: white;
+//   .formBlock{
 
+//     /*모양*/
 
-  }
+//     /*글씨*/
+//     font-size: 12px;
+//     color: black;
+//     font-weight: bold;
+//     text-align: left;
 
-  /*환영 글*/
-  .comment{
+//   }
+//   /*입력 칸 명*/
+//   .titleStyle{
 
-    /*padding-top:;*/
-    padding-left: 20px;
-    padding-right: 20px;
+//     /*글씨*/
+//     font-size: 12px;
+//     color: black;
+//     font-weight: bold;
+//     text-align: left;
 
-    /*글씨*/
-    font-size: 12px;
-    color: black;
-    font-weight: bold;
-  }
+//     width: 40%;
+//   }
 
-  /*form 입력 레이아웃*/
-  .formMain{
+//   /*입력 칸*/
+//   .inputStyle{
+//     /*레이아웃*/
 
-    text-align: left;
-  }
+//     border-radius: 5px;
 
-
-  .formBlock{
-
-    /*모양*/
-
-    /*글씨*/
-    font-size: 12px;
-    color: black;
-    font-weight: bold;
-    text-align: left;
-
-  }
-  /*입력 칸 명*/
-  .titleStyle{
-
-    /*글씨*/
-    font-size: 12px;
-    color: black;
-    font-weight: bold;
-    text-align: left;
-
-    width: 40%;
-  }
-
-  /*입력 칸*/
-  .inputStyle{
-    /*레이아웃*/
-
-    border-radius: 5px;
-
-    /*글씨*/
-    font-size: 11px;
-    color: black;
-    font-weight: bold;
-    text-align: left;
+//     /*글씨*/
+//     font-size: 11px;
+//     color: black;
+//     font-weight: bold;
+//     text-align: left;
 
 
 
-    /*호버*/
-    &:hover {
-        opacity: 0.7;
-    }
+//     /*호버*/
+//     &:hover {
+//         opacity: 0.7;
+//     }
 
-  }
+//   }
 
-  /*이용약관 창*/
-  .contract{
+//   /*이용약관 창*/
+//   .contract{
 
-    /*글씨*/
-    font-size: 12px;
-    color: black;
-    font-weight: bold;
-
-
-  }
-
-  /*이용약관 진입 버튼*/
-  .buttonContract{
-
-    /*모양*/
-    margin-right: 5px;
-    border-radius: 5px;
+//     /*글씨*/
+//     font-size: 12px;
+//     color: black;
+//     font-weight: bold;
 
 
-    font-size: 14px;
-    color: white;
+//   }
 
-    /*색*/
-    background-color: #5a5a5a;
-    opacity: 1;
+//   /*이용약관 진입 버튼*/
+//   .buttonContract{
 
-    /*호버*/
-    &:hover {
-        opacity: 0.9;
-    }
-  }
+//     /*모양*/
+//     margin-right: 5px;
+//     border-radius: 5px;
 
-  /*가입하기 버튼 활성화 안내 문구 */
-  .registerNotice{
 
-    font-size: 11px;
-    color: #C4C4C4;
-    font-weight: bold;
+//     font-size: 14px;
+//     color: white;
+
+//     /*색*/
+//     background-color: #5a5a5a;
+//     opacity: 1;
+
+//     /*호버*/
+//     &:hover {
+//         opacity: 0.9;
+//     }
+//   }
+
+//   /*가입하기 버튼 활성화 안내 문구 */
+//   .registerNotice{
+
+//     font-size: 11px;
+//     color: #C4C4C4;
+//     font-weight: bold;
     
-  }
+//   }
 
-  /*가입하기 버튼*/
-  .buttonRegister{
-    /*레이아웃*/
+//   /*가입하기 버튼*/
+//   .buttonRegister{
+//     /*레이아웃*/
 
-    background-color: #002F5A;
-    opacity: 0.8;
+//     background-color: #002F5A;
+//     opacity: 0.8;
 
-    /*모양*/
-    border-radius: 5px;
+//     /*모양*/
+//     border-radius: 5px;
 
-    /*글씨*/
-    font-size: 14px;
-    color: white;
-    font-weight: bold;
+//     /*글씨*/
+//     font-size: 14px;
+//     color: white;
+//     font-weight: bold;
 
-    /*호버*/
-    &:hover {
-      background-color: #002F5A;
-      opacity: 0.9;
-    }
-  }
+//     /*호버*/
+//     &:hover {
+//       background-color: #002F5A;
+//       opacity: 0.9;
+//     }
+//   }
 
-`
+// `
 // const MainBlockStyle = styled.div`
 // height: 70vh;
 

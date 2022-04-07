@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import ShowContract from './component/ShowContract';
 import Header from '../../main/component/Header';
+import '../../../media/css/formFrame.css';
 // import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Col,  Container, Modal, Row} from 'react-bootstrap';
@@ -257,8 +258,8 @@ export default function SignupForm() {
       <div className="formMainContainer">
         <div className="header"><Header showMenu={showMenu}/></div>
         <div className='mainBody'>
-        <FormBlockStyle>
-          <Form className= "container" onSubmit={handleRegister} ref={form}>
+        <div className='formFrame'>
+          <Form onSubmit={handleRegister} ref={form}>
             {!successful && (
               <Container>
                 <Row className='tableRow'>
@@ -451,258 +452,11 @@ export default function SignupForm() {
             </Modal.Footer>
           </Modal>
           
-          </FormBlockStyle>
+          </div>
           </div>
         <div className='footer'><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
       </div>
   )
 }
 
-
-
-
-const FormBlockStyle = styled.div`
-
-width: 45vh;
-
-  .tableRow{
-    margin-bottom:5px;
-  }
-
-  .container{
-      background-color: white;
-    }
-
-  /*환영 글*/
-  .comment{
-
-    /*padding-top:;*/
-    padding-left: 20px;
-    padding-right: 20px;
-
-    /*글씨*/
-    font-size: 12px;
-    color: black;
-    font-weight: bold;
-  }
-
-  /*form 입력 레이아웃*/
-  .formMain{
-    text-align: left;
-  }
-
-  .formBlock{
-
-    /*모양*/
-
-    /*글씨*/
-    font-size: 12px;
-    color: black;
-    font-weight: bold;
-    text-align: left;
-
-  }
-  /*입력 칸 명*/
-  .titleStyle{
-
-    /*글씨*/
-    font-size: 12px;
-    color: black;
-    font-weight: bold;
-    text-align: left;
-
-    width: 40%;
-  }
-
-  /*입력 칸*/
-  .inputStyle{
-    /*레이아웃*/
-
-    border-radius: 5px;
-
-    /*글씨*/
-    font-size: 11px;
-    color: black;
-    font-weight: bold;
-    text-align: left;
-
-    /*호버*/
-    &:hover {
-        opacity: 0.7;
-    }
-
-  }
-  /*stdNum 중복확인 버튼*/
-  .buttonDuplicate{
-
-    /*모양*/
-
-    border-radius: 5px;
-
-    font-size: 12px;
-    color: white;
-
-    /*색*/
-    background-color: #5a5a5a;
-    opacity: 1;
-
-    /*호버*/
-    &:hover {
-        opacity: 0.9;
-    }
-  }
-
-  /*이용약관 창*/
-  .contract{
-
-    /*글씨*/
-    font-size: 12px;
-    color: black;
-    font-weight: bold;
-
-
-  }
-
-  /*이용약관 진입 버튼*/
-  .buttonContract{
-
-    /*모양*/
-    margin-right: 5px;
-    border-radius: 5px;
-
-
-    font-size: 12px;
-    color: white;
-
-    /*색*/
-    background-color: #5a5a5a;
-    opacity: 1;
-
-    /*호버*/
-    &:hover {
-        opacity: 0.9;
-    }
-  }
-
-  /*가입하기 버튼 활성화 안내 문구 */
-  .registerNotice{
-
-    font-size: 11px;
-    color: #C4C4C4;
-    font-weight: bold;
-    
-  }
-
-  /*가입하기 버튼*/
-  .buttonRegister{
-    /*레이아웃*/
-
-    background-color: #002F5A;
-    opacity: 0.8;
-
-    /*모양*/
-    border-radius: 5px;
-
-    /*글씨*/
-    font-size: 15px;
-    color: white;
-    font-weight: bold;
-
-    /*호버*/
-    &:hover {
-      background-color: #002F5A;
-      opacity: 0.9;
-    }
-  }
-
-`
-// const MainBlockStyle = styled.div`   
-// height: 70vh;
-
-// .mainContainer{
-//   display: grid;
-//   grid-template-rows: 1fr 7fr 1fr;
-//   background-color: white;
-//   text-align: center;
-//   justify-content: center;
-//   vertical-align: middle;
-  
-//   /*border: solid 1px #002F5A;*/
-
-
-//   // z-index:0;
-
-
-// }
-
-
-// div.header{
-//   gird-row-start: 0;
-//   grid-row-start: 1;
-
-// }
-
-// div.mainBody{
-//   gird-row-start: 1;
-//   grid-row-start: 2;
-// }
-
-// div.footer{
-
-//   gird-row-start: 2;
-//   grid-row-start: 3;
-
-// }
-// `
-
-
-
-
-
-// import React, {useState} from 'react';
-// import { useForm, Controller} from 'react-hook-form';
-// // import { Input} from '@meterial-ui/core';
-
-
-
-// export default function App() {
-//     const { handleSubmit, control, formState: {errors}} = useForm();
-//     const [result, setResult] = useState('');
-
-//     const onSubmit = (data) => setResult(JSON.stringify(data));
-
-//     const notice = () => {
-//       return(
-//         <span>아이디를 입력해주세요.</span>
-//       )
-//     }
-
-//     return (
-//         <form onSubmit={handleSubmit(onSubmit)}>
-//           <div className='container'>
-//             <Controller
-//               name='userid'
-//               control={control}
-//               rules={{ required: true, min:4, max:12}}
-//               render={({ field }) => <input {...field} />}
-//             />
-//             <br/>
-
-//           </div>
-//           <input type='submit'/>
-//           <p>{result}</p>
-
-//           {
-//               errors.userid?.type ==='required' && notice()//<span>아이디를 입력해주세요.</span>
-//             }
-//             {
-//               errors.userid?.type === 'min' && <span>아이디를 확인해주세요.</span>
-//             }
-//             {
-//               errors.userid?.type === 'max' && <span>아이디를 확인해주세요.</span>
-//             }
-          
-//         </form>
-//   )
-// }
 

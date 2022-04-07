@@ -1,0 +1,133 @@
+.formFrame {
+    width: 45vh;
+    background-color: white;
+}
+
+/*최상단 안내글*/
+.comment {
+    /*padding-top:;*/
+    padding-left: 20px;
+    padding-right: 20px;
+
+    /*글씨*/
+    font-size: 12px;
+    color: black;
+    font-weight: bold;
+}
+
+/*form 입력 레이아웃*/
+.formMain {
+    text-align: left;
+}
+
+.formBlock {
+    /*글씨*/
+    font-size: 12px;
+    color: black;
+    font-weight: bold;
+    text-align: left;
+}
+
+/*입력 칸 명*/
+.titleStyle {
+    /*글씨*/
+    font-size: 12px;
+    color: black;
+    font-weight: bold;
+    text-align: left;
+
+    width: 40%;
+}
+
+/*입력 칸*/
+.inputStyle {
+    /*레이아웃*/
+    border-radius: 5px;
+
+    /*글씨*/
+    font-size: 11px;
+    color: black;
+    font-weight: bold;
+    text-align: left;
+}
+
+/*호버*/
+input::hover {
+    opacity: 0.7;
+}
+
+/*이용약관 창*/
+.contract {
+    /*글씨*/
+    font-size: 12px;
+    color: black;
+    font-weight: bold;
+}
+
+/*이용약관 진입 버튼*/
+.buttonContract {
+    /*모양*/
+    margin-right: 5px;
+    border-radius: 5px;
+
+    font-size: 14px;
+    color: white;
+
+    /*색*/
+    background-color: #5a5a5a;
+    opacity: 1;
+}
+
+/*호버*/
+.buttonContract::hover {
+    opacity: 0.9;
+}
+
+/*가입하기 버튼 활성화 안내 문구 */
+.registerNotice {
+    font-size: 11px;
+    color: #C4C4C4;
+    font-weight: bold;
+}
+
+/*가입하기 버튼*/
+.buttonRegister {
+    /*레이아웃*/
+
+    background-color: #002F5A;
+    opacity: 0.8;
+
+    /*모양*/
+    border-radius: 5px;
+
+    /*글씨*/
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+}
+
+/*호버*/
+.buttonRegister::hover {
+    background-color: #002F5A;
+    opacity: 0.9;
+}
+
+/*stdNum 중복확인 버튼*/
+.buttonDuplicate {
+
+    /*모양*/
+
+    border-radius: 5px;
+
+    font-size: 12px;
+    color: white;
+
+    /*색*/
+    background-color: #5a5a5a;
+    opacity: 1;
+}
+
+/*호버*/
+.buttonDuplicate::hover {
+    opacity: 0.9;
+}
