@@ -3,7 +3,8 @@ import { useForm, Controller} from 'react-hook-form';
 import styled from 'styled-components';
 import axios from 'axios';
 import Header from '../../main/component/Header';
-import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter';
+import Footer from '../../main/component/Footer';
+// import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Col,  Container, Modal, Row} from 'react-bootstrap';
 import Form from "react-validation/build/form";
@@ -85,6 +86,13 @@ export default function SignupForm() {
 
     //메뉴바 노출 상태관리
     const showMenu = false;
+
+    //하단바 컨트롤 : 
+    const showPrev = true;
+    const showNext = false;
+    const showDev = false;
+
+
 
     //페이지 이동(call-back함수)
     let navigate = useNavigate();
@@ -253,11 +261,11 @@ export default function SignupForm() {
     const handleShow = () => setShow(true);
 
     return (
-        <MainBlockStyle>
         <div className="mainContainer">
             <div className="header"><Header showMenu={showMenu}/></div>
+            
+            <div className='mainBody'>
             <FormBlockStyle>
-
             <Form className= "container" onSubmit={handleRegister} ref={form}>
                 {!successful && (
                 <Container>
@@ -436,9 +444,10 @@ export default function SignupForm() {
             </Modal>
 
             </FormBlockStyle>
-            <div className='footer'><OnlyPrevFooter/></div>
+            </div>
+            <div className='footer'><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
         </div>
-        </MainBlockStyle>
+
     )
     }
 
@@ -581,43 +590,43 @@ width: 45vh;
   }
 
 `
-const MainBlockStyle = styled.div`
-height: 70vh;
+// const MainBlockStyle = styled.div`
+// height: 70vh;
 
-div.mainContainer{
-  display: grid;
-  grid-template-rows: 0.9fr 6fr 1fr;
-  background-color: white;
-  text-align: center;
-  justify-content: center;
-  vertical-align: middle;
+// div.mainContainer{
+//   display: grid;
+//   grid-template-rows: 0.9fr 6fr 1fr;
+//   background-color: white;
+//   text-align: center;
+//   justify-content: center;
+//   vertical-align: middle;
   
-  /*border: solid 1px #002F5A;*/
+//   /*border: solid 1px #002F5A;*/
 
-  z-index:0;
-}
+//   z-index:0;
+// }
 
 
-div.header{
-  gird-row-start: 0;
-  grid-row-start: 1;
+// div.header{
+//   gird-row-start: 0;
+//   grid-row-start: 1;
 
-  z-index:1;
-}
+//   z-index:1;
+// }
 
-div.mainBody{
-  gird-row-start: 1;
-  grid-row-start: 2;
-}
+// div.mainBody{
+//   gird-row-start: 1;
+//   grid-row-start: 2;
+// }
 
-div.footer{
-  margin-top:10px;
-  bottom:0px;
-  gird-row-start: 2;
-  grid-row-start: 3;
-  z-index:1;
-}
-`
+// div.footer{
+//   margin-top:10px;
+//   bottom:0px;
+//   gird-row-start: 2;
+//   grid-row-start: 3;
+//   z-index:1;
+// }
+// `
 
 
 

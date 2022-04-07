@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import 'bootstrap/dist/css/bootstrap.css';
 import MyModal from './MyModal';
 import axios from 'axios'
+import '../../../media/css/header.css';
 
 export default function Header({showMenu}) {
   //로그인 여부 확인(기본 값: 로그인 false)
@@ -52,7 +53,6 @@ export default function Header({showMenu}) {
 
   return (
     <>
-    <BackgroundBlock>
       <div className='containerHeader'>
         <div className='logo'>
           <Link to={'/'}>
@@ -66,7 +66,11 @@ export default function Header({showMenu}) {
         </div>
         {
         !showMenu?
-          <></>:
+          <>
+            <div className='menu'>
+              <img src={require('../../../media/structure/무지.jpg')} alt='무지'></img>
+            </div>
+          </>:
           <>
             {
               login === false ?
@@ -84,80 +88,79 @@ export default function Header({showMenu}) {
         }
       </div>
       <MyModal show={modalShow} onHide={() => setModalShow(false)} />
-    </BackgroundBlock>
     </>
   )
 }
 // login? MyModal(thisUser): location.href='http://localhost:3000/#/choose'
 
-const BackgroundBlock = styled.div`
-  div.containerHeader{
-    min-height: 3vh;
-    display: grid;
-    grid-template-columns: 1fr 4fr 1fr;
-    background-color: white;
+// const BackgroundBlock = styled.div`
+//   div.containerHeader{
+//     min-height: 3vh;
+//     display: grid;
+//     grid-template-columns: 1fr 4fr 1fr;
+//     background-color: white;
 
     
-    padding-bottom: 15px;
-    border-bottom: solid 2px #002F5A;
-  }
+//     padding-bottom: 15px;
+//     border-bottom: solid 2px #002F5A;
+//   }
 
-  div.menu{
-    grid-column-start: 3;
-    grid-column-end: 4;
-    padding-top: 10px;
+//   div.menu{
+//     grid-column-start: 3;
+//     grid-column-end: 4;
+//     padding-top: 10px;
 
 
-    background-color: white;
+//     background-color: white;
 
-    /*이미지*/
-    img{
-      width: 35px;
-      height: 35px;
-    }
+//     /*이미지*/
+//     img{
+//       width: 35px;
+//       height: 35px;
+//     }
 
-    /*호버*/
-    &:hover {
-      background-color: white;
-      opacity: 0.6;
-    }
-  }
+//     /*호버*/
+//     &:hover {
+//       background-color: white;
+//       opacity: 0.6;
+//     }
+//   }
 
-  div.blank{
-    grid-column-start: 2;
-    grid-column-end: 3;
+//   div.blank{
+//     grid-column-start: 2;
+//     grid-column-end: 3;
 
-    /*글씨*/
-    padding-top: 5%;
-    font-size: 18px;
-    color: #002F5A;
-    font-weight: bold;
+//     /*글씨*/
+//     padding-top: 5%;
+//     font-size: 18px;
+//     color: #002F5A;
+//     font-weight: bold;
 
-    /*호버*/
-    &:hover {
-      background-color: white;
-      opacity: 0.6;
-    }
-  }
+//     /*호버*/
+//     &:hover {
+//       background-color: white;
+//       opacity: 0.6;
+//     }
+//   }
 
-  div.logo{
-    grid-column-start: 1;
-    grid-column-end: 2;
-    padding-top: 10px;
+//   div.logo{
+//     grid-column-start: 1;
+//     grid-column-end: 2;
+//     padding-top: 10px;
 
-    background-color: white;
+//     background-color: white;
 
-    img{
-      width: 40px;
-      height: 40px;
-    }
+//     img{
+//       width: 40px;
+//       height: 40px;
+//     }
 
-    /*호버*/
-    &:hover {
-      background-color: white;
-      opacity: 0.6;
-    }
-  }
-  `
+//     /*호버*/
+//     &:hover {
+//       background-color: white;
+//       opacity: 0.6;
+//     }
+//   }
+//   `
 
 // ={process.env.PUBLIC_URL +`${'/media/structure/메뉴2.jpg'}`

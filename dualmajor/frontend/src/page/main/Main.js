@@ -5,68 +5,71 @@ import styled from "styled-components";
 import Header from "./component/Header";
 import Footer from "./component/Footer"
 import MainFrame from "./component/MainFrame";
+import '../../media/css/commonFrame.css';
 
 
 function Main() {
-  // const [rows, setRows]= useState(1)
-  //메뉴바 노출 상태관리
+
+  //상단바 컨트롤 : 메뉴바 노출 상태관리
   const showMenu = true;
+
+  //하단바 컨트롤 : 
+  const showPrev = false;
+  const showNext = false;
+  const showDev = true;
+
 
   return (
     <>
-      <MainBlockStyle>
-        <div className="mainContainer">
-          <div className="header"><Header showMenu={showMenu}/></div>
-          <div className="mainBody"><MainFrame/></div>
-          <div className="footer"><Footer/></div>
-        </div>
-      </MainBlockStyle>
-      
+      <div className="mainContainer">
+        <div className="header"><Header showMenu={showMenu}/></div>
+        <div className="mainBody"><MainFrame/></div>
+        <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
+      </div>
     </>
-
   );
 }
 
 export default Main;
 
-const MainBlockStyle = styled.div`
-  width: 100%;
-  height: 100%;
+// const MainBlockStyle = styled.div`
+//   width: 100%;
+//   height: 100%;
 
-  div.mainContainer{
-    display: grid;
-    grid-template-rows: 1.3fr 6fr 0.5fr;
-    background-color: white;
-    text-align: center;
-    justify-content: center;
-    vertical-align: middle;
+//   div.mainContainer{
+//     display: grid;
+//     grid-template-rows: 1.3fr 6fr 0.5fr;
+//     background-color: white;
+//     text-align: center;
+//     justify-content: center;
+//     vertical-align: middle;
     
-    /*border: solid 1px #002F5A;*/
+//     /*border: solid 1px #002F5A;*/
 
-    z-index:0;
-  }
+//     z-index:0;
+//   }
 
 
-  div.header{
-    gird-row-start: 0;
-    grid-row-start: 1;
+//   div.header{
+//     gird-row-start: 0;
+//     grid-row-start: 1;
 
-    z-index:1;
-  }
+//     z-index:1;
+//   }
 
-  div.mainBody{
-    gird-row-start: 1;
-    grid-row-start: 2;
-  }
+//   div.mainBody{
+//     gird-row-start: 1;
+//     grid-row-start: 2;
+//   }
 
-  div.footer{
-    margin-top:10px;
-    bottom:0px;
-    gird-row-start: 2;
-    grid-row-start: 3;
-    z-index:1;
-  }
-`
+//   div.footer{
+//     margin-top:10px;
+//     bottom:0px;
+//     gird-row-start: 2;
+//     grid-row-start: 3;
+//     z-index:1;
+//   }
+// `
 
 
 

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import ShowContract from './component/ShowContract';
 import Header from '../../main/component/Header';
-import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter';
+// import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Col,  Container, Modal, Row} from 'react-bootstrap';
 import Form from "react-validation/build/form";
@@ -15,6 +15,8 @@ import { isEmail } from "validator";
 import { useNavigate} from 'react-router-dom';
 import Select from 'react-bootstrap/FormSelect'//bootstrap 경로에서 직접 Select만 빼오기(공식문서 상으로는 Form.select로만 사용 가능한 제약 극복)
 
+import '../../../media/css/commonFrame.css'
+import Footer from '../../main/component/Footer';
 
 //input 값에 대한 유효성 검사
 const required = (value) => {
@@ -85,6 +87,11 @@ export default function SignupForm() {
 
   //메뉴바 노출 상태관리
   const showMenu = false;
+
+  //하단바 컨트롤 : 
+  const showPrev = true;
+  const showNext = false;
+  const showDev = false;
 
   let navigate = useNavigate();
 
@@ -247,9 +254,9 @@ export default function SignupForm() {
 
 
   return (
-    <MainBlockStyle>
-      <div className="mainContainer">
+      <div className="formMainContainer">
         <div className="header"><Header showMenu={showMenu}/></div>
+        <div className='mainBody'>
         <FormBlockStyle>
           <Form className= "container" onSubmit={handleRegister} ref={form}>
             {!successful && (
@@ -445,9 +452,9 @@ export default function SignupForm() {
           </Modal>
           
           </FormBlockStyle>
-        <div className='footer'><OnlyPrevFooter/></div>
+          </div>
+        <div className='footer'><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
       </div>
-    </MainBlockStyle>
   )
 }
 
@@ -609,45 +616,44 @@ width: 45vh;
   }
 
 `
-const MainBlockStyle = styled.div`
-    
-height: 70vh;
+// const MainBlockStyle = styled.div`   
+// height: 70vh;
 
-.mainContainer{
-  display: grid;
-  grid-template-rows: 1fr 7fr 1fr;
-  background-color: white;
-  text-align: center;
-  justify-content: center;
-  vertical-align: middle;
+// .mainContainer{
+//   display: grid;
+//   grid-template-rows: 1fr 7fr 1fr;
+//   background-color: white;
+//   text-align: center;
+//   justify-content: center;
+//   vertical-align: middle;
   
-  /*border: solid 1px #002F5A;*/
+//   /*border: solid 1px #002F5A;*/
 
 
-  // z-index:0;
+//   // z-index:0;
 
 
-}
+// }
 
 
-div.header{
-  gird-row-start: 0;
-  grid-row-start: 1;
+// div.header{
+//   gird-row-start: 0;
+//   grid-row-start: 1;
 
-}
+// }
 
-div.mainBody{
-  gird-row-start: 1;
-  grid-row-start: 2;
-}
+// div.mainBody{
+//   gird-row-start: 1;
+//   grid-row-start: 2;
+// }
 
-div.footer{
+// div.footer{
 
-  gird-row-start: 2;
-  grid-row-start: 3;
+//   gird-row-start: 2;
+//   grid-row-start: 3;
 
-}
-`
+// }
+// `
 
 
 

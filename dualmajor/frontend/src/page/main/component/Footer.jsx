@@ -1,58 +1,42 @@
 //메인 화면의 footer (기획, 개발자 명과 문의 시 이메일)
 import React from 'react'
 import styled from 'styled-components'
+import '../../../media/css/footer.css';
 
-export default function Footer() {
-
-    const BackgroundBlock = styled.div`
-    div.containerHeader{
-
-      /*min-height: 5vh;*/
-      margin-top: 20px;
-      border-top: solid 2px #002F5A;
-      padding-top: 10px;
-
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      background-color: white;
-
-      z-index: 1;
-    }
-
-    div.title{
-      flex-basis: 10%;
-      flex-grow: 4;
-      background-color: white;
-
-      /*글씨*/
-      padding-right:10px;
-      text-align: right;
-      font-size: 11px;
-      color: #002F5A;
-      font-weight: bold;
-    }
-
-    div.content{
-      flex-grow: 5;
-
-
-      /*글씨*/
-      text-align: left;
-      font-size: 11px;
-      color: #002F5A;
-      font-weight: normal;
-    }
-  `
-
-
+export default function Footer({showPrev, showNext, showDev}) {
+  
+  //showDev(제작자, 문의처 노출)
+  //showPrev(이전 버튼 노출)
+  //showNext(다음 버튼 노출)
   return (
-    <BackgroundBlock>
-      <div className='containerHeader'>
-        <div className='title'><span><b>◽기획/개발:</b></span><br/><span><b>◽문의:</b></span></div>
-        <div className='content'><span>박동렬, 류승기, 정재윤, 최중원</span><br/><span>rangyun36@gmail.com</span></div>
+      <div className='containerFooter'>
+        {
+          !showDev?
+          <>
+            {
+              !showPrev?
+              <>
+                <div className='prev'><img src={require('../../../media/structure/무지.jpg')} alt="이전"/></div>
+              </>:
+              <>
+                <div className='prev' onClick={() => { window.history.back(); }}><img src={require('../../../media/tab/이전.png')} alt="이전"/></div>
+              </>
+            }
+            {
+              !showNext?
+              <>
+                <div className='next'><img src={require('../../../media/structure/무지.jpg')} alt="이전"/></div>
+              </>:
+              <>
+                <div className='next' onClick={() => { window.history.forward(); }}><img src={require('../../../media/tab/다음.png')} alt="다음"/></div>
+              </>
+            }
+          </>:
+          <>
+            <div className='title'><span><b>◽기획/개발:</b></span><br/><span><b>◽문의:</b></span></div>
+            <div className='content'><span>박동렬, 류승기, 정재윤, 최중원</span><br/><span>rangyun36@gmail.com</span></div>
+          </>
+        }
       </div>
-      
-    </BackgroundBlock>
   )
 }
