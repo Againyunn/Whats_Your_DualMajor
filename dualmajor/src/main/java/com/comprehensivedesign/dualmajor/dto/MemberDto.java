@@ -26,9 +26,9 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     //회원 비밀번호
     private String password;
     //회원 본전공(제 1전공)
-    private String firstMajor;
+    private Long firstMajorId;
     //회원 이중/부전공(제 2전공)
-    private String dualMajor;
+    private Long dualMajorId;
     //회원 학년
     private String grade;
     //회원 유형(멘토 or 멘티)
@@ -36,24 +36,24 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
 
 
 
-    public void setLoginInfo(String nickName, String stdNum, String firstMajor, String dualMajor, String grade, String userType) {
+    public void setLoginInfo(String nickName, String stdNum, Long firstMajorId, Long dualMajorId, String grade, String userType) {
         this.nickName = nickName;
         this.stdNum = stdNum;
-        this.firstMajor = firstMajor;
-        this.dualMajor = dualMajor;
+        this.firstMajorId = firstMajorId;
+        this.dualMajorId = dualMajorId;
         this.grade = grade;
         this.userType = userType;
 
     }
 
     public Map getLoginInfo() {
-        LinkedHashMap<String, String> map = new LinkedHashMap<>();
+        LinkedHashMap<String, Object> map = new LinkedHashMap<>();
         map.put("id", stdNum);
         map.put("nickName", nickName);
         map.put("grade", grade);
         map.put("userType", userType);
-        map.put("firstMajor", firstMajor);
-        map.put("dualMajor", dualMajor);
+        map.put("firstMajor", firstMajorId);
+        map.put("dualMajor", dualMajorId);
         return map;
     }
 }

@@ -48,7 +48,7 @@ public class MemberServiceImpl implements MemberService{
         String password = bCryptPasswordEncoder.encode(memberDto.getPassword());
         validateDuplicateEmail(stdEmail);
         Member member = new Member();
-        member.CreateMember(memberDto.getNickName(), stdEmail, password, memberDto.getStdNum(), memberDto.getFirstMajor(), memberDto.getDualMajor(), memberDto.getGrade(),memberDto.getUserType());
+        member.CreateMember(memberDto.getNickName(), stdEmail, password, memberDto.getStdNum(), memberDto.getFirstMajorId(), memberDto.getDualMajorId(), memberDto.getGrade(),memberDto.getUserType());
         return memberRepository.save(member).getId();
     }
     private void validateDuplicateEmail(String stdEmail) throws Exception{
@@ -79,8 +79,8 @@ public class MemberServiceImpl implements MemberService{
         member.updateMember(memberDto.getNickName()
                 , memberDto.getPassword()
                 , memberDto.getStdNum()
-                , memberDto.getFirstMajor()
-                , memberDto.getDualMajor()
+                , memberDto.getFirstMajorId()
+                , memberDto.getDualMajorId()
                 , memberDto.getGrade()
                 , memberDto.getUserType());
         return member;
