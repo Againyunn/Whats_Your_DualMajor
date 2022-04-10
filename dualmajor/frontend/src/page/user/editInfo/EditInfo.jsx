@@ -15,6 +15,8 @@ import AuthService from '../../../services/auth.service';
 import { isEmail } from "validator";
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-bootstrap/FormSelect'//bootstrap 경로에서 직접 Select만 빼오기(공식문서 상으로는 Form.select로만 사용 가능한 제약 극복)
+import uuid from "react-uuid"
+
 
 //input 값에 대한 유효성 검사
 const required = (value) => {
@@ -79,9 +81,9 @@ export default function SignupForm() {
     const [username, setUsername] = useState("");
     const [userstdNum, setUserstdNum] = useState("");
     const [password, setPassword] = useState("");
-    const [grade, setGrade] = useState("1학년");
-    const [firstMajor,  setFirstMajor] = useState("GBT학부");
-    const [dualMajor, setDualMajor] = useState("없음");
+    const [grade, setGrade] = useState("1");
+    const [firstMajor,  setFirstMajor] = useState("1");
+    const [dualMajor, setDualMajor] = useState("0");
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
 
@@ -94,7 +96,6 @@ export default function SignupForm() {
     const showDev = false;
 
 
-
     //페이지 이동(call-back함수)
     let navigate = useNavigate();
 
@@ -105,14 +106,13 @@ export default function SignupForm() {
     }
 
 
-
     //기존의 회원정보를 value값으로 자동 입력
     useEffect(() => {
         //테스트용
         console.log("thisUser",thisUser);
 
         AuthService.firstMajorList();
-        AuthService.dualMajorList()
+        AuthService.dualMajorList();
 
         let allFirstMajor = false;
         let allDualMajor = false;
@@ -331,12 +331,12 @@ export default function SignupForm() {
                         <span className='titleStyle'>본전공</span>
                     </Col>
                     <Col md={7} xs={12}>
-                        <Select className='inputStyle' onChange={onChangeUserFirstMajor}>
+                        <Select className='inputStyle' onChange={onChangeUserFirstMajor} value={firstMajor} key={uuid()}>
                         {
                         !totalFirstMajor?  
                         <option value="0">학과 없음</option>:
                         totalFirstMajor.map(thisMajor => (
-                            <option key={thisMajor.id} value={thisMajor.id}>
+                            <option key={thisMajor.id} value={thisMajor.id} >
                             {thisMajor.name}
                             </option>
                         ))
@@ -350,11 +350,11 @@ export default function SignupForm() {
                         <span className='titleStyle'>학년</span>
                     </Col>
                     <Col md={7} xs={12}>
-                        <Select className='inputStyle' onChange={onChangeUserGrade}>
-                        <option value="1학년">1학년</option>
-                        <option value="2학년">2학년</option>
-                        <option value="3학년">3학년</option>
-                        <option value="4학년 이상">4학년 이상</option>
+                        <Select className='inputStyle' onChange={onChangeUserGrade} defaultValue={grade} key={uuid()}>
+                        <option value="1">1학년</option>
+                        <option value="2">2학년</option>
+                        <option value="3">3학년</option>
+                        <option value="4">4학년 이상</option>
                         </Select>
                     </Col>
                     </Row>
@@ -364,7 +364,7 @@ export default function SignupForm() {
                         <span className='titleStyle'>이용유형</span>
                     </Col>
                     <Col md={7} xs={12}>
-                        <Select className='inputStyle' onChange={SelectedUserType}>
+                        <Select className='inputStyle' onChange={SelectedUserType} defaultValue={userType} key={uuid()}>
                         <option value="mentee">멘티</option>
                         <option value="mento">멘토</option>
                         </Select>
@@ -376,7 +376,7 @@ export default function SignupForm() {
                         <span className='titleStyle'>{dualmajor}</span>
                     </Col>
                     <Col md={7} xs={12}>
-                        <Select className='inputStyle' onChange={onChangeUserDualMajor}>
+                        <Select className='inputStyle' onChange={onChangeUserDualMajor} defaultValue={dualMajor} key={uuid()}>
                         {
                         !totalDualMajor?  
                         <option value="0">학과 없음</option>:

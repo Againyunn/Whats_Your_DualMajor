@@ -122,6 +122,7 @@ import Choose from './page/user/choose/Choose';
 import Login from './page/user/login/Login';
 import SignupForm from './page/user/signup/SignupForm';
 import EditInfo from './page/user/editInfo/EditInfo';
+import RecommendMain from './page/recommend/RecommendMain';
 
 function App() {
   return (
@@ -133,6 +134,7 @@ function App() {
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<SignupForm/>} />
         <Route path='/editInfo' element={<EditInfo/>} />
+        <Route path='/recommend' element={<RecommendMain/>} />
       </Routes>
     </BrowserRouter>
   </>
