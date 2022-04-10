@@ -1,8 +1,10 @@
-package com.comprehensivedesign.dualmajor.Service;
+package com.comprehensivedesign.dualmajor.Service.MemberService;
 
 
-import com.comprehensivedesign.dualmajor.config.auth.MemberDetails;
+import com.comprehensivedesign.dualmajor.Service.MajorService.MajorService;
 import com.comprehensivedesign.dualmajor.config.auth.MemberDetailsService;
+import com.comprehensivedesign.dualmajor.domain.DualMajor;
+import com.comprehensivedesign.dualmajor.domain.FirstMajor;
 import com.comprehensivedesign.dualmajor.domain.Member;
 import com.comprehensivedesign.dualmajor.dto.MemberDto;
 import com.comprehensivedesign.dualmajor.repository.MemberRepository;
@@ -26,6 +28,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Autowired private MemberRepository memberRepository;
     @Autowired private MemberDetailsService memberDetailsService;
+    @Autowired private MajorService majorService;
     @Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -48,7 +51,9 @@ public class MemberServiceImpl implements MemberService{
         String password = bCryptPasswordEncoder.encode(memberDto.getPassword());
         validateDuplicateEmail(stdEmail);
         Member member = new Member();
-        member.CreateMember(memberDto.getNickName(), stdEmail, password, memberDto.getStdNum(), memberDto.getFirstMajorId(), memberDto.getDualMajorId(), memberDto.getGrade(),memberDto.getUserType());
+        FirstMajor firstMajor = majorService.findFirstMajorById(memberDto.getFirstMajorId());
+        DualMajor dualMajor = majorService.findDualMajorById(memberDto.getDualMajorId());
+        member.CreateMember(memberDto.getNickName(), stdEmail, password, memberDto.getStdNum(), firstMajor, dualMajor, memberDto.getGrade(),memberDto.getUserType());
         return memberRepository.save(member).getId();
     }
     private void validateDuplicateEmail(String stdEmail) throws Exception{
@@ -79,8 +84,8 @@ public class MemberServiceImpl implements MemberService{
         member.updateMember(memberDto.getNickName()
                 , memberDto.getPassword()
                 , memberDto.getStdNum()
-                , memberDto.getFirstMajorId()
-                , memberDto.getDualMajorId()
+                , majorService.findFirstMajorById(memberDto.getFirstMajorId())
+                , majorService.findDualMajorById(memberDto.getDualMajorId())
                 , memberDto.getGrade()
                 , memberDto.getUserType());
         return member;

@@ -1,7 +1,7 @@
 package com.comprehensivedesign.dualmajor.controller;
 
 
-import com.comprehensivedesign.dualmajor.Service.MemberService;
+import com.comprehensivedesign.dualmajor.Service.MemberService.MemberService;
 import com.comprehensivedesign.dualmajor.domain.Member;
 import com.comprehensivedesign.dualmajor.dto.MemberDto;
 import com.comprehensivedesign.dualmajor.repository.MemberRepository;

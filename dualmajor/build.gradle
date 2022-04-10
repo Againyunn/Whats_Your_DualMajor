@@ -41,7 +41,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-
+/*react 연결 시작부분*/
 def frontendDir = "$projectDir/frontend"
 
 sourceSets {
@@ -82,3 +82,4 @@ task copyReactBuildFiles(type: Copy) {
 	from "$frontendDir/build"
 	into "$projectDir/src/main/resources/static"
 }
+/*react 연결 마무리*/

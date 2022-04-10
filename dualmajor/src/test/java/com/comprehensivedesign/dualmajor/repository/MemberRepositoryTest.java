@@ -1,5 +1,7 @@
 package com.comprehensivedesign.dualmajor.repository;
 
+import com.comprehensivedesign.dualmajor.domain.DualMajor;
+import com.comprehensivedesign.dualmajor.domain.FirstMajor;
 import com.comprehensivedesign.dualmajor.domain.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,7 +32,9 @@ class MemberRepositoryTest {
         * DB에 정상적으로 저장이 되었는지 확인*/
         //given
         Member member = new Member();
-        member.CreateMember("test","email","1234","111",1L,2L,"1","MENTEE");
+        FirstMajor firstMajor = new FirstMajor();
+        DualMajor dualMajor = new DualMajor();
+        member.CreateMember("test","email","1234","111",firstMajor,dualMajor,"1","MENTEE");
 
         //when
         memberRepository.save(member);
@@ -43,7 +47,9 @@ class MemberRepositoryTest {
     void findByEmail() {
         //given
         Member member = new Member();
-        member.CreateMember("test","email","1234","111",1L,2L,"1","MENTEE");
+        FirstMajor firstMajor = new FirstMajor();
+        DualMajor dualMajor = new DualMajor();
+        member.CreateMember("test","email","1234","111",firstMajor,dualMajor,"1","MENTEE");
 
         //when
         memberRepository.save(member);

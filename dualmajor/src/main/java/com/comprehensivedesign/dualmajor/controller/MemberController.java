@@ -1,11 +1,10 @@
 package com.comprehensivedesign.dualmajor.controller;
 
-import com.comprehensivedesign.dualmajor.Service.MemberService;
+import com.comprehensivedesign.dualmajor.Service.MemberService.MemberService;
 import com.comprehensivedesign.dualmajor.domain.Member;
 import com.comprehensivedesign.dualmajor.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -63,8 +62,8 @@ public class MemberController {
         updatedMemberDto.setLoginInfo(
                 updatedMember.getName(),
                 updatedMember.getStdNum(),
-                updatedMember.getFirstMajorId(),
-                updatedMember.getDualMajorId(),
+                updatedMember.getFirstMajor().getId(), //회원 엔티티에 연관관계로 인해 저장된 전공 객체를 참조하여 id값 반환
+                updatedMember.getDualMajor().getId(),
                 updatedMember.getGrade(),
                 updatedMember.getType());
         return updatedMemberDto.getLoginInfo(); //업데이트 성공 후 업데이트된 데이터 셋 반환

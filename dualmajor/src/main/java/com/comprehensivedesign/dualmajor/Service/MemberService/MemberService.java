@@ -1,4 +1,4 @@
-package com.comprehensivedesign.dualmajor.Service;
+package com.comprehensivedesign.dualmajor.Service.MemberService;
 
 import com.comprehensivedesign.dualmajor.domain.Member;
 import java.util.Optional;
