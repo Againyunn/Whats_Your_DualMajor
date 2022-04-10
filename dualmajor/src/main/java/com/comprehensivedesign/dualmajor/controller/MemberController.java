@@ -63,8 +63,8 @@ public class MemberController {
         updatedMemberDto.setLoginInfo(
                 updatedMember.getName(),
                 updatedMember.getStdNum(),
-                updatedMember.getFirstMajor(),
-                updatedMember.getDualMajor(),
+                updatedMember.getFirstMajorId(),
+                updatedMember.getDualMajorId(),
                 updatedMember.getGrade(),
                 updatedMember.getType());
         return updatedMemberDto.getLoginInfo(); //업데이트 성공 후 업데이트된 데이터 셋 반환

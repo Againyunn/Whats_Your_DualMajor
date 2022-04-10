@@ -26,21 +26,30 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     //회원 비밀번호
     private String password;
     //회원 본전공(제 1전공)
-    private Long firstMajorId;
+    private String firstMajorId;
     //회원 이중/부전공(제 2전공)
-    private Long dualMajorId;
+    private String dualMajorId;
     //회원 학년
     private String grade;
     //회원 유형(멘토 or 멘티)
     private String userType;
 
 
+    /*===majorId type parsint(String->Long)===*/
+    /*Json으로 넘어오는 majorId(String)을 회원 DB에 저장할 때에는 Long타입으로 넣어줘야 함.
+     * 해당 데이터로 전공 테이블에 접근이 가능하기 때문*/
+    public Long getFirstMajorId() {
+        return Long.parseLong(this.firstMajorId);
+    }
 
+    public Long getDualMajorId() {
+        return Long.parseLong(this.dualMajorId);
+    }
     public void setLoginInfo(String nickName, String stdNum, Long firstMajorId, Long dualMajorId, String grade, String userType) {
         this.nickName = nickName;
         this.stdNum = stdNum;
-        this.firstMajorId = firstMajorId;
-        this.dualMajorId = dualMajorId;
+        this.firstMajorId = Long.toString(firstMajorId); //DB의 Long형태 -> Json의 String 형태
+        this.dualMajorId = Long.toString(dualMajorId);
         this.grade = grade;
         this.userType = userType;
 
@@ -52,8 +61,8 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
         map.put("nickName", nickName);
         map.put("grade", grade);
         map.put("userType", userType);
-        map.put("firstMajor", firstMajorId);
-        map.put("dualMajor", dualMajorId);
+        map.put("firstMajorId", firstMajorId);
+        map.put("dualMajorId", dualMajorId);
         return map;
     }
 }

@@ -26,11 +26,13 @@ public class AuthenticationController {
     @ResponseBody
     public Object loginSuccess(@AuthenticationPrincipal MemberAdapter memberAdapter) {
         MemberDto memberDto = new MemberDto();
+        System.out.println(memberAdapter.getMember().getFirstMajorId().getClass().getName());
+        System.out.println(memberAdapter.getMember().getFirstMajorId().getClass().getName());
         memberDto.setLoginInfo(
                 memberAdapter.getMember().getName(),
                 memberAdapter.getMember().getStdNum(),
-                memberAdapter.getMember().getFirstMajor(),
-                memberAdapter.getMember().getDualMajor(),
+                memberAdapter.getMember().getFirstMajorId(),
+                memberAdapter.getMember().getDualMajorId(),
                 memberAdapter.getMember().getGrade(),
                 memberAdapter.getMember().getType()
         );
