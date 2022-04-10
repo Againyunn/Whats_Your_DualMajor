@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.829ee1c8.css",
-    "main.js": "/static/js/main.b6b3abbe.js",
+    "main.css": "/static/css/main.13ded742.css",
+    "main.js": "/static/js/main.daa6cea9.js",
     "static/media/로고.png": "/static/media/로고.83c34aa6324d9e58e65a.png",
     "static/media/백이중추천.png": "/static/media/백이중추천.299c099e6d836db153ff.png",
     "static/media/백경쟁률.png": "/static/media/백경쟁률.f93860284bd0e95e16c0.png",
     "index.html": "/index.html",
-    "main.829ee1c8.css.map": "/static/css/main.829ee1c8.css.map",
-    "main.b6b3abbe.js.map": "/static/js/main.b6b3abbe.js.map"
+    "main.13ded742.css.map": "/static/css/main.13ded742.css.map",
+    "main.daa6cea9.js.map": "/static/js/main.daa6cea9.js.map"
   },
   "entrypoints": [
-    "static/css/main.829ee1c8.css",
-    "static/js/main.b6b3abbe.js"
+    "static/css/main.13ded742.css",
+    "static/js/main.daa6cea9.js"
   ]
 }

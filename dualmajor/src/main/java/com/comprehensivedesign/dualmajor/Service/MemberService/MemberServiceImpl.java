@@ -51,7 +51,7 @@ public class MemberServiceImpl implements MemberService{
         String password = bCryptPasswordEncoder.encode(memberDto.getPassword());
         validateDuplicateEmail(stdEmail);
         Member member = new Member();
-        FirstMajor firstMajor = majorService.findFirstMajorById(memberDto.getFirstMajorId());
+        FirstMajor firstMajor = majorService.findFirstMajorById(memberDto.getFirstMajorId()); //Long형태로 변환된 id값을 DTO에서 받아옴
         DualMajor dualMajor = majorService.findDualMajorById(memberDto.getDualMajorId());
         member.CreateMember(memberDto.getNickName(), stdEmail, password, memberDto.getStdNum(), firstMajor, dualMajor, memberDto.getGrade(),memberDto.getUserType());
         return memberRepository.save(member).getId();

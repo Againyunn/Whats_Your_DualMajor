@@ -34,10 +34,11 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     //회원 유형(멘토 or 멘티)
     private String userType;
 
-
     /*===majorId type parsint(String->Long)===*/
     /*Json으로 넘어오는 majorId(String)을 회원 DB에 저장할 때에는 Long타입으로 넣어줘야 함.
      * 해당 데이터로 전공 테이블에 접근이 가능하기 때문*/
+    /*이 DTO에서 전공 Id에 대한 타입 변환(Long->String, String->Long)은 모두 이루어주기에 비즈니스 로직에서는 신경 쓰지 않고 개발 가능*/
+
     public Long getFirstMajorId() {
         return Long.parseLong(this.firstMajorId);
     }
@@ -45,6 +46,7 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     public Long getDualMajorId() {
         return Long.parseLong(this.dualMajorId);
     }
+
     public void setLoginInfo(String nickName, String stdNum, Long firstMajorId, Long dualMajorId, String grade, String userType) {
         this.nickName = nickName;
         this.stdNum = stdNum;
@@ -52,9 +54,7 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
         this.dualMajorId = Long.toString(dualMajorId);
         this.grade = grade;
         this.userType = userType;
-
     }
-
     public Map getLoginInfo() {
         LinkedHashMap<String, Object> map = new LinkedHashMap<>();
         map.put("id", stdNum);
