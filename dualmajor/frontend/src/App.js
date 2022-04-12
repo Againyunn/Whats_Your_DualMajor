@@ -137,7 +137,7 @@ function App() {
         <Route path='/editInfo' element={<EditInfo/>} />
         <Route path='/recommend' element={<RecommendMain/>}/>
         <Route path='/question' element={<QuestionFrame/>}>
-          <Route path=':num' element={<QuestionFrame/>}/>
+          {/* <Route path=':num' element={<QuestionFrame/>}/> */}
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,13 +1,33 @@
 //메인 프레임(틀) component
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import ReactTypingEffect from 'react-typing-effect';
 import MoveToQuestion from './MoveToQuestion';
 import { Button, Col, Container, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function MainFrame() {
 
-    localStorage.setItem()
+    //화면 이동 제어용 callback함수 정의
+    let navigate = useNavigate();
+
+    //초기 화면 랜더링 시 초기화(1번 실행)
+    useEffect( () =>{
+        //recommendTest : 정상적인 방법으로 테스트를 처음부터 시작했는 지 검증하기 위한 값(url을 통한 비정상적 접근 방지)
+        localStorage.setItem('recommendTest', 'true');
+
+        //questionNum : 몇 번째 질문인지 식별할 수 있게하는 변수
+        localStorage.setItem('questionNum', '1');
+    },[])
+
+
+
+    const moveToQuestion = () => {
+        //question page로 이동
+        navigate("/question");
+        window.location.reload();
+    }
+    
 
     return (
     <>
@@ -17,7 +37,7 @@ export default function MainFrame() {
                     <img src={require('../../../media/major/경영대학.jpg')} alt='경영대학'/>
                 </div>
                 <div className='startFrame'>
-                    <Button className='startButton' onClick={() => MoveToQuestion(1)}>시작하기</Button>
+                    <Button className='startButton' onClick={moveToQuestion}>시작하기</Button>
                 </div>
                 <div className='notice'>
                     <span>신중하게 선택해주세요.</span><br/>

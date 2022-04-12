@@ -1,24 +1,36 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Button, Col, Container, Row, ProgressBar } from 'react-bootstrap';
+import RecommendService from '../../../services/recommend.service';
 
-export default function Question({questionNum, totalQuestionNum, questionContent, response1, response2}) {
+export default function Question({questionNum, questionId, totalQuestionNum, questionContent, response1, response2}) {
     //상태값 및 변수 정의
-    const [thisResponse, setThisResponse] = useState(false);
+    const [thisAnswer, setThisAnswer] = useState(false);
     let progressPercent = Math.round(questionNum/totalQuestionNum *100); //진행척도를 나타내기 위한 변수
 
     console.log(progressPercent)
     //답변에 따라 값 변경
     const checkAnswer = (type) =>{
         if(type === 1){
-            setThisResponse('1');
+            setThisAnswer('1');
         }
 
         else if(type === 2){
-            setThisResponse('2');
+            setThisAnswer('2');
         }
     }
 
+    const goToNext = () => {
+        //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
+        if(!thisAnswer === false){
+            //API전송
+            RecommendService.submitFirstSectionAnswer(questionNum, questionId, thisAnswer);
+
+            //다음질문을 받을 수 있도록 세션스토리지 값 변경
+            let nextQuestionNum = questionNum + 1;
+            localStorage.setItem('questionNum', nextQuestionNum);
+        }
+    }
     
   return (
     <BodyBlock>
@@ -30,13 +42,13 @@ export default function Question({questionNum, totalQuestionNum, questionContent
 
             <div className='responseTitle'>답변</div>
             {
-                thisResponse === '1'?
+                thisAnswer === '1'?
                 <Button className='checkedResponse1' >{response1}</Button>:
                 <Button className='response1' onClick={()=> checkAnswer(1)}>{response1}</Button>
             }
             
             {
-                thisResponse === '2'?
+                thisAnswer === '2'?
                 <Button className='checkedResponse2' >{response2}</Button>:
                 <Button className='response2' onClick={()=> checkAnswer(2)}>{response2}</Button>
             }
@@ -46,7 +58,7 @@ export default function Question({questionNum, totalQuestionNum, questionContent
             </div>
         
             <div className='nextButtonFrame'>
-                <Button className='nextButton'>다음</Button>
+                <Button className='nextButton' onClick={goToNext}>다음</Button>
             </div>
         </div>
     </BodyBlock>
