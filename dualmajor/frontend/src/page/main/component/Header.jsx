@@ -56,7 +56,7 @@ export default function Header({showMenu}) {
       <div className='containerHeader'>
         <div className='logo'>
           <Link to={'/'}>
-            <img src={require('../../../media/structure/부_원형.jpg')} alt='로고' style={{width: "40px", height: "40px"}}/>
+            <img src={require('../../../media/structure/부_원형.jpg')} alt='로고' />
           </Link>
         </div>
         <div className='blank'>
