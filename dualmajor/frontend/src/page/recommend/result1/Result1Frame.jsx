@@ -3,14 +3,13 @@ import React from 'react'
 import {useState, useEffect} from "react";
 import axios from "axios";
 import styled from "styled-components";
-import Header from "../main/component/Header";
-import Footer from "../main/component/Footer"
+import Header from "../../main/component/Header";
+import Footer from "../../main/component/Footer"
+import '../../../media/css/commonFrame.css';
+import MainFrame from "../question1/MainFrame";
+import Result from './Result';
 
-import '../../media/css/commonFrame.css';
-import MainFrame from "./question1/MainFrame";
-
-
-function RecommendMain() {
+export default function Result1Frame() {
 
   //상단바 컨트롤 : 메뉴바 노출 상태관리
   const showMenu = false;
@@ -20,16 +19,13 @@ function RecommendMain() {
   const showNext = false;
   const showDev = true;
 
-
   return (
     <>
       <div className="mainContainer">
         <div className="header"><Header showMenu={showMenu}/></div>
-        <div className="mainBody"><MainFrame/> </div>
+        <div className="mainBody"><Result/> </div>
         <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
       </div>
     </>
-  );
+  )
 }
-
-export default RecommendMain;

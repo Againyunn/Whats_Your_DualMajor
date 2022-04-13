@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import ReactTypingEffect from 'react-typing-effect';
-import MoveToQuestion from './MoveToQuestion';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,7 +23,7 @@ export default function MainFrame() {
 
     const moveToQuestion = () => {
         //question page로 이동
-        navigate("/question");
+        navigate("/question1");
         window.location.reload();
     }
     

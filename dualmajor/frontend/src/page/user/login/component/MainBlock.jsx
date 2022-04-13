@@ -182,19 +182,10 @@ export default function MainBlock() {
             (error) => {
               const resMessage =
                 "로그인 정보를 확인해주세요."
-                // (error.response &&
-                //   error.response.data &&
-                //   error.response.data.message) ||
-                // error.message ||
-                // error.toString();
               setLoading(false);
               setMessage(resMessage);
             }
           );
-
-        // } else {
-        //   setLoading(false);
-        // }
       }
     };
 

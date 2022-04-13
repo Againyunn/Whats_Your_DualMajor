@@ -134,24 +134,16 @@ export default function SignupForm() {
             setDualMajor(thisUser[7]);  //이중전공  id
 
             //백엔드 서버로부터 본전공/이중전공 정보받고 값을 찾아서 반환
-            //본전공
-            // let allFirstMajor = JSON.parse(AuthService.firstMajorList())
+
             //전체 본전공 정보 저장
             setTotalFirstMajor(allFirstMajor);
-            
-            //이중전공
-            // let allDualMajor = JSON.parse(AuthService.dualMajorList())
             //전체 이중전공 정보 저장
             setTotalDualMajor(allDualMajor);             
-            
-
           }
     },[])
 
     //서비스 탈퇴 신청 시
     useEffect(() => {
-
-
         //서비스 탈퇴 신청 true인 경우
         if( resign === true){
             AuthService.applyResign(userstdNum).then(

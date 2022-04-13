@@ -3,13 +3,12 @@ import Header from '../../main/component/Header';
 import MainFrame from './MainFrame';
 import Footer from '../../main/component/Footer';
 import '../../../media/css/commonFrame.css';
-import Question from './Question';
 import RecommendService from '../../../services/recommend.service';
 import { useNavigate } from 'react-router-dom';
 import { Button, Col, Container, Row, ProgressBar } from 'react-bootstrap';
 import styled from 'styled-components'
 
-export default function QuestionFrame() {
+export default function Question1Frame() {
 
     //상단바 컨트롤 : 메뉴바 노출 상태관리
     const showMenu = false;
@@ -18,13 +17,6 @@ export default function QuestionFrame() {
     const showPrev = false;
     const showNext = false;
     const showDev = false;
-
-    //테스트용
-    // let questionNum=1;
-    // let totalQuestionNum=8;
-    // let questionContent="전공에 대해 이론 자체만으로도 의미가 있다고 생각하나요? 혹은 실용적인 것만 의미가 있다고 생각하나요?";
-    // let response1="이론만으로도 의미가 있어요.";
-    // let response2="실용적이어야 해요.";
 
     //화면 이동 제어용 callback함수 정의
     let navigate = useNavigate();
@@ -50,10 +42,6 @@ export default function QuestionFrame() {
         setValidateTest(localStorage.getItem('recommendTest'));
         let firstValidate = localStorage.getItem('recommendTest');
         
-        //테스트
-        // console.log("localStorage.getItem('recommendTest')", localStorage.getItem('recommendTest'));
-        // console.log('validateTest',validateTest);
-        // console.log('firstValidate', firstValidate);
 
         //비정상적인 방법으로 테스트 접근 시 이중전공 추천 서비스 첫 화면으로 강제 이동
         if(!firstValidate){
@@ -63,7 +51,6 @@ export default function QuestionFrame() {
             navigate("/recommend");
             window.location.reload();
         }
-
 
         let thisQuestionNum = localStorage.getItem("questionNum");
 
@@ -95,7 +82,10 @@ export default function QuestionFrame() {
             (response) => {
 
                 //1차 결과(학문별 선택창)인지 식별
-                if(response.data.questionId === "result"){
+                if(isNaN(response.data.questionId)){ //백엔드로부터 받은 questionId가 숫자가 아닌경우(결과 값인 경우)
+                    //결과로 받아올 값을 세션스토리지에 저장
+                    sessionStorage.setItem('result1Type',response.data.questionId)
+                    
                     //1차 결과 page로 이동
                     navigate("/result1");
                     window.location.reload();
@@ -302,7 +292,7 @@ const BodyBlock = styled.div`
     }
 
     /*다음 버튼*/
-    .nextButtonFrame{
+    .nextButtonFrame{Frame
         grid-row-start: 7;
         grid-row-end: 8;
         grid-template-rows: repeat(auto-fit, minmax(300px, auto));

@@ -123,7 +123,8 @@ import Login from './page/user/login/Login';
 import SignupForm from './page/user/signup/SignupForm';
 import EditInfo from './page/user/editInfo/EditInfo';
 import RecommendMain from './page/recommend/RecommendMain';
-import QuestionFrame from './page/recommend/component/QuestionFrame';
+import Question1Frame from './page/recommend/question1/Question1Frame';
+import Result1Frame from './page/recommend/result1/Result1Frame';
 
 function App() {
   return (
@@ -136,9 +137,8 @@ function App() {
         <Route path='/signup' element={<SignupForm/>} />
         <Route path='/editInfo' element={<EditInfo/>} />
         <Route path='/recommend' element={<RecommendMain/>}/>
-        <Route path='/question' element={<QuestionFrame/>}>
-          {/* <Route path=':num' element={<QuestionFrame/>}/> */}
-        </Route>
+        <Route path='/question1' element={<Question1Frame/>}/>
+        <Route path='/result1' element={<Result1Frame/>}/>
       </Routes>
     </BrowserRouter>
   </>
