@@ -3,11 +3,14 @@ package com.comprehensivedesign.dualmajor.controller;
 import com.comprehensivedesign.dualmajor.Service.MemberService.MemberService;
 import com.comprehensivedesign.dualmajor.domain.Member;
 import com.comprehensivedesign.dualmajor.dto.MemberDto;
+import com.comprehensivedesign.dualmajor.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -16,6 +19,8 @@ public class MemberController {
 
     @Autowired
     private final MemberService memberService;
+    @Autowired
+    private final MemberRepository memberRepository;
 
 
     @GetMapping("/member")
@@ -67,5 +72,15 @@ public class MemberController {
                 updatedMember.getGrade(),
                 updatedMember.getType());
         return updatedMemberDto.getLoginInfo(); //업데이트 성공 후 업데이트된 데이터 셋 반환
+    }
+
+    @PostMapping("/test")
+    public List<Member> test(@RequestBody MemberDto memberDto) {
+        List<Member> byEmailAndNickNameAndGrade = memberRepository.findByEmailAndNickNameAndGrade(memberDto.getEmail(), memberDto.getNickName(), memberDto.getGrade());
+        System.out.println(byEmailAndNickNameAndGrade);
+        System.out.println(byEmailAndNickNameAndGrade.get(0));
+
+
+        return byEmailAndNickNameAndGrade;
     }
 }

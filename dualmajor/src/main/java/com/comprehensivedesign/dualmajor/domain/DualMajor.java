@@ -16,7 +16,6 @@ public class DualMajor {
 
     @Id @GeneratedValue
     private Long id;
-
     private String majorName; //전공명
 /*    @OneToMany(mappedBy = "dualMajorId")
     private List<Member> members = new ArrayList<>();*/

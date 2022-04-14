@@ -39,6 +39,9 @@ public class Member {
     //서비스 내 회원 지위
     private String role;
 
+
+    private int mbtiScore = 0;
+
     //Getter
     public Long getId() {
         return id;
@@ -100,4 +103,13 @@ public class Member {
     public void editPassword(String password) {
         this.password = password;
     }
-}
+
+    /*회원 mbti 점수 저장 로직*/
+    public void setMbtiScoreLogic(int mbtiScore) {
+        this.mbtiScore += mbtiScore;
+        }
+
+    public void clearMbtiScore() {
+        this.mbtiScore = 0;
+    }
+    }
