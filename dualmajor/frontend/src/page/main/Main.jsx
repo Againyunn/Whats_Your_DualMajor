@@ -16,7 +16,7 @@ function Main() {
   //하단바 컨트롤 : 
   const showPrev = false;
   const showNext = false;
-  const showDev = true;
+  const showDev = false;
 
 
   return (

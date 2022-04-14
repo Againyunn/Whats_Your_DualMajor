@@ -16,9 +16,9 @@ function RecommendMain() {
   const showMenu = false;
 
   //하단바 컨트롤 : 
-  const showPrev = false;
+  const showPrev = true;
   const showNext = false;
-  const showDev = true;
+  const showDev = false;
 
 
   return (

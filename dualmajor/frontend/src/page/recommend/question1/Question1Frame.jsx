@@ -70,6 +70,16 @@ export default function Question1Frame() {
             }
         )
 
+        // //테스트용
+        // // setQuestionNum(3);
+        // setTotalQuestionNum(8);
+        // setQuestionId(101);
+        // setQuestionContent("당신은 전공을 선택할 때 개인의 성향과 진로 중 무엇을 더 중시하나요?");
+        // setResponse1("개인성향이 중요해요.");
+        // setResponse2("진로나 직업이 더 중요해요.");
+        // setProgressPercent(1/8*100);
+
+
         setProgressPercent(Math.round(questionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
 
     },[])
@@ -102,6 +112,9 @@ export default function Question1Frame() {
         )
 
         setProgressPercent(Math.round(questionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
+
+
+
     },[questionChange])
 
 
@@ -127,6 +140,16 @@ export default function Question1Frame() {
             let nextQuestionNum = questionNum + 1;
             localStorage.setItem('questionNum', nextQuestionNum);
             setQuestionChange(nextQuestionNum);
+
+            //테스트용
+            // setQuestionNum(3);
+            // setTotalQuestionNum(8);
+            // setQuestionId(101);
+            // setQuestionContent("당신은 수학적인 계산이나 통계 분석을 즐기거나 잘하는 편인가요?");
+            // setResponse1("네. 좋아하거나 잘해요.");
+            // setResponse2("아니오. 좋아하거나 잘하지 않아요.");
+            // setProgressPercent(2/8*100);
+            setThisAnswer(false);
         }
     }
 

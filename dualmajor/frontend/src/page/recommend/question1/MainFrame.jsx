@@ -33,14 +33,18 @@ export default function MainFrame() {
         <BodyBlock>
             <div className='container'>
                 <div className='ShowFrame'>
-                    <img src={require('../../../media/major/경영대학.jpg')} alt='경영대학'/>
+                    <img src={require('../../../media/major/aniMajor.gif')} alt='경영대학'/>
                 </div>
                 <div className='startFrame'>
                     <Button className='startButton' onClick={moveToQuestion}>시작하기</Button>
                 </div>
                 <div className='notice'>
                     <span>신중하게 선택해주세요.</span><br/>
-                    <span>테스트 중 '뒤로가기' 불가합니다!</span>
+                    <span>테스트 중 '뒤로가기' 불가합니다!</span><br/>
+                    <span>비회원은 본전공이 이중전공<br/> 
+                        추천 결과에 포함될 수 있습니다.<br/>
+                        정확한 결과를 원하시면<br/> 
+                        “로그인”후 이용 부탁드립니다.</span>
                 </div>
             </div>
         </BodyBlock>
@@ -142,6 +146,7 @@ const BodyBlock = styled.div`
      padding-top: 3%;
      font-size: 15px;
      color: #5a5a5a;
+     opacity: 0.8;
  }
 `
 
