@@ -26,8 +26,7 @@ import static org.assertj.core.api.Assertions.*;
 @Transactional
 class MemberServiceImplTest {
 
-    @Autowired
-    MemberService memberService;
+    @Autowired MemberService memberService;
     @Autowired MemberRepository memberRepository;
 
     @Test

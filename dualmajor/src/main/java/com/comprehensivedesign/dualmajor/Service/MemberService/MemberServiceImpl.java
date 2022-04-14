@@ -47,17 +47,18 @@ public class MemberServiceImpl implements MemberService{
     @Transactional
     @Override
     public Long join(MemberDto memberDto) throws Exception {
-        String stdEmail = memberDto.getStdNum() + "@hufs.ac.kr";
-        String password = bCryptPasswordEncoder.encode(memberDto.getPassword());
-        validateDuplicateEmail(stdEmail);
+        String stdEmail = memberDto.getStdNum() + "@hufs.ac.kr"; //프론트엔드 입력 창에 학번만 입력되므로 이메일 형식으로 저장하기 위해 주소 붙여주기
+        String password = bCryptPasswordEncoder.encode(memberDto.getPassword()); //비밀번호를 암호화하여 DB에 저장 => 보안 강화
+        validateDuplicateEmail(stdEmail); //중복 이메일 판별
         Member member = new Member();
-        FirstMajor firstMajor = majorService.findFirstMajorById(memberDto.getFirstMajorId()); //Long형태로 변환된 id값을 DTO에서 받아옴
-        DualMajor dualMajor = majorService.findDualMajorById(memberDto.getDualMajorId());
+        FirstMajor firstMajor = majorService.findFirstMajorById(memberDto.getFirstMajorId()); //회원이 참조할 제1전공 객체
+        DualMajor dualMajor = majorService.findDualMajorById(memberDto.getDualMajorId()); //회원이 참조할 이중전공 객체
+        //DB의 회원 테이블과 매핑되는 회원 Entity 객체를 생성하여 가입할 회원의 정보 저장
         member.CreateMember(memberDto.getNickName(), stdEmail, password, memberDto.getStdNum(), firstMajor, dualMajor, memberDto.getGrade(),memberDto.getUserType());
-        return memberRepository.save(member).getId();
+        return memberRepository.save(member).getId(); //가입될 회원 정보가 저장된 회원 객체를 DB의 회원 테이블에 매핑하여 저장
     }
     private void validateDuplicateEmail(String stdEmail) throws Exception{
-        Optional<Member> byEmail = memberRepository.findByEmail(stdEmail);
+        Optional<Member> byEmail = memberRepository.findByEmail(stdEmail); //회원이 입력한 이메일을 기준으로 DB에 같은 정보가 있는지 확인
         if(!byEmail.isEmpty()){
             throw new Exception("already exists Email");
         }
