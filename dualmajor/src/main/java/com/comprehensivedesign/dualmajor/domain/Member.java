@@ -38,8 +38,7 @@ public class Member {
     private String userType;
     //서비스 내 회원 지위
     private String role;
-
-
+    //mbti 점수
     private int mbtiScore = 0;
 
     //Getter
@@ -103,6 +102,7 @@ public class Member {
     public void editPassword(String password) {
         this.password = password;
     }
+
 
     /*회원 mbti 점수 저장 로직*/
     public void setMbtiScoreLogic(int mbtiScore) {

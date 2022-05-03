@@ -83,9 +83,9 @@ public class TendencyServiceImpl implements TendencyService{
         if (q == "4") { //2,3,4번까지 문제 응답 후
             String mbti = tendencyResponse.getMbti();
             if (member.getMbtiScore() > 4) { //"e"성향 질문에 두개 이상 응답했으면 회원 응답지 mbti항목에 "e"추가
-                tendencyResponse.setMbti(mbti += "e");
+                tendencyResponse.setMbti(mbti += "i");
             }
-            else{tendencyResponse.setMbti(mbti += "i");}
+            else{tendencyResponse.setMbti(mbti += "e");}
             member.clearMbtiScore(); //세 문제의 응답을 통한 mbti 요소 산출이 완료되면 저장되어있는 mbti점수 초기화
         }
         else if (q == "7") { //5,6,7번까지 문제 응답 후

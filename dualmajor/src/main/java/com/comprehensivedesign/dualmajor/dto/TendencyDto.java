@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Getter
@@ -29,7 +30,7 @@ public class TendencyDto {
         this.response2 = response2;
     }
     public Map getQuestionData() {
-        Map<String, String> map = new HashMap<>();
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
         map.put("questionNum", questionNum);
         map.put("questionContent", questionContent);
         map.put("response1", response1);
