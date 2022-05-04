@@ -21,7 +21,7 @@ export default function Result() {
             },
             {
                 "academicName":"사회과학대학",
-                "departmentList":"AI전공,컴퓨터공학부,산업경영공학과,전자공학과,정보통신공학과"
+                "departmentList": "경영학부, 국제학부, 국제통상학과, 경제학과, 국제금융학과, 미디어커뮤니케이션학과, 광고pr학과, 문화콘텐츠전공, GBT학부"
             }
         ]
     }
@@ -69,12 +69,12 @@ export default function Result() {
                 {
                     testData.list.map(thisData => (
                         <>
-                            <div className='eachResult' key={thisData.academicName} data-tip data-for="tooltip" onClick={()=>{selectAcademicName(thisData.academicName)}}>
-                                <span >
+                            <div className='eachResult' key={thisData.academicName} data-tip data-for={`tooltip${thisData.academicName}}`} onClick={()=>{selectAcademicName(thisData.academicName)}}>
+                                
                                     {thisData.academicName}
-                                </span>
+                                
                                     <ReactTooltip
-                                        id="tooltip"
+                                        id={`tooltip${thisData.academicName}}`}
                                         effect="solid"
                                         place="bottom"
                                         type="dark"
