@@ -21,19 +21,10 @@ public class MajorServiceImpl implements MajorService{
 
     @Override
     public FirstMajor findFirstMajorById(Long firstMajorId) throws Exception{
-        Optional<FirstMajor> firstMajor = firstMajorRepository.findById(firstMajorId);
-        if (firstMajor.isEmpty()) {
-            throw new Exception("not exists FirstMajor");
-        }
-        return firstMajor.get();
+        return firstMajorRepository.findById(firstMajorId).orElseThrow(()->new Exception("not exist first major"));
     }
-
     @Override
     public DualMajor findDualMajorById(Long dualMajorId) throws Exception{
-        Optional<DualMajor> dualMajor = dualMajorRepository.findById(dualMajorId);
-        if (dualMajor.isEmpty()) {
-            throw new Exception("not exists DualMajor");
-        }
-        return dualMajor.get();
+        return dualMajorRepository.findById(dualMajorId).orElseThrow(()->new Exception("not exist dual major"));
     }
 }

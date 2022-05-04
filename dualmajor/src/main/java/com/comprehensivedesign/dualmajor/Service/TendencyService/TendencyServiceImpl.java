@@ -5,7 +5,10 @@ import com.comprehensivedesign.dualmajor.Service.MemberService.MemberService;
 import com.comprehensivedesign.dualmajor.domain.Member;
 import com.comprehensivedesign.dualmajor.domain.Tendency.TendencyResponse;
 import com.comprehensivedesign.dualmajor.domain.Tendency.TendencyResult;
+import com.comprehensivedesign.dualmajor.domain.sector.MemberSector;
+import com.comprehensivedesign.dualmajor.domain.sector.Sector;
 import com.comprehensivedesign.dualmajor.dto.TendencyDto;
+import com.comprehensivedesign.dualmajor.repository.MemberSectorRepository;
 import com.comprehensivedesign.dualmajor.repository.TendencyResponseRepository;
 import com.comprehensivedesign.dualmajor.repository.TendencyResultRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +28,11 @@ public class TendencyServiceImpl implements TendencyService{
     @Autowired private final MemberService memberService;
     @Autowired private final TendencyResponseRepository tendencyResponseRepository;
     @Autowired private final TendencyResultRepository tendencyResultRepository;
+    @Autowired private final MemberSectorRepository memberSectorRepository;
 
     /*섹션 1 : 섹터 도출 로직*/
     @Override
+    @Transactional
     public Object resultProcess(TendencyDto tendencyDto, Long memberId) {
         String q = tendencyDto.getQuestionNum();
         //Member member = memberService.findById(memberId); //응답 객체에 참조할 현재 서비스 이용중인 회원 객체 불러오기
@@ -46,12 +52,15 @@ public class TendencyServiceImpl implements TendencyService{
             } else if (q == "15") { //15번 문제
                 tendencyResponse.setQ15(tendencyDto.getAnswer());
             } else { //16번 문제
-                tendencyResponse.setQ16(tendencyDto.getAnswer());}
+                tendencyResponse.setQ16(tendencyDto.getAnswer());
+                saveSector(tendencyResponse); //최종 응답까지 저장되면 회원 응답을 통해 결과 테이블에서 일치하는 객체(행)들 찾아내기
+            }
         }
         return true; //매 응답에 의한 로직이 잘 처리되면 true 반환
     }
 
     @Override
+    @Transactional
     public String mbtiProcess(TendencyDto tendencyDto, Long memberId) {
         String q = tendencyDto.getQuestionNum();
         TendencyResponse tendencyResponse = tendencyResponseRepository.findByMemberId(memberId);//FK인 회원id 로 회원의 응답지 찾기
@@ -91,4 +100,31 @@ public class TendencyServiceImpl implements TendencyService{
         }
         return "ok"; //일반 결과
     }
+    /*회원 응답에 따른 결과 Sector 찾기*/
+    @Override
+    @Transactional
+    public boolean saveSector(TendencyResponse tendencyResponse){
+        ArrayList<TendencyResult> result = tendencyResultRepository.findByMbtiAndQ14AndQ15AndQ16(tendencyResponse.getMbti(), tendencyResponse.getQ14(), tendencyResponse.getQ15(), tendencyResponse.getQ16());
+        if (result.isEmpty()) {
+            return false; //추천된 섹터가 없으면 재시도 요청
+        }
+        for (int i = 0; i < result.size(); i++) { //회원에게 추천된 섹터 결과만큼 MemberSector 객체 생성하여 회원과 결과 하나의 행으로 저장
+            MemberSector memberSector = new MemberSector();
+            memberSector.saveSector(tendencyResponse.getMember(), result.get(i).getSector());
+        }
+        return true;
+    }
+
+    /*회원에게 추천된 섹터 반환*/
+    @Override
+    public List<Sector> findMemberSector(Long memberId) throws Exception {
+        List<MemberSector> memberSectors = memberSectorRepository.findByMemberId(memberId).orElseThrow(()->new Exception("not exists member sector"));
+        List<Sector> sector = new ArrayList<>();
+        for (int i = 0; i < memberSectors.size(); i++) { //회원에게 추천된 섹터 수 만큼 반복하며 섹터만 추출
+            sector.add(memberSectors.get(i).getSector()); //MemberSector객체 내에서 sector만 추출하여 Sector 리스트에 담기
+        }
+        return sector;
+    }
+
+
 }
