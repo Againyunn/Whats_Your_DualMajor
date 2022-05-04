@@ -10,6 +10,7 @@ import com.comprehensivedesign.dualmajor.repository.TendencyQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,19 +22,20 @@ public class TendencyController {
     @Autowired private final TendencyQuestionRepository tendencyQuestionRepository;
     @Autowired private final TendencyService tendencyService;
 
-    @PostMapping("/firstSectionQuestion")
+    /*질문 요청*/
+    @GetMapping("/firstSectionQuestion")
     public Object firstSectionQuestion(@RequestBody TendencyDto tendencyDto) {
         TendencyQuestion byQuestionNum = tendencyQuestionRepository.findByQuestionNum(tendencyDto.getQuestionNum());//프론트에서 요청한 질문 번호를 기준으로 해당 질문으로 조회한 해당 질문 정보들
-        TendencyDto questionData = new TendencyDto();
-        questionData.setQuestionData(byQuestionNum.getQuestionNum(), byQuestionNum.getQuestionContent(), byQuestionNum.getResponse1(), byQuestionNum.getResponse2());
-        return questionData.getQuestionData(); //요청한 질문 번호에 대한 질문 정보들 응답
+        TendencyDto questionAPI = new TendencyDto();
+        questionAPI.setQuestionData(byQuestionNum.getQuestionNum(), byQuestionNum.getQuestionContent(), byQuestionNum.getResponse1(), byQuestionNum.getResponse2());
+        return questionAPI.getQuestionData(); //요청한 질문 번호에 대한 질문 정보들 응답
     }
-
+    /*사용자 응답 전송*/
     @PostMapping("/firstSectionAnswer")
     public Object firstSectionAnswer(@RequestBody TendencyDto tendencyDto,
                                      @AuthenticationPrincipal MemberAdapter memberAdapter) {//현재 인증된 회원이라면 회원 정보 불러오기
         tendencyService.resultProcess(tendencyDto, memberAdapter.getMember().getId());
         return "test";
     }
-
+    /*섹터 추천 최종 결과 요청*/
 }

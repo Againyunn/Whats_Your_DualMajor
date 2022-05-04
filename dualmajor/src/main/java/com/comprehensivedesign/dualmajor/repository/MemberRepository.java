@@ -18,6 +18,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     //JPA query Method : findBy~ ==> 뒤에 붙는 명사를 기준으로 자동으로 쿼리 생성
     //select * from member m where m.email="email"
-    public Optional<Member> findByEmail(String email);
+    Optional<Member> findByEmail(String email);
 
 }
