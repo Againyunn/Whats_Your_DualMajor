@@ -10,7 +10,8 @@ import javax.persistence.*;
 @Getter
 public class Member {
     //식별번호, PK
-    @Id @GeneratedValue //자동 증가시켜준다는 의미
+    @Id
+    @GeneratedValue //자동 증가시켜준다는 의미
     private Long id;
     //회원 이름(닉네임)
     private String nickName;
@@ -33,13 +34,9 @@ public class Member {
     //회원 학년
     private String grade;
     //회원 유형(멘토 or 멘티)
-    //@Enumerated(EnumType.STRING)
-    //private Type type;
     private String userType;
     //서비스 내 회원 지위
     private String role;
-    //mbti 점수
-    private int mbtiScore = 0;
 
     //Getter
     public Long getId() {
@@ -62,9 +59,13 @@ public class Member {
         return firstMajor;
     }
 
-    public DualMajor getDualMajor() {return dualMajor;}
+    public DualMajor getDualMajor() {
+        return dualMajor;
+    }
 
-    public String getGrade() {return grade;}
+    public String getGrade() {
+        return grade;
+    }
 
     public String getType() {
         return userType;
@@ -102,14 +103,5 @@ public class Member {
     public void editPassword(String password) {
         this.password = password;
     }
+}
 
-
-    /*회원 mbti 점수 저장 로직*/
-    public void setMbtiScoreLogic(int mbtiScore) {
-        this.mbtiScore += mbtiScore;
-        }
-
-    public void clearMbtiScore() {
-        this.mbtiScore = 0;
-    }
-    }

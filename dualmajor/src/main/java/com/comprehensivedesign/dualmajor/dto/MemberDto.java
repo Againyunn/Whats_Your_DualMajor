@@ -1,11 +1,9 @@
 package com.comprehensivedesign.dualmajor.dto;
 
 
-import com.comprehensivedesign.dualmajor.domain.Type;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
