@@ -112,9 +112,6 @@ export default function Question1Frame() {
         )
 
         setProgressPercent(Math.round(questionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
-
-
-
     },[questionChange])
 
 

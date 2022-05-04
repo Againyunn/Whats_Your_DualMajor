@@ -63,7 +63,7 @@ export default function MainFrame() {
 
  /*이중전공 추천 & 예상 경쟁률*/
  div.choose{
-     gird-row-start: 0;
+     grid-row-start: 0;
      grid-row-start: 1;
 
      grid-template-rows: repeat(auto-fit, minmax(300px, auto));
@@ -71,7 +71,7 @@ export default function MainFrame() {
 
  /*우리학과 자랑하기*/
  div.write{
-     gird-row-start: 1;
+     grid-row-start: 1;
      grid-row-start: 2;
      grid-template-rows: repeat(auto-fit, minmax(300px, auto));
 
@@ -98,7 +98,7 @@ export default function MainFrame() {
 
  /*학우들의 생생후기*/
  div.review{
-     gird-row-start: 2;
+     grid-row-start: 2;
      grid-row-start: 3;    
 
      /*색*/
@@ -123,7 +123,7 @@ export default function MainFrame() {
 
  /*공지사항*/
  div.notice{
-     gird-row-start: 3;
+     grid-row-start: 3;
      grid-row-start: 4;
 
      /*색*/

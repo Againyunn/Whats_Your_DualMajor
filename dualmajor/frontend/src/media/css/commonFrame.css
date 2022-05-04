@@ -6,7 +6,7 @@
     grid-template-rows: repeat(10, minmax(10%, auto));
     background-color: white;
     text-align: center;
-    justify-content: stretch;
+    justify-content: stretch; 
     /* vertical-align: middle; */
 
     /*border: solid 1px #002F5A;*/
@@ -40,7 +40,7 @@
     grid-row-end: 10;
     grid-column-start: 2;
     grid-column-end: 3;
-    align-self: stretch;
+    /* align-self: stretch; */
     /* max-height: 150%; */
 }
 

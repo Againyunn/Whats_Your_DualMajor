@@ -17,13 +17,13 @@ export default function Result1Frame() {
   //하단바 컨트롤 : 
   const showPrev = false;
   const showNext = false;
-  const showDev = true;
+  const showDev = false;
 
   return (
     <>
       <div className="mainContainer">
         <div className="header"><Header showMenu={showMenu}/></div>
-        <div className="mainBody"><Result/> </div>
+        <div className="mainBody"><Result/></div>
         <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
       </div>
     </>

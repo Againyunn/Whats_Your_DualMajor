@@ -26,7 +26,6 @@ export default function MainFrame() {
         navigate("/question1");
         window.location.reload();
     }
-    
 
     return (
     <>
