@@ -69,12 +69,12 @@ export default function Result() {
                 {
                     testData.list.map(thisData => (
                         <>
-                            <div className='eachResult' key={thisData.academicName} data-tip data-for={`tooltip${thisData.academicName}}`} onClick={()=>{selectAcademicName(thisData.academicName)}}>
+                            <div className='eachResult' key={thisData.academicName} data-tip data-for={`tooltip${thisData.academicName}`} onClick={()=>{selectAcademicName(thisData.academicName)}}>
                                 
                                     {thisData.academicName}
                                 
                                     <ReactTooltip
-                                        id={`tooltip${thisData.academicName}}`}
+                                        id={`tooltip${thisData.academicName}`}
                                         effect="solid"
                                         place="bottom"
                                         type="dark"
