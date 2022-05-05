@@ -125,6 +125,7 @@ import EditInfo from './page/user/editInfo/EditInfo';
 import RecommendMain from './page/recommend/RecommendMain';
 import Question1Frame from './page/recommend/question1/Question1Frame';
 import Result1Frame from './page/recommend/result1/Result1Frame';
+import Question2Frame from './page/recommend/question2/Question2Frame';
 
 function App() {
   return (
@@ -139,6 +140,7 @@ function App() {
         <Route path='/recommend' element={<RecommendMain/>}/>
         <Route path='/question1' element={<Question1Frame/>}/>
         <Route path='/result1' element={<Result1Frame/>}/>
+        <Route path='/question2' element={<Question2Frame/>}/>
       </Routes>
     </BrowserRouter>
   </>

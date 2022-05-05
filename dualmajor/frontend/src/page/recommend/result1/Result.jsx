@@ -104,6 +104,13 @@ export default function Result() {
             //API전송
             RecommendService.submitFirstSectionAnswer(answer);
             console.log("answer:",answer);
+
+            localStorage.setItem('recommendFirstResult', 'true');
+            localStorage.setItem('questionNum', '1');
+
+            //2차 질문 page로 이동
+            navigate("/question2");
+            window.location.reload();
         }
     }
 
