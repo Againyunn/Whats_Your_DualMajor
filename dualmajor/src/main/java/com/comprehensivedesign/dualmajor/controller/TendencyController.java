@@ -50,20 +50,25 @@ public class TendencyController {
         }
         return map;
     }
-    /*섹터 추천 최종 결과 요청*/
-    @GetMapping("/firstSectionResult")
-    public Map viewMemberSector(@AuthenticationPrincipal MemberAdapter memberAdapter) throws Exception{
-        List<Sector> memberSector;
-        try {
-            memberSector = tendencyService.findMemberSector(memberAdapter.getMember().getId());
-        } catch (Exception e) {
-            Map<String, Boolean> map = new HashMap<>();
-            map.put("findSectors", false);
-            return map;
-        }
-        FirstSectionDto firstSectionApi = new FirstSectionDto();
-        firstSectionApi.setMemberSectorApi(memberSector);
-        return firstSectionApi.getMemberSectorApi();
 
+    /*섹터 추천 최종 결과 요청*/
+    @PostMapping("/firstSectionResult")
+    public Map viewMemberSector(@RequestBody FirstSectionDto firstSectionDto, @AuthenticationPrincipal MemberAdapter memberAdapter) throws Exception {
+        if(!firstSectionDto.getResultType().equals("result20")){
+            List<Sector> memberSector;
+            try {
+                memberSector = tendencyService.findMemberSector(memberAdapter.getMember().getId());
+            } catch (Exception e) {
+                Map<String, Boolean> map = new HashMap<>();
+                map.put("findSectors", false);
+                return map;
+            }
+            FirstSectionDto firstSectionApi = new FirstSectionDto();
+            firstSectionApi.setMemberSectorApi(memberSector);
+            return firstSectionApi.getMemberSectorApi();
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("accessed",false);
+        return map;
     }
 }

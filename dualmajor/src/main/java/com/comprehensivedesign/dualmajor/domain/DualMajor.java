@@ -1,6 +1,7 @@
 package com.comprehensivedesign.dualmajor.domain;
 
 
+import com.comprehensivedesign.dualmajor.domain.sector.Sector;
 import lombok.Getter;
 
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ public class DualMajor {
     @Id @GeneratedValue
     private Long id;
     private String majorName; //전공명
-/*    @OneToMany(mappedBy = "dualMajorId")
-    private List<Member> members = new ArrayList<>();*/
+    private String campus; //서울vs글로벌
+    private Sector sector; //해당되는 섹터
+
 }
