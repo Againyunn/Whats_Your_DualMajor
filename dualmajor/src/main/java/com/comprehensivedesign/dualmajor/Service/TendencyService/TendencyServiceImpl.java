@@ -2,12 +2,15 @@ package com.comprehensivedesign.dualmajor.Service.TendencyService;
 
 
 import com.comprehensivedesign.dualmajor.Service.MemberService.MemberService;
+import com.comprehensivedesign.dualmajor.domain.DualMajor;
 import com.comprehensivedesign.dualmajor.domain.Member;
 import com.comprehensivedesign.dualmajor.domain.Tendency.TendencyResponse;
 import com.comprehensivedesign.dualmajor.domain.Tendency.TendencyResult;
 import com.comprehensivedesign.dualmajor.domain.sector.MemberSector;
 import com.comprehensivedesign.dualmajor.domain.sector.Sector;
+import com.comprehensivedesign.dualmajor.dto.DualMajorName;
 import com.comprehensivedesign.dualmajor.dto.TendencyDto;
+import com.comprehensivedesign.dualmajor.repository.DualMajorRepository;
 import com.comprehensivedesign.dualmajor.repository.MemberSectorRepository;
 import com.comprehensivedesign.dualmajor.repository.TendencyResponseRepository;
 import com.comprehensivedesign.dualmajor.repository.TendencyResultRepository;
@@ -16,9 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,7 @@ public class TendencyServiceImpl implements TendencyService{
     @Autowired private final TendencyResponseRepository tendencyResponseRepository;
     @Autowired private final TendencyResultRepository tendencyResultRepository;
     @Autowired private final MemberSectorRepository memberSectorRepository;
+    @Autowired private final DualMajorRepository dualMajorRepository;
 
     /*섹션 1 : 섹터 도출 로직*/
     @Override
@@ -126,6 +128,18 @@ public class TendencyServiceImpl implements TendencyService{
             sector.add(memberSectors.get(i).getSector()); //MemberSector객체 내에서 sector만 추출하여 Sector 리스트에 담기
         }
         return sector;
+    }
+
+    /*추천된 섹터에 해당하는 이중전공 찾기*/
+    @Override
+    public Map<Long, List> findDualMajor(Long memberId) throws Exception {
+        List<MemberSector> memberSectors = memberSectorRepository.findByMemberId(memberId).orElseThrow(()->new Exception("not exists member sector"));
+        Map<Long, List> map = new HashMap<>();
+        for (int i = 0; i < memberSectors.size(); i++) {
+            List<DualMajorName> dualMajorNames = dualMajorRepository.findMajorNameBySectorId(memberSectors.get(i).getSector().getId());
+            map.put(memberSectors.get(i).getSector().getId(), dualMajorNames); //{sectorId : dualMajorList}
+        }
+        return map;
     }
 
 

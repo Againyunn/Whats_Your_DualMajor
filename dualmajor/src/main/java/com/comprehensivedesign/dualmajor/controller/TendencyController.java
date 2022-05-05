@@ -3,6 +3,7 @@ package com.comprehensivedesign.dualmajor.controller;
 
 import com.comprehensivedesign.dualmajor.Service.TendencyService.TendencyService;
 import com.comprehensivedesign.dualmajor.config.auth.MemberAdapter;
+import com.comprehensivedesign.dualmajor.domain.DualMajor;
 import com.comprehensivedesign.dualmajor.domain.Member;
 import com.comprehensivedesign.dualmajor.domain.Tendency.TendencyQuestion;
 import com.comprehensivedesign.dualmajor.domain.sector.Sector;
@@ -54,17 +55,19 @@ public class TendencyController {
     /*섹터 추천 최종 결과 요청*/
     @PostMapping("/firstSectionResult")
     public Map viewMemberSector(@RequestBody FirstSectionDto firstSectionDto, @AuthenticationPrincipal MemberAdapter memberAdapter) throws Exception {
-        if(!firstSectionDto.getResultType().equals("result20")){
+        if(firstSectionDto.getResultType().equals("result20")){
             List<Sector> memberSector;
+            Map<Long, List> dualMajor;
             try {
                 memberSector = tendencyService.findMemberSector(memberAdapter.getMember().getId());
+                dualMajor = tendencyService.findDualMajor(memberAdapter.getMember().getId());
             } catch (Exception e) {
                 Map<String, Boolean> map = new HashMap<>();
                 map.put("findSectors", false);
                 return map;
             }
             FirstSectionDto firstSectionApi = new FirstSectionDto();
-            firstSectionApi.setMemberSectorApi(memberSector);
+            firstSectionApi.setMemberSectorApi(memberSector, dualMajor);
             return firstSectionApi.getMemberSectorApi();
         }
         Map<String, Object> map = new HashMap<>();
