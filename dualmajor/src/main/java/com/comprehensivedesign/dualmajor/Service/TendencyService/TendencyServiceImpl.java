@@ -137,7 +137,11 @@ public class TendencyServiceImpl implements TendencyService{
         Map<Long, List> map = new HashMap<>();
         for (int i = 0; i < memberSectors.size(); i++) {
             List<DualMajorName> dualMajorNames = dualMajorRepository.findMajorNameBySectorId(memberSectors.get(i).getSector().getId());
-            map.put(memberSectors.get(i).getSector().getId(), dualMajorNames); //{sectorId : dualMajorList}
+            List<String> temp = new ArrayList<>(); //이중전공명만 따로 담기 위한 리스트
+            for (int j = 0; j < dualMajorNames.size(); j++) { //회원에게 추천된 섹터 내의 이중전공들 대상으로 이중전공 명만 따로 뽑아내기
+                temp.add(dualMajorNames.get(j).getMajorName());
+                map.put(memberSectors.get(i).getSector().getId(), temp);
+            }
         }
         return map;
     }
