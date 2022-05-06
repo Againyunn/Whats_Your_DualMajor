@@ -1,4 +1,4 @@
-package com.comprehensivedesign.dualmajor.domain.Tendency;
+package com.comprehensivedesign.dualmajor.domain.firstSection.Tendency;
 
 
 import lombok.Getter;

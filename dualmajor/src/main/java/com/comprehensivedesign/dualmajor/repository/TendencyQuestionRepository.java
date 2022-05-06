@@ -1,6 +1,6 @@
 package com.comprehensivedesign.dualmajor.repository;
 
-import com.comprehensivedesign.dualmajor.domain.Tendency.TendencyQuestion;
+import com.comprehensivedesign.dualmajor.domain.firstSection.Tendency.TendencyQuestion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

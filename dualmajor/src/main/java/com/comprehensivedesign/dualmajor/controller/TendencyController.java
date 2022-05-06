@@ -3,9 +3,7 @@ package com.comprehensivedesign.dualmajor.controller;
 
 import com.comprehensivedesign.dualmajor.Service.TendencyService.TendencyService;
 import com.comprehensivedesign.dualmajor.config.auth.MemberAdapter;
-import com.comprehensivedesign.dualmajor.domain.DualMajor;
-import com.comprehensivedesign.dualmajor.domain.Member;
-import com.comprehensivedesign.dualmajor.domain.Tendency.TendencyQuestion;
+import com.comprehensivedesign.dualmajor.domain.firstSection.Tendency.TendencyQuestion;
 import com.comprehensivedesign.dualmajor.domain.sector.Sector;
 import com.comprehensivedesign.dualmajor.dto.FirstSectionDto;
 import com.comprehensivedesign.dualmajor.dto.TendencyDto;

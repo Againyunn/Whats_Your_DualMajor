@@ -1,13 +1,10 @@
 package com.comprehensivedesign.dualmajor.repository;
 
-import com.comprehensivedesign.dualmajor.domain.Tendency.TendencyResult;
-import com.comprehensivedesign.dualmajor.domain.sector.Sector;
+import com.comprehensivedesign.dualmajor.domain.firstSection.Tendency.TendencyResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public interface TendencyResultRepository extends JpaRepository<TendencyResult, Long> {

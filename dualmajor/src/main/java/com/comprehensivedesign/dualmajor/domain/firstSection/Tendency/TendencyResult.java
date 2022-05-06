@@ -1,4 +1,4 @@
-package com.comprehensivedesign.dualmajor.domain.Tendency;
+package com.comprehensivedesign.dualmajor.domain.firstSection.Tendency;
 
 
 import com.comprehensivedesign.dualmajor.domain.sector.Sector;

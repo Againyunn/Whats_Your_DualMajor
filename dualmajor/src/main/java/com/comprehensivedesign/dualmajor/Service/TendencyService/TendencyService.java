@@ -1,7 +1,6 @@
 package com.comprehensivedesign.dualmajor.Service.TendencyService;
 
-import com.comprehensivedesign.dualmajor.domain.DualMajor;
-import com.comprehensivedesign.dualmajor.domain.Tendency.TendencyResponse;
+import com.comprehensivedesign.dualmajor.domain.firstSection.Tendency.TendencyResponse;
 import com.comprehensivedesign.dualmajor.domain.sector.Sector;
 import com.comprehensivedesign.dualmajor.dto.TendencyDto;
 
