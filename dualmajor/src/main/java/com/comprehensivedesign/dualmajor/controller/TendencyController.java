@@ -1,14 +1,14 @@
 package com.comprehensivedesign.dualmajor.controller;
 
 
-import com.comprehensivedesign.dualmajor.Service.FirstSectionDivisionService.FirstSectionDivisionService;
-import com.comprehensivedesign.dualmajor.Service.TendencyService.TendencyService;
+import com.comprehensivedesign.dualmajor.Service.FirstSection.FirstSectionDivisionService.FirstSectionDivisionService;
+import com.comprehensivedesign.dualmajor.Service.FirstSection.TendencyService.TendencyService;
 import com.comprehensivedesign.dualmajor.config.auth.MemberAdapter;
 import com.comprehensivedesign.dualmajor.domain.firstSection.Tendency.TendencyQuestion;
 import com.comprehensivedesign.dualmajor.domain.sector.Sector;
 import com.comprehensivedesign.dualmajor.dto.FirstSectionDto;
 import com.comprehensivedesign.dualmajor.dto.FirstSectionQuestionDto;
-import com.comprehensivedesign.dualmajor.repository.TendencyQuestionRepository;
+import com.comprehensivedesign.dualmajor.repository.firstSection.tendency.TendencyQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

@@ -1,4 +1,4 @@
-package com.comprehensivedesign.dualmajor.Service.TendencyService;
+package com.comprehensivedesign.dualmajor.Service.FirstSection.TendencyService;
 
 
 import com.comprehensivedesign.dualmajor.Service.MemberService.MemberService;
@@ -8,10 +8,10 @@ import com.comprehensivedesign.dualmajor.domain.sector.MemberSector;
 import com.comprehensivedesign.dualmajor.domain.sector.Sector;
 import com.comprehensivedesign.dualmajor.dto.DualMajorName;
 import com.comprehensivedesign.dualmajor.dto.FirstSectionQuestionDto;
-import com.comprehensivedesign.dualmajor.repository.DualMajorRepository;
+import com.comprehensivedesign.dualmajor.repository.major.DualMajorRepository;
 import com.comprehensivedesign.dualmajor.repository.MemberSectorRepository;
-import com.comprehensivedesign.dualmajor.repository.TendencyResponseRepository;
-import com.comprehensivedesign.dualmajor.repository.TendencyResultRepository;
+import com.comprehensivedesign.dualmajor.repository.firstSection.tendency.TendencyResponseRepository;
+import com.comprehensivedesign.dualmajor.repository.firstSection.tendency.TendencyResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

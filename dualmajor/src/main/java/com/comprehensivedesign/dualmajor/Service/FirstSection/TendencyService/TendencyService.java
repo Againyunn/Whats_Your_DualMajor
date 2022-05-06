@@ -1,4 +1,4 @@
-package com.comprehensivedesign.dualmajor.Service.TendencyService;
+package com.comprehensivedesign.dualmajor.Service.FirstSection.TendencyService;
 
 import com.comprehensivedesign.dualmajor.domain.firstSection.Tendency.TendencyResponse;
 import com.comprehensivedesign.dualmajor.domain.sector.Sector;

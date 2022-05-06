@@ -1,4 +1,4 @@
-package com.comprehensivedesign.dualmajor.repository;
+package com.comprehensivedesign.dualmajor.repository.major;
 
 import com.comprehensivedesign.dualmajor.domain.DualMajor;
 import com.comprehensivedesign.dualmajor.dto.DualMajorName;

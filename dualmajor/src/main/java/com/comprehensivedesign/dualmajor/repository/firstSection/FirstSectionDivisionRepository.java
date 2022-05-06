@@ -1,4 +1,4 @@
-package com.comprehensivedesign.dualmajor.repository;
+package com.comprehensivedesign.dualmajor.repository.firstSection;
 
 import com.comprehensivedesign.dualmajor.domain.Member;
 import com.comprehensivedesign.dualmajor.domain.firstSection.FirstSectionDivision;

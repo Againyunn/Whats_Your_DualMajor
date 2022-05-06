@@ -1,9 +1,9 @@
-package com.comprehensivedesign.dualmajor.Service.FirstSectionDivisionService;
+package com.comprehensivedesign.dualmajor.Service.FirstSection.FirstSectionDivisionService;
 
 
 import com.comprehensivedesign.dualmajor.domain.Member;
 import com.comprehensivedesign.dualmajor.domain.firstSection.FirstSectionDivision;
-import com.comprehensivedesign.dualmajor.repository.FirstSectionDivisionRepository;
+import com.comprehensivedesign.dualmajor.repository.firstSection.FirstSectionDivisionRepository;
 import com.comprehensivedesign.dualmajor.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

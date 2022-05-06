@@ -1,4 +1,4 @@
-package com.comprehensivedesign.dualmajor.Service.FirstSectionDivisionService;
+package com.comprehensivedesign.dualmajor.Service.FirstSection.FirstSectionDivisionService;
 
 public interface FirstSectionDivisionService {
     /*회원의 응답 찾기*/

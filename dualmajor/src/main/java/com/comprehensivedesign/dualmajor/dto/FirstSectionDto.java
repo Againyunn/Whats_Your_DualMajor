@@ -1,13 +1,8 @@
 package com.comprehensivedesign.dualmajor.dto;
 
-import com.comprehensivedesign.dualmajor.Service.TendencyService.TendencyService;
-import com.comprehensivedesign.dualmajor.domain.DualMajor;
 import com.comprehensivedesign.dualmajor.domain.sector.Sector;
-import com.comprehensivedesign.dualmajor.repository.DualMajorRepository;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

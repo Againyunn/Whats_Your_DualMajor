@@ -3,14 +3,12 @@ package com.comprehensivedesign.dualmajor.Service.MajorService;
 
 import com.comprehensivedesign.dualmajor.domain.DualMajor;
 import com.comprehensivedesign.dualmajor.domain.FirstMajor;
-import com.comprehensivedesign.dualmajor.repository.DualMajorRepository;
-import com.comprehensivedesign.dualmajor.repository.FirstMajorRepository;
+import com.comprehensivedesign.dualmajor.repository.major.DualMajorRepository;
+import com.comprehensivedesign.dualmajor.repository.major.FirstMajorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
