@@ -7,7 +7,7 @@ import com.comprehensivedesign.dualmajor.domain.firstSection.Tendency.TendencyRe
 import com.comprehensivedesign.dualmajor.domain.sector.MemberSector;
 import com.comprehensivedesign.dualmajor.domain.sector.Sector;
 import com.comprehensivedesign.dualmajor.dto.DualMajorName;
-import com.comprehensivedesign.dualmajor.dto.TendencyDto;
+import com.comprehensivedesign.dualmajor.dto.FirstSectionQuestionDto;
 import com.comprehensivedesign.dualmajor.repository.DualMajorRepository;
 import com.comprehensivedesign.dualmajor.repository.MemberSectorRepository;
 import com.comprehensivedesign.dualmajor.repository.TendencyResponseRepository;
@@ -33,8 +33,8 @@ public class TendencyServiceImpl implements TendencyService{
     /*섹션 1 : 섹터 도출 로직*/
     @Override
     @Transactional
-    public boolean resultProcess(TendencyDto tendencyDto, Long memberId) {
-        String q = tendencyDto.getQuestionNum();
+    public boolean resultProcess(FirstSectionQuestionDto firstSectionQuestionDto, Long memberId) {
+        String q = firstSectionQuestionDto.getQuestionNum();
         //Member member = memberService.findById(memberId); //응답 객체에 참조할 현재 서비스 이용중인 회원 객체 불러오기
         /*성향 우선 질문지에서 성향 관련 질문 :: q2~q13(총 12개)*/
         if (q.equals("2") || q.equals("3") || q.equals("4") || q.equals("5") || q.equals("6") || q.equals("7") || q.equals("8") || q.equals("9") || q.equals("10") || q.equals("11") || q.equals("12") || q.equals("13")) {
@@ -43,17 +43,17 @@ public class TendencyServiceImpl implements TendencyService{
                 tendencyResponse.createMemberResponse(memberService.findById(memberId));
                 tendencyResponseRepository.save(tendencyResponse);
             }
-            mbtiProcess(tendencyDto, memberId); //mbti 판별 로직으로 성향 관련 질문 응답 전달
+            mbtiProcess(firstSectionQuestionDto, memberId); //mbti 판별 로직으로 성향 관련 질문 응답 전달
         }
         /*진로 관련 질문 응답 과정*/
         else if (q.equals("14") || q.equals("15") || q.equals("16")) {
             TendencyResponse tendencyResponse = tendencyResponseRepository.findByMemberId(memberId);
             if (q.equals("14")) { //14번 문제
-                tendencyResponse.setQ14(tendencyDto.getAnswer());
+                tendencyResponse.setQ14(firstSectionQuestionDto.getAnswer());
             } else if (q.equals("15")) { //15번 문제
-                tendencyResponse.setQ15(tendencyDto.getAnswer());
+                tendencyResponse.setQ15(firstSectionQuestionDto.getAnswer());
             } else { //16번 문제
-                tendencyResponse.setQ16(tendencyDto.getAnswer());
+                tendencyResponse.setQ16(firstSectionQuestionDto.getAnswer());
                 saveSector(tendencyResponse);//최종 응답까지 저장되면 회원 응답을 통해 결과 테이블에서 일치하는 객체(행)들 찾아내기
             }
         }
@@ -62,10 +62,10 @@ public class TendencyServiceImpl implements TendencyService{
 
     @Override
     @Transactional
-    public String mbtiProcess(TendencyDto tendencyDto, Long memberId) {
-        String q = tendencyDto.getQuestionNum();
+    public String mbtiProcess(FirstSectionQuestionDto firstSectionQuestionDto, Long memberId) {
+        String q = firstSectionQuestionDto.getQuestionNum();
         TendencyResponse tendencyResponse = tendencyResponseRepository.findByMemberId(memberId);//FK인 회원id 로 회원의 응답지 찾기
-        tendencyResponse.setMbtiScoreLogic(Integer.parseInt(tendencyDto.getAnswer()));//회원 테이블에 저장되는 mbti점수에 현재 들어온 응답 값 더해주기(+=)
+        tendencyResponse.setMbtiScoreLogic(Integer.parseInt(firstSectionQuestionDto.getAnswer()));//회원 테이블에 저장되는 mbti점수에 현재 들어온 응답 값 더해주기(+=)
         if (q.equals("4")) { //2,3,4번까지 문제 응답 후
             String mbti = tendencyResponse.getMbti(); //현재 회원 응답 객체에 저장되어있는 mbti 상태 반환
             if (tendencyResponse.getMbtiScore() > 4) { //"e"성향 질문에 두개 이상 응답했으면 회원 응답지 mbti항목에 "e"추가

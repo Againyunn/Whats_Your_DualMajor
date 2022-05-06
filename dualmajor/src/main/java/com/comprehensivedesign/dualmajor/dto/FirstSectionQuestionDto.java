@@ -4,13 +4,12 @@ package com.comprehensivedesign.dualmajor.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Getter
 @Setter
-public class TendencyDto {
+public class FirstSectionQuestionDto {
 
     //질문 번호
     private String questionNum;
