@@ -63,26 +63,19 @@ public class TendencyController {
         if (firstSectionQuestionDto.getQuestionNum().equals("1")) {
             firstSectionDivisionService.createResponse(memberAdapter.getMember().getId(), firstSectionQuestionDto.getAnswer());
             map.put("success", true);
-            return map;
         }
         else{ // 1번문제 이후 성향 vs 진로에 따른 로직
             String response = firstSectionDivisionService.findResponse(memberAdapter.getMember().getId());
             boolean b;
             if (response.equals("1")) { //성향 관련 질문 로직
-                b = tendencyService.resultProcess(firstSectionQuestionDto, memberAdapter.getMember().getId());
-                if (b == true) {map.put("success", true);}
-                else{map.put("success", false);}
-
-            }
-            else if (response.equals("2")) { //진로 관련 질문 로직
-                System.out.println("go to carrier response");
-                b = carrierService.resultProcess(firstSectionQuestionDto, memberAdapter.getMember().getId());
-                if (b == true) {map.put("success", true);}
-                else{map.put("success", false);}
-
-            }
-            return map;
+                b = tendencyService.resultProcess(firstSectionQuestionDto, memberAdapter.getMember().getId());}
+            else{ //진로 관련 질문 로직
+                b = carrierService.resultProcess(firstSectionQuestionDto, memberAdapter.getMember().getId());}
+            /* 로직 성공 유무 처리 */
+            if (b == true) {map.put("success", true);}
+            else{map.put("success", false);}
         }
+        return map;
     }
 
     /*섹터 추천 최종 결과 요청*/

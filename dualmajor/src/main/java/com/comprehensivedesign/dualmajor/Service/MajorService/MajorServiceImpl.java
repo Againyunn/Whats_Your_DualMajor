@@ -22,8 +22,8 @@ import java.util.Map;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MajorServiceImpl implements MajorService{
-    @Autowired private FirstMajorRepository firstMajorRepository;
-    @Autowired private DualMajorRepository dualMajorRepository;
+    @Autowired private final FirstMajorRepository firstMajorRepository;
+    @Autowired private final DualMajorRepository dualMajorRepository;
     @Autowired private final MemberSectorRepository memberSectorRepository;
 
     @Override

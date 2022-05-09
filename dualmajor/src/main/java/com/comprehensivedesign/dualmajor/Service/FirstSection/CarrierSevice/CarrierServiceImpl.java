@@ -35,10 +35,8 @@ public class CarrierServiceImpl implements CarrierService{
         /*진로 우선 질문지에서 성향 관련 질문 :: q2~q5(총 4개)*/
         if (q.equals("2") || q.equals("3") || q.equals("4") || q.equals("5")) {
             if (q.equals("2")) {//최초 1회 응답이 들어오면 회원 객체를 포함하는 회원의 응답 객체(CarrierResponse) 생성해야함.
-                System.out.println("carrier q2");
                 CarrierResponse carrierResponse = new CarrierResponse();
                 carrierResponse.createMemberResponse(memberService.findById(memberId));
-                System.out.println(carrierResponse.getMbti());
                 carrierResponseRepository.save(carrierResponse);
             }
             mbtiProcess(firstSectionQuestionDto, memberId); //mbti 판별 로직으로 성향 관련 질문 응답 전달
