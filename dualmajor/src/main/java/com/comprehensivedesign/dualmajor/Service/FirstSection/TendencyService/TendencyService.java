@@ -11,7 +11,6 @@ public interface TendencyService {
     boolean resultProcess(FirstSectionQuestionDto firstSectionQuestionDto, Long memberId);
     String mbtiProcess(FirstSectionQuestionDto firstSectionQuestionDto, Long memberId);
     boolean saveSector(TendencyResponse tendencyResponse);
-    List<Sector> findMemberSector(Long memberId) throws Exception;
-    Map<Long, List> findDualMajor(Long memberId) throws Exception;
+
 
 }

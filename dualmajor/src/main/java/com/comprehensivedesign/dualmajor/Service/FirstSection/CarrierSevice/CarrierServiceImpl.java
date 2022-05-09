@@ -3,6 +3,9 @@ package com.comprehensivedesign.dualmajor.Service.FirstSection.CarrierSevice;
 
 import com.comprehensivedesign.dualmajor.Service.MemberService.MemberService;
 import com.comprehensivedesign.dualmajor.domain.firstSection.Carrier.CarrierResponse;
+import com.comprehensivedesign.dualmajor.domain.firstSection.Carrier.CarrierResult;
+import com.comprehensivedesign.dualmajor.domain.firstSection.Tendency.TendencyResult;
+import com.comprehensivedesign.dualmajor.domain.sector.MemberSector;
 import com.comprehensivedesign.dualmajor.dto.FirstSectionQuestionDto;
 import com.comprehensivedesign.dualmajor.repository.MemberSectorRepository;
 import com.comprehensivedesign.dualmajor.repository.firstSection.carrier.CarrierResponseRepository;
@@ -12,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -24,19 +29,22 @@ public class CarrierServiceImpl implements CarrierService{
     @Autowired private final DualMajorRepository dualMajorRepository;
 
     @Override
+    @Transactional
     public boolean resultProcess(FirstSectionQuestionDto firstSectionQuestionDto, Long memberId) {
         String q = firstSectionQuestionDto.getQuestionNum();
         /*진로 우선 질문지에서 성향 관련 질문 :: q2~q5(총 4개)*/
         if (q.equals("2") || q.equals("3") || q.equals("4") || q.equals("5")) {
             if (q.equals("2")) {//최초 1회 응답이 들어오면 회원 객체를 포함하는 회원의 응답 객체(CarrierResponse) 생성해야함.
+                System.out.println("carrier q2");
                 CarrierResponse carrierResponse = new CarrierResponse();
                 carrierResponse.createMemberResponse(memberService.findById(memberId));
+                System.out.println(carrierResponse.getMbti());
                 carrierResponseRepository.save(carrierResponse);
             }
             mbtiProcess(firstSectionQuestionDto, memberId); //mbti 판별 로직으로 성향 관련 질문 응답 전달
         }
         /*진로 관련 질문 응답 과정 ::q6~q12(총7개)*/
-        else if (q.equals("6") || q.equals("7") || q.equals("8") || q.equals("9") || q.equals("10") || q.equals("1") || q.equals("12")) {
+        else if (q.equals("6") || q.equals("7") || q.equals("8") || q.equals("9") || q.equals("10") || q.equals("11") || q.equals("12")) {
             CarrierResponse carrierResponse = carrierResponseRepository.findByMemberId(memberId);
             if (q.equals("6")) {
                 carrierResponse.setQ6(firstSectionQuestionDto.getAnswer());
@@ -64,6 +72,7 @@ public class CarrierServiceImpl implements CarrierService{
     }
 
     @Override
+    @Transactional
     public String mbtiProcess(FirstSectionQuestionDto firstSectionQuestionDto, Long memberId) {
         String q = firstSectionQuestionDto.getQuestionNum();
         CarrierResponse carrierResponse = carrierResponseRepository.findByMemberId(memberId);//FK인 회원id 로 회원의 응답지 찾기
@@ -101,7 +110,17 @@ public class CarrierServiceImpl implements CarrierService{
     }
 
     @Override
+    @Transactional
     public boolean saveSector(CarrierResponse carrierResponse) {
-        return false;
+        ArrayList<CarrierResult> result = carrierResultRepository.findByMbtiAndQ6AndQ7AndQ8AndQ9AndQ10AndQ11AndQ12(carrierResponse.getMbti(), carrierResponse.getQ6(), carrierResponse.getQ7(), carrierResponse.getQ8(), carrierResponse.getQ9(), carrierResponse.getQ10(), carrierResponse.getQ11(), carrierResponse.getQ12());
+        if (result.isEmpty()) {
+            return false; //추천된 섹터가 없으면 재시도 요청
+        }
+        for (int i = 0; i < result.size(); i++) { //회원에게 추천된 섹터 결과만큼 MemberSector 객체 생성하여 회원과 결과 하나의 행으로 저장
+            MemberSector memberSector = new MemberSector();
+            memberSector.saveSector(carrierResponse.getMember(), result.get(i).getSector());
+            memberSectorRepository.save(memberSector);
+        }
+        return true;
     }
 }

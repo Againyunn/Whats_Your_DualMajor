@@ -1,13 +1,18 @@
 package com.comprehensivedesign.dualmajor.controller;
 
 
+import com.comprehensivedesign.dualmajor.Service.FirstSection.CarrierSevice.CarrierService;
 import com.comprehensivedesign.dualmajor.Service.FirstSection.FirstSectionDivisionService.FirstSectionDivisionService;
+import com.comprehensivedesign.dualmajor.Service.FirstSection.MemberSector.MemberSectorService;
 import com.comprehensivedesign.dualmajor.Service.FirstSection.TendencyService.TendencyService;
+import com.comprehensivedesign.dualmajor.Service.MajorService.MajorService;
 import com.comprehensivedesign.dualmajor.config.auth.MemberAdapter;
+import com.comprehensivedesign.dualmajor.domain.firstSection.Carrier.CarrierQuestion;
 import com.comprehensivedesign.dualmajor.domain.firstSection.Tendency.TendencyQuestion;
 import com.comprehensivedesign.dualmajor.domain.sector.Sector;
 import com.comprehensivedesign.dualmajor.dto.FirstSectionDto;
 import com.comprehensivedesign.dualmajor.dto.FirstSectionQuestionDto;
+import com.comprehensivedesign.dualmajor.repository.firstSection.carrier.CarrierQuestionRepository;
 import com.comprehensivedesign.dualmajor.repository.firstSection.tendency.TendencyQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +29,13 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 public class TendencyController {
-
+    @Autowired private final FirstSectionDivisionService firstSectionDivisionService;
     @Autowired private final TendencyQuestionRepository tendencyQuestionRepository;
     @Autowired private final TendencyService tendencyService;
-    @Autowired private final FirstSectionDivisionService firstSectionDivisionService;
+    @Autowired private final CarrierQuestionRepository carrierQuestionRepository;
+    @Autowired private final CarrierService carrierService;
+    @Autowired private final MajorService majorService;
+    @Autowired private final MemberSectorService memberSectorService;
 
 
     /*질문 요청*/
@@ -42,7 +50,9 @@ public class TendencyController {
             return questionAPI.getQuestionData(); //요청한 질문 번호에 대한 질문 정보들 응답
         }
         else{ //1번 문제 요청도 아니고, 1번 문항에 대하여 진로 관련 질문지를 고른 경우
-            return "carrier";
+            CarrierQuestion byQuestionNum = carrierQuestionRepository.findByQuestionNum(firstSectionQuestionDto.getQuestionNum());
+            questionAPI.setQuestionData(byQuestionNum.getQuestionNum(), byQuestionNum.getQuestionContent(), byQuestionNum.getResponse1(), byQuestionNum.getResponse2());
+            return questionAPI.getQuestionData(); //요청한 질문 번호에 대한 질문 정보들 응답
         }
     }
     /*사용자 응답 전송*/
@@ -60,19 +70,19 @@ public class TendencyController {
             boolean b;
             if (response.equals("1")) { //성향 관련 질문 로직
                 b = tendencyService.resultProcess(firstSectionQuestionDto, memberAdapter.getMember().getId());
-                if (b == true) {
-                    map.put("success", true);
-                }
-                else{
-                    map.put("success", false);
-                }
-                return map;
+                if (b == true) {map.put("success", true);}
+                else{map.put("success", false);}
+
             }
             else if (response.equals("2")) { //진로 관련 질문 로직
-                return "test";
+                System.out.println("go to carrier response");
+                b = carrierService.resultProcess(firstSectionQuestionDto, memberAdapter.getMember().getId());
+                if (b == true) {map.put("success", true);}
+                else{map.put("success", false);}
+
             }
+            return map;
         }
-        return map;
     }
 
     /*섹터 추천 최종 결과 요청*/
@@ -82,8 +92,8 @@ public class TendencyController {
             List<Sector> memberSector;
             Map<Long, List> dualMajor;
             try {
-                memberSector = tendencyService.findMemberSector(memberAdapter.getMember().getId());
-                dualMajor = tendencyService.findDualMajor(memberAdapter.getMember().getId());
+                memberSector = memberSectorService.findMemberSector(memberAdapter.getMember().getId());
+                dualMajor = majorService.findDualMajor(memberAdapter.getMember().getId());
             } catch (Exception e) {
                 Map<String, Boolean> map = new HashMap<>();
                 map.put("findSectors", false);
