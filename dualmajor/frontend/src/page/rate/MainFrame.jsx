@@ -3,22 +3,24 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import ReactTypingEffect from 'react-typing-effect';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function MainFrame() {
 
+    //화면 이동 제어용 callback함수 정의
+    let navigate = useNavigate();
+
     const moveToSeoul = () => {
         //SeoulMain으로 이동
-        Navigate("/seoul");
+        navigate("/seoul");
         window.location.reload();
     }
  
     const moveToGlobal = () => {
         //GlobalMain으로 이동
-        Navigate("/global");
+        navigate("/global");
         window.location.reload();
     }
-
 
 
   return (
@@ -28,8 +30,8 @@ export default function MainFrame() {
             <div className='choose'>
                 <ChooseBlock>
                     <div className='containerFlex'>
-                        <div className='recommend' onClick={moveToSeoul}><img src={require('../../media/structure/본관.jpg')} alt="추천"/><br/><br/><span>이중전공 추천</span></div>
-                        <div className='compete' onClick={moveToGlobal}><img src={require('../../media/structure/백년관.jpg')} alt="추천"/><br/><br/><span>&nbsp;예상 경쟁률&nbsp;</span></div>
+                        <div className='recommend' onClick={moveToSeoul}><img src={require('../../media/structure/본관.jpg')} alt="추천"/><br/><br/><span>서울캠퍼스</span></div>
+                        <div className='compete' onClick={moveToGlobal}><img src={require('../../media/structure/백년관.jpg')} alt="추천"/><br/><br/><span>글로벌캠퍼스</span></div>
                     </div>
                 </ChooseBlock>
             </div>
