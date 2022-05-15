@@ -32,7 +32,7 @@ export default function MainFrame() {
         <BodyBlock>
             <div className='container'>
                 <div className='ShowFrame'>
-                    <img src={require('../../../media/major/aniMajor.gif')} alt='경영대학'/>
+                    <img src={require('../../../media/major/aniMajor.gif')} alt='학과별 로고'/>
                 </div>
                 <div className='startFrame'>
                     <Button className='startButton' onClick={moveToQuestion}>시작하기</Button>

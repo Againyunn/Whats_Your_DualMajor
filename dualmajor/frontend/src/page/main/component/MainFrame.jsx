@@ -17,6 +17,13 @@ export default function MainFrame() {
         window.location.reload();
     }
 
+    //예상경쟁률 서비스로 이동
+    const moveToRate = () => {
+        //RateMain으로 이동
+        navigate("/rate");
+        window.location.reload();
+    }
+
   
     return (
     <>
@@ -26,7 +33,7 @@ export default function MainFrame() {
                     <ChooseBlock>
                         <div className='containerFlex'>
                             <div className='recommend' onClick={moveToRecommend}><img src={require('../../../media/tab/백이중추천.png')} alt="추천"/><br/><br/><span>이중전공 추천</span></div>
-                            <div className='compete'><img src={require('../../../media/tab/백경쟁률.png')} alt="추천"/><br/><br/><span>&nbsp;예상 경쟁률&nbsp;</span></div>
+                            <div className='compete' onClick={moveToRate}><img src={require('../../../media/tab/백경쟁률.png')} alt="추천"/><br/><br/><span>&nbsp;예상 경쟁률&nbsp;</span></div>
                         </div>
                     </ChooseBlock>
                 </div>
