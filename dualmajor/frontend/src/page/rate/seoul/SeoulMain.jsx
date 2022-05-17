@@ -8,8 +8,9 @@ import Footer from "../../main/component/Footer";
 import '../../../media/css/commonFrame.css';
 import MainFrame from "../MainFrame";
 import FilterMajor from "../component/FilterMajor";
-import { Button, Col, Container, Row, ProgressBar } from 'react-bootstrap';
+import { Button, Col, Container, Row, ProgressBar,Form } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
+import RateService from '../../../services/rate.service';
 
 function SeoulMain() {
     //상단바 컨트롤 : 메뉴바 노출 상태관리
@@ -30,6 +31,84 @@ function SeoulMain() {
             navigate("/global");
     }
 
+    //filter로 전공을 선택하면 해당 전공에 대한 정보 API로 받아오기
+
+    //변수 선언
+    const [thisMajorList, setThisMajorList] = useState([{id: "1", name: "2"}]);
+    const [selectedMajorId, setSelectedMajorId] = useState("");
+    const [majorInfo, setMajorInfo] = useState("");
+
+    //API통신 선언
+    //처음 화면 랜더링 시 → 각 캠퍼스별 전공리스트 받아오기
+    useEffect(() => {
+
+        //테스트용
+        console.log("rendering")
+        let data = `
+            [
+                {
+                    "id": "1",
+                    "name": "GBT학부"
+                },
+                {
+                    "id": "2",
+                    "name": "컴퓨터공학부"
+                },
+                {
+                    "id": "3",
+                    "name": "세르비아크로아티아어과"
+                },
+                {
+                    "id": "4",
+                    "name": "브라질학과"
+                }
+            ]
+        `
+        setThisMajorList(Object.values(JSON.parse(data)));
+
+        //     RateService.getMajorListGlobal().then(
+        //         (response) => {
+        //             setThisMajorList(Object.values(JSON.parse(response.data.majorListSeoul)));
+        //             console.log(response.data.majorListSeoul);
+        //         }
+        //     )
+
+    },[])
+
+    useEffect(() => {
+        setSelectedMajorId(thisMajorList[0].name);
+    },[thisMajorList])
+
+    //select를 통해 전공을 선택하면 API를 요청
+    useEffect(() => {
+        //테스트
+        let majorData =`
+            {
+                "id" : "1",
+                "name" : "GBT학부",
+                "applyNum" : "25",
+                "totalNum" : "100",
+                "avgGpa" : "4.05"
+            }
+        `
+        setMajorInfo(JSON.parse(majorData));
+
+
+        // RateService.getRateInfo(selectedMajorId).then(
+        //     (response) => {
+        //         setMajorInfo(JSON.parse(response));
+        //     }
+        // )
+
+
+    },[selectedMajorId])
+    
+
+    //정보를 확인해볼 전공 확인 함수
+    const SelectMajorId = (e) =>{
+        setSelectedMajorId(e.target.value);
+    }
+
 
     return (
         <>
@@ -44,10 +123,28 @@ function SeoulMain() {
                             </div>
                         </div>
                         <div className="filterBlock">
-                            <FilterMajor campus={"seoul"}/>
+                              <Form.Select onChange={SelectMajorId}>
+                                {
+                                    !thisMajorList?  
+                                    <option value="0">학과 없음</option>:
+                                    thisMajorList.map(thisMajor => (
+                                        <option key={thisMajor.name} value={thisMajor.name}>
+                                        {thisMajor.name}
+                                        </option>
+                                    ))
+                                }
+                            </Form.Select>
                         </div>
                         <div className="majorBlock">
-
+                            {
+                                !majorInfo?
+                                <></>:
+                                <>
+                                    <span>{majorInfo.applyNum}</span><br/>
+                                    <span>{majorInfo.totalNum}</span><br/>
+                                    <span>{majorInfo.avgGpa}</span>
+                                </>
+                            }
                         </div>
                         <div className="applyBlock">
                             <Button type="button" className="applyButton">지원하기</Button>

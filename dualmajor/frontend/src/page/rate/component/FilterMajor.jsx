@@ -12,7 +12,6 @@ export default function FilterMajor({campus}) { //어떤 캠퍼스인지 전달�
     useEffect(() => {
 
         //테스트용
-
         console.log("rendering")
         let data = `
             [
@@ -55,6 +54,10 @@ export default function FilterMajor({campus}) { //어떤 캠퍼스인지 전달�
         //     )
         // }
     },[])
+
+    useEffect(() => {
+        setSelectedMajorId(thisMajorList[0].name);
+    },[thisMajorList])
 
     //select를 통해 전공을 선택하면 API를 요청
     useEffect(() => {

@@ -13,8 +13,9 @@ const getMajorListGlobal = () => {
 }
 
 //전공 별 경쟁률 정보 
-const getRateInfo = () => {
-    return (axios.post(API_URL + "majorList/global/"));
+/**majorName(전공명)을 인자로 넘겨서 데이터 받기*/
+const getRateInfo = (majorName) => {
+    return (axios.post(API_URL + "majorList/global/"),{majorName});
 }
 
 const RateService = {
