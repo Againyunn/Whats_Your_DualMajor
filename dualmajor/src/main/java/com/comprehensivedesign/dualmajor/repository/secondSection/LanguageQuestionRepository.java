@@ -5,4 +5,5 @@ import com.comprehensivedesign.dualmajor.domain.secondSection.LanguageQuestion;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LanguageQuestionRepository extends JpaRepository<LanguageQuestion,Long> {
+    LanguageQuestion findByQuestionId(int questionId);
 }
