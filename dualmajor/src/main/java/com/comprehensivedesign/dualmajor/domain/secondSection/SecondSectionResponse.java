@@ -17,6 +17,8 @@ public class SecondSectionResponse {
     private int questionId;
     //남아있는 질문의 수
     private int leftQuestions;
+    //진행되는 질문 번호
+    private int questionNum;
     @OneToOne //한명의 회원은 하나의 응답지를 갖고, 하나의 응답지는 한명의 회원의 것임
     @JoinColumn(name = "member_id")
     private Member member;
@@ -27,6 +29,7 @@ public class SecondSectionResponse {
     /*응답지 생성*/
     public void createResponse(int leftQuestions, Member member, Sector sector) {
         this.questionId = 1;
+        this.questionNum = 1;
         this.leftQuestions = leftQuestions;
         this.member = member;
         this.sector = sector;
@@ -36,5 +39,6 @@ public class SecondSectionResponse {
     public void updateResponse(int questionId, int leftQuestions) {
         this.questionId = questionId;
         this.leftQuestions = leftQuestions;
+        this.questionNum += 1; //질문 응답 시 마다 현재 진행중인 질문의 번호 +1
     }
 }

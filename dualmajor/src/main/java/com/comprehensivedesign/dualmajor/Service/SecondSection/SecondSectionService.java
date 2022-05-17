@@ -9,8 +9,8 @@ import java.util.Map;
 
 public interface SecondSectionService {
     SecondSectionResponse createResponse(Member member, Long sectorId);
-    void recommendProcess(SecondSectionQuestionDto secondSectionDto, Member member);
+    Map recommendProcess(SecondSectionQuestionDto secondSectionDto, Member member);
     SecondSectionResponse binaryTree(String answer, Long memberId);
-    Map viewQuestions(Long sectorId, int questionId);
+    Map viewQuestions(Long sectorId, int questionId, int leftQuestions, int questionNum);
 
 }

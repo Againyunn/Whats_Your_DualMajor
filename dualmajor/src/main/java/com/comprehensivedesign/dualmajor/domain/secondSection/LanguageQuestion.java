@@ -15,4 +15,6 @@ public class LanguageQuestion {
     @GeneratedValue
     private Long id;
     private String questionContent;
+    private int questionId;
+
 }
