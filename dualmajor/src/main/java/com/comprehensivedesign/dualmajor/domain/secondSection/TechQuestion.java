@@ -14,4 +14,5 @@ public class TechQuestion {
     @Id @GeneratedValue
     private Long id;
     private String questionContent;
+    private int questionId;
 }

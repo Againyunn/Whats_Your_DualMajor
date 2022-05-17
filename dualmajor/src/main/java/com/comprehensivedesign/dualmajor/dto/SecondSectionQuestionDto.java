@@ -7,11 +7,13 @@ import lombok.Setter;
 @Setter
 public class SecondSectionQuestionDto {
 
-    private Long sectionId;
+    private Long sectorId;
+    private int questionNum;
     private String questionContent;
     private int questionId;
     private int leftQuestions;
     private String answer;
+
 
 
 }

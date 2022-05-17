@@ -15,4 +15,5 @@ public class ScienceQuestion {
     @GeneratedValue
     private Long id;
     private String questionContent;
+    private int questionId;
 }
