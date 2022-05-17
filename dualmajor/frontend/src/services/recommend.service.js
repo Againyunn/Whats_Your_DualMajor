@@ -68,6 +68,7 @@ const submitSecondSectionAnswer = (questionNum, questionId, answer) =>{
     );
 }
 
+
 //2번째 섹션 결과 받아오기
 const getFinalResult = (resultType) =>{
     return (axios.post(API_URL + "getFinalResult/", {

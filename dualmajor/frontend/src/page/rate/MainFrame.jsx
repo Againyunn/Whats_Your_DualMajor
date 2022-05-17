@@ -22,7 +22,6 @@ export default function MainFrame() {
         window.location.reload();
     }
 
-
   return (
     <>
     <BodyBlock>

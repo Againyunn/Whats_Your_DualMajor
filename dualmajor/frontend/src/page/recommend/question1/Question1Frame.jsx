@@ -150,7 +150,6 @@ export default function Question1Frame() {
         }
     }
 
-
     return (
         <>
         <div className="mainContainer">
