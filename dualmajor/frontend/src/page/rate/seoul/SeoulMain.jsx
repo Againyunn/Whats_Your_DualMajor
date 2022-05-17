@@ -7,7 +7,7 @@ import Footer from "../../main/component/Footer";
 
 import '../../../media/css/commonFrame.css';
 import MainFrame from "../MainFrame";
-import FilterMajor from "./FilterMajor";
+import FilterMajor from "../component/FilterMajor";
 import { Button, Col, Container, Row, ProgressBar } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 
@@ -44,7 +44,7 @@ function SeoulMain() {
                             </div>
                         </div>
                         <div className="filterBlock">
-                            <FilterMajor/>
+                            <FilterMajor campus={"seoul"}/>
                         </div>
                         <div className="majorBlock">
 

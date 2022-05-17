@@ -14,10 +14,8 @@ const getMajorListGlobal = () => {
 
 //전공 별 경쟁률 정보 
 const getRateInfo = () => {
-    return (axios.get(API_URL + "majorList/global/"));
+    return (axios.post(API_URL + "majorList/global/"));
 }
-
-
 
 const RateService = {
     getMajorListSeoul,
