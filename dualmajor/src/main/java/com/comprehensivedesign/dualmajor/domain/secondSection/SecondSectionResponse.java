@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(name = "SECOND_SECTION_RESPONSE")
 public class SecondSectionResponse {
     @Id @GeneratedValue
     private Long id;

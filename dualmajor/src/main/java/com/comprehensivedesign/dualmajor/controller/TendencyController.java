@@ -7,12 +7,12 @@ import com.comprehensivedesign.dualmajor.Service.FirstSection.MemberSector.Membe
 import com.comprehensivedesign.dualmajor.Service.FirstSection.TendencyService.TendencyService;
 import com.comprehensivedesign.dualmajor.Service.MajorService.MajorService;
 import com.comprehensivedesign.dualmajor.config.auth.MemberAdapter;
-import com.comprehensivedesign.dualmajor.domain.firstSection.Carrier.CarrierQuestion;
+import com.comprehensivedesign.dualmajor.domain.firstSection.Carrier.CareerQuestion;
 import com.comprehensivedesign.dualmajor.domain.firstSection.Tendency.TendencyQuestion;
 import com.comprehensivedesign.dualmajor.domain.sector.Sector;
 import com.comprehensivedesign.dualmajor.dto.FirstSectionDto;
 import com.comprehensivedesign.dualmajor.dto.FirstSectionQuestionDto;
-import com.comprehensivedesign.dualmajor.repository.firstSection.carrier.CarrierQuestionRepository;
+import com.comprehensivedesign.dualmajor.repository.firstSection.carrier.CareerQuestionRepository;
 import com.comprehensivedesign.dualmajor.repository.firstSection.tendency.TendencyQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class TendencyController {
     @Autowired private final FirstSectionDivisionService firstSectionDivisionService;
     @Autowired private final TendencyQuestionRepository tendencyQuestionRepository;
     @Autowired private final TendencyService tendencyService;
-    @Autowired private final CarrierQuestionRepository carrierQuestionRepository;
+    @Autowired private final CareerQuestionRepository carrierQuestionRepository;
     @Autowired private final CarrierService carrierService;
     @Autowired private final MajorService majorService;
     @Autowired private final MemberSectorService memberSectorService;
@@ -50,7 +50,7 @@ public class TendencyController {
             return questionAPI.getQuestionData(); //요청한 질문 번호에 대한 질문 정보들 응답
         }
         else{ //1번 문제 요청도 아니고, 1번 문항에 대하여 진로 관련 질문지를 고른 경우
-            CarrierQuestion byQuestionNum = carrierQuestionRepository.findByQuestionNum(firstSectionQuestionDto.getQuestionNum());
+            CareerQuestion byQuestionNum = carrierQuestionRepository.findByQuestionNum(firstSectionQuestionDto.getQuestionNum());
             questionAPI.setQuestionData(byQuestionNum.getQuestionNum(), byQuestionNum.getQuestionContent(), byQuestionNum.getResponse1(), byQuestionNum.getResponse2());
             return questionAPI.getQuestionData(); //요청한 질문 번호에 대한 질문 정보들 응답
         }

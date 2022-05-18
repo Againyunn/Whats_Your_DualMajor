@@ -8,6 +8,7 @@ import javax.persistence.*;
 //@Setter --> Entity는 외부로부터 절대 보존되어야하기 때문에 최대한 setter사용 제한
 @Entity
 @Getter
+@Table(name = "MEMBER")
 public class Member {
     //식별번호, PK
     @Id

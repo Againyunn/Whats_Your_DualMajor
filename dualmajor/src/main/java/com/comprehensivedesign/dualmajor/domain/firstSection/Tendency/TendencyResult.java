@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(name = "TENDENCY_RESULT")
 public class TendencyResult { //응답 결과들에 따른 섹터 구분
 
     @Id @GeneratedValue
