@@ -16,6 +16,7 @@ import javax.persistence.Table;
 public class CollegeQuestion {
     @Id @GeneratedValue
     private Long id;
-    private String question1;
-    private String question2;
+    private String questionContent;
+    private String response1;
+    private String response2;
 }

@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface HumanityQuestionRepository extends JpaRepository<HumanityQuestion,Long> {
 
 
-    HumanityQuestion findByQuestionId(int questionId);
 
 }

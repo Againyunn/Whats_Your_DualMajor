@@ -11,6 +11,7 @@ public interface SecondSectionService {
     SecondSectionResponse createResponse(Member member, Long sectorId);
     Map recommendProcess(SecondSectionQuestionDto secondSectionDto, Member member);
     SecondSectionResponse binaryTree(String answer, Long memberId);
-    Map viewQuestions(Long sectorId, int questionId, int leftQuestions, int questionNum);
-
+    Map viewCollegeQuestions(String totalQuestionNum, int leftQuestions, int questionNum);
+    Map viewQuestions(Long sectorId, int questionId, String totalQuestionNum, int leftQuestions, int questionNum);
+    boolean saveCollegeAnswer(SecondSectionQuestionDto secondSectionQuestionDto, Long memberId);
 }

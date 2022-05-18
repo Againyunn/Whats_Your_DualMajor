@@ -17,5 +17,6 @@ public class ScienceQuestion {
     @GeneratedValue
     private Long id;
     private String questionContent;
-    private int questionId;
+    private String response1;
+    private String response2;
 }
