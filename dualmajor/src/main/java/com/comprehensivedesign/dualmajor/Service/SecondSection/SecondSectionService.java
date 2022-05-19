@@ -16,5 +16,5 @@ public interface SecondSectionService {
     Map viewCollegeQuestions(String totalQuestionNum, int leftQuestions, int questionNum);
     Map viewQuestions(String sectorName, int questionId, String totalQuestionNum, int leftQuestions, int questionNum);
     boolean saveCollegeAnswer(SecondSectionQuestionDto secondSectionQuestionDto, Long memberId);
-    List<FinalResult> viewResult(Long id);
+    Map<String, Object> viewResult(Long id);
 }

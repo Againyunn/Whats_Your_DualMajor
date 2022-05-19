@@ -243,11 +243,21 @@ public class SecondSectionServiceImpl implements SecondSectionService{
     }
 
     @Override
-    public List<FinalResult> viewResult(Long id) {
+    public Map<String, Object> viewResult(Long id) {
         MemberFinalResult result = memberFinalResultRepository.findByMemberId(id);
-        //List<FinalResult> finalResults = majorDetailRepository.findByResultType(result.getResultType());
-
-        return null;
+        String campus = secondSectionResponseRepository.findByMemberId(id).get().getCampus();
+        List<FinalResult> finalResults;
+        if (campus.equals("서울캠퍼스") || campus.equals("글로벌캠퍼스")) {
+            //변수 campus에 캠퍼스명이 담겨있고, 해당 캠퍼스명과 같은 캠퍼스명을 갖는 학과 도출 조건
+            finalResults = majorDetailRepository.findByResultTypeWithCampus(result.getResultType(), campus);
+        }
+        else{
+            //캠퍼스 교차 여부 상관 없는 사용자에게 도출 조건
+            finalResults = majorDetailRepository.findByResultType(result.getResultType());
+        }
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("info", finalResults);
+        return map;
     }
 
 

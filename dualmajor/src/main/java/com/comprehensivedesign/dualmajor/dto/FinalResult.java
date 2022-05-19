@@ -1,12 +1,11 @@
 package com.comprehensivedesign.dualmajor.dto;
 
 public interface FinalResult {
-    String getMajorName();
-    String getWebpage();
-    String getInformation();
+    String getDepartmentName();
+    //String getInformation();
+    String getIntro();
     String getCareer();
-    String getCurriculum();
-    String getCertification();
+    //String getCertification();
     String getDegree();
-
+    String getWebpage();
 }

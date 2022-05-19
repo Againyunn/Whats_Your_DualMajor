@@ -55,14 +55,14 @@ public class SecondSectionController {
         return map;
     }
 
-    @PostMapping("/getFinalResult")
+    @PostMapping("/finalResult")
     public Map viewResult(@RequestBody SecondSectionQuestionDto secondSectionQuestionDto, @AuthenticationPrincipal MemberAdapter memberAdapter) {
         if (secondSectionQuestionDto.getResultType().equals("result101")) {
-            secondSectionService.viewResult(memberAdapter.getMember().getId());
-
+            return secondSectionService.viewResult(memberAdapter.getMember().getId());
         }
-
-        return null;
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("success", false);
+        return map;
 
     }
 }

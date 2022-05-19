@@ -12,6 +12,12 @@ import java.util.List;
 @Repository
 public interface MajorDetailRepository extends JpaRepository<MajorDetail, Long> {
 
-   /* @Query(value = "select m. as majorName from MEMBER_FINAL_RESULT m where m.result_type = :result_type",nativeQuery = true)
-    List<FinalResult> findByResultType(@Param("result_type")String resultType);*/
+    /*이중전공 선택 시 캠퍼스 교차 불가*/
+    //회원이 원하는 캠퍼스(서울or글로벌)에 따른 학과 도출
+    @Query(value = "select m.majorName as departmentName, m.information as intro, m.degree as degree, m.career as career, m.webpage as webPage from MAJOR_DETAIL m where m.resultType = :result_type and m.campus = :campus", nativeQuery = true)
+    List<FinalResult> findByResultTypeWithCampus(@Param("result_type")String resultType, @Param("campus")String campus);
+
+    /*이중전공 선택 시 캠퍼스 교차 가능*/
+     @Query(value = "select m.majorName as departmentName, m.information as intro, m.degree as degree, m.career as career, m.webpage as webPage from MAJOR_DETAIL m where m.resultType = :result_type", nativeQuery = true)
+    List<FinalResult> findByResultType(@Param("result_type")String resultType);
 }
