@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(name = "TENDENCY_RESPONSE")
 public class TendencyResponse {//회원의 응답 결과 저장
     @Id
     @GeneratedValue

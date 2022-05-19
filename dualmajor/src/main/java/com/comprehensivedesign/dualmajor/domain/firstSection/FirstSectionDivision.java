@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(name = "FIRST_SECTION_DIVISION")
 public class FirstSectionDivision {
     @Id @GeneratedValue
     private Long id;

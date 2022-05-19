@@ -39,6 +39,16 @@ public class SecondSectionController {
     @PostMapping("/secondSectionAnswer")
     public Map getAnswer(@RequestBody SecondSectionQuestionDto secondSectionQuestionDto, @AuthenticationPrincipal MemberAdapter memberAdapter) {
         Map<String, Object> map = new LinkedHashMap<>();
+        if(secondSectionQuestionDto.getQuestionNum()==1 || secondSectionQuestionDto.getQuestionNum()==2){
+            boolean b = secondSectionService.saveCollegeAnswer(secondSectionQuestionDto, memberAdapter.getMember().getId());
+            if(b==true){
+                map.put("success", true);
+            }
+            else{
+                map.put("success", true);
+            }
+            return map;
+        }
         secondSectionService.binaryTree(secondSectionQuestionDto.getAnswer(), memberAdapter.getMember().getId());
         map.put("success", true);
         return map;

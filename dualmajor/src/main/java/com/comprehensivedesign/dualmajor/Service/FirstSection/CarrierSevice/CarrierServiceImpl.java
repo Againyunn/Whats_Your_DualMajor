@@ -2,14 +2,14 @@ package com.comprehensivedesign.dualmajor.Service.FirstSection.CarrierSevice;
 
 
 import com.comprehensivedesign.dualmajor.Service.MemberService.MemberService;
-import com.comprehensivedesign.dualmajor.domain.firstSection.Carrier.CarrierResponse;
-import com.comprehensivedesign.dualmajor.domain.firstSection.Carrier.CarrierResult;
+import com.comprehensivedesign.dualmajor.domain.firstSection.Carrier.CareerResponse;
+import com.comprehensivedesign.dualmajor.domain.firstSection.Carrier.CarееrResult;
 import com.comprehensivedesign.dualmajor.domain.firstSection.Tendency.TendencyResult;
 import com.comprehensivedesign.dualmajor.domain.sector.MemberSector;
 import com.comprehensivedesign.dualmajor.dto.FirstSectionQuestionDto;
 import com.comprehensivedesign.dualmajor.repository.MemberSectorRepository;
-import com.comprehensivedesign.dualmajor.repository.firstSection.carrier.CarrierResponseRepository;
-import com.comprehensivedesign.dualmajor.repository.firstSection.carrier.CarrierResultRepository;
+import com.comprehensivedesign.dualmajor.repository.firstSection.carrier.CareerResponseRepository;
+import com.comprehensivedesign.dualmajor.repository.firstSection.carrier.CareerResultRepository;
 import com.comprehensivedesign.dualmajor.repository.major.DualMajorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ import java.util.ArrayList;
 @Transactional(readOnly = true)
 public class CarrierServiceImpl implements CarrierService{
     @Autowired private final MemberService memberService;
-    @Autowired private final CarrierResponseRepository carrierResponseRepository;
-    @Autowired private final CarrierResultRepository carrierResultRepository;
+    @Autowired private final CareerResponseRepository carrierResponseRepository;
+    @Autowired private final CareerResultRepository carrierResultRepository;
     @Autowired private final MemberSectorRepository memberSectorRepository;
     @Autowired private final DualMajorRepository dualMajorRepository;
 
@@ -35,7 +35,7 @@ public class CarrierServiceImpl implements CarrierService{
         /*진로 우선 질문지에서 성향 관련 질문 :: q2~q5(총 4개)*/
         if (q.equals("2") || q.equals("3") || q.equals("4") || q.equals("5")) {
             if (q.equals("2")) {//최초 1회 응답이 들어오면 회원 객체를 포함하는 회원의 응답 객체(CarrierResponse) 생성해야함.
-                CarrierResponse carrierResponse = new CarrierResponse();
+                CareerResponse carrierResponse = new CareerResponse();
                 carrierResponse.createMemberResponse(memberService.findById(memberId));
                 carrierResponseRepository.save(carrierResponse);
             }
@@ -43,7 +43,7 @@ public class CarrierServiceImpl implements CarrierService{
         }
         /*진로 관련 질문 응답 과정 ::q6~q12(총7개)*/
         else if (q.equals("6") || q.equals("7") || q.equals("8") || q.equals("9") || q.equals("10") || q.equals("11") || q.equals("12")) {
-            CarrierResponse carrierResponse = carrierResponseRepository.findByMemberId(memberId);
+            CareerResponse carrierResponse = carrierResponseRepository.findByMemberId(memberId);
             if (q.equals("6")) {
                 carrierResponse.setQ6(firstSectionQuestionDto.getAnswer());
             } else if (q.equals("7")) {
@@ -73,7 +73,7 @@ public class CarrierServiceImpl implements CarrierService{
     @Transactional
     public String mbtiProcess(FirstSectionQuestionDto firstSectionQuestionDto, Long memberId) {
         String q = firstSectionQuestionDto.getQuestionNum();
-        CarrierResponse carrierResponse = carrierResponseRepository.findByMemberId(memberId);//FK인 회원id 로 회원의 응답지 찾기
+        CareerResponse carrierResponse = carrierResponseRepository.findByMemberId(memberId);//FK인 회원id 로 회원의 응답지 찾기
         /*진로 관련 질문지에서 성향 관련 잘문은 각 항목당 하나이므로, 사용자 응답에 따라 바로바로 mbti 요소판별 가능*/
         if (q.equals("2")) { //2번 e-i
             String mbti = carrierResponse.getMbti(); //현재 회원 응답 객체에 저장되어있는 mbti 상태 반환
@@ -109,8 +109,8 @@ public class CarrierServiceImpl implements CarrierService{
 
     @Override
     @Transactional
-    public boolean saveSector(CarrierResponse carrierResponse) {
-        ArrayList<CarrierResult> result = carrierResultRepository.findByMbtiAndQ6AndQ7AndQ8AndQ9AndQ10AndQ11AndQ12(carrierResponse.getMbti(), carrierResponse.getQ6(), carrierResponse.getQ7(), carrierResponse.getQ8(), carrierResponse.getQ9(), carrierResponse.getQ10(), carrierResponse.getQ11(), carrierResponse.getQ12());
+    public boolean saveSector(CareerResponse carrierResponse) {
+        ArrayList<CarееrResult> result = carrierResultRepository.findByMbtiAndQ6AndQ7AndQ8AndQ9AndQ10AndQ11AndQ12(carrierResponse.getMbti(), carrierResponse.getQ6(), carrierResponse.getQ7(), carrierResponse.getQ8(), carrierResponse.getQ9(), carrierResponse.getQ10(), carrierResponse.getQ11(), carrierResponse.getQ12());
         if (result.isEmpty()) {
             return false; //추천된 섹터가 없으면 재시도 요청
         }

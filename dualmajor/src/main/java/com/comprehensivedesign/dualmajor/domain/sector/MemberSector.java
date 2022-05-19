@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(name = "MEMBER_SECTOR")
 public class MemberSector {
     @Id @GeneratedValue
     private Long id;

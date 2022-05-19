@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "DUAL_MAJOR")
 public class DualMajor {
 
     @Id @GeneratedValue

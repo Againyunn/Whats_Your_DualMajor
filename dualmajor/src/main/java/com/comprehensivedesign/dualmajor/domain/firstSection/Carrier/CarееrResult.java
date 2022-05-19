@@ -9,7 +9,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class CarrierResult {
+@Table(name = "CAREER_RESULT")
+public class CarееrResult {
     @Id
     @GeneratedValue
     private Long id;

@@ -3,15 +3,13 @@ package com.comprehensivedesign.dualmajor.domain;
 
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "FIRST_MAJOR")
 public class FirstMajor {
 
     @Id @GeneratedValue

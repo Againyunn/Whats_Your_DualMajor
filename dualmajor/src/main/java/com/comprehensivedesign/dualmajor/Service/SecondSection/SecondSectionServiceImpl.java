@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -27,6 +26,7 @@ public class SecondSectionServiceImpl implements SecondSectionService{
     @Autowired private final TechQuestionRepository techQuestionRepository;
     @Autowired private final ScienceQuestionRepository scienceQuestionRepository;
     @Autowired private final HumanityQuestionRepository humanityQuestionRepository;
+    @Autowired private final CollegeQuestionRepository collegeQuestionRepository;
 
     /* 회원의 응답 생성 로직 */
     @Override
@@ -35,29 +35,34 @@ public class SecondSectionServiceImpl implements SecondSectionService{
         SecondSectionResponse response = new SecondSectionResponse();
         /* 섹터 질문별로 질문 갯수가 다르기 때문에 경우 구분 */
         if (sectorId == 1) { //language
-            response.createResponse(5, member, sectorRepository.findById(sectorId).get()); //사용자가 이진트리에 총 응답할 질문 갯수
+            response.createResponse(4, "6", member, sectorRepository.findById(sectorId).get()); //사용자가 이진트리에 총 응답할 질문 갯수
         }
         else if (sectorId == 2) { //social
-            response.createResponse(3, member, sectorRepository.findById(sectorId).get());
+            response.createResponse(3, "5", member, sectorRepository.findById(sectorId).get());
         }
         else if (sectorId == 3) { //science
-            response.createResponse(1, member, sectorRepository.findById(sectorId).get());
+            response.createResponse(1, "3", member, sectorRepository.findById(sectorId).get());
         }
         else if (sectorId == 4) { //tech
-            response.createResponse(1, member, sectorRepository.findById(sectorId).get());
+            response.createResponse(1, "3", member, sectorRepository.findById(sectorId).get());
         }
         else { //humanity
-            response.createResponse(0, member, sectorRepository.findById(sectorId).get());
+            response.createResponse(0, "2", member, sectorRepository.findById(sectorId).get());
         }
         return secondSectionResponseRepository.save(response);
     }
 
     /* 사용자가 선택한 섹터와 현재 노드id에 따라 질문 넘겨주는 로직 */
     @Override
+    @Transactional
     public Map recommendProcess(SecondSectionQuestionDto secondSectionQuestionDto, Member member) {
         SecondSectionResponse response = secondSectionResponseRepository.findByMemberId(member.getId()).get();
         if (secondSectionQuestionDto.getQuestionNum() == response.getQuestionNum()) {
-            return viewQuestions(response.getSector().getId(), response.getQuestionId(), response.getLeftQuestions(), response.getQuestionNum());
+            if(secondSectionQuestionDto.getQuestionNum()==1 || secondSectionQuestionDto.getQuestionNum()==2){
+                Map map = viewCollegeQuestions(response.getTotalQuestionNum(), response.getLeftQuestions(), response.getQuestionNum());
+                return map;
+            }
+            return viewQuestions(response.getSector().getId(), response.getQuestionId(), response.getTotalQuestionNum(), response.getLeftQuestions(), response.getQuestionNum());
         }
         else{
             Map<String, Object> map = new LinkedHashMap<>();
@@ -68,34 +73,75 @@ public class SecondSectionServiceImpl implements SecondSectionService{
 
     /*사용자에게 질문 return 로직*/
     @Override
-    public Map viewQuestions(Long sectorId, int questionId, int leftQuestions, int questionNum) {
+    public Map viewQuestions(Long sectorId, int questionId, String totalQuestionNum, int leftQuestions, int questionNum) {
         String currentQuestionContent;
+        String currentResponse1;
+        String currentResponse2;
+        Long id = new Long(questionId);
         if (sectorId == 1) { //language
-            LanguageQuestion question = languageQuestionRepository.findByQuestionId(questionId);
+            LanguageQuestion question = languageQuestionRepository.findById(id).get();
             currentQuestionContent = question.getQuestionContent();
+            currentResponse1 = question.getResponse1();
+            currentResponse2 = question.getResponse2();
         }
         else if (sectorId == 2) { //social
-            SocialQuestion question = socialQuestionRepository.findByQuestionId(questionId);
+            SocialQuestion question = socialQuestionRepository.findById(id).get();
             currentQuestionContent = question.getQuestionContent();
+            currentResponse1 = question.getResponse1();
+            currentResponse2 = question.getResponse2();
         }
         else if (sectorId == 3) { //science
-            ScienceQuestion question = scienceQuestionRepository.findByQuestionId(questionId);
+            ScienceQuestion question = scienceQuestionRepository.findById(id).get();
             currentQuestionContent = question.getQuestionContent();
+            currentResponse1 = question.getResponse1();
+            currentResponse2 = question.getResponse2();
         }
         else if (sectorId == 4) { //tech
-            TechQuestion question = techQuestionRepository.findByQuestionId(questionId);
+            TechQuestion question = techQuestionRepository.findById(id).get();
             currentQuestionContent = question.getQuestionContent();
+            currentResponse1 = question.getResponse1();
+            currentResponse2 = question.getResponse2();
         }
         else { //humanity
-            HumanityQuestion question = humanityQuestionRepository.findByQuestionId(questionId);
+            HumanityQuestion question = humanityQuestionRepository.findById(id).get();
             currentQuestionContent = question.getQuestionContent();
+            currentResponse1 = question.getResponse1();
+            currentResponse2 = question.getResponse2();
         }
-        Map<String, Object> map = new LinkedHashMap<>();
+        Map<String, Object> map = new LinkedHashMap<>(); //회원에게 보여질 질문 및 답변 내용들 JSON형식으로 저장
         map.put("questionNum", questionNum);
+        map.put("totalQuestionNum", totalQuestionNum);
         map.put("questionId", questionId);
         map.put("questionContent", currentQuestionContent);
-        map.put("leftQuestions", leftQuestions);
+        map.put("response1", currentResponse1);
+        map.put("response2", currentResponse2);
         return map;
+    }
+
+    /*공통 캠퍼스 문항 1,2번 처리 로직*/
+    @Override
+    @Transactional
+    public boolean saveCollegeAnswer(SecondSectionQuestionDto secondSectionQuestionDto, Long memberId) {
+        SecondSectionResponse response = secondSectionResponseRepository.findByMemberId(memberId).get();
+        if (secondSectionQuestionDto.getQuestionNum() == 1) { //1번 문제 설vs글
+            response.setCampusQ1(secondSectionQuestionDto.getAnswer());
+            response.afterCollege();
+            return true;
+        }
+        else{ //2번문제 교차캠퍼스 가능vs불가능
+            response.setCampusQ2(secondSectionQuestionDto.getAnswer()); //공통문항 2개가 끝나면 해당 사용자의 캠퍼스 여부를 처리하여 저장
+            response.afterCollege();
+            if(response.getCampusQ1().equals("1") && response.getCampusQ2().equals("2")){
+                response.setCampus("서울캠퍼스");
+            }
+            else if(response.getCampusQ1().equals("2") && response.getCampusQ2().equals("2")){
+                response.setCampus("글로벌캠퍼스");
+            }
+            else{
+                response.setCampus("교차 가능");
+            }
+            return true;
+        }
     }
 
     /* 회원의 응답에 따른 이진 트리 로직 */
@@ -113,6 +159,34 @@ public class SecondSectionServiceImpl implements SecondSectionService{
         }
         response.updateResponse(currentQId, leftQuestions); //다음 질문에 해당하는 노드 Id와, 남은 질문의 갯수 업데이트
         return response;
+    }
+
+    @Override
+    public Map viewCollegeQuestions(String totalQuestionNum, int leftQuestions, int questionNum) {
+        String currentQuestionContent;
+        String currentResponse1;
+        String currentResponse2;
+        //모든 섹터 1, 2번은 캠퍼스 공통문항
+        if(questionNum == 1){
+            CollegeQuestion question = collegeQuestionRepository.findById(1L).get();
+            currentQuestionContent = question.getQuestionContent();
+            currentResponse1 = question.getResponse1();
+            currentResponse2 = question.getResponse2();
+        }
+        else {
+            CollegeQuestion question = collegeQuestionRepository.findById(2L).get();
+            currentQuestionContent = question.getQuestionContent();
+            currentResponse1 = question.getResponse1();
+            currentResponse2 = question.getResponse2();
+        }
+        //공통 campus질문은 노드id와 상관 없이 처리되므로 quesetionNum과 질문, 응답들만 보냄
+        Map<String, Object> map = new LinkedHashMap<>(); //회원에게 보여질 질문 및 답변 내용들 JSON형식으로 저장
+        map.put("questionNum", questionNum);
+        map.put("totalQuestionNum", totalQuestionNum);
+        map.put("questionContent", currentQuestionContent);
+        map.put("response1", currentResponse1);
+        map.put("response2", currentResponse2);
+        return map;
     }
 
 
