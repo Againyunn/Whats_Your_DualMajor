@@ -31,18 +31,17 @@ public class SecondSectionResponse {
     @OneToOne //한명의 회원은 하나의 응답지를 갖고, 하나의 응답지는 한명의 회원의 것임
     @JoinColumn(name = "member_id")
     private Member member;
-    @OneToOne //하나의 응답지에는 하나의 섹터가 온다.
-    @JoinColumn(name = "sector_id")
-    private Sector sector;
+    private String sectorName;
+
 
     /*응답지 생성*/
-    public void createResponse(int leftQuestions, String totalQuestionNum, Member member, Sector sector) {
+    public void createResponse(int leftQuestions, String totalQuestionNum, Member member, String sectorName) {
         this.questionId = 1;
         this.questionNum = 1;
         this.totalQuestionNum = totalQuestionNum;
         this.leftQuestions = leftQuestions;
         this.member = member;
-        this.sector = sector;
+        this.sectorName = sectorName;
     }
 
     /*응답지 업데이트*/

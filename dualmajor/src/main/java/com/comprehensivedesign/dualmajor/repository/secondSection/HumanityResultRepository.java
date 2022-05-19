@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HumanityResultRepository extends JpaRepository<HumanityResult,Long> {
+
+    HumanityResult findByQuestionId(String questionId);
 }

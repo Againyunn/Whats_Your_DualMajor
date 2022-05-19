@@ -25,8 +25,9 @@ public class SecondSectionController {
     @PostMapping("/submitFirstSectionResult")
     public Map saveSector(@RequestBody SecondSectionQuestionDto secondSectionQuestionDto, @AuthenticationPrincipal MemberAdapter memberAdapter) {
         Map<String, Object> map = new LinkedHashMap<>();
-        SecondSectionResponse response = secondSectionService.createResponse(memberAdapter.getMember(), secondSectionQuestionDto.getSectorId());
-        map.put("academicName", response.getSector().getSectorName());
+        SecondSectionResponse response = secondSectionService.createResponse(memberAdapter.getMember(), secondSectionQuestionDto.getAcademicName());
+        map.put("success", true);
+        map.put("academicName", response.getSectorName());
         return map;
     }
 
@@ -55,7 +56,12 @@ public class SecondSectionController {
     }
 
     @PostMapping("/getFinalResult")
-    public Map viewResult() {
+    public Map viewResult(@RequestBody SecondSectionQuestionDto secondSectionQuestionDto, @AuthenticationPrincipal MemberAdapter memberAdapter) {
+        if (secondSectionQuestionDto.getResultType().equals("result101")) {
+            secondSectionService.viewResult(memberAdapter.getMember().getId());
+
+        }
+
         return null;
 
     }

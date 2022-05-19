@@ -16,4 +16,6 @@ import javax.persistence.Table;
 public class TechResult {
     @Id @GeneratedValue
     private Long id;
+    private String questionId;
+    private String resultType;
 }

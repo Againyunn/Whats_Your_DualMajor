@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.annotation.Primary;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -16,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "SECTOR")
 public class Sector {
     @Id @GeneratedValue
+    @Column(name = "sector_id")
     private Long id;
     private String sectorName;
 }

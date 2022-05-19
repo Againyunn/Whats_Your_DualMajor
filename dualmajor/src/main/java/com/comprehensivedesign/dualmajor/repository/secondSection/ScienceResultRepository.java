@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ScienceResultRepository extends JpaRepository<ScienceResult,Long> {
+
+    ScienceResult findByQuestionId(String questionId);
 }

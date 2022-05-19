@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TechResultRepository extends JpaRepository<TechResult,Long> {
+
+    TechResult findByQuestionId(String questionId);
 }

@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SocialResultRepository extends JpaRepository<SocialResult,Long> {
+
+    SocialResult findByQuestionId(String questionId);
 }

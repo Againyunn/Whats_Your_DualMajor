@@ -13,6 +13,7 @@ public class Member {
     //식별번호, PK
     @Id
     @GeneratedValue //자동 증가시켜준다는 의미
+    @Column(name = "member_id")
     private Long id;
     //회원 이름(닉네임)
     private String nickName;

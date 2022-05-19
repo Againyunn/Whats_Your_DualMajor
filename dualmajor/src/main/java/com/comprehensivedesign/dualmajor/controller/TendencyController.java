@@ -39,7 +39,7 @@ public class TendencyController {
 
 
     /*질문 요청*/
-    @GetMapping("/firstSectionQuestion")
+    @PostMapping("/firstSectionQuestion")
     public Object firstSectionQuestion(@RequestBody FirstSectionQuestionDto firstSectionQuestionDto,
                                        @AuthenticationPrincipal MemberAdapter memberAdapter) {
         FirstSectionQuestionDto questionAPI = new FirstSectionQuestionDto();

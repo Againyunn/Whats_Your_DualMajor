@@ -14,6 +14,10 @@ public class SecondSectionQuestionDto {
     private int leftQuestions;
     private String answer;
 
+    private String academicName; //프론트에서 넘어오는 sectorName
+
+    private String resultType;
+
 
 
 }

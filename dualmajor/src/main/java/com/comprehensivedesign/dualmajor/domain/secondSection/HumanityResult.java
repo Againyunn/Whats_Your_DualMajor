@@ -15,4 +15,6 @@ import javax.persistence.Table;
 public class HumanityResult {
     @Id @GeneratedValue
     private Long id;
+    private String questionId;
+    private String resultType;
 }

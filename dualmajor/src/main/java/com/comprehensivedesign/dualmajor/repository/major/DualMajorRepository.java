@@ -17,6 +17,6 @@ public interface DualMajorRepository extends JpaRepository<DualMajor, Long> {
 
     Optional<List<DualMajor>> findBySectorId(Long sectorId);
 
-    @Query(value = "select d.major_name as majorName from dual_major d where d.sector_id = :sector_id",nativeQuery = true)
+    @Query(value = "select d.majorName as majorName from DUAL_MAJOR d where d.sector_id = :sector_id",nativeQuery = true)
     List<DualMajorName> findMajorNameBySectorId(@Param("sector_id") Long sectorId);
 }
