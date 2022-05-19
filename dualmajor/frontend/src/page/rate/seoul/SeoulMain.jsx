@@ -12,7 +12,8 @@ import { Button, Col, Container, Row, ProgressBar,Form } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import RateService from '../../../services/rate.service';
 
-import ChartInfo from '../component/GPAChart'
+import GPAChart from '../component/GPAChart'
+import ApplyChart from "../component/ApplyChart";
 
 function SeoulMain() {
     //상단바 컨트롤 : 메뉴바 노출 상태관리
@@ -144,11 +145,8 @@ function SeoulMain() {
                                 !majorInfo?
                                 <></>:
                                 <>
-                                    <span>{majorInfo.applyNum}</span><br/>
-                                    <span>{majorInfo.totalNum}</span><br/>
-                                    <span>{majorInfo.avgGpa}</span>
-                                    <br/>
-                                    <ChartInfo majorName={selectedMajorId} averageGPA={majorInfo.avgGpa}/>
+                                    <GPAChart majorName={selectedMajorId} averageGPA={majorInfo.avgGpa}/>
+                                    <ApplyChart majorName={selectedMajorId} applyNum={majorInfo.applyNum} totalNum={majorInfo.totalNum} />
                                 </>
                             }
                         </div>

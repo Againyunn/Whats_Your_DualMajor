@@ -9,10 +9,9 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import styled from 'styled-components';
 
 
-export default function GPAChart({majorName, averageGPA}) {
+export default function ApplyChart({majorName, applyNum, totalNum}) {
 
   ChartJS.register(
     CategoryScale,
@@ -28,11 +27,7 @@ export default function GPAChart({majorName, averageGPA}) {
     elements: {
       bar: {
         borderWidth: 0,
-        clip: {left: 5, top: false, right: -2, bottom: 0},
-
-        //inflateAmount: 2,
-        //barPercentage: 0.5
-      }
+      },
     },
     responsive: true,
     plugins: {
@@ -41,37 +36,35 @@ export default function GPAChart({majorName, averageGPA}) {
       },
       title: {
         display: false,
-        text: '지원자의 평균학점',
+        text: '지원자 수',
       },
       tooltip:{
         display:true,
       }
     },
     // scale:{
-    //   // Y축
-    //   yAxes: 
-    //     {
-    //     offset:false
+    //     // Y축
+    //     yAxes: 
+    //       {
+    //       offset:false
+    //       }
     //     }
-    //   }
-
-    
+  
   };
   
-  const labels = ['평균학점'];
+  const labels = ['지원자 수'];
   
   const data = {
   labels,
   datasets: [{
       label: majorName,
-      data: [averageGPA, 4.5],
+      data: [applyNum, totalNum],
       borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(2, 135, 153, 0.6)',
+      backgroundColor: 'rgba(0, 47, 90, 0.7)',
       barThickness:30,
-      //barPercentage:0.5,
     }]
   };
 
   
-  return <Bar width={100} height={25} options={options} data={data} />;
+  return <Bar width={100} height={25} options={options} data={data}/>;
 }
