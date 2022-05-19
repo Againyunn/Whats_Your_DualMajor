@@ -12,6 +12,8 @@ import { Button, Col, Container, Row, ProgressBar,Form } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import RateService from '../../../services/rate.service';
 
+import ChartInfo from '../component/GPAChart'
+
 function SeoulMain() {
     //상단바 컨트롤 : 메뉴바 노출 상태관리
     const showMenu = false;
@@ -109,6 +111,8 @@ function SeoulMain() {
         setSelectedMajorId(e.target.value);
     }
 
+    //차트
+
 
     return (
         <>
@@ -143,6 +147,8 @@ function SeoulMain() {
                                     <span>{majorInfo.applyNum}</span><br/>
                                     <span>{majorInfo.totalNum}</span><br/>
                                     <span>{majorInfo.avgGpa}</span>
+                                    <br/>
+                                    <ChartInfo majorName={selectedMajorId} averageGPA={majorInfo.avgGpa}/>
                                 </>
                             }
                         </div>
