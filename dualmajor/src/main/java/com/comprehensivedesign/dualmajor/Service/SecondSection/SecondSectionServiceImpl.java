@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -47,16 +44,16 @@ public class SecondSectionServiceImpl implements SecondSectionService{
     public SecondSectionResponse createResponse(Member member, String sectorName) {
         SecondSectionResponse response = new SecondSectionResponse();
         /* 섹터 질문별로 질문 갯수가 다르기 때문에 경우 구분 */
-        if (sectorName.equals("언어학섹터")) { //language
+        if (sectorName.equals("언어학 섹터")) { //language
             response.createResponse(4, "6", member, sectorName); //사용자가 이진트리에 총 응답할 질문 갯수
         }
-        else if (sectorName.equals("사회경제학섹터")) { //social
+        else if (sectorName.equals("사회경제학 섹터")) { //social
             response.createResponse(3, "5", member, sectorName);
         }
-        else if (sectorName.equals("자연과학섹터")) { //science
+        else if (sectorName.equals("자연과학 섹터")) { //science
             response.createResponse(1, "3", member, sectorName);
         }
-        else if (sectorName.equals("공과섹터")) { //tech
+        else if (sectorName.equals("공과대학 섹터")) { //tech
             response.createResponse(1, "3", member, sectorName);
         }
         else { //humanity
@@ -95,25 +92,25 @@ public class SecondSectionServiceImpl implements SecondSectionService{
         String currentResponse2;
         Long id = new Long(questionId);
         System.out.println(sectorName);
-        if (sectorName.equals("언어학섹터")) { //language
+        if (sectorName.equals("언어학 섹터")) { //language
             LanguageQuestion question = languageQuestionRepository.findById(id).get();
             currentQuestionContent = question.getQuestionContent();
             currentResponse1 = question.getResponse1();
             currentResponse2 = question.getResponse2();
         }
-        else if (sectorName.equals("사회경제학섹터")) { //social
+        else if (sectorName.equals("사회경제학 섹터")) { //social
             SocialQuestion question = socialQuestionRepository.findById(id).get();
             currentQuestionContent = question.getQuestionContent();
             currentResponse1 = question.getResponse1();
             currentResponse2 = question.getResponse2();
         }
-        else if (sectorName.equals("자연과학섹터")) { //science
+        else if (sectorName.equals("자연과학 섹터")) { //science
             ScienceQuestion question = scienceQuestionRepository.findById(id).get();
             currentQuestionContent = question.getQuestionContent();
             currentResponse1 = question.getResponse1();
             currentResponse2 = question.getResponse2();
         }
-        else if (sectorName.equals("공과섹터")) { //tech
+        else if (sectorName.equals("공과대학 섹터")) { //tech
             TechQuestion question = techQuestionRepository.findById(id).get();
             currentQuestionContent = question.getQuestionContent();
             currentResponse1 = question.getResponse1();
@@ -161,37 +158,41 @@ public class SecondSectionServiceImpl implements SecondSectionService{
         map.put("response2", currentResponse2);
         return map;
     }
-
     /*공통 캠퍼스 문항 1,2번 처리 로직*/
     @Override
     @Transactional
-    public boolean saveCollegeAnswer(SecondSectionQuestionDto secondSectionQuestionDto, Long memberId) {
+    public String saveCollegeAnswer(SecondSectionQuestionDto secondSectionQuestionDto, Long memberId) {
         SecondSectionResponse response = secondSectionResponseRepository.findByMemberId(memberId).get();
         if (secondSectionQuestionDto.getQuestionNum() == 1) { //1번 문제 설vs글
             response.setCampusQ1(secondSectionQuestionDto.getAnswer());
             response.afterCollege();
-            return true;
+            return "q1";
         }
         else{ //2번문제 교차캠퍼스 가능vs불가능
             response.setCampusQ2(secondSectionQuestionDto.getAnswer()); //공통문항 2개가 끝나면 해당 사용자의 캠퍼스 여부를 처리하여 저장
             response.afterCollege();
             if(response.getCampusQ1().equals("1") && response.getCampusQ2().equals("2")){
-                response.setCampus("서울캠퍼스");
+                response.setCampus("서울");
             }
             else if(response.getCampusQ1().equals("2") && response.getCampusQ2().equals("2")){
-                response.setCampus("글로벌캠퍼스");
+                response.setCampus("글로벌");
             }
             else{
-                response.setCampus("교차 가능");
+                response.setCampus("교차가능");
             }
-            return true;
+            /*인문학 섹터의 경우 질문 트리가 없고 공통 문항이 끝나면 바로 최종 결과 도출됨*/
+            if (response.getSectorName().equals("인문학 섹터")) {
+                return "humanity";
+
+            }
+            return "q2";
         }
     }
 
     /* 회원의 응답에 따른 이진 트리 로직 */
     @Override
     @Transactional
-    public SecondSectionResponse binaryTree(String answer, Long memberId) {
+    public String binaryTree(String answer, Long memberId) {
         SecondSectionResponse response = secondSectionResponseRepository.findByMemberId(memberId).get();
         int currentQId = response.getQuestionId();
         int leftQuestions = response.getLeftQuestions()-1; //회원이 질문에 응답 시 마다 남은 질문 갯수-=1
@@ -204,8 +205,9 @@ public class SecondSectionServiceImpl implements SecondSectionService{
         response.updateResponse(currentQId, leftQuestions); //다음 질문에 해당하는 노드 Id와, 남은 질문의 갯수 업데이트
         if (response.getLeftQuestions() == 0) { //마지막 질문의 응답까지 마친 후 결과 산출하기
             saveFinalResult(memberId);
+            return "end";
         }
-        return response;
+        return "not end";
     }
     /*각 섹터별 질문 끝난 후 MemberFinalResult 테이블에 결과 유형 저장하기*/
     @Transactional
@@ -218,19 +220,19 @@ public class SecondSectionServiceImpl implements SecondSectionService{
         String questionId = Integer.toString(response.getQuestionId());
         MemberFinalResult memberFinalResult = new MemberFinalResult();
         String resultType;
-        if (response.getSectorName().equals("언어학섹터")) {
+        if (response.getSectorName().equals("언어학 섹터")) {
             LanguageResult result = languageResultRepository.findByQuestionId(questionId);
             resultType = result.getResultType();
         }
-        else if (response.getSectorName().equals("사회경제학섹터")) {
+        else if (response.getSectorName().equals("사회경제학 섹터")) {
             SocialResult result = socialResultRepository.findByQuestionId(questionId);
             resultType = result.getResultType();
         }
-        else if (response.getSectorName().equals("자연과학섹터")) {
+        else if (response.getSectorName().equals("자연과학 섹터")) {
             ScienceResult result = scienceResultRepository.findByQuestionId(questionId);
             resultType = result.getResultType();
         }
-        else if (response.getSectorName().equals("공과섹터")) {
+        else if (response.getSectorName().equals("공과대학 섹터")) {
             TechResult result = techResultRepository.findByQuestionId(questionId);
             resultType = result.getResultType();
         }
@@ -255,8 +257,19 @@ public class SecondSectionServiceImpl implements SecondSectionService{
             //캠퍼스 교차 여부 상관 없는 사용자에게 도출 조건
             finalResults = majorDetailRepository.findByResultType(result.getResultType());
         }
+        List<Map> list = new ArrayList<>();
+        for (int i = 0; i < finalResults.size(); i++) {
+            Map<String, Object> results = new LinkedHashMap<>();
+            FinalResult finalResult = finalResults.get(i);
+            results.put("departmentName", finalResult.getDepartmentName());
+            results.put("intro", finalResult.getIntro());
+            results.put("degree", finalResult.getDegree());
+            results.put("career", finalResult.getCareer());
+            results.put("webPage", finalResult.getWebpage());
+            list.add(results);
+        }
         Map<String, Object> map = new LinkedHashMap<>();
-        map.put("info", finalResults);
+        map.put("info", list);
         return map;
     }
 
