@@ -14,6 +14,8 @@ import styled from 'styled-components';
 
 export default function GPAChart({majorName, averageGPA}) {
 
+
+
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -46,19 +48,28 @@ export default function GPAChart({majorName, averageGPA}) {
       tooltip:{
         display:true,
       }
-    },
-    // scale:{
-    //   // Y축
-    //   yAxes: 
-    //     {
-    //     offset:false
-    //     }
-    //   }
+    }
 
     
   };
   
   const labels = ['평균학점'];
+  
+  //로그인하지 않은 경우:
+  if(majorName === "false"){
+    const noData = {
+      labels,
+      datasets: [{
+          //label: majorName,
+          data: [0, 4.5],
+          borderColor: 'rgb(53, 162, 235)',
+          backgroundColor: 'rgba(2, 135, 153, 0.6)',
+          barThickness:30
+        }]
+    }
+
+    return <Bar width={100} height={25} options={options} data={noData} />;
+  }
   
   const data = {
   labels,
@@ -67,8 +78,7 @@ export default function GPAChart({majorName, averageGPA}) {
       data: [averageGPA, 4.5],
       borderColor: 'rgb(53, 162, 235)',
       backgroundColor: 'rgba(2, 135, 153, 0.6)',
-      barThickness:30,
-      //barPercentage:0.5,
+      barThickness:30
     }]
   };
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -24,6 +24,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [thisBackPoint, setThisBackPoint] = useState("");
+
+  // useEffect(() => {
+  //   setThisBackPoint(backPoint);
+  // },[])
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -48,10 +53,10 @@ const Login = () => {
         () => {
             //로그인 성공 시:
             //세션에 저장
-           
 
             //main page로 이동
-            navigate("/");
+            // navigate(thisBackPoint);
+            navigate('/');
             window.location.reload();
         },
         //로그인 실패 시:
