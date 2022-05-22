@@ -5,6 +5,7 @@ import com.comprehensivedesign.dualmajor.domain.DualMajor;
 import com.comprehensivedesign.dualmajor.domain.FirstMajor;
 import com.comprehensivedesign.dualmajor.domain.sector.MemberSector;
 import com.comprehensivedesign.dualmajor.dto.DualMajorName;
+import com.comprehensivedesign.dualmajor.dto.MajorList;
 import com.comprehensivedesign.dualmajor.repository.MemberSectorRepository;
 import com.comprehensivedesign.dualmajor.repository.major.DualMajorRepository;
 import com.comprehensivedesign.dualmajor.repository.major.FirstMajorRepository;
@@ -13,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -25,6 +23,21 @@ public class MajorServiceImpl implements MajorService{
     @Autowired private final FirstMajorRepository firstMajorRepository;
     @Autowired private final DualMajorRepository dualMajorRepository;
     @Autowired private final MemberSectorRepository memberSectorRepository;
+
+    /* 제1전공 리스트 */
+    @Override
+    public Map viewFirstMajorList() {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("firstMajor", firstMajorRepository.viewFirstMajorList());
+        return map;
+    }
+    /* 제2전공 리스트*/
+    @Override
+    public Map viewDualMajorList() {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("dualMajor", dualMajorRepository.viewDualMajorList());
+        return map;
+    }
 
     @Override
     public FirstMajor findFirstMajorById(Long firstMajorId) throws Exception{

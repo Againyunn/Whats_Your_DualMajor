@@ -17,7 +17,6 @@ import com.comprehensivedesign.dualmajor.repository.firstSection.tendency.Tenden
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +27,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-public class TendencyController {
+public class FirstSectionController {
     @Autowired private final FirstSectionDivisionService firstSectionDivisionService;
     @Autowired private final TendencyQuestionRepository tendencyQuestionRepository;
     @Autowired private final TendencyService tendencyService;

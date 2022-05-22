@@ -4,7 +4,6 @@ package com.comprehensivedesign.dualmajor.Service.SecondSection;
 import com.comprehensivedesign.dualmajor.Service.MemberService.MemberService;
 import com.comprehensivedesign.dualmajor.domain.Member;
 import com.comprehensivedesign.dualmajor.domain.secondSection.*;
-import com.comprehensivedesign.dualmajor.domain.sector.Sector;
 import com.comprehensivedesign.dualmajor.dto.FinalResult;
 import com.comprehensivedesign.dualmajor.dto.SecondSectionQuestionDto;
 import com.comprehensivedesign.dualmajor.repository.SectorRepository;
@@ -272,7 +271,4 @@ public class SecondSectionServiceImpl implements SecondSectionService{
         map.put("info", list);
         return map;
     }
-
-
-
 }
