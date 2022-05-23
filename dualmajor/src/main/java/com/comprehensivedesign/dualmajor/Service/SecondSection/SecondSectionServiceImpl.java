@@ -202,7 +202,9 @@ public class SecondSectionServiceImpl implements SecondSectionService{
             currentQId = (currentQId * 2) + 1;
         }
         response.updateResponse(currentQId, leftQuestions); //다음 질문에 해당하는 노드 Id와, 남은 질문의 갯수 업데이트
-        if (response.getLeftQuestions() == 0) { //마지막 질문의 응답까지 마친 후 결과 산출하기
+        /*==예외(사회경제학섹터 6번 노드)처리== */
+        /*==마지막 질문의 응답까지 마친 후 결과 산출하기==*/
+        if (response.getLeftQuestions() == 0 || (response.getSectorName().equals("사회경제학 섹터")&&response.getQuestionId()==6)) {
             saveFinalResult(memberId);
             return "end";
         }
