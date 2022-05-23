@@ -84,6 +84,7 @@ function SeoulMain() {
         `
         setThisMajorList(Object.values(JSON.parse(data)));
 
+        
         //     RateService.getMajorListGlobal().then(
         //         (response) => {
         //             setThisMajorList(Object.values(JSON.parse(response.data.majorListSeoul)));

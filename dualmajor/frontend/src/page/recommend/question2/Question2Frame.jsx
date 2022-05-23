@@ -29,7 +29,7 @@ export default function Question2Frame() {
     const[response1, setResponse1] = useState('');
     const[response2, setResponse2] = useState('');
     const[progressPercent, setProgressPercent] = useState(10);
-    const[validateTest, setValidateTest] = useState(null);
+    const[nextQuestionNum, setNextQuestionNum] = useState(1);
     const[questionChange, setQuestionChange] = useState(0);
 
     //상태값 및 변수 정의
@@ -39,7 +39,7 @@ export default function Question2Frame() {
     //백엔드로부터 질문 데이터 받아오기
     useEffect(() => {
         //정상적인 방법으로 테스트를 하는 지 검증
-        setValidateTest(localStorage.getItem('recommendFirstResult'));
+        //setValidateTest(localStorage.getItem('recommendFirstResult'));
         let firstValidate = localStorage.getItem('recommendFirstResult');
         
 
@@ -52,10 +52,10 @@ export default function Question2Frame() {
             window.location.reload();
         }
 
-        let thisQuestionNum = localStorage.getItem("questionNum");
+        //테스트 시작
 
         //질문받아오기
-        RecommendService.getSecondSectionQuestion(thisQuestionNum).then(
+        RecommendService.getSecondSectionQuestion(nextQuestionNum).then(
             (response) => {
                 console.log("thisData", response.data);
                 console.log("thisData Type:", typeof(response.data));
@@ -63,7 +63,6 @@ export default function Question2Frame() {
                 //현재 상태(질문)값 변경
                 setQuestionNum(response.data.questionNum);
                 setTotalQuestionNum(response.data.totalQuestionNum);
-                setQuestionId(response.data.questionId);
                 setQuestionContent(response.data.questionContent);
                 setResponse1(response.data.response1);
                 setResponse2(response.data.response2);
@@ -80,7 +79,7 @@ export default function Question2Frame() {
         // setProgressPercent(1/8*100);
 
 
-        setProgressPercent(Math.round(questionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
+        setProgressPercent(Math.round(nextQuestionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
 
     },[])
 
@@ -88,30 +87,20 @@ export default function Question2Frame() {
     useEffect(() => {
         //질문받아오기
 
-        RecommendService.getSecondSectionQuestion(questionNum).then(
+        RecommendService.getSecondSectionQuestion(nextQuestionNum).then(
             (response) => {
 
-                //1차 결과(학문별 선택창)인지 식별
-                if(isNaN(response.data.questionId)){ //백엔드로부터 받은 questionId가 숫자가 아닌경우(결과 값인 경우)
-                    //결과로 받아올 값을 세션스토리지에 저장
-                    sessionStorage.setItem('result1Type',response.data.questionId)
-                    
-                    //1차 결과 page로 이동
-                    navigate("/result1");
-                    window.location.reload();
-                }
                 
                 //현재 상태(질문)값 변경
                 setQuestionNum(response.data.questionNum);
                 setTotalQuestionNum(response.data.totalQuestionNum);
-                setQuestionId(response.data.questionId);
                 setQuestionContent(response.data.questionContent);
                 setResponse1(response.data.response1);
                 setResponse2(response.data.response2);
             }
         )
 
-        setProgressPercent(Math.round(questionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
+        setProgressPercent(Math.round(nextQuestionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
     },[questionChange])
 
 
@@ -131,7 +120,18 @@ export default function Question2Frame() {
         //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
         if(!thisAnswer === false){
             //API전송
-            RecommendService.submitSecondSectionAnswer(questionNum, questionId, thisAnswer);
+            RecommendService.submitSecondSectionAnswer(nextQuestionNum, questionId, thisAnswer).then(
+                (response) => {
+                    if(response.data.finished != false){
+                        //결과로 받아올 값을 세션스토리지에 저장
+                        sessionStorage.setItem('result1Type',response.data.questionId)
+                                            
+                        //1차 결과 page로 이동
+                        navigate("/result1");
+                        window.location.reload();
+                    }
+                }
+            );
 
             //다음질문을 받을 수 있도록 세션스토리지 값 변경
             let nextQuestionNum = questionNum + 1;

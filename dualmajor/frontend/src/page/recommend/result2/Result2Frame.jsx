@@ -7,7 +7,7 @@ import Header from "../../main/component/Header";
 import Footer from "../../main/component/Footer"
 import '../../../media/css/commonFrame.css';
 import MainFrame from "../question1/MainFrame";
-import Result1 from './Result1';
+import Result2 from './Result2';
 
 export default function Result1Frame() {
 
@@ -23,7 +23,7 @@ export default function Result1Frame() {
     <>
       <div className="mainContainer">
         <div className="header"><Header showMenu={showMenu}/></div>
-        <div className="mainBody"><Result1/></div>
+        <div className="mainBody"><Result2/></div>
         <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
       </div>
     </>
