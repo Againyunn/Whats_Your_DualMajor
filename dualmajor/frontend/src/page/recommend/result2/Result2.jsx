@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Button, Col, Container, Row, ProgressBar, Accordion, ListGroup} from 'react-bootstrap';
 import RecommendService from '../../../services/recommend.service';
 import { useNavigate } from 'react-router-dom';
-import ReactTooltip from 'react-tooltip';
+//import ReactTooltip from 'react-tooltip';
 
 export default function Result() {
     //상태값 정의
@@ -67,6 +67,8 @@ export default function Result() {
         ShowResult();
     },[])
 
+    
+
     const ShowResult = () => {
         console.log('thisResult:',thisResult);
         console.log('testData.list.academicName:',testData.info[0]);
@@ -83,8 +85,10 @@ export default function Result() {
                     {
                         testData.info.map(thisData => (
                             <>
-                                  <Accordion.Item eventKey={thisData.departmentName}>
-                                    <Accordion.Header>{thisData.departmentName}</Accordion.Header>
+                                <Accordion.Item eventKey={thisData.departmentName}>
+                                    <div id={`${thisData.departmentName}`} onClick={selectResult}>
+                                        <Accordion.Header>{thisData.departmentName}</Accordion.Header>
+                                    </div>
                                     <Accordion.Body>
                                         <ListGroup>
                                             <ListGroup.Item>{thisData.campus}</ListGroup.Item>
@@ -121,26 +125,37 @@ export default function Result() {
         )
     }
 
-    const selectAcademicName =(thisAcademicName) =>{
-        console.log("thisAcademicName:",thisAcademicName);
-        setAnswer(thisAcademicName);
+    
 
-        console.log("setAnswer:",answer);
+    const selectResult =(event) =>{
+        let result = event.currentTarget.id;
+        // let result = selectedElement.current.id;
+
+        console.log("thisAcademicName:",result);
+        setAnswer(result);
+
+        //선택한 전공에 대해 색 변경(프론트에 표시)
+        document.getElementById(result).style.border = "1px solid #002F5A";
+        document.getElementById(result).style.color = "white";
     }
 
     const goToNext = () => {
         //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
-        if(!answer === false){
+        if(answer !== false){
             //API전송
-            RecommendService.submitFirstSectionAnswer(answer);
+            RecommendService.saveResult(answer);
             console.log("answer:",answer);
 
-            localStorage.setItem('recommendFirstResult', 'true');
-            localStorage.setItem('questionNum', '1');
+            //비회원이 차후에 회원가입 시 기존의 서비스 정보를 받을 수 있도록
+            localStorage.setItem('recommendResult', answer);
 
             //2차 질문 page로 이동
-            navigate("/question2");
-            window.location.reload();
+            // navigate("/question2");
+            // window.location.reload();
+
+            //서비스 만족도 조사 모달 띄우기
+
+            //서비스 만족도 조사 이후 공유하기 활성화
         }
     }
 
@@ -148,18 +163,18 @@ export default function Result() {
     <BodyBlock>
         <div className="container">
             <div className='notice'>
-                <span>단과대학을 1개 골라주세요!</span><br/>
-                <span>선택한 단과대학에 따라 결과가 달라집니다.</span>
+                <span><b>!!이중전공 추천 서비스 결과!!</b></span><br/>
+                <span>학과를 선택한 뒤 저장을 누르시면 sns에 공유할 수 있어요!</span>
             </div>
             <div className='resultFrame'>
-                        {
-                                !thisResult?
-                                <></>:
-                                <ShowResult/>  
-                        }
+                {
+                    !thisResult?
+                    <></>:
+                    <ShowResult/>  
+                }
             </div>
             <div className='nextButtonFrame'>
-            <Button className='nextButton' onClick={() => goToNext()}>다음</Button>
+            <Button className='nextButton' onClick={() => goToNext()}>저장하기</Button>
             </div>
         </div>
     </BodyBlock>
