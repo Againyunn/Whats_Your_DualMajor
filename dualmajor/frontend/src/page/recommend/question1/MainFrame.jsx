@@ -16,7 +16,7 @@ export default function MainFrame() {
         sessionStorage.setItem('recommendTest', 'true');
 
         //questionNum : 몇 번째 질문인지 식별할 수 있게하는 변수
-        sessionStorage.setItem('questionNum', '1');
+        sessionStorage.setItem('questionNum', '0');
     },[])
 
 

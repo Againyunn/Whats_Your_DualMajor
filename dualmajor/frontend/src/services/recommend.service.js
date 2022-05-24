@@ -148,24 +148,29 @@ const getFinalResult = (id, resultType) =>{
 
     //백엔드에서 받아올 데이터 예시
     /**
-     * {
-        "info": [
-                {
-                    "departmentName": "경영",
-                    "intro": "inf1",
-                    "degree": "deg1",
-                    "career": "career1",
-                    "webPage": "www.hufs.ac.kr"
-                },
-                {
-                    "departmentName": "국금",
-                    "intro": "inf2",
-                    "degree": "deg2",
-                    "career": "career2",
-                    "webPage": "www.hufs.ac.kr"
-                }
-            ]
-        }
+      "info": [
+            {
+                "departmentName": "경영",
+                "campus": "서울",
+                "intro": "inf1",
+                "degree": "deg1",
+                "career": "career1",//null가능
+                "curriculum": "경영학원론",//null가능
+                "certification": "전산회계",//null가능
+                "webPage": "www.hufs.ac.kr" //null가능
+            },
+            {
+                "departmentName": "국금",
+                "campus": "글로벌",
+                "intro": "inf2",
+                "degree": "deg2",
+                "career": "career2",
+                "curriculum": "경제학원론",//null가능
+                "certification": "경제학",//null가능
+                "webPage": "www.hufs.ac.kr"
+            }
+        ]
+    }
      */
     //departmentName, info 각각 JSON 내부에 객체 형식으로 
 }

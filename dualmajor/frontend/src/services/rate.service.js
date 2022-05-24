@@ -23,7 +23,7 @@ const getRateInfo = (majorName) => {
  * 프론트엔드에서 로그인한 경우에만 정보를 요청하도록 설정할 것이므로, 백엔드는 로그인 유무 신경 안써도 됩니다.
  * 경우1: 지원x 인 경우 → stdNum: 학번, apply: false, majorName: null, gpa: null, change: true
  * 
- * 경우2: 지원한 경우 → stdNum: 학번, apply: true, majorName: DB내의 학과명, gpa: 학점, change: true
+ * 경우2: 지원한 경우 → stdNum: 학번, apply: true, majorName: DB내의 학과명, gpa: 학점, change: true/false
  */
 /**
  * 백엔드에 로직 요구사항:

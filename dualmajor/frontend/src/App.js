@@ -129,6 +129,7 @@ import Question2Frame from './page/recommend/question2/Question2Frame';
 import RateMain from './page/rate/RateMain';
 import SeoulMain from './page/rate/seoul/SeoulMain';
 import GlobalMain from './page/rate/global/GlobalMain';
+import Result2Frame from './page/recommend/result2/Result2Frame';
 
 function App() {
   return (
@@ -144,6 +145,7 @@ function App() {
         <Route path='/question1' element={<Question1Frame/>}/>
         <Route path='/result1' element={<Result1Frame/>}/>
         <Route path='/question2' element={<Question2Frame/>}/>
+        <Route path='/result2' element={<Result2Frame/>}/>
         <Route path='/rate' element={<RateMain/>} />
         <Route path='/seoul' element={<SeoulMain/>} />
         <Route path='/global' element={<GlobalMain/>} />
@@ -152,5 +154,6 @@ function App() {
   </>
   );
 }
+
 
 export default App;

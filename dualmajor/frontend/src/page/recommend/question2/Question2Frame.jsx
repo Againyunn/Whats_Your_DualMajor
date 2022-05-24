@@ -58,7 +58,7 @@ export default function Question2Frame() {
         let thisQuestionNum = sessionStorage.getItem("questionNum");
 
         //질문받아오기
-        RecommendService.getSecondSectionQuestion(id, thisQuestionNum).then(
+        RecommendService.getSecondSectionQuestion(idValidate, thisQuestionNum).then(
             (response) => {
                 console.log("thisData", response.data);
                 console.log("thisData Type:", typeof(response.data));
@@ -89,8 +89,8 @@ export default function Question2Frame() {
     //질문 순서 값이 변경되었는 지 확인 후, 다음 질문 랜더링
     useEffect(() => {
         //질문받아오기
-
-        RecommendService.getSecondSectionQuestion(id, nextQuestionNum).then(
+        let idValidate = sessionStorage.getItem('testId');
+        RecommendService.getSecondSectionQuestion(idValidate, nextQuestionNum).then(
             (response) => {
 
                 
@@ -123,14 +123,15 @@ export default function Question2Frame() {
         //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
         if(thisAnswer !== false){
             //API전송
-            RecommendService.submitSecondSectionAnswer(id, nextQuestionNum, thisAnswer).then(
+            let idValidate = sessionStorage.getItem('testId');
+            RecommendService.submitSecondSectionAnswer(idValidate, nextQuestionNum, thisAnswer).then(
                 (response) => {
                     if(response.data.finished != false){
                         //결과로 받아올 값을 세션스토리지에 저장
-                        sessionStorage.setItem('result2Type',response.data.questionId)
+                        sessionStorage.setItem('result2Type',response.data.finished)
                                             
-                        //1차 결과 page로 이동
-                        navigate("/result1");
+                        //2차 결과 page로 이동
+                        navigate("/result2");
                         window.location.reload();
                     }
                 }

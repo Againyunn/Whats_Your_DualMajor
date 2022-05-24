@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Button, Col, Container, Row, ProgressBar } from 'react-bootstrap';
+import { Button, Col, Container, Row, ProgressBar, Accordion, ListGroup} from 'react-bootstrap';
 import RecommendService from '../../../services/recommend.service';
 import { useNavigate } from 'react-router-dom';
-import Error from './Error';
 import ReactTooltip from 'react-tooltip';
 
 export default function Result() {
@@ -17,17 +16,23 @@ export default function Result() {
         "info": [
             {
                 "departmentName": "경영",
+                "campus": "서울",
                 "intro": "inf1",
                 "degree": "deg1",
-                "career": "career1",
-                "webPage": "www.hufs.ac.kr"
+                "career": "career1",//null가능
+                "curriculum": "경영학원론",//null가능
+                "certification": "전산회계",//null가능
+                "webPage": "www.hufs.ac.kr" //null가능
             },
             {
                 "departmentName": "국금",
+                "campus": "글로벌",
                 "intro": "inf2",
                 "degree": "deg2",
                 "career": "career2",
-                "webPage": "www.hufs.ac.kr"
+                "curriculum": "경제학원론",//null가능
+                "certification": null,//null가능
+                "webPage": "www.hufs.ac.kr스위스 다보스에서 열린 세계경제포럼 연차총회(WEF·다보스포럼)에서는 비트코인 등 가상화폐를 둘러싼 비관적인 전망도 쏟아졌다. 글로벌 자산운용사 구겐하임인베스트먼트의 스콧 마이너드 최고투자책임자(CIO)는 비트코인이 8000달러까지 폭락할 수 있다고 경고했다. 현 시세에서 70% 이상 추가 폭락할 수 있다는 것이다."
             }
         ]
     }
@@ -37,11 +42,14 @@ export default function Result() {
 
 
     useEffect(() => {
+        //임시 아이디 설정
+        let idValidate = sessionStorage.getItem('testId');
+
         //세션 스토리지에 저장된 결과값을 백엔드에 요청
-        // RecommendService.getFirstSectionResult(sessionStorage.getItem('result2Type')).then(
+        // RecommendService.getFirstSectionResult(idValidate, sessionStorage.getItem('result2Type')).then(
         //     (response) => {
         //         //전달받은 값을 데이터로 저장
-        //         setThisResult(response.data);
+        //         setThisResult(response.data.info);
         //         //실행
         //         ShowResult();
         //     }
@@ -52,46 +60,63 @@ export default function Result() {
         //     }
         // )
 
-        //테스트용(시작)
-        setThisResult(testData.list);
+        //테스트용
+        setThisResult(testData.info);
+        //thisResult는 테스트 종료되면 삭제 처리
 
         ShowResult();
-        //테스트용(끝)
-    
     },[])
-
-
 
     const ShowResult = () => {
         console.log('thisResult:',thisResult);
-        console.log('testData.list.academicName:',testData.list[0]);
+        console.log('testData.list.academicName:',testData.info[0]);
 
         if(!thisResult){
-            return;
+            return(
+                <></>
+            );
         }
 
         return(
             <>
-                {
-                    testData.list.map(thisData => (
-                        <>
-                            <div className='eachResult' key={thisData.academicName} data-tip data-for={`tooltip${thisData.academicName}`} onClick={()=>{selectAcademicName(thisData.academicName)}}>
-                                
-                                    {thisData.academicName}
-                                
-                                    <ReactTooltip
-                                        id={`tooltip${thisData.academicName}`}
-                                        effect="solid"
-                                        place="bottom"
-                                        type="dark"
-                                        key={thisData.departmentList}
-                                        >
-                                        {thisData.departmentList}
-                                    </ReactTooltip>
-                            </div>
-                        </>
-                    ))
-                }
+                <Accordion defaultActiveKey="0" flush>
+                    {
+                        testData.info.map(thisData => (
+                            <>
+                                  <Accordion.Item eventKey={thisData.departmentName}>
+                                    <Accordion.Header>{thisData.departmentName}</Accordion.Header>
+                                    <Accordion.Body>
+                                        <ListGroup>
+                                            <ListGroup.Item>{thisData.campus}</ListGroup.Item>
+                                            <ListGroup.Item>{thisData.intro}</ListGroup.Item>
+                                            <ListGroup.Item>{thisData.degree}</ListGroup.Item>
+                                                {
+                                                    (thisData.career !== null)?
+                                                    <ListGroup.Item>{thisData.career}</ListGroup.Item>:
+                                                    <></>
+                                                }
+                                                {
+                                                    (thisData.curriculum !== null)?
+                                                     <ListGroup.Item>{thisData.curriculum}</ListGroup.Item>:
+                                                     <></>
+                                                }
+                                                {
+                                                    (thisData.certification!== null)?
+                                                    <ListGroup.Item>{thisData.certification}</ListGroup.Item>:
+                                                    <></>                                                   
+                                                }
+                                                {
+                                                    (thisData.webPage !== null)?
+                                                    <ListGroup.Item>{thisData.webPage}</ListGroup.Item>:
+                                                    <></>
+                                                }
+                                        </ListGroup>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </>
+                        ))
+                    }
+                </Accordion>
             </>
         )
     }
@@ -102,8 +127,7 @@ export default function Result() {
 
         console.log("setAnswer:",answer);
     }
- 
-    
+
     const goToNext = () => {
         //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
         if(!answer === false){
@@ -120,8 +144,6 @@ export default function Result() {
         }
     }
 
-
-
   return (
     <BodyBlock>
         <div className="container">
@@ -130,17 +152,11 @@ export default function Result() {
                 <span>선택한 단과대학에 따라 결과가 달라집니다.</span>
             </div>
             <div className='resultFrame'>
-                {
-                    !isError?
-                    <>
                         {
-                            !thisResult?
-                            <></>:
-                            <ShowResult/>  
+                                !thisResult?
+                                <></>:
+                                <ShowResult/>  
                         }
-                    </>:
-                        <Error/>
-                }
             </div>
             <div className='nextButtonFrame'>
             <Button className='nextButton' onClick={() => goToNext()}>다음</Button>
@@ -149,7 +165,6 @@ export default function Result() {
     </BodyBlock>
   )
 }
-
 
 //CSS
 const BodyBlock = styled.div`

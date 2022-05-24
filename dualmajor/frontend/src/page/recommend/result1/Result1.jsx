@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Button, Col, Container, Row, ProgressBar } from 'react-bootstrap';
+import { Button, Col, Container, Row, ProgressBar, Accordion } from 'react-bootstrap';
 import RecommendService from '../../../services/recommend.service';
 import { useNavigate } from 'react-router-dom';
 import Error from './Error';
@@ -30,9 +30,14 @@ export default function Result() {
     let navigate = useNavigate();
 
 
+
+
     useEffect(() => {
-        //세션 스토리지에 저장된 결과값을 백엔드에 요청
-        // RecommendService.getFirstSectionResult(sessionStorage.getItem('result1Type')).then(
+        //임시 아이디 설정
+        let idValidate = sessionStorage.getItem('testId');
+
+        // // 세션 스토리지에 저장된 결과값을 백엔드에 요청
+        // RecommendService.getFirstSectionResult(idValidate, sessionStorage.getItem('result1Type')).then(
         //     (response) => {
         //         //전달받은 값을 데이터로 저장
         //         setThisResult(response.data);
@@ -48,10 +53,9 @@ export default function Result() {
 
         //테스트용(시작)
         setThisResult(testData.list);
-
+        //thisResult는 테스트 종료되면 삭제 처리
+        
         ShowResult();
-        //테스트용(끝)
-    
     },[])
 
 
@@ -66,29 +70,73 @@ export default function Result() {
 
         return(
             <>
-                {
-                    testData.list.map(thisData => (
-                        <>
-                            <div className='eachResult' key={thisData.academicName} data-tip data-for={`tooltip${thisData.academicName}`} onClick={()=>{selectAcademicName(thisData.academicName)}}>
-                                
-                                    {thisData.academicName}
-                                
-                                    <ReactTooltip
-                                        id={`tooltip${thisData.academicName}`}
-                                        effect="solid"
-                                        place="bottom"
-                                        type="dark"
-                                        key={thisData.departmentList}
-                                        >
+                <Accordion defaultActiveKey="0" flush>
+                    {
+                        testData.list.map(thisData => (
+                            <>
+                                <Accordion.Item eventKey={thisData.academicName}>
+                                    <Accordion.Header>{thisData.academicName}</Accordion.Header>
+                                    <Accordion.Body>
+
                                         {thisData.departmentList}
-                                    </ReactTooltip>
-                            </div>
-                        </>
-                    ))
-                }
+                                    {/* <div className='eachResult' key={thisData.academicName} data-tip data-for={`tooltip${thisData.academicName}`} onClick={()=>{selectAcademicName(thisData.academicName)}}>
+                                        
+                                            {thisData.academicName}
+                                        
+                                            <ReactTooltip
+                                                id={`tooltip${thisData.academicName}`}
+                                                effect="solid"
+                                                place="bottom"
+                                                type="dark"
+                                                key={thisData.departmentList}
+                                                >
+                                                {thisData.departmentList}
+                                            </ReactTooltip>
+                                    </div> */}
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </>
+                        ))
+                    }
+                </Accordion>
             </>
         )
     }
+
+<Accordion defaultActiveKey="0" flush>
+  <Accordion.Item eventKey="0">
+    <Accordion.Header>Accordion Item #1</Accordion.Header>
+    <Accordion.Body>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+      est laborum.
+    </Accordion.Body>
+  </Accordion.Item>
+  <Accordion.Item eventKey="1">
+    <Accordion.Header>Accordion Item #2</Accordion.Header>
+    <Accordion.Body>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+      est laborum.
+    </Accordion.Body>
+  </Accordion.Item>
+</Accordion>
+
+
+
+
+
+
+
+
 
     const selectAcademicName =(thisAcademicName) =>{
         console.log("thisAcademicName:",thisAcademicName);
@@ -101,12 +149,15 @@ export default function Result() {
     const goToNext = () => {
         //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
         if(answer !== false){
+            //임시 아이디 설정
+            let idValidate = sessionStorage.getItem('testId');
+
             //API전송
-            RecommendService.submitFirstSectionAnswer(answer);
+            RecommendService.submitFirstSectionAnswer(idValidate, answer);
             console.log("answer:",answer);
 
-            sessionStorage.setItem('recommendFirstResult', 'true');
-            sessionStorage.setItem('questionNum', '1');
+            sessionStorage.setItem('recommendFirstResult', true);
+            sessionStorage.setItem('questionNum', 1);
 
             //2차 질문 page로 이동
             navigate("/question2");
