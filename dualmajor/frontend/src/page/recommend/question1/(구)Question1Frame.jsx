@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../main/component/Header';
-// import MainFrame from './MainFrame';
+import MainFrame from './MainFrame';
 import Footer from '../../main/component/Footer';
 import '../../../media/css/commonFrame.css';
 import RecommendService from '../../../services/recommend.service';
@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Col, Container, Row, ProgressBar } from 'react-bootstrap';
 import styled from 'styled-components'
 
-export default function Question2Frame() {
+export default function Question1Frame() {
 
     //상단바 컨트롤 : 메뉴바 노출 상태관리
     const showMenu = false;
@@ -22,7 +22,6 @@ export default function Question2Frame() {
     let navigate = useNavigate();
 
     //질문 값 제어 상태 관리
-    //const[validateTest, setValidateTest] = useState(null);
     const[questionNum, setQuestionNum] = useState(1);
     const[totalQuestionNum, setTotalQuestionNum] = useState('');
     const[questionId, setQuestionId] = useState(1);
@@ -30,9 +29,8 @@ export default function Question2Frame() {
     const[response1, setResponse1] = useState('');
     const[response2, setResponse2] = useState('');
     const[progressPercent, setProgressPercent] = useState(10);
-    const[nextQuestionNum, setNextQuestionNum] = useState(1);
-    //const[questionChange, setQuestionChange] = useState(0);
-    const[id, setId] = useState("");
+    //const[validateTest, setValidateTest] = useState(null);
+    const[questionChange, setQuestionChange] = useState(0);
 
     //상태값 및 변수 정의
     const [thisAnswer, setThisAnswer] = useState(false);
@@ -44,8 +42,6 @@ export default function Question2Frame() {
         //setValidateTest(sessionStorage.getItem('recommendTest'));
         let firstValidate = sessionStorage.getItem('recommendTest');
         
-        //임시 아이디 설정
-        setId(sessionStorage.getItem('testId'));
 
         //비정상적인 방법으로 테스트 접근 시 이중전공 추천 서비스 첫 화면으로 강제 이동
         if(!firstValidate){
@@ -55,13 +51,11 @@ export default function Question2Frame() {
             navigate("/recommend");
             window.location.reload();
         }
-        
+
         let thisQuestionNum = sessionStorage.getItem("questionNum");
 
-        //테스트 시작
-
         //질문받아오기
-        RecommendService.getSecondSectionQuestion(id, thisQuestionNum).then(
+        RecommendService.getFirstSectionQuestion(thisQuestionNum).then(
             (response) => {
                 console.log("thisData", response.data);
                 console.log("thisData Type:", typeof(response.data));
@@ -69,6 +63,7 @@ export default function Question2Frame() {
                 //현재 상태(질문)값 변경
                 setQuestionNum(response.data.questionNum);
                 setTotalQuestionNum(response.data.totalQuestionNum);
+                setQuestionId(response.data.questionId);
                 setQuestionContent(response.data.questionContent);
                 setResponse1(response.data.response1);
                 setResponse2(response.data.response2);
@@ -85,7 +80,7 @@ export default function Question2Frame() {
         // setProgressPercent(1/8*100);
 
 
-        setProgressPercent(Math.round(nextQuestionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
+        setProgressPercent(Math.round(questionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
 
     },[])
 
@@ -93,21 +88,31 @@ export default function Question2Frame() {
     useEffect(() => {
         //질문받아오기
 
-        RecommendService.getSecondSectionQuestion(id, nextQuestionNum).then(
+        RecommendService.getFirstSectionQuestion(questionNum).then(
             (response) => {
 
+                //1차 결과(학문별 선택창)인지 식별
+                if(isNaN(response.data.questionId)){ //백엔드로부터 받은 questionId가 숫자가 아닌경우(결과 값인 경우)
+                    //결과로 받아올 값을 세션스토리지에 저장
+                    sessionStorage.setItem('result1Type',response.data.questionId)
+                    
+                    //1차 결과 page로 이동
+                    navigate("/result1");
+                    window.location.reload();
+                }
                 
                 //현재 상태(질문)값 변경
                 setQuestionNum(response.data.questionNum);
                 setTotalQuestionNum(response.data.totalQuestionNum);
+                setQuestionId(response.data.questionId);
                 setQuestionContent(response.data.questionContent);
                 setResponse1(response.data.response1);
                 setResponse2(response.data.response2);
             }
         )
 
-        setProgressPercent(Math.round(nextQuestionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
-    },[nextQuestionNum])
+        setProgressPercent(Math.round(questionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
+    },[questionChange])
 
 
     //답변에 따라 값 변경
@@ -124,24 +129,14 @@ export default function Question2Frame() {
 
     const goToNext = () => {
         //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
-        if(thisAnswer !== false){
+        if(!thisAnswer === false){
             //API전송
-            RecommendService.submitSecondSectionAnswer(id, nextQuestionNum, thisAnswer).then(
-                (response) => {
-                    if(response.data.finished != false){
-                        //결과로 받아올 값을 세션스토리지에 저장
-                        sessionStorage.setItem('result1Type',response.data.questionId)
-                                            
-                        //1차 결과 page로 이동
-                        navigate("/result1");
-                        window.location.reload();
-                    }
-                }
-            );
+            RecommendService.submitFirstSectionAnswer(questionNum, questionId, thisAnswer);
 
             //다음질문을 받을 수 있도록 세션스토리지 값 변경
-            setNextQuestionNum(nextQuestionNum+1);
-            //setQuestionChange(nextQuestionNum);
+            let nextQuestionNum = questionNum + 1;
+            localStorage.setItem('questionNum', nextQuestionNum);
+            setQuestionChange(nextQuestionNum);
 
             //테스트용
             // setQuestionNum(3);
@@ -154,7 +149,6 @@ export default function Question2Frame() {
             setThisAnswer(false);
         }
     }
-
 
     return (
         <>

@@ -16,7 +16,7 @@ const getFirstSectionQuestion = (id, questionNum) =>{
 }
 /**
  * {
-        "id": (임시)회원식별 값,
+        "id": (임시)회원식별 값, -> 처음에는 ''빈 값
         "questionNum": "1",
         "questionContent": "성향vs진로?",
         "response1": "1",

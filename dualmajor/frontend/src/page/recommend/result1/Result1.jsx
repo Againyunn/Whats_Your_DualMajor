@@ -100,13 +100,13 @@ export default function Result() {
     
     const goToNext = () => {
         //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
-        if(!answer === false){
+        if(answer !== false){
             //API전송
             RecommendService.submitFirstSectionAnswer(answer);
             console.log("answer:",answer);
 
-            localStorage.setItem('recommendFirstResult', 'true');
-            localStorage.setItem('questionNum', '1');
+            sessionStorage.setItem('recommendFirstResult', 'true');
+            sessionStorage.setItem('questionNum', '1');
 
             //2차 질문 page로 이동
             navigate("/question2");

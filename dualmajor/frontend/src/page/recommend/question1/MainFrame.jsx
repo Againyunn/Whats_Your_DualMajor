@@ -13,10 +13,10 @@ export default function MainFrame() {
     //초기 화면 랜더링 시 초기화(1번 실행)
     useEffect( () =>{
         //recommendTest : 정상적인 방법으로 테스트를 처음부터 시작했는 지 검증하기 위한 값(url을 통한 비정상적 접근 방지)
-        localStorage.setItem('recommendTest', 'true');
+        sessionStorage.setItem('recommendTest', 'true');
 
         //questionNum : 몇 번째 질문인지 식별할 수 있게하는 변수
-        localStorage.setItem('questionNum', '1');
+        sessionStorage.setItem('questionNum', '1');
     },[])
 
 

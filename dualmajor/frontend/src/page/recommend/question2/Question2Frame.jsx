@@ -30,7 +30,8 @@ export default function Question2Frame() {
     const[response2, setResponse2] = useState('');
     const[progressPercent, setProgressPercent] = useState(10);
     const[nextQuestionNum, setNextQuestionNum] = useState(1);
-    const[questionChange, setQuestionChange] = useState(0);
+    //const[questionChange, setQuestionChange] = useState(0);
+    const[id, setId] = useState("");
 
     //상태값 및 변수 정의
     const [thisAnswer, setThisAnswer] = useState(false);
@@ -40,11 +41,12 @@ export default function Question2Frame() {
     useEffect(() => {
         //정상적인 방법으로 테스트를 하는 지 검증
         //setValidateTest(localStorage.getItem('recommendFirstResult'));
-        let firstValidate = localStorage.getItem('recommendFirstResult');
-        
+        let firstValidate = sessionStorage.getItem('recommendFirstResult');
+        //임시 아이디 설정
+        let idValidate = sessionStorage.getItem('testId');
 
         //비정상적인 방법으로 테스트 접근 시 이중전공 추천 서비스 첫 화면으로 강제 이동
-        if(!firstValidate){
+        if(!firstValidate || !idValidate){
             alert("처음부터 테스트를 진행해주세요😁");
 
             //recommend page로 이동
@@ -53,9 +55,10 @@ export default function Question2Frame() {
         }
 
         //테스트 시작
+        let thisQuestionNum = sessionStorage.getItem("questionNum");
 
         //질문받아오기
-        RecommendService.getSecondSectionQuestion(nextQuestionNum).then(
+        RecommendService.getSecondSectionQuestion(id, thisQuestionNum).then(
             (response) => {
                 console.log("thisData", response.data);
                 console.log("thisData Type:", typeof(response.data));
@@ -87,7 +90,7 @@ export default function Question2Frame() {
     useEffect(() => {
         //질문받아오기
 
-        RecommendService.getSecondSectionQuestion(nextQuestionNum).then(
+        RecommendService.getSecondSectionQuestion(id, nextQuestionNum).then(
             (response) => {
 
                 
@@ -101,7 +104,7 @@ export default function Question2Frame() {
         )
 
         setProgressPercent(Math.round(nextQuestionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
-    },[questionChange])
+    },[nextQuestionNum])
 
 
     //답변에 따라 값 변경
@@ -118,13 +121,13 @@ export default function Question2Frame() {
 
     const goToNext = () => {
         //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
-        if(!thisAnswer === false){
+        if(thisAnswer !== false){
             //API전송
-            RecommendService.submitSecondSectionAnswer(nextQuestionNum, questionId, thisAnswer).then(
+            RecommendService.submitSecondSectionAnswer(id, nextQuestionNum, thisAnswer).then(
                 (response) => {
                     if(response.data.finished != false){
                         //결과로 받아올 값을 세션스토리지에 저장
-                        sessionStorage.setItem('result1Type',response.data.questionId)
+                        sessionStorage.setItem('result2Type',response.data.questionId)
                                             
                         //1차 결과 page로 이동
                         navigate("/result1");
@@ -134,9 +137,8 @@ export default function Question2Frame() {
             );
 
             //다음질문을 받을 수 있도록 세션스토리지 값 변경
-            let nextQuestionNum = questionNum + 1;
-            localStorage.setItem('questionNum', nextQuestionNum);
-            setQuestionChange(nextQuestionNum);
+            setNextQuestionNum(nextQuestionNum+1);
+            //setQuestionChange(nextQuestionNum);
 
             //테스트용
             // setQuestionNum(3);
