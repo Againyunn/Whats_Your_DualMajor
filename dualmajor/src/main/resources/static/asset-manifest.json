@@ -1,16 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.13ded742.css",
-    "main.js": "/static/js/main.daa6cea9.js",
-    "static/media/로고.png": "/static/media/로고.83c34aa6324d9e58e65a.png",
+    "main.css": "/static/css/main.34c4f543.css",
+    "main.js": "/static/js/main.77ede5dd.js",
+    "static/media/부_원형.jpg": "/static/media/부_원형.5805b6bdda001e1ea22c.jpg",
+    "static/media/백년관.jpg": "/static/media/백년관.bd21e048c71a7595f717.jpg",
+    "static/media/본관.jpg": "/static/media/본관.0aded51d9fbabde40e00.jpg",
+    "static/media/aniMajor.gif": "/static/media/aniMajor.f0c86cc9bebf17cde901.gif",
     "static/media/백이중추천.png": "/static/media/백이중추천.299c099e6d836db153ff.png",
     "static/media/백경쟁률.png": "/static/media/백경쟁률.f93860284bd0e95e16c0.png",
     "index.html": "/index.html",
-    "main.13ded742.css.map": "/static/css/main.13ded742.css.map",
-    "main.daa6cea9.js.map": "/static/js/main.daa6cea9.js.map"
+    "main.34c4f543.css.map": "/static/css/main.34c4f543.css.map",
+    "main.77ede5dd.js.map": "/static/js/main.77ede5dd.js.map"
   },
   "entrypoints": [
-    "static/css/main.13ded742.css",
-    "static/js/main.daa6cea9.js"
+    "static/css/main.34c4f543.css",
+    "static/js/main.77ede5dd.js"
   ]
 }
