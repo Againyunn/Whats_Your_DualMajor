@@ -131,7 +131,7 @@ export default function Result() {
         let result = event.currentTarget.id;
         // let result = selectedElement.current.id;
 
-        console.log("thisAcademicName:",result);
+        console.log("selectedResult:",result);
         setAnswer(result);
 
         //선택한 전공에 대해 색 변경(프론트에 표시)

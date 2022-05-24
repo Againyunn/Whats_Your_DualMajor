@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Button, Col, Container, Row, ProgressBar, Accordion } from 'react-bootstrap';
+import { Button, Col, Container, Row, ProgressBar, Accordion, ListGroup} from 'react-bootstrap';
 import RecommendService from '../../../services/recommend.service';
 import { useNavigate } from 'react-router-dom';
 import Error from './Error';
@@ -75,10 +75,13 @@ export default function Result() {
                         testData.list.map(thisData => (
                             <>
                                 <Accordion.Item eventKey={thisData.academicName}>
-                                    <Accordion.Header>{thisData.academicName}</Accordion.Header>
+                                    <div id={`${thisData.academicName}`} onClick={selectResult}>
+                                        <Accordion.Header>{thisData.academicName}</Accordion.Header>
+                                    </div>
                                     <Accordion.Body>
-
-                                        {thisData.departmentList}
+                                        <ListGroup>
+                                            <ListGroup.Item>{thisData.departmentList}</ListGroup.Item>
+                                        </ListGroup>
                                     {/* <div className='eachResult' key={thisData.academicName} data-tip data-for={`tooltip${thisData.academicName}`} onClick={()=>{selectAcademicName(thisData.academicName)}}>
                                         
                                             {thisData.academicName}
@@ -103,46 +106,15 @@ export default function Result() {
         )
     }
 
-<Accordion defaultActiveKey="0" flush>
-  <Accordion.Item eventKey="0">
-    <Accordion.Header>Accordion Item #1</Accordion.Header>
-    <Accordion.Body>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.
-    </Accordion.Body>
-  </Accordion.Item>
-  <Accordion.Item eventKey="1">
-    <Accordion.Header>Accordion Item #2</Accordion.Header>
-    <Accordion.Body>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.
-    </Accordion.Body>
-  </Accordion.Item>
-</Accordion>
+    const selectResult =(event) =>{
+        let result = event.currentTarget.id;
 
+        console.log("thisAcademicName:",result);
+        setAnswer(result);
 
-
-
-
-
-
-
-
-    const selectAcademicName =(thisAcademicName) =>{
-        console.log("thisAcademicName:",thisAcademicName);
-        setAnswer(thisAcademicName);
-
-        console.log("setAnswer:",answer);
+        //선택한 전공에 대해 색 변경(프론트에 표시)
+        document.getElementById(result).style.border = "1px solid #002F5A";
+        document.getElementById(result).style.color = "white";
     }
  
     
