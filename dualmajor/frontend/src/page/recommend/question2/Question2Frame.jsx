@@ -23,7 +23,7 @@ export default function Question2Frame() {
 
     //질문 값 제어 상태 관리
     const[questionNum, setQuestionNum] = useState(1);
-    const[totalQuestionNum, setTotalQuestionNum] = useState('');
+    const[totalQuestionNum, setTotalQuestionNum] = useState(0);
     const[questionId, setQuestionId] = useState(1);
     const[questionContent, setQuestionContent] = useState('');
     const[response1, setResponse1] = useState('');
@@ -55,7 +55,8 @@ export default function Question2Frame() {
         }
 
         //테스트 시작
-        let thisQuestionNum = JSON.parse(sessionStorage.getItem("questionNum"));
+        let responseQuestionNum, responseTotalQuestionNum;
+        let thisQuestionNum = Number(sessionStorage.getItem("questionNum"));
 
         //질문받아오기
         RecommendService.getSecondSectionQuestion(thisQuestionNum, testKeyValidate).then(
@@ -66,12 +67,17 @@ export default function Question2Frame() {
                 //테스트 사용자 식별용 세션 셋팅
                 sessionStorage.setItem('testKey', response.data.testKey);
 
-                //현재 상태(질문)값 변경
-                setQuestionNum(JSON.parse(response.data.questionNum));
-                setTotalQuestionNum(JSON.parse(response.data.totalQuestionNum));
-                setQuestionContent(JSON.parse(response.data.questionContent));
-                setResponse1(JSON.parse(response.data.response1));
-                setResponse2(JSON.parse(response.data.response2));
+                //현재 상태(질문)값 변경  
+                responseQuestionNum = Number(response.data.questionNum);
+                responseTotalQuestionNum = Number(response.data.totalQuestionNum);
+
+                setQuestionNum(responseQuestionNum);
+                setTotalQuestionNum(responseTotalQuestionNum);
+                setQuestionContent(response.data.questionContent);
+                setResponse1(response.data.response1);
+                setResponse2(response.data.response2);
+
+                setProgressPercent(Math.round((responseQuestionNum/responseTotalQuestionNum)*100)); //진행척도를 나타내기 위한 변수
             }
         )
 
@@ -84,33 +90,30 @@ export default function Question2Frame() {
         // setResponse2("진로나 직업이 더 중요해요.");
         // setProgressPercent(1/8*100);
 
-
-        setProgressPercent(Math.round(nextQuestionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
-
     },[])
 
-    //질문 순서 값이 변경되었는 지 확인 후, 다음 질문 랜더링
-    useEffect(() => {
-        //질문받아오기
-        //임시 아이디 설정
-        let testKeyValidate = sessionStorage.getItem('testKey');
-        RecommendService.getSecondSectionQuestion(nextQuestionNum, testKeyValidate).then(
-            (response) => {
+    // //질문 순서 값이 변경되었는 지 확인 후, 다음 질문 랜더링
+    // useEffect(() => {
+    //     //질문받아오기
+    //     //임시 아이디 설정
+    //     let testKeyValidate = sessionStorage.getItem('testKey');
+    //     RecommendService.getSecondSectionQuestion(nextQuestionNum, testKeyValidate).then(
+    //         (response) => {
 
-                //테스트 사용자 식별용 세션 셋팅
-                sessionStorage.setItem('testKey', response.data.testKey);
+    //             //테스트 사용자 식별용 세션 셋팅
+    //             sessionStorage.setItem('testKey', response.data.testKey);
                 
-                //현재 상태(질문)값 변경
-                setQuestionNum(JSON.parse(response.data.questionNum));
-                setTotalQuestionNum(JSON.parse(response.data.totalQuestionNum));
-                setQuestionContent(JSON.parse(response.data.questionContent));
-                setResponse1(JSON.parse(response.data.response1));
-                setResponse2(JSON.parse(response.data.response2));
-            }
-        )
+    //             //현재 상태(질문)값 변경
+    //             setQuestionNum(JSON.parse(response.data.questionNum));
+    //             setTotalQuestionNum(JSON.parse(response.data.totalQuestionNum));
+    //             setQuestionContent(JSON.parse(response.data.questionContent));
+    //             setResponse1(JSON.parse(response.data.response1));
+    //             setResponse2(JSON.parse(response.data.response2));
+    //         }
+    //     )
 
-        setProgressPercent(Math.round(nextQuestionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
-    },[nextQuestionNum])
+    //     setProgressPercent(Math.round(nextQuestionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
+    // },[nextQuestionNum])
 
 
     //답변에 따라 값 변경
@@ -131,8 +134,15 @@ export default function Question2Frame() {
             //API전송
             //임시 아이디 설정
             let testKeyValidate = sessionStorage.getItem('testKey');
-            RecommendService.submitSecondSectionAnswer(nextQuestionNum, thisAnswer, testKeyValidate).then(
+            let thisQuestionNum = Number(sessionStorage.getItem("questionNum"));
+
+            RecommendService.submitSecondSectionAnswer(thisQuestionNum, thisAnswer, testKeyValidate).then(
                 (response) => {
+                    console.log("submitData", response.data);
+
+                    //테스트 사용자 식별용 세션 셋팅
+                    sessionStorage.setItem('testKey', response.data.testKey);
+
                     if(response.data.finished != false){
                         //결과로 받아올 값을 세션스토리지에 저장
                         sessionStorage.setItem('result2Type',response.data.finished)
@@ -141,11 +151,19 @@ export default function Question2Frame() {
                         navigate("/result2");
                         window.location.reload();
                     }
+                    else{
+                        //다음질문을 받을 수 있도록 세션스토리지 값 변경
+                        //setNextQuestionNum(nextQuestionNum+1);
+                        sessionStorage.setItem("questionNum", thisQuestionNum+1 );
+
+                        //다음 값 가져오기 
+                        window.location.reload();
+                    }
                 }
             );
 
             //다음질문을 받을 수 있도록 세션스토리지 값 변경
-            setNextQuestionNum(nextQuestionNum+1);
+            //setNextQuestionNum(nextQuestionNum+1);
             //setQuestionChange(nextQuestionNum);
 
             //테스트용

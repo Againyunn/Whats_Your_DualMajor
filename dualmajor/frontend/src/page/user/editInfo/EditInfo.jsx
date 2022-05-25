@@ -227,7 +227,7 @@ export default function SignupForm() {
             setMessage(response.data.message);
             setSuccessful(true);
             
-            let newUser = {"stdNum":userstdNum, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "daulMajor": dualMajor};
+            let newUser = {"stdNum":userstdNum, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "dualMajor": dualMajor};
             //세션에 저장
             sessionStorage.setItem("user", JSON.stringify(newUser));
 

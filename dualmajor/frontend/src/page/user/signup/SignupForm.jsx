@@ -161,7 +161,7 @@ export default function SignupForm() {
         (response) => {
           //입력된 stdNum으로 상태값 변경
           console.log(response.data.joinPossible)
-          if(response.data.joinPossible === "true"){
+          if(response.data.joinPossible === true){
             setCheckStdNum(true);
             alert("가입가능한 학번/사번입니다.");
           }

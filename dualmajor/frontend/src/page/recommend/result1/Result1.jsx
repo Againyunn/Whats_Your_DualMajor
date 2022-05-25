@@ -4,7 +4,7 @@ import { Button, Col, Container, Row, ProgressBar, Accordion, ListGroup} from 'r
 import RecommendService from '../../../services/recommend.service';
 import { useNavigate } from 'react-router-dom';
 import Error from './Error';
-import ReactTooltip from 'react-tooltip';
+// import ReactTooltip from 'react-tooltip';
 
 export default function Result() {
     //상태값 정의
@@ -41,6 +41,8 @@ export default function Result() {
             (response) => {
                 //테스트 사용자 식별용 세션 셋팅
                 sessionStorage.setItem('testKey', response.data.testKey);
+
+                console.log("response.data.list",response.data.list);
 
                 //전달받은 값을 데이터로 저장
                 setThisResult(JSON.parse(response.data.list));
@@ -165,7 +167,11 @@ export default function Result() {
                 }
             </div>
             <div className='nextButtonFrame'>
-            <Button className='nextButton' onClick={() => goToNext()}>다음</Button>
+            {
+                !isError?
+                <Button className='nextButton' onClick={() => goToNext()}>다음</Button>:
+                <></>
+            }
             </div>
         </div>
     </BodyBlock>
