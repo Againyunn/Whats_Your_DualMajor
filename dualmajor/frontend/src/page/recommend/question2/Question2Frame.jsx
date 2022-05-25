@@ -43,10 +43,10 @@ export default function Question2Frame() {
         //setValidateTest(localStorage.getItem('recommendFirstResult'));
         let firstValidate = sessionStorage.getItem('recommendFirstResult');
         //임시 아이디 설정
-        let idValidate = sessionStorage.getItem('testId');
+        let testKeyValidate = sessionStorage.getItem('testKey');
 
         //비정상적인 방법으로 테스트 접근 시 이중전공 추천 서비스 첫 화면으로 강제 이동
-        if(!firstValidate || !idValidate){
+        if(!firstValidate || !testKeyValidate){
             alert("처음부터 테스트를 진행해주세요😁");
 
             //recommend page로 이동
@@ -58,10 +58,13 @@ export default function Question2Frame() {
         let thisQuestionNum = sessionStorage.getItem("questionNum");
 
         //질문받아오기
-        RecommendService.getSecondSectionQuestion(idValidate, thisQuestionNum).then(
+        RecommendService.getSecondSectionQuestion(thisQuestionNum, testKeyValidate).then(
             (response) => {
                 console.log("thisData", response.data);
                 console.log("thisData Type:", typeof(response.data));
+
+                //테스트 사용자 식별용 세션 셋팅
+                sessionStorage.setItem('testKey', response.data.testKey);
 
                 //현재 상태(질문)값 변경
                 setQuestionNum(response.data.questionNum);
@@ -89,10 +92,13 @@ export default function Question2Frame() {
     //질문 순서 값이 변경되었는 지 확인 후, 다음 질문 랜더링
     useEffect(() => {
         //질문받아오기
-        let idValidate = sessionStorage.getItem('testId');
-        RecommendService.getSecondSectionQuestion(idValidate, nextQuestionNum).then(
+        //임시 아이디 설정
+        let testKeyValidate = sessionStorage.getItem('testKey');
+        RecommendService.getSecondSectionQuestion(nextQuestionNum, testKeyValidate).then(
             (response) => {
 
+                //테스트 사용자 식별용 세션 셋팅
+                sessionStorage.setItem('testKey', response.data.testKey);
                 
                 //현재 상태(질문)값 변경
                 setQuestionNum(response.data.questionNum);
@@ -123,8 +129,9 @@ export default function Question2Frame() {
         //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
         if(thisAnswer !== false){
             //API전송
-            let idValidate = sessionStorage.getItem('testId');
-            RecommendService.submitSecondSectionAnswer(idValidate, nextQuestionNum, thisAnswer).then(
+            //임시 아이디 설정
+            let testKeyValidate = sessionStorage.getItem('testKey');
+            RecommendService.submitSecondSectionAnswer(nextQuestionNum, thisAnswer, testKeyValidate).then(
                 (response) => {
                     if(response.data.finished != false){
                         //결과로 받아올 값을 세션스토리지에 저장

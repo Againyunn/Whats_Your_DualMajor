@@ -12,30 +12,30 @@ export default function Result() {
     const [answer, setAnswer] = useState(false); //사용자가 선택한 학문 설정
 
     //테스트용
-    let testData = {
-        "info": [
-            {
-                "departmentName": "경영",
-                "campus": "서울",
-                "intro": "inf1",
-                "degree": "deg1",
-                "career": "career1",//null가능
-                "curriculum": "경영학원론",//null가능
-                "certification": "전산회계",//null가능
-                "webPage": "www.hufs.ac.kr" //null가능
-            },
-            {
-                "departmentName": "국금",
-                "campus": "글로벌",
-                "intro": "inf2",
-                "degree": "deg2",
-                "career": "career2",
-                "curriculum": "경제학원론",//null가능
-                "certification": null,//null가능
-                "webPage": "www.hufs.ac.kr스위스 다보스에서 열린 세계경제포럼 연차총회(WEF·다보스포럼)에서는 비트코인 등 가상화폐를 둘러싼 비관적인 전망도 쏟아졌다. 글로벌 자산운용사 구겐하임인베스트먼트의 스콧 마이너드 최고투자책임자(CIO)는 비트코인이 8000달러까지 폭락할 수 있다고 경고했다. 현 시세에서 70% 이상 추가 폭락할 수 있다는 것이다."
-            }
-        ]
-    }
+    // let testData = {
+    //     "info": [
+    //         {
+    //             "departmentName": "경영",
+    //             "campus": "서울",
+    //             "intro": "inf1",
+    //             "degree": "deg1",
+    //             "career": "career1",//null가능
+    //             "curriculum": "경영학원론",//null가능
+    //             "certification": "전산회계",//null가능
+    //             "webPage": "www.hufs.ac.kr" //null가능
+    //         },
+    //         {
+    //             "departmentName": "국금",
+    //             "campus": "글로벌",
+    //             "intro": "inf2",
+    //             "degree": "deg2",
+    //             "career": "career2",
+    //             "curriculum": "경제학원론",//null가능
+    //             "certification": null,//null가능
+    //             "webPage": "www.hufs.ac.kr스위스 다보스에서 열린 세계경제포럼 연차총회(WEF·다보스포럼)에서는 비트코인 등 가상화폐를 둘러싼 비관적인 전망도 쏟아졌다. 글로벌 자산운용사 구겐하임인베스트먼트의 스콧 마이너드 최고투자책임자(CIO)는 비트코인이 8000달러까지 폭락할 수 있다고 경고했다. 현 시세에서 70% 이상 추가 폭락할 수 있다는 것이다."
+    //         }
+    //     ]
+    // }
 
     //화면 이동 제어용 callback함수 정의
     let navigate = useNavigate();
@@ -43,25 +43,27 @@ export default function Result() {
 
     useEffect(() => {
         //임시 아이디 설정
-        let idValidate = sessionStorage.getItem('testId');
+        let testKeyValidate = sessionStorage.getItem('testKey');
 
         //세션 스토리지에 저장된 결과값을 백엔드에 요청
-        // RecommendService.getFirstSectionResult(idValidate, sessionStorage.getItem('result2Type')).then(
-        //     (response) => {
-        //         //전달받은 값을 데이터로 저장
-        //         setThisResult(response.data.info);
-        //         //실행
-        //         ShowResult();
-        //     }
-        // ).catch(
-        //     (Error) => {
-        //         //에러가 발생했음을 저장
-        //         setIsError(true);
-        //     }
-        // )
+        RecommendService.getFirstSectionResult(sessionStorage.getItem('result2Type'), testKeyValidate).then(
+            (response) => {
+
+
+                //전달받은 값을 데이터로 저장
+                setThisResult(JSON.parse(response.data.info));
+                //실행
+                ShowResult();
+            }
+        ).catch(
+            (Error) => {
+                //에러가 발생했음을 저장
+                setIsError(true);
+            }
+        )
 
         //테스트용
-        setThisResult(testData.info);
+        //setThisResult(testData.info);
         //thisResult는 테스트 종료되면 삭제 처리
 
         ShowResult();
@@ -71,7 +73,7 @@ export default function Result() {
 
     const ShowResult = () => {
         console.log('thisResult:',thisResult);
-        console.log('testData.list.academicName:',testData.info[0]);
+        console.log('testData.list.academicName:',thisResult[0]);
 
         if(!thisResult){
             return(
@@ -83,7 +85,8 @@ export default function Result() {
             <>
                 <Accordion defaultActiveKey="0" flush>
                     {
-                        testData.info.map(thisData => (
+                        //testData.info.map(thisData => (
+                        thisResult.info.map(thisData => (
                             <>
                                 <Accordion.Item eventKey={thisData.departmentName}>
                                     <div id={`${thisData.departmentName}`} onClick={selectResult}>
@@ -142,8 +145,14 @@ export default function Result() {
     const goToNext = () => {
         //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
         if(answer !== false){
+            //임시 아이디 설정
+            let testKeyValidate = sessionStorage.getItem('testKey');
+
+            //로그인 정보 받아오기
+            let thisUser = sessionStorage.getItem("user");
+
             //API전송
-            RecommendService.saveResult(answer);
+            RecommendService.saveResult(answer, thisUser ,testKeyValidate);
             console.log("answer:",answer);
 
             //비회원이 차후에 회원가입 시 기존의 서비스 정보를 받을 수 있도록

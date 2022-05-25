@@ -1,12 +1,14 @@
 import axios from "axios";
-const API_URL = "https://81e0af5c-fa2e-4ea9-b93f-8d63072a71dc.mock.pstmn.io/";
+//const API_URL = "https://81e0af5c-fa2e-4ea9-b93f-8d63072a71dc.mock.pstmn.io/";
+// const API_URL = "localhost:8080/"
+const API_URL = "localhost:8080/"
 
 //1번째 섹션 질문 정보 받아오기
-const getFirstSectionQuestion = (id, questionNum) =>{
+const getFirstSectionQuestion = (questionNum, testKey) =>{
 
     return (axios.post(API_URL + "firstSectionQuestion/", {
-        id,
-        questionNum//몇 번째 문제인지 식별하기 위함
+        questionNum,//몇 번째 문제인지 식별하기 위함
+        testKey//테스트하는 사용자 식별값
     })
     );
 
@@ -16,7 +18,7 @@ const getFirstSectionQuestion = (id, questionNum) =>{
 }
 /**
  * {
-        "id": (임시)회원식별 값, -> 처음에는 ''빈 값
+        "testKey": (임시)회원식별 값, -> 처음에는 null 값
         "questionNum": "1",
         "questionContent": "성향vs진로?",
         "response1": "1",
@@ -25,11 +27,10 @@ const getFirstSectionQuestion = (id, questionNum) =>{
  */
 
 //1번째 섹션 답변 넘겨주기
-const submitFirstSectionAnswer = (id, questionNum, answer) =>{
+const submitFirstSectionAnswer = (questionNum, testKey, answer) =>{
     return (axios.post(API_URL + "firstSectionAnswer/", {
-        id,
         questionNum, //현재 사용자의 질문(몇 번째 질문인지 식별용)
-        //questionId, //질문의 고유한 트리 id(현재 질문이 무엇인지 구분하고 다음 질문을 추출하기 위한 값)
+        testKey,//테스트하는 사용자 식별값
         answer, //사용자가 답변한 값(response1 == 1, response2 == 2)
     })
     );
@@ -38,15 +39,16 @@ const submitFirstSectionAnswer = (id, questionNum, answer) =>{
  * 1번째 섹션 결과 창으로 이동할 때의 Signal: 질문이 아닌, 결과 값을 전달받았을 때의 데이터 형식
  * {
         "success": true,
-        "finished": "result30"   ← 1차 섹션의 결과 id 값으로 받게 된다.
+        "finished": "result30",   ← 1차 섹션의 결과 id 값으로 받게 된다.
+        "testKey": (임시)회원식별 값
     }
  */
 
 //1번째 섹션 결과 받아오기
-const getFirstSectionResult = (id, resultType) =>{
+const getFirstSectionResult = (resultType, testKey) =>{
     return (axios.post(API_URL + "getFirstSectionResult/", {
-        id,
-        resultType//앞선 1번째 섹션 질문 정보를 받아오는 API에서 반환된 문자열 값(어떤 result인지)
+        resultType,//앞선 1번째 섹션 질문 정보를 받아오는 API에서 반환된 문자열 값(어떤 result인지),
+        testKey//테스트하는 사용자 식별값
     })
     );
 
@@ -57,6 +59,7 @@ const getFirstSectionResult = (id, resultType) =>{
 
 /**
  * {
+ *      "testKey": (임시)회원식별 값,
         "list": [
             {
                 "academicName": "언어학섹터",
@@ -78,15 +81,16 @@ const getFirstSectionResult = (id, resultType) =>{
 
 
 //1번째 섹션 결과에 대한 사용자의 선택값 넘겨주기
-const submitFirstSectionResult = (id, academicName) => {
+const submitFirstSectionResult = (academicName, testKey) => {
     return (axios.post(API_URL + "submitFirstSectionResult/", {
-        id,
-        academicName//몇 번째 문제인지 식별하기 위함
+        academicName,//몇 번째 문제인지 식별하기 위함
+        testKey//테스트하는 사용자 식별 값
     })
     );
 }
 /**
  * {
+        "testKey": (임시)사용자식별 값,
         "success": true,
         "academicName": "언어학 섹터"  ← t섹터의 종류명을 받게 된다.
     }
@@ -95,11 +99,11 @@ const submitFirstSectionResult = (id, academicName) => {
 
 
 //2번째 섹션 질문 정보 받아오기
-const getSecondSectionQuestion = (id, questionNum) =>{
+const getSecondSectionQuestion = (questionNum, testKey) =>{
 
     return (axios.post(API_URL + "secondSectionQuestion/", {
-        id,
-        questionNum//몇 번째 문제인지 식별하기 위함
+        questionNum,//몇 번째 문제인지 식별하기 위함
+        testKey//테스트하는 사용자 식별 값
     })
     );
 
@@ -110,7 +114,7 @@ const getSecondSectionQuestion = (id, questionNum) =>{
 /**
  * 2번째 섹터 질문 받아올 때 데이터 형식
  * {
- *  "id": (임시)회원식별 값,
+ *  "testKey": (임시)회원식별 값,
     "questionNum": 2,
     "totalQuestionNum": "6",
     "questionContent": "교차캠퍼스가능?",
@@ -120,12 +124,12 @@ const getSecondSectionQuestion = (id, questionNum) =>{
  */
 
 //2번째 섹션 답변 넘겨주기
-const submitSecondSectionAnswer = (id, questionNum, answer) =>{
+const submitSecondSectionAnswer = (questionNum, answer, testKey) =>{
     return (axios.post(API_URL + "secondSectionAnswer/", {
-        id,
         questionNum, //현재 사용자의 질문(몇 번째 질문인지 식별용)
         //questionId, //질문의 고유한 트리 id(현재 질문이 무엇인지 구분하고 다음 질문을 추출하기 위한 값)
         answer, //사용자가 답변한 값(response1 == 1, response2 == 2)
+        testKey//테스트하는 사용자 식별 값
     })
     );
 }
@@ -133,22 +137,24 @@ const submitSecondSectionAnswer = (id, questionNum, answer) =>{
 /**
  * 2번째 섹션 결과 창으로 이동할 때의 Signal: 질문이 아닌, 결과 값을 전달받았을 때의 데이터 형식
  * {
+        "testKey": (임시)사용자식별 값,
         "success": true,
         "finished": "result101"   ← 최종 이중전공 추천결과 id 값으로 받게 된다.
     }
  */
 
 //2번째 섹션 결과 받아오기
-const getFinalResult = (id, resultType) =>{
+const getFinalResult = (resultType, testKey) =>{
     return (axios.post(API_URL + "getFinalResult/", {
-        id,
-        resultType//앞선 2번째 섹션 질문 정보를 받아오는 API에서 반환된 문자열 값(어떤 result인지)
+        resultType,//앞선 2번째 섹션 질문 정보를 받아오는 API에서 반환된 문자열 값(어떤 result인지)
+        testKey//테스트하는 사용자 식별 값
     })
     );
 
     //백엔드에서 받아올 데이터 예시
     /**
-      "info": [
+        "testKey": (임시)사용자식별 값
+        "info": [
             {
                 "departmentName": "경영",
                 "campus": "서울",
@@ -176,16 +182,16 @@ const getFinalResult = (id, resultType) =>{
 }
 
 //사용자가 결정한 값을 localStorage에 저장하고 로그인한 회원의 결과 값은 DB에 저장
-const saveResult =(id, resultType, user) =>{ //user : 사용자가 로그인한 상태인지 식별하기 위한 값(로그인 시 session으로 user값 자동 생성)
+const saveResult =(resultType, user, testKey) =>{ //user : 사용자가 로그인한 상태인지 식별하기 위한 값(로그인 시 session으로 user값 자동 생성)
 
     //resultType(학과 결과 값의 DB유형)을 로컬스토리지에 저장하여 비회원도, 회원가입 시 기존의 이중전공 추천 서비스 결과를 불러올 수 있도록 저장
     localStorage.setItem("recommendResult", resultType);
     
     //로그인한 사용자는 DB에 이중전공 추천 서비스 결과 값을 저장할 수 있도록 조치
     return (axios.post(API_URL + "saveResult/", {
-        id,
         resultType,
-        user 
+        user,
+        testKey
     })
     );
 

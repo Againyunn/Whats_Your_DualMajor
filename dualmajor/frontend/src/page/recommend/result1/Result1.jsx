@@ -13,18 +13,18 @@ export default function Result() {
     const [answer, setAnswer] = useState(false); //사용자가 선택한 학문 설정
 
     //테스트용
-    let testData = {
-        "list":[
-            {
-                "academicName":"공과대학",
-                "departmentList":"AI전공,컴퓨터공학부,산업경영공학과,전자공학과,정보통신공학과"
-            },
-            {
-                "academicName":"사회과학대학",
-                "departmentList": "경영학부, 국제학부, 국제통상학과, 경제학과, 국제금융학과, 미디어커뮤니케이션학과, 광고pr학과, 문화콘텐츠전공, GBT학부"
-            }
-        ]
-    }
+    // let testData = {
+    //     "list":[
+    //         {
+    //             "academicName":"공과대학",
+    //             "departmentList":"AI전공,컴퓨터공학부,산업경영공학과,전자공학과,정보통신공학과"
+    //         },
+    //         {
+    //             "academicName":"사회과학대학",
+    //             "departmentList": "경영학부, 국제학부, 국제통상학과, 경제학과, 국제금융학과, 미디어커뮤니케이션학과, 광고pr학과, 문화콘텐츠전공, GBT학부"
+    //         }
+    //     ]
+    // }
 
     //화면 이동 제어용 callback함수 정의
     let navigate = useNavigate();
@@ -34,25 +34,28 @@ export default function Result() {
 
     useEffect(() => {
         //임시 아이디 설정
-        let idValidate = sessionStorage.getItem('testId');
+        let testKeyValidate = sessionStorage.getItem('testKey');
 
-        // // 세션 스토리지에 저장된 결과값을 백엔드에 요청
-        // RecommendService.getFirstSectionResult(idValidate, sessionStorage.getItem('result1Type')).then(
-        //     (response) => {
-        //         //전달받은 값을 데이터로 저장
-        //         setThisResult(response.data);
-        //         //실행
-        //         ShowResult();
-        //     }
-        // ).catch(
-        //     (Error) => {
-        //         //에러가 발생했음을 저장
-        //         setIsError(true);
-        //     }
-        // )
+        // 세션 스토리지에 저장된 결과값을 백엔드에 요청
+        RecommendService.getFirstSectionResult(sessionStorage.getItem('result1Type'), testKeyValidate).then(
+            (response) => {
+                //테스트 사용자 식별용 세션 셋팅
+                sessionStorage.setItem('testKey', response.data.testKey);
+
+                //전달받은 값을 데이터로 저장
+                setThisResult(JSON.parse(response.data.list));
+                //실행
+                ShowResult();
+            }
+        ).catch(
+            (Error) => {
+                //에러가 발생했음을 저장
+                setIsError(true);
+            }
+        )
 
         //테스트용(시작)
-        setThisResult(testData.list);
+        //setThisResult(testData.list);
         //thisResult는 테스트 종료되면 삭제 처리
         
         ShowResult();
@@ -62,7 +65,8 @@ export default function Result() {
 
     const ShowResult = () => {
         console.log('thisResult:',thisResult);
-        console.log('testData.list.academicName:',testData.list[0]);
+        console.log('testData.list.academicName:',thisResult[0]);
+        // console.log('testData.list.academicName:',testData.list[0]);
 
         if(!thisResult){
             return;
@@ -72,7 +76,8 @@ export default function Result() {
             <>
                 <Accordion defaultActiveKey="0" flush>
                     {
-                        testData.list.map(thisData => (
+                        //testData.list.map(thisData => (
+                        thisResult.map(thisData => (
                             <>
                                 <Accordion.Item eventKey={thisData.academicName}>
                                     <div id={`${thisData.academicName}`} onClick={selectResult}>
@@ -122,10 +127,10 @@ export default function Result() {
         //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
         if(answer !== false){
             //임시 아이디 설정
-            let idValidate = sessionStorage.getItem('testId');
+            let testKeyValidate = sessionStorage.getItem('testKey');
 
             //API전송
-            RecommendService.submitFirstSectionAnswer(idValidate, answer);
+            RecommendService.submitFirstSectionAnswer(answer, testKeyValidate);
             console.log("answer:",answer);
 
             sessionStorage.setItem('recommendFirstResult', true);

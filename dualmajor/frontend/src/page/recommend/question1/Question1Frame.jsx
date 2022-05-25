@@ -45,7 +45,7 @@ export default function Question2Frame() {
         let firstValidate = sessionStorage.getItem('recommendTest');
         
         //임시 아이디 설정
-        let idValidate = sessionStorage.getItem('testId');
+        let testKeyValidate = sessionStorage.getItem('testKey');
 
         //비정상적인 방법으로 테스트 접근 시 이중전공 추천 서비스 첫 화면으로 강제 이동
         if(!firstValidate){
@@ -61,7 +61,7 @@ export default function Question2Frame() {
         //아이디 초기화 
         if(thisQuestionNum === 0){
             //처음 테스트용 임시 아이디를 요청할 때
-            idValidate = null;
+            testKeyValidate = null;
             //처음인지 식별하기 위해 questionNum = 0을 지정했으므로, +1 처리하여 정상적인 문제의 번호 요청
             thisQuestionNum += 1;
         }
@@ -69,12 +69,15 @@ export default function Question2Frame() {
         //테스트 시작
 
         //질문받아오기
-        RecommendService.getSecondSectionQuestion(idValidate, thisQuestionNum).then(
+        RecommendService.getFirstSectionQuestion(thisQuestionNum, testKeyValidate).then(
             (response) => {
                 console.log("thisData", response.data);
                 console.log("thisData Type:", typeof(response.data));
 
-                //현재 상태(질문)값 변경
+                //테스트 사용자 식별용 세션 셋팅
+                sessionStorage.setItem('testKey', response.data.testKey);
+                
+                //현재 상태(질문)값 변경  
                 setQuestionNum(response.data.questionNum);
                 setTotalQuestionNum(response.data.totalQuestionNum);
                 setQuestionContent(response.data.questionContent);
@@ -100,10 +103,12 @@ export default function Question2Frame() {
     //질문 순서 값이 변경되었는 지 확인 후, 다음 질문 랜더링
     useEffect(() => {
         //질문받아오기
-        let idValidate = sessionStorage.getItem('testId');
-        RecommendService.getSecondSectionQuestion(idValidate, nextQuestionNum).then(
+        let testKeyValidate = sessionStorage.getItem('testKey');
+        RecommendService.getFirstSectionQuestion(nextQuestionNum, testKeyValidate).then(
             (response) => {
 
+                //테스트 사용자 식별용 세션 셋팅
+                sessionStorage.setItem('testKey', response.data.testKey);
                 
                 //현재 상태(질문)값 변경
                 setQuestionNum(response.data.questionNum);
@@ -135,9 +140,13 @@ export default function Question2Frame() {
         if(thisAnswer !== false){
             //API전송
             let idValidate = sessionStorage.getItem('testId');
-            RecommendService.submitSecondSectionAnswer(idValidate, nextQuestionNum, thisAnswer).then(
+            RecommendService.submitFirstSectionAnswer(nextQuestionNum, idValidate, thisAnswer).then(
                 (response) => {
                     if(response.data.finished != false){
+
+                        //테스트 사용자 식별용 세션 셋팅
+                        sessionStorage.setItem('testKey', response.data.testKey);
+                
                         //결과로 받아올 값을 세션스토리지에 저장
                         sessionStorage.setItem('result1Type',response.data.finished)
                                             
