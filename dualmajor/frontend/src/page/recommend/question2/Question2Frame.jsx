@@ -55,7 +55,7 @@ export default function Question2Frame() {
         }
 
         //테스트 시작
-        let thisQuestionNum = sessionStorage.getItem("questionNum");
+        let thisQuestionNum = JSON.parse(sessionStorage.getItem("questionNum"));
 
         //질문받아오기
         RecommendService.getSecondSectionQuestion(thisQuestionNum, testKeyValidate).then(
@@ -67,11 +67,11 @@ export default function Question2Frame() {
                 sessionStorage.setItem('testKey', response.data.testKey);
 
                 //현재 상태(질문)값 변경
-                setQuestionNum(response.data.questionNum);
-                setTotalQuestionNum(response.data.totalQuestionNum);
-                setQuestionContent(response.data.questionContent);
-                setResponse1(response.data.response1);
-                setResponse2(response.data.response2);
+                setQuestionNum(JSON.parse(response.data.questionNum));
+                setTotalQuestionNum(JSON.parse(response.data.totalQuestionNum));
+                setQuestionContent(JSON.parse(response.data.questionContent));
+                setResponse1(JSON.parse(response.data.response1));
+                setResponse2(JSON.parse(response.data.response2));
             }
         )
 
@@ -101,11 +101,11 @@ export default function Question2Frame() {
                 sessionStorage.setItem('testKey', response.data.testKey);
                 
                 //현재 상태(질문)값 변경
-                setQuestionNum(response.data.questionNum);
-                setTotalQuestionNum(response.data.totalQuestionNum);
-                setQuestionContent(response.data.questionContent);
-                setResponse1(response.data.response1);
-                setResponse2(response.data.response2);
+                setQuestionNum(JSON.parse(response.data.questionNum));
+                setTotalQuestionNum(JSON.parse(response.data.totalQuestionNum));
+                setQuestionContent(JSON.parse(response.data.questionContent));
+                setResponse1(JSON.parse(response.data.response1));
+                setResponse2(JSON.parse(response.data.response2));
             }
         )
 

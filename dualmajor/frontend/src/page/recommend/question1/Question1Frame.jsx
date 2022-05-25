@@ -56,10 +56,10 @@ export default function Question2Frame() {
             window.location.reload();
         }
         
-        let thisQuestionNum = sessionStorage.getItem("questionNum");
+        let thisQuestionNum = JSON.parse(sessionStorage.getItem("questionNum"));
 
         //아이디 초기화 
-        if(thisQuestionNum == 0){
+        if(thisQuestionNum === 0){
             //처음 테스트용 임시 아이디를 요청할 때
             testKeyValidate = null;
             //처음인지 식별하기 위해 questionNum = 0을 지정했으므로, +1 처리하여 정상적인 문제의 번호 요청
@@ -78,11 +78,11 @@ export default function Question2Frame() {
                 sessionStorage.setItem('testKey', response.data.testKey);
                 
                 //현재 상태(질문)값 변경  
-                setQuestionNum(response.data.questionNum);
-                setTotalQuestionNum(response.data.totalQuestionNum);
-                setQuestionContent(response.data.questionContent);
-                setResponse1(response.data.response1);
-                setResponse2(response.data.response2);
+                setQuestionNum(JSON.parse(response.data.questionNum));
+                setTotalQuestionNum(JSON.parse(response.data.totalQuestionNum));
+                setQuestionContent(JSON.parse(response.data.questionContent));
+                setResponse1(JSON.parse(response.data.response1));
+                setResponse2(JSON.parse(response.data.response2));
             }
         )
 
@@ -111,11 +111,11 @@ export default function Question2Frame() {
                 sessionStorage.setItem('testKey', response.data.testKey);
                 
                 //현재 상태(질문)값 변경
-                setQuestionNum(response.data.questionNum);
-                setTotalQuestionNum(response.data.totalQuestionNum);
-                setQuestionContent(response.data.questionContent);
-                setResponse1(response.data.response1);
-                setResponse2(response.data.response2);
+                setQuestionNum(JSON.parse(response.data.questionNum));
+                setTotalQuestionNum(JSON.parse(response.data.totalQuestionNum));
+                setQuestionContent(JSON.parse(response.data.questionContent));
+                setResponse1(JSON.parse(response.data.response1));
+                setResponse2(JSON.parse(response.data.response2));
             }
         )
 

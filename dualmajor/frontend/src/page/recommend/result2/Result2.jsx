@@ -174,21 +174,21 @@ export default function Result() {
 
     const Star = () => {
         const drawStar = (e) => {
-            document.querySelector(`.star span`).style.width = `${e.target.value * 10}%`;
+            document.getElementById("realStar").style.width = `${e.target.value * 10}%`;
             // document.querySelector(`.star span`).style.width = `${e.target.value * 10}%`;
 
             //별점 기록
-            setSatisfyingStar(e.target.value);
+            //setSatisfyingStar(e.target.value);
 
           }
     
       return (
         <>
-          <StarFrame >
-            <div class="star">
-                ★★★★★
-                <span>★★★★★</span>
-                    <input type="range" oninput={drawStar} value="1" step="1" min="0" max="10"/>
+            <StarFrame >
+                <div class="star">
+                    ★★★★★
+                    <span id="realStar">★★★★★</span>
+                        <input type="range" onInput={drawStar} value="1" step="1" min="0" max="10"/>
                 </div>
             </StarFrame>
         </>
@@ -355,12 +355,12 @@ const StarFrame =styled.div`
     .star {
         position: relative;
         font-size: 2rem;
-        color: #002F5A;
+        color: #ddd;
 
         input {
             width: 100%;
             height: 100%;
-            position: absolute;
+            //position: absolute;
             left: 0;
             opacity: 0;
             cursor: pointer;
@@ -370,7 +370,7 @@ const StarFrame =styled.div`
             width: 0;
             position: absolute; 
             left: 0;
-            color: red;
+            color: #002F5A;
             overflow: hidden;
             pointer-events: none;
       }
