@@ -59,7 +59,7 @@ export default function Question2Frame() {
         let thisQuestionNum = sessionStorage.getItem("questionNum");
 
         //아이디 초기화 
-        if(thisQuestionNum === 0){
+        if(thisQuestionNum == 0){
             //처음 테스트용 임시 아이디를 요청할 때
             testKeyValidate = null;
             //처음인지 식별하기 위해 questionNum = 0을 지정했으므로, +1 처리하여 정상적인 문제의 번호 요청

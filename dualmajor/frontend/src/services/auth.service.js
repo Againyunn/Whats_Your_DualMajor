@@ -4,7 +4,7 @@ import axios from "axios";
 const API_URL = "http://localhost:8080/"
 
 //POST 회원가입
-const register = (stdNum, password, nickName, grade, userType, firstMajorId, dualMajorId) => {
+const register = (stdNum, password, nickName, grade, userType, firstMajorId, dualMajorId, gpa) => {
   return axios.post(API_URL + "join/", {
     stdNum, //문제가 있으면username으로 바꾸기
     password,
@@ -12,7 +12,8 @@ const register = (stdNum, password, nickName, grade, userType, firstMajorId, dua
     grade,
     userType,
     firstMajorId,
-    dualMajorId
+    dualMajorId,
+    gpa
   });
 };
 
@@ -39,7 +40,7 @@ const logout = () => {
 };
 
 //POST 유저정보 수정
-const changeInfo = (stdNum, password, nickName, grade, userType, firstMajorId, dualMajorId) => {
+const changeInfo = (stdNum, password, nickName, grade, userType, firstMajorId, dualMajorId, gpa) => {
   return axios.post(API_URL + "editInfo/", {
     stdNum, //문제가 있으면username으로 바꾸기
     password,
@@ -47,7 +48,8 @@ const changeInfo = (stdNum, password, nickName, grade, userType, firstMajorId, d
     grade,
     userType,
     firstMajorId,
-    dualMajorId
+    dualMajorId,
+    gpa
   });
 }
 

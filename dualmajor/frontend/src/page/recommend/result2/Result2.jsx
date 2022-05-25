@@ -11,6 +11,10 @@ export default function Result() {
     const [isError, setIsError] = useState(false); //결과 값이 에러인지 여부 저장
     const [answer, setAnswer] = useState(false); //사용자가 선택한 학문 설정
 
+
+    //만족도 조사 변수
+    const [satisfyingStar, setSatisfyingStar] = useState(1); //별점
+
     //테스트용
     // let testData = {
     //     "info": [
@@ -168,6 +172,32 @@ export default function Result() {
         }
     }
 
+    const Star = () => {
+        const drawStar = (e) => {
+            document.querySelector(`.star span`).style.width = `${e.target.value * 10}%`;
+            // document.querySelector(`.star span`).style.width = `${e.target.value * 10}%`;
+
+            //별점 기록
+            setSatisfyingStar(e.target.value);
+
+          }
+    
+      return (
+        <>
+          <StarFrame >
+            <div class="star">
+                ★★★★★
+                <span>★★★★★</span>
+                    <input type="range" oninput={drawStar} value="1" step="1" min="0" max="10"/>
+                </div>
+            </StarFrame>
+        </>
+      )
+
+      
+    }
+
+
   return (
     <BodyBlock>
         <div className="container">
@@ -175,6 +205,9 @@ export default function Result() {
                 <span><b>!!이중전공 추천 서비스 결과!!</b></span><br/>
                 <span>학과를 선택한 뒤 저장을 누르시면 sns에 공유할 수 있어요!</span>
             </div>
+            <br/>
+            <Star/>
+
             <div className='resultFrame'>
                 {
                     !thisResult?
@@ -315,5 +348,31 @@ const BodyBlock = styled.div`
                 opacity: 0.9;
             }
         }
+    }
+`
+
+const StarFrame =styled.div`
+    .star {
+        position: relative;
+        font-size: 2rem;
+        color: #002F5A;
+
+        input {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        span {
+            width: 0;
+            position: absolute; 
+            left: 0;
+            color: red;
+            overflow: hidden;
+            pointer-events: none;
+      }
     }
 `
