@@ -21,8 +21,11 @@ public class FirstSectionQuestionDto {
     private String response2;
     //특정 질문에 대해 사용자가 고른 답변
     private String answer;
+    //testKey
+    private String testKey;
 
-    public void setQuestionData(String questionNum, String questionContent, String response1, String response2) {
+    public void setQuestionData(String testKey, String questionNum, String questionContent, String response1, String response2) {
+        this.testKey = testKey;
         this.questionNum = questionNum;
         this.questionContent = questionContent;
         this.response1 = response1;
@@ -30,6 +33,7 @@ public class FirstSectionQuestionDto {
     }
     public Map getQuestionData() {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
+        map.put("testKey", testKey);
         map.put("questionNum", questionNum);
         map.put("questionContent", questionContent);
         map.put("response1", response1);

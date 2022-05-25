@@ -14,14 +14,12 @@ import javax.persistence.*;
 public class MemberFinalResult {
     @Id @GeneratedValue
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "member_Id")
-    private Member member;
+    private String testKey;
     private String resultType;
 
     /*객체 생성 로직*/
-    public void createMemberFinalResult(Member member, String resultType) {
-        this.member = member;
+    public void createMemberFinalResult(String testKey, String resultType) {
+        this.testKey = testKey;
         this.resultType = resultType;
     }
 }

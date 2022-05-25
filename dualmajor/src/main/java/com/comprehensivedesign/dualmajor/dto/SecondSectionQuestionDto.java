@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class SecondSectionQuestionDto {
 
+    private String testKey;
     private Long sectorId;
     private int questionNum;
     private String questionContent;
@@ -17,7 +18,6 @@ public class SecondSectionQuestionDto {
     private String academicName; //프론트에서 넘어오는 sectorName
 
     private String resultType;
-
 
 
 }

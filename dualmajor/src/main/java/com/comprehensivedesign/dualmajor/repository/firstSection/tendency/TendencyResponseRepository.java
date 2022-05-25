@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TendencyResponseRepository extends JpaRepository<TendencyResponse, Long> {
 
-    TendencyResponse findByMemberId(Long memberId);
+    TendencyResponse findByTestKey(String testKey);
 
 }

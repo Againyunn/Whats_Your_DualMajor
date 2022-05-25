@@ -30,20 +30,20 @@ public class CarrierServiceImpl implements CarrierService{
 
     @Override
     @Transactional
-    public boolean resultProcess(FirstSectionQuestionDto firstSectionQuestionDto, Long memberId) {
+    public String resultProcess(FirstSectionQuestionDto firstSectionQuestionDto, String testKey) {
         String q = firstSectionQuestionDto.getQuestionNum();
         /*진로 우선 질문지에서 성향 관련 질문 :: q2~q5(총 4개)*/
         if (q.equals("2") || q.equals("3") || q.equals("4") || q.equals("5")) {
             if (q.equals("2")) {//최초 1회 응답이 들어오면 회원 객체를 포함하는 회원의 응답 객체(CarrierResponse) 생성해야함.
                 CareerResponse carrierResponse = new CareerResponse();
-                carrierResponse.createMemberResponse(memberService.findById(memberId));
+                carrierResponse.createMemberResponse(testKey);
                 carrierResponseRepository.save(carrierResponse);
             }
-            mbtiProcess(firstSectionQuestionDto, memberId); //mbti 판별 로직으로 성향 관련 질문 응답 전달
+            mbtiProcess(firstSectionQuestionDto, testKey); //mbti 판별 로직으로 성향 관련 질문 응답 전달
         }
         /*진로 관련 질문 응답 과정 ::q6~q12(총7개)*/
         else if (q.equals("6") || q.equals("7") || q.equals("8") || q.equals("9") || q.equals("10") || q.equals("11") || q.equals("12")) {
-            CareerResponse carrierResponse = carrierResponseRepository.findByMemberId(memberId);
+            CareerResponse carrierResponse = carrierResponseRepository.findByTestKey(testKey);
             if (q.equals("6")) {
                 carrierResponse.setQ6(firstSectionQuestionDto.getAnswer());
             } else if (q.equals("7")) {
@@ -64,16 +64,17 @@ public class CarrierServiceImpl implements CarrierService{
             else if (q.equals("12")){
                 carrierResponse.setQ12(firstSectionQuestionDto.getAnswer());
                 saveSector(carrierResponse);//최종 응답까지 저장되면 회원 응답을 통해 결과 테이블에서 일치하는 객체(행)들 찾아내기
+                return "end";
             }
         }
-        return true; //매 응답에 의한 로직이 잘 처리되면 true 반환
+        return "not end"; //매 응답에 의한 로직이 잘 처리되면 true 반환
     }
 
     @Override
     @Transactional
-    public String mbtiProcess(FirstSectionQuestionDto firstSectionQuestionDto, Long memberId) {
+    public String mbtiProcess(FirstSectionQuestionDto firstSectionQuestionDto, String testKey) {
         String q = firstSectionQuestionDto.getQuestionNum();
-        CareerResponse carrierResponse = carrierResponseRepository.findByMemberId(memberId);//FK인 회원id 로 회원의 응답지 찾기
+        CareerResponse carrierResponse = carrierResponseRepository.findByTestKey(testKey);//FK인 회원id 로 회원의 응답지 찾기
         /*진로 관련 질문지에서 성향 관련 잘문은 각 항목당 하나이므로, 사용자 응답에 따라 바로바로 mbti 요소판별 가능*/
         if (q.equals("2")) { //2번 e-i
             String mbti = carrierResponse.getMbti(); //현재 회원 응답 객체에 저장되어있는 mbti 상태 반환
@@ -116,7 +117,7 @@ public class CarrierServiceImpl implements CarrierService{
         }
         for (int i = 0; i < result.size(); i++) { //회원에게 추천된 섹터 결과만큼 MemberSector 객체 생성하여 회원과 결과 하나의 행으로 저장
             MemberSector memberSector = new MemberSector();
-            memberSector.saveSector(carrierResponse.getMember(), result.get(i).getSector());
+            memberSector.saveSector(carrierResponse.getTestKey(), result.get(i).getSector());
             memberSectorRepository.save(memberSector);
         }
         return true;

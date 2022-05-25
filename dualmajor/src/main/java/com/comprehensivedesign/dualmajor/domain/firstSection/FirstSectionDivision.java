@@ -15,14 +15,12 @@ import javax.persistence.*;
 public class FirstSectionDivision {
     @Id @GeneratedValue
     private Long id;
-    @ManyToOne
-    @JoinColumn(name="member_id")
-    private Member member; //회원 참조FK
+    private String testKey; //회원 참조FK
     private String q1; //성향 vs 진로 구분지을 첫번째 질문
 
     /*객체 생성 메서드*/
-    public void createFirstSectionDivision(Member member, String q1) {
-        this.member = member;
+    public void createFirstSectionDivision(String testKey, String q1) {
+        this.testKey = testKey;
         this.q1 = q1;
     }
     /*객체 수정 메서드*/

@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface FirstSectionDivisionRepository extends JpaRepository<FirstSectionDivision, Long> {
 
-    Optional<FirstSectionDivision> findByMemberId(Long memberId);
+    Optional<FirstSectionDivision> findByTestKey(String testKey);
 }

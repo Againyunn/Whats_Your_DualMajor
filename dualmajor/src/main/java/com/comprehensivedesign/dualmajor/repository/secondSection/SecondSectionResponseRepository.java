@@ -8,5 +8,5 @@ import java.util.*;
 @Repository
 public interface SecondSectionResponseRepository extends JpaRepository<SecondSectionResponse,Long> {
 
-    Optional<SecondSectionResponse> findByMemberId(Long memberId);
+    Optional<SecondSectionResponse> findByTestKey(String testKey);
 }

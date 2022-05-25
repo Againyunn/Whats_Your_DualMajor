@@ -28,19 +28,17 @@ public class SecondSectionResponse {
     private String campusQ2;
     //섹터 공통 캠퍼스 질문의 결과
     private String campus;
-    @OneToOne //한명의 회원은 하나의 응답지를 갖고, 하나의 응답지는 한명의 회원의 것임
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private String testKey; // 테스트용 랜덤 키값
     private String sectorName;
 
 
     /*응답지 생성*/
-    public void createResponse(int leftQuestions, String totalQuestionNum, Member member, String sectorName) {
+    public void createResponse(int leftQuestions, String totalQuestionNum, String testKey, String sectorName) {
         this.questionId = 1;
         this.questionNum = 1;
         this.totalQuestionNum = totalQuestionNum;
         this.leftQuestions = leftQuestions;
-        this.member = member;
+        this.testKey = testKey;
         this.sectorName = sectorName;
     }
 

@@ -5,7 +5,10 @@ public interface FinalResult {
     //String getInformation();
     String getIntro();
     String getCareer();
-    //String getCertification();
+    String getCertification();
+    String getCurriculum();
+    String getCampus();
     String getDegree();
     String getWebpage();
+
 }

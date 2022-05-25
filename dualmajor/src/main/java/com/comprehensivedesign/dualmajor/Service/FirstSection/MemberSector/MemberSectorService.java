@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface MemberSectorService {
 
-    List<Sector> findMemberSector(Long memberId) throws Exception;
+    List<Sector> findMemberSector(String testKey) throws Exception;
 }

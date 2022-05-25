@@ -25,7 +25,8 @@ public class SecondSectionController {
     @PostMapping("/submitFirstSectionResult")
     public Map saveSector(@RequestBody SecondSectionQuestionDto secondSectionQuestionDto, @AuthenticationPrincipal MemberAdapter memberAdapter) {
         Map<String, Object> map = new LinkedHashMap<>();
-        SecondSectionResponse response = secondSectionService.createResponse(memberAdapter.getMember(), secondSectionQuestionDto.getAcademicName());
+        SecondSectionResponse response = secondSectionService.createResponse(secondSectionQuestionDto.getTestKey(), secondSectionQuestionDto.getAcademicName());
+        map.put("testKey", secondSectionQuestionDto.getTestKey());
         map.put("success", true);
         map.put("academicName", response.getSectorName());
         return map;
@@ -33,7 +34,7 @@ public class SecondSectionController {
 
     @PostMapping("/secondSectionQuestion")
     public Map viewQuestion(@RequestBody SecondSectionQuestionDto secondSectionQuestionDto, @AuthenticationPrincipal MemberAdapter memberAdapter) {
-        Map map = secondSectionService.recommendProcess(secondSectionQuestionDto, memberAdapter.getMember());
+        Map map = secondSectionService.recommendProcess(secondSectionQuestionDto, secondSectionQuestionDto.getTestKey());
         return map;
     }
 
@@ -42,16 +43,19 @@ public class SecondSectionController {
         Map<String, Object> map = new LinkedHashMap<>();
         /* 학과 추천 섹터별 캠퍼스 공통 문항 1, 2번에 대한 처리 */
         if(secondSectionQuestionDto.getQuestionNum()==1 || secondSectionQuestionDto.getQuestionNum()==2){
-            String str = secondSectionService.saveCollegeAnswer(secondSectionQuestionDto, memberAdapter.getMember().getId());
+            String str = secondSectionService.saveCollegeAnswer(secondSectionQuestionDto, secondSectionQuestionDto.getTestKey());
             if(str.equals("q1")){
+                map.put("testKey", secondSectionQuestionDto.getTestKey());
                 map.put("success", true);
                 map.put("finished", false);
             } else { //공퉁 문항이 끝난 후 인문학 섹터 vs 나머지 섹터
                 if (str.equals("humanity")) { //인문학 섹터는 공통 문항 2번이 마지막 질문임.
+                    map.put("testKey", secondSectionQuestionDto.getTestKey());
                     map.put("success", true);
                     map.put("finished", true);
                 }
                 else{
+                    map.put("testKey", secondSectionQuestionDto.getTestKey());
                     map.put("success", true);
                     map.put("finished", false);
                 }
@@ -59,12 +63,14 @@ public class SecondSectionController {
             return map;
         }
         /* 섹터별 질문 트리에 관한 응답 처리 */
-        String progress = secondSectionService.binaryTree(secondSectionQuestionDto.getAnswer(), memberAdapter.getMember().getId());
+        String progress = secondSectionService.binaryTree(secondSectionQuestionDto.getAnswer(), secondSectionQuestionDto.getTestKey());
         if (progress.equals("end")) { //마지막 질문에 응답한 경우 프론트에 질문이 끝났다는 것을 알리기 위한 API
+            map.put("testKey", secondSectionQuestionDto.getTestKey());
             map.put("success", true);
-            map.put("finished", true);
+            map.put("finished", "result101");
             return map;
         }
+        map.put("testKey", secondSectionQuestionDto.getTestKey());
         map.put("success", true);
         map.put("finished", false);
         return map;
@@ -73,7 +79,7 @@ public class SecondSectionController {
     @PostMapping("/finalResult")
     public Map viewResult(@RequestBody SecondSectionQuestionDto secondSectionQuestionDto, @AuthenticationPrincipal MemberAdapter memberAdapter) {
         if (secondSectionQuestionDto.getResultType().equals("result101")) {
-            return secondSectionService.viewResult(memberAdapter.getMember().getId());
+            return secondSectionService.viewResult(secondSectionQuestionDto.getTestKey());
         }
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("success", false);

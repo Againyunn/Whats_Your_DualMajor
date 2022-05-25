@@ -32,21 +32,21 @@ public class TendencyServiceImpl implements TendencyService{
     /*섹션 1 : 섹터 도출 로직*/
     @Override
     @Transactional
-    public boolean resultProcess(FirstSectionQuestionDto firstSectionQuestionDto, Long memberId) {
+    public String resultProcess(FirstSectionQuestionDto firstSectionQuestionDto, String testKey) {
         String q = firstSectionQuestionDto.getQuestionNum();
         //Member member = memberService.findById(memberId); //응답 객체에 참조할 현재 서비스 이용중인 회원 객체 불러오기
         /*성향 우선 질문지에서 성향 관련 질문 :: q2~q13(총 12개)*/
         if (q.equals("2") || q.equals("3") || q.equals("4") || q.equals("5") || q.equals("6") || q.equals("7") || q.equals("8") || q.equals("9") || q.equals("10") || q.equals("11") || q.equals("12") || q.equals("13")) {
             if (q.equals("2")) {//최초 1회 응답이 들어오면 회원 객체를 포함하는 회원의 응답 객체(TendencyResponse) 생성해야함.
                 TendencyResponse tendencyResponse = new TendencyResponse();
-                tendencyResponse.createMemberResponse(memberService.findById(memberId));
+                tendencyResponse.createMemberResponse(testKey);
                 tendencyResponseRepository.save(tendencyResponse);
             }
-            mbtiProcess(firstSectionQuestionDto, memberId); //mbti 판별 로직으로 성향 관련 질문 응답 전달
+            mbtiProcess(firstSectionQuestionDto, testKey); //mbti 판별 로직으로 성향 관련 질문 응답 전달
         }
         /*진로 관련 질문 응답 과정*/
         else if (q.equals("14") || q.equals("15") || q.equals("16")) {
-            TendencyResponse tendencyResponse = tendencyResponseRepository.findByMemberId(memberId);
+            TendencyResponse tendencyResponse = tendencyResponseRepository.findByTestKey(testKey);
             if (q.equals("14")) { //14번 문제
                 tendencyResponse.setQ14(firstSectionQuestionDto.getAnswer());
             } else if (q.equals("15")) { //15번 문제
@@ -54,16 +54,17 @@ public class TendencyServiceImpl implements TendencyService{
             } else { //16번 문제
                 tendencyResponse.setQ16(firstSectionQuestionDto.getAnswer());
                 saveSector(tendencyResponse);//최종 응답까지 저장되면 회원 응답을 통해 결과 테이블에서 일치하는 객체(행)들 찾아내기
+                return "end";
             }
         }
-        return true; //매 응답에 의한 로직이 잘 처리되면 true 반환
+        return "not end"; //매 응답에 의한 로직이 잘 처리되면 true 반환
     }
 
     @Override
     @Transactional
-    public String mbtiProcess(FirstSectionQuestionDto firstSectionQuestionDto, Long memberId) {
+    public String mbtiProcess(FirstSectionQuestionDto firstSectionQuestionDto, String testKey) {
         String q = firstSectionQuestionDto.getQuestionNum();
-        TendencyResponse tendencyResponse = tendencyResponseRepository.findByMemberId(memberId);//FK인 회원id 로 회원의 응답지 찾기
+        TendencyResponse tendencyResponse = tendencyResponseRepository.findByTestKey(testKey);//FK인 회원id 로 회원의 응답지 찾기
         tendencyResponse.setMbtiScoreLogic(Integer.parseInt(firstSectionQuestionDto.getAnswer()));//회원 테이블에 저장되는 mbti점수에 현재 들어온 응답 값 더해주기(+=)
         if (q.equals("4")) { //2,3,4번까지 문제 응답 후
             String mbti = tendencyResponse.getMbti(); //현재 회원 응답 객체에 저장되어있는 mbti 상태 반환
@@ -110,7 +111,7 @@ public class TendencyServiceImpl implements TendencyService{
         }
         for (int i = 0; i < result.size(); i++) { //회원에게 추천된 섹터 결과만큼 MemberSector 객체 생성하여 회원과 결과 하나의 행으로 저장
             MemberSector memberSector = new MemberSector();
-            memberSector.saveSector(tendencyResponse.getMember(), result.get(i).getSector());
+            memberSector.saveSector(tendencyResponse.getTestKey(), result.get(i).getSector());
             memberSectorRepository.save(memberSector);
         }
         return true;

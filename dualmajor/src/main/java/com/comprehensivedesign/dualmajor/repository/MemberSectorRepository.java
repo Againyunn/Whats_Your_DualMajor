@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MemberSectorRepository extends JpaRepository<MemberSector, Long> {
-    Optional<List<MemberSector>> findByMemberId(Long memberId);
+    Optional<List<MemberSector>> findByTestKey(String testKey);
 }

@@ -40,25 +40,25 @@ public class SecondSectionServiceImpl implements SecondSectionService{
     /* 회원의 응답 생성 로직 */
     @Override
     @Transactional
-    public SecondSectionResponse createResponse(Member member, String sectorName) {
+    public SecondSectionResponse createResponse(String testKey, String sectorName) {
         SecondSectionResponse response = new SecondSectionResponse();
         /* 섹터 질문별로 질문 갯수가 다르기 때문에 경우 구분 */
         if (sectorName.equals("언어학 섹터")) { //language
-            response.createResponse(4, "6", member, sectorName); //사용자가 이진트리에 총 응답할 질문 갯수
+            response.createResponse(4, "6", testKey, sectorName); //사용자가 이진트리에 총 응답할 질문 갯수
         }
         else if (sectorName.equals("사회경제학 섹터")) { //social
-            response.createResponse(3, "5", member, sectorName);
+            response.createResponse(3, "5", testKey, sectorName);
         }
         else if (sectorName.equals("자연과학 섹터")) { //science
-            response.createResponse(1, "3", member, sectorName);
+            response.createResponse(1, "3", testKey, sectorName);
         }
         else if (sectorName.equals("공과대학 섹터")) { //tech
-            response.createResponse(1, "3", member, sectorName);
+            response.createResponse(1, "3", testKey, sectorName);
         }
         else { //humanity
-            response.createResponse(0, "2", member, sectorName);
+            response.createResponse(0, "2", testKey, sectorName);
             SecondSectionResponse temp = secondSectionResponseRepository.save(response);//인문학 섹터는 질문이 없으므로 바로 결과 저장
-            saveFinalResult(member.getId());
+            saveFinalResult(testKey);
             return temp;
         }
         return secondSectionResponseRepository.save(response);
@@ -67,14 +67,14 @@ public class SecondSectionServiceImpl implements SecondSectionService{
     /* 사용자가 선택한 섹터와 현재 노드id에 따라 질문 넘겨주는 로직 */
     @Override
     @Transactional
-    public Map recommendProcess(SecondSectionQuestionDto secondSectionQuestionDto, Member member) {
-        SecondSectionResponse response = secondSectionResponseRepository.findByMemberId(member.getId()).get();
+    public Map recommendProcess(SecondSectionQuestionDto secondSectionQuestionDto, String testKey) {
+        SecondSectionResponse response = secondSectionResponseRepository.findByTestKey(testKey).get();
         if (secondSectionQuestionDto.getQuestionNum() == response.getQuestionNum()) {
             if(secondSectionQuestionDto.getQuestionNum() == 1 || secondSectionQuestionDto.getQuestionNum() == 2){
-                Map map = viewCollegeQuestions(response.getTotalQuestionNum(), response.getLeftQuestions(), response.getQuestionNum());
+                Map map = viewCollegeQuestions(testKey, response.getTotalQuestionNum(), response.getLeftQuestions(), response.getQuestionNum());
                 return map;
             }
-            return viewQuestions(response.getSectorName(), response.getQuestionId(), response.getTotalQuestionNum(), response.getLeftQuestions(), response.getQuestionNum());
+            return viewQuestions(testKey, response.getSectorName(), response.getQuestionId(), response.getTotalQuestionNum(), response.getLeftQuestions(), response.getQuestionNum());
         }
         else{
             Map<String, Object> map = new LinkedHashMap<>();
@@ -85,7 +85,7 @@ public class SecondSectionServiceImpl implements SecondSectionService{
 
     /*사용자에게 질문 return 로직*/
     @Override
-    public Map viewQuestions(String sectorName, int questionId, String totalQuestionNum, int leftQuestions, int questionNum) {
+    public Map viewQuestions(String testKey, String sectorName, int questionId, String totalQuestionNum, int leftQuestions, int questionNum) {
         String currentQuestionContent;
         String currentResponse1;
         String currentResponse2;
@@ -122,6 +122,7 @@ public class SecondSectionServiceImpl implements SecondSectionService{
             currentResponse2 = question.getResponse2();
         }
         Map<String, Object> map = new LinkedHashMap<>(); //회원에게 보여질 질문 및 답변 내용들 JSON형식으로 저장
+        map.put("testKey", testKey);
         map.put("questionNum", questionNum);
         map.put("totalQuestionNum", totalQuestionNum);
         map.put("questionId", questionId);
@@ -131,7 +132,7 @@ public class SecondSectionServiceImpl implements SecondSectionService{
         return map;
     }
     @Override
-    public Map viewCollegeQuestions(String totalQuestionNum, int leftQuestions, int questionNum) {
+    public Map viewCollegeQuestions(String testKey, String totalQuestionNum, int leftQuestions, int questionNum) {
         String currentQuestionContent;
         String currentResponse1;
         String currentResponse2;
@@ -150,6 +151,7 @@ public class SecondSectionServiceImpl implements SecondSectionService{
         }
         //공통 campus질문은 섹터 질문 트리 및 노드 id와 상관 없이 처리되므로 현재 quesetionNum과 질문, 응답들만 보냄
         Map<String, Object> map = new LinkedHashMap<>();
+        map.put("testKey", testKey);
         map.put("questionNum", questionNum);
         map.put("totalQuestionNum", totalQuestionNum);
         map.put("questionContent", currentQuestionContent);
@@ -160,8 +162,8 @@ public class SecondSectionServiceImpl implements SecondSectionService{
     /*공통 캠퍼스 문항 1,2번 처리 로직*/
     @Override
     @Transactional
-    public String saveCollegeAnswer(SecondSectionQuestionDto secondSectionQuestionDto, Long memberId) {
-        SecondSectionResponse response = secondSectionResponseRepository.findByMemberId(memberId).get();
+    public String saveCollegeAnswer(SecondSectionQuestionDto secondSectionQuestionDto, String testKey) {
+        SecondSectionResponse response = secondSectionResponseRepository.findByTestKey(testKey).get();
         if (secondSectionQuestionDto.getQuestionNum() == 1) { //1번 문제 설vs글
             response.setCampusQ1(secondSectionQuestionDto.getAnswer());
             response.afterCollege();
@@ -191,8 +193,8 @@ public class SecondSectionServiceImpl implements SecondSectionService{
     /* 회원의 응답에 따른 이진 트리 로직 */
     @Override
     @Transactional
-    public String binaryTree(String answer, Long memberId) {
-        SecondSectionResponse response = secondSectionResponseRepository.findByMemberId(memberId).get();
+    public String binaryTree(String answer, String testKey) {
+        SecondSectionResponse response = secondSectionResponseRepository.findByTestKey(testKey).get();
         int currentQId = response.getQuestionId();
         int leftQuestions = response.getLeftQuestions()-1; //회원이 질문에 응답 시 마다 남은 질문 갯수-=1
         if (answer.equals("1")) { //전자에 해당하는 응답이 나올 시 다음 질문은 왼쪽 자식 노드이므로, 현재 노드 번호 n * 2
@@ -205,16 +207,16 @@ public class SecondSectionServiceImpl implements SecondSectionService{
         /*==예외(사회경제학섹터 6번 노드)처리== */
         /*==마지막 질문의 응답까지 마친 후 결과 산출하기==*/
         if (response.getLeftQuestions() == 0 || (response.getSectorName().equals("사회경제학 섹터")&&response.getQuestionId()==6)) {
-            saveFinalResult(memberId);
+            saveFinalResult(testKey);
             return "end";
         }
         return "not end";
     }
     /*각 섹터별 질문 끝난 후 MemberFinalResult 테이블에 결과 유형 저장하기*/
     @Transactional
-    private void saveFinalResult(Long memberId) {
-        Member member = memberService.findById(memberId);
-        SecondSectionResponse response = secondSectionResponseRepository.findByMemberId(memberId).get();
+    private void saveFinalResult(String testKey) {
+        //Member member = memberService.findById(memberId);
+        SecondSectionResponse response = secondSectionResponseRepository.findByTestKey(testKey).get();
         //회원의 응답에 저장되어있는 questionId : int
         //result 테이블에 저장되어있는 questionId : String
         //따라서 questionId로 result테이블에 접근하기 위하여 String 형변환을 해주어야함.
@@ -241,16 +243,16 @@ public class SecondSectionServiceImpl implements SecondSectionService{
             HumanityResult result = humanityResultRepository.findByQuestionId(questionId);
             resultType = result.getResultType();
         }
-        memberFinalResult.createMemberFinalResult(member, resultType); //경우 분류로 의해 나눠진 resultType을 회원 최종 결과 응답지에 저장
+        memberFinalResult.createMemberFinalResult(testKey, resultType); //경우 분류로 의해 나눠진 resultType을 회원 최종 결과 응답지에 저장
         memberFinalResultRepository.save(memberFinalResult);
     }
 
     @Override
-    public Map<String, Object> viewResult(Long id) {
-        MemberFinalResult result = memberFinalResultRepository.findByMemberId(id);
-        String campus = secondSectionResponseRepository.findByMemberId(id).get().getCampus();
+    public Map<String, Object> viewResult(String testKey) {
+        MemberFinalResult result = memberFinalResultRepository.findByTestKey(testKey);
+        String campus = secondSectionResponseRepository.findByTestKey(testKey).get().getCampus();
         List<FinalResult> finalResults;
-        if (campus.equals("서울캠퍼스") || campus.equals("글로벌캠퍼스")) {
+        if (campus.equals("서울") || campus.equals("글로벌")) {
             //변수 campus에 캠퍼스명이 담겨있고, 해당 캠퍼스명과 같은 캠퍼스명을 갖는 학과 도출 조건
             finalResults = majorDetailRepository.findByResultTypeWithCampus(result.getResultType(), campus);
         }
@@ -263,13 +265,17 @@ public class SecondSectionServiceImpl implements SecondSectionService{
             Map<String, Object> results = new LinkedHashMap<>();
             FinalResult finalResult = finalResults.get(i);
             results.put("departmentName", finalResult.getDepartmentName());
+            results.put("campus", finalResult.getCampus());
             results.put("intro", finalResult.getIntro());
             results.put("degree", finalResult.getDegree());
             results.put("career", finalResult.getCareer());
+            results.put("curriculum",finalResult.getCurriculum());
+            results.put("certification",finalResult.getCertification());
             results.put("webPage", finalResult.getWebpage());
             list.add(results);
         }
         Map<String, Object> map = new LinkedHashMap<>();
+        map.put("testKey", testKey);
         map.put("info", list);
         return map;
     }

@@ -15,9 +15,7 @@ public class CareerResponse {
     @GeneratedValue
     private Long id;
     //저장할 회원 객체 참조
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private String testKey;
     //mbti판별 로직에 의한 mbti
     private String mbti;
     //응답 결과에 따른 결과 리스트
@@ -30,8 +28,8 @@ public class CareerResponse {
     private String q12;
 
     /*회원 응답 객체 메서드*/
-    public void createMemberResponse(Member member) {
-        this.member = member;
+    public void createMemberResponse(String testKey) {
+        this.testKey = testKey;
         this.mbti="";
     }
     /*성향 질문 마친 후 mbti연산 후 업데이트에 사용될 메서드*/

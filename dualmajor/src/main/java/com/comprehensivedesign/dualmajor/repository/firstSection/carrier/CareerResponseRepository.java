@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CareerResponseRepository extends JpaRepository<CareerResponse,Long> {
 
-    CareerResponse findByMemberId(Long memberId);
+    CareerResponse findByTestKey(String testKey);
 
 }

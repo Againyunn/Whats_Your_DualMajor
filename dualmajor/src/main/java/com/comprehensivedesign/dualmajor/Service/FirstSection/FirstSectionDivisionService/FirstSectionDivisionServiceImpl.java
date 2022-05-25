@@ -22,8 +22,8 @@ public class FirstSectionDivisionServiceImpl implements FirstSectionDivisionServ
 
     /*회원 응답 찾기*/
     @Override
-    public String findResponse(Long memberId) {
-        Optional<FirstSectionDivision> response = firstSectionDivisionRepository.findByMemberId(memberId);
+    public String findResponse(String testKey) {
+        Optional<FirstSectionDivision> response = firstSectionDivisionRepository.findByTestKey(testKey);
         if (response.isEmpty()) {
             return "X";
         }
@@ -33,17 +33,16 @@ public class FirstSectionDivisionServiceImpl implements FirstSectionDivisionServ
     /*회원 응답 생성*/
     @Override
     @Transactional
-    public void createResponse(Long memberId, String q1) throws Exception{
+    public void createResponse(String testKey, String q1) throws Exception{
         FirstSectionDivision response = new FirstSectionDivision();
-        Member member = memberRepository.findById(memberId).orElseThrow(()->new Exception("not exists member"));
-        response.createFirstSectionDivision(member, q1);
+        response.createFirstSectionDivision(testKey, q1);
         firstSectionDivisionRepository.save(response);
     }
     /*회원 응답 수정*/
     @Override
     @Transactional
-    public void updateResponse(Long memberId, String q1) throws Exception{
-        FirstSectionDivision response = firstSectionDivisionRepository.findByMemberId(memberId).get();
+    public void updateResponse(String testKey, String q1) throws Exception{
+        FirstSectionDivision response = firstSectionDivisionRepository.findByTestKey(testKey).get();
         response.updateFirstSectionDivision(q1);
     }
 }

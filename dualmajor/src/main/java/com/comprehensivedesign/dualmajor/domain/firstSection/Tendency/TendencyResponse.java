@@ -16,9 +16,7 @@ public class TendencyResponse {//회원의 응답 결과 저장
     @GeneratedValue
     private Long id;
     //저장할 회원 객체 참조
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private String testKey;
     //mbti 점수
     private int mbtiScore;
     //mbti판별 로직에 의한 mbti
@@ -32,8 +30,8 @@ public class TendencyResponse {//회원의 응답 결과 저장
     private List<TendencyResult> results; //성향 질문 결과 테이블 단순 참조 .. 일대다 단방향 관계*/
 
     /*회원 응답 객체 메서드*/
-    public void createMemberResponse(Member member) {
-        this.member = member;
+    public void createMemberResponse(String testKey) {
+        this.testKey = testKey;
         this.mbti="";
         this.mbtiScore = 0;
     }

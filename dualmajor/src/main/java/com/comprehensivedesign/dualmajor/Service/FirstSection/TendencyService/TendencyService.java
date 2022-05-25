@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public interface TendencyService {
-    boolean resultProcess(FirstSectionQuestionDto firstSectionQuestionDto, Long memberId);
-    String mbtiProcess(FirstSectionQuestionDto firstSectionQuestionDto, Long memberId);
+    String resultProcess(FirstSectionQuestionDto firstSectionQuestionDto, String testKey);
+    String mbtiProcess(FirstSectionQuestionDto firstSectionQuestionDto, String testKey);
     boolean saveSector(TendencyResponse tendencyResponse);
+    //TendencyResponse findTendencyResponse();
 
 
 }

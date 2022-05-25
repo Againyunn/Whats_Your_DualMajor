@@ -50,8 +50,8 @@ public class MajorServiceImpl implements MajorService{
 
     /*추천된 섹터에 해당하는 이중전공 찾기*/
     @Override
-    public Map<Long, List> findDualMajor(Long memberId) throws Exception {
-        List<MemberSector> memberSectors = memberSectorRepository.findByMemberId(memberId).orElseThrow(()->new Exception("not exists member sector"));
+    public Map<Long, List> findDualMajor(String testKey) throws Exception {
+        List<MemberSector> memberSectors = memberSectorRepository.findByTestKey(testKey).orElseThrow(()->new Exception("not exists member sector"));
         Map<Long, List> map = new HashMap<>();
         for (int i = 0; i < memberSectors.size(); i++) {
             List<DualMajorName> dualMajorNames = dualMajorRepository.findMajorNameBySectorId(memberSectors.get(i).getSector().getId());
