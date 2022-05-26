@@ -1,18 +1,18 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/dualmajor?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-    #url: jdbc:h2:tcp://localhost/~/dualmajor
-    username: root
-    password: wnddnjs11@@
-    #username: sa
-    #password:
-    #driver-class-name: org.h2.Driver
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://127.0.0.1:3306/dualmajor?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    #username: root
+    #password: wnddnjs11@@
+    url: jdbc:h2:tcp://localhost/~/dualmajor
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    #driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
-    database: MYSQL
+    #database: MYSQL
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
