@@ -1,76 +1,149 @@
-import React, { useState, useEffect} from 'react'
-import { Button, Col, Container, Modal, Row } from 'react-bootstrap'
+import React, { useState, useEffect,  useRef} from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import AuthService from '../../../services/auth.service'
 import { useNavigate, Link } from 'react-router-dom';
+import '../../../media/css/login.css';
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+import bootstrap from 'bootstrap/dist/css/bootstrap.css';
+import { useForm, Controller} from 'react-hook-form';
+import { Button, Alert, Col, FormControl, Modal, Container, Row} from 'react-bootstrap';
 
-export default function LoginModal(props) {
-  //상태값 정의
-
-  // const [thisUser, setThisUser] = useState('')//유저의 데이터
-  
-  //유저의 상세 데이터
-  const [userName, setUserName] = useState('닉네임')// 사용자 닉네임 
-  const [userType, setUserType] = useState('mentee')// 유저유형(멘토/ 멘티)
-  const [userstdNum, setUserstdNum] = useState('202200001')//사용자 학번(이메일의 앞부분)
-  const [userMajor, setUserMajor] = useState('GBT학부'); //사용자 본전공
-  const [userGrade, setUserGrade] = useState('1학년'); //사용자 학년
-  const [dualMajor, setDualMajor] = useState('컴퓨터공학'); //이중전공
-  const [dualMajorType, setDualMajorType] = useState('희망 이중전공'); //멘토, 멘티에 따른 이중전공의 상태값 변경
-
-  //backend로 부터 userdata API받기
-  let thisUser = false;
-  if(sessionStorage.getItem('user') !== null){
-    thisUser = Object.values(JSON.parse(sessionStorage.getItem('user')));
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
+        값을 넣어주세요!
+      </div>
+    );
   }
+};
 
+//stdNum(학번)
+const vuserstdNum = (value) => {
+  if (value.length < 4 || value.length > 9) {
+    return (
+      <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
+        올바르게 입력해주세요.
+      </div>
+    );
+  }
+};
 
-  //페이지 이동(call-back함수)
+//password
+const vpassword = (value) => {
+  if (value.length < 6 || value.length > 20) {
+    return (
+      <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
+        올바르게 입력해주세요.
+      </div>
+    );
+  }
+};
+
+export default function LoginModal() {
+ 
+  //상태값 처리
   let navigate = useNavigate();
+  const form = useRef();
+  const checkBtn = useRef();
 
-  //현재 접속한 유저의 데이터를 받아오기  
-  useEffect(() => {
-    
-    //테스트용
-    console.log("thisUser",thisUser);
+  const [userstdNum, setUserstdNum] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
-    //세션에 저장된 유저 데이터의 value값만 배열로 반환하여 thisUser에 저장
-    if (thisUser !== false){
-      //각 항목별로 데이터 저장(순서변경되면 값이 깨지니 주의!)
-      setUserstdNum(thisUser[0]); //학번/사번
-      setUserName(thisUser[1]); //닉네임
-      setUserGrade(thisUser[2]);  //학년
-      setUserType(thisUser[3]);   //사용자 유형
-      setUserMajor(thisUser[4]);  //본전공 이름
-      setDualMajor(thisUser[6]);  //이중전공 이름
-    }
+  // const [checkUserstdNum, setCheckUserstdNum] = useState('');
+  // const [checkPassword, setCheckPassword] = useState('');
 
-  },[])
+  //alert창(id, pw 검증용)
+  const [show, setShow] = useState(true);
 
+  //비밀번호 찾기
+  const [resetPw, setResetPW] = useState(false);
+  const [validID, setValidID] = useState("");
+  const [activateResetPW, setActivateResetPW] = useState(false);
+  const [newPW, setNewPW] = useState("");
 
-  //userType이 바뀌면 dualMajorType을 바꾸기
-  useEffect(()=>{
-    if(userType === 'mento'){
-      setDualMajorType('이중(부)전공');
-    }
-    else{
-      setDualMajorType('희망 이중전공');
-    }
-  },[userType]);
+  const onChangeUserstdNum = (e) => {
+    const userstdNum = e.target.value;
+    setUserstdNum(userstdNum);
+  };
 
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
+   //비밀번호 재설정 모달창 제어 함수
+   const handleClose = () => setResetPW(false);
+   const handleShow = () => setResetPW(true);
+
+   const onChangeValidID = (e) => {
+     const validID = e.target.value;
+     setValidID(validID);
+   };
+
+   const onChangeNewPW = (e) => {
+     const newPW = e.target.value;
+     setNewPW(newPW);
+   };
+
+   //id조회 후 비밀번호 재설정 기능 활성화 함수
+   const activatePW = (validID) => {
+     //ID값 조회 API 백엔드 
+     //validID
+
+     //입력받은 ID값을 전달받은 경우
+     setActivateResetPW(true);
+
+   }
+
+   //새로운PW를 저장 함수
+   const saveNewPW = (validID, newPW) => {
+     //ID값과 새로운 PW를 백엔드DB에 저장하는 API
+
+     //비밀번호 변경이 제대로 된 경우
+     alert("비밀번호가 재설정되었습니다.")
+   }
+
+   const handleLogin = (e) => {
+     e.preventDefault();
+     setMessage("");
+     setLoading(true);
+     form.current.validateAll(); //모든 유효성검사 통과 시
+
+     //id와 pw 모두 입력된 경우
+     // if(checkUserstdNum === true && checkPassword === true){
+
+       //백엔드 서버와 통신
+       if (checkBtn.current.context._errors.length === 0) {
+         AuthService.login(userstdNum, password).then( //login(stdNum, password)
+           () => {
+  
+             //main page로 이동
+             navigate("/");
+             // window.location.reload();
+           },
+           (error) => {
+             const resMessage =
+               "로그인 정보를 확인해주세요."
+             setLoading(false);
+             setMessage(resMessage);
+           }
+         );
+     }
+   };
 
   return (
-    <Modal {...props} aria-labelledby="contained-modal-title-vcenter">
+    <Modal aria-labelledby="contained-modal-title-vcenter">
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter" >
           <Container>
             <Row>
               <Col md={12} xs={12} >
-                <h6><b>{userName} {userType}님, </b></h6>
-              </Col>
-              <Col md={12} xs={12} >
-                <h6><b>안녕하세요.</b></h6>
+                <h6><b>Log In</b></h6>
               </Col>
             </Row>
           </Container>
@@ -78,72 +151,123 @@ export default function LoginModal(props) {
       </Modal.Header>
       <Modal.Body className="show-grid">
         <Container>
-          <Row>
-            <Col xs={6} md={6}>
-              <small><b>학번/사번:</b></small>
-            </Col>
-            <Col xs={6} md={6}>
-            <small>{userstdNum}</small>
-            </Col>
+          <Form className='loginContainer' onSubmit={handleLogin} ref={form}>
 
-            <Col xs={6} md={6}>
-              <small><b>학과:</b></small>
-            </Col>
-            <Col xs={6} md={6}>
-            <small>{userMajor}</small>
-            </Col>
+          <label htmlFor="username" className='ID'>ID</label>
+          <span className='IDBlock'>
 
-            <Col xs={6} md={6}>
-              <small><b>학년:</b></small>
-            </Col>
-            <Col xs={6} md={6}>
-              <small>{userGrade}</small>
-            </Col>
+          <Input
+            className="form-control"
+            type="userstdNum"
+            name="userstdNum"
+            value={userstdNum}
+            onChange={onChangeUserstdNum}
+            // required
+            validations={[required, vuserstdNum]}
+            placeholder="학번/사번" 
+            size="25"
+            style={{borderRadius: "5px", fontSize: "14px"}}
+          />
+          </span>
 
-            <Col xs={6} md={6}>
-              <small><b>{dualMajorType}:</b></small>
-            </Col>
-            <Col xs={6} md={6}>
-              <small>{dualMajor}</small>
-            </Col>
+          <label htmlFor="password" className='PW'>PW</label>
+          <span className='PWBlock'>
+          <Input
+          className="form-control"
+            type="password"
+            name="password"
+            value={password}
+            onChange={onChangePassword}
+            validations={[required, vpassword]}
+            placeholder="비밀번호"
+            size="25"
+            style={{borderRadius: "5px", fontSize: "14px"}}
+          /></span>
 
-            <Col xs={12} md={12}>
-              <Modify>
-                <Link to={'/editInfo'}>
-                  <Button className='modify'>수정하기</Button>
-                </Link>
-              </Modify>
-            </Col>
+          <CheckButton className='Login' ref={checkBtn}>Login</CheckButton>
 
-            <PersonalButton>
-              <Col xs={12} md={12}>
-                <Button  className='recommend'>이중전공 추천 결과</Button>
-              </Col>
+          <Button type='button' variant="secondary" className='resetPW'  onClick={handleShow}>비밀번호 재설정</Button>
 
-              <Col xs={12} md={12}>
-                <Button className='compete'>내 이중전공 예상 경쟁률</Button>
-              </Col>
+          <Modal show={resetPw} onHide={() => {handleClose(); setActivateResetPW(false);}}>
+          <Modal.Header closeButton>
+            <Modal.Title>비밀번호 재설정</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Container >
+              <Row><span style={{ fontSize: "12px", color: "#C4C4C4"}}>ID 입력 후 조회를 눌러주세요.</span></Row>
+              <Row>
+                <Col md={2} xs={2}>
+                  ID
+                </Col>
+                <Col md={6} xs={6}>
+                  <Input 
+                    className="form-control" 
+                    type="text" 
+                    style={{fontSize: "12px"}}
+                    value={validID}
+                    onChange={onChangeValidID}
+                    placeholder="학번/사번" 
+                  ></Input>
+                </Col>
+                <Col md={4} xs={4}>
+                  <Button 
+                    style={{ backgroundColor: "#002F5A", opacity: "0.8", fontSize: "12px"}} 
+                    onClick={() => activatePW(validID)}
+                  >조회</Button>
+                </Col>
+              </Row>
+              {
+                !activateResetPW?
+                <span></span>:
+                <>
+                  <Row><span style={{ fontSize: "12px", color: "#C4C4C4"}}>새로운 PW 입력 후 확인을 눌러주세요.</span></Row>
+                  <Row>
+                    <Col md={2} xs={2}>
+                      PW
+                    </Col>
+                    <Col md={6} xs={6}>
+                      <Input 
+                        className="form-control" 
+                        type="password" 
+                        style={{fontSize: "12px"}}
+                        value={newPW}
+                        onChange={onChangeNewPW}
+                        placeholder="새로운 비밀번호" 
+                      ></Input>
+                    </Col>
+                    <Col md={4} xs={4}>
+                      <Button 
+                        style={{  backgroundColor: "#028799", opacity: "0.9", fontSize: "12px"}} 
+                        onClick={() => saveNewPW(validID, newPW)}
+                      >확인</Button>
+                    </Col>
+                  </Row>
+                </>
+              }
+            </Container>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={ () => {
+              handleClose();
+              setActivateResetPW(false);
+            }}>
+              닫기
+            </Button>
+          </Modal.Footer>
+          </Modal>
 
-              <Col xs={12} md={12}>
-                <Button className='myPost'>내가 쓴 글</Button>
-              </Col>
-            </PersonalButton>
-          </Row>
+          {message && (
+          <div className="error">
+            <div className="alert alert-danger" role="alert">
+              {message}
+            </div>
+          </div>
+          )}
+          </Form>
 
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Cancel>
-          <Button className="cancel" onClick={ ()=> {
-            //로그아웃처리
-            AuthService.logout();
-
-            //main page로 이동
-            navigate("/");
-            window.location.reload();
-          
-          }}>로그아웃</Button>
-        </Cancel>
       </Modal.Footer>
     </Modal>
   )

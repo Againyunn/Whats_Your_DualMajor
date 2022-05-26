@@ -16,6 +16,7 @@ import GPAChart from '../component/GPAChart'
 import ApplyChart from "../component/ApplyChart";
 
 import Login from "../../../components/Login";
+import LoginModal from "../../main/component/LoginModal";
 
 function SeoulMain() {
     //상단바 컨트롤 : 메뉴바 노출 상태관리
@@ -167,7 +168,7 @@ function SeoulMain() {
     const applyMajor = () => {
         //로그인 유무 확인
         if(!login){
-            //Login()
+            LoginModal();
         }
         //모달창 열어서 GPA입력 받기
         modalShow();

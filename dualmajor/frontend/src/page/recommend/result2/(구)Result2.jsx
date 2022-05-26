@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { Button,  Modal, Row, Col, Container, ProgressBar, Accordion, ListGroup, InputGroup, FormControl} from 'react-bootstrap';
+import { Button,  Modal, Row, Col, Container, ProgressBar, Accordion, ListGroup, InputGroup, FormControl, Card} from 'react-bootstrap';
 import RecommendService from '../../../services/recommend.service';
 import { useNavigate } from 'react-router-dom';
 //import ReactTooltip from 'react-tooltip';
@@ -11,6 +11,10 @@ export default function Result() {
     const [isError, setIsError] = useState(false); //결과 값이 에러인지 여부 저장
     const [answer, setAnswer] = useState(false); //사용자가 선택한 학문 설정
 
+    //결과 세부 내역 보여주기
+    const [resultModalShow, setResultModalShow] = useState([]);
+    //const [selectResultModal, setSelectResultModal] = useState("");
+
 
     //만족도 조사 변수
     const [modalShow, setModalShow] = useState(false); //모달을 통해 만족도 수집
@@ -18,30 +22,40 @@ export default function Result() {
     const [reviewContent, setReviewContent] = useState("");//간략후기
 
     //테스트용
-    // let testData = {
-    //     "info": [
-    //         {
-    //             "departmentName": "경영",
-    //             "campus": "서울",
-    //             "intro": "inf1",
-    //             "degree": "deg1",
-    //             "career": "career1",//null가능
-    //             "curriculum": "경영학원론",//null가능
-    //             "certification": "전산회계",//null가능
-    //             "webPage": "www.hufs.ac.kr" //null가능
-    //         },
-    //         {
-    //             "departmentName": "국금",
-    //             "campus": "글로벌",
-    //             "intro": "inf2",
-    //             "degree": "deg2",
-    //             "career": "career2",
-    //             "curriculum": "경제학원론",//null가능
-    //             "certification": null,//null가능
-    //             "webPage": "www.hufs.ac.kr스위스 다보스에서 열린 세계경제포럼 연차총회(WEF·다보스포럼)에서는 비트코인 등 가상화폐를 둘러싼 비관적인 전망도 쏟아졌다. 글로벌 자산운용사 구겐하임인베스트먼트의 스콧 마이너드 최고투자책임자(CIO)는 비트코인이 8000달러까지 폭락할 수 있다고 경고했다. 현 시세에서 70% 이상 추가 폭락할 수 있다는 것이다."
-    //         }
-    //     ]
-    // }
+    let testData = {
+        "info": [
+            {
+                "departmentName": "경영",
+                "campus": "서울",
+                "intro": "inf1",
+                "degree": "deg1",
+                "career": "career1",//null가능
+                "curriculum": "경영학원론",//null가능
+                "certification": "전산회계",//null가능
+                "webPage": "www.hufs.ac.kr" //null가능
+            },
+            {
+                "departmentName": "국금",
+                "campus": "글로벌",
+                "intro": "inf2",
+                "degree": "deg2",
+                "career": "career2",
+                "curriculum": "경제학원론",//null가능
+                "certification": null,//null가능
+                "webPage": "www.hufs.ac.kr스위스 다보스에서 열린 세계경제포럼 연차총회(WEF·다보스포럼)에서는 비트코인 등 가상화폐를 둘러싼 비관적인 전망도 쏟아졌다. 글로벌 자산운용사 구겐하임인베스트먼트의 스콧 마이너드 최고투자책임자(CIO)는 비트코인이 8000달러까지 폭락할 수 있다고 경고했다. 현 시세에서 70% 이상 추가 폭락할 수 있다는 것이다."
+            },
+            {
+                "departmentName": "경영",
+                "campus": "서울",
+                "intro": "inf1",
+                "degree": "deg1",
+                "career": "career1",//null가능
+                "curriculum": "경영학원론",//null가능
+                "certification": "전산회계",//null가능
+                "webPage": "www.hufs.ac.kr" //null가능
+            },
+        ]
+    }
 
     //화면 이동 제어용 callback함수 정의
     let navigate = useNavigate();
@@ -51,31 +65,68 @@ export default function Result() {
         //임시 아이디 설정
         let testKeyValidate = sessionStorage.getItem('testKey');
 
-        //세션 스토리지에 저장된 결과값을 백엔드에 요청
-        RecommendService.getFirstSectionResult(sessionStorage.getItem('result2Type'), testKeyValidate).then(
-            (response) => {
+        // //세션 스토리지에 저장된 결과값을 백엔드에 요청
+        // RecommendService.getFirstSectionResult(sessionStorage.getItem('result2Type'), testKeyValidate).then(
+        //     (response) => {
 
 
-                //전달받은 값을 데이터로 저장
-                setThisResult(JSON.parse(response.data.info));
-                //실행
-                ShowResult();
-            }
-        ).catch(
-            (Error) => {
-                //에러가 발생했음을 저장
-                setIsError(true);
-            }
-        )
+        //         //전달받은 값을 데이터로 저장
+        //         setThisResult(JSON.parse(response.data.info));
+
+                // let thisArr = [];
+                // for(var i = 0; i < testData.info.length; i++){
+                //     thisArr.push(false);
+                // }
+                // setResultModalShow(thisArr);
+        //         //실행
+        //         //ShowResult();
+        //     }
+        // ).catch(
+        //     (Error) => {
+        //         //에러가 발생했음을 저장
+        //         setIsError(true);
+        //     }
+        // )
 
         //테스트용
-        //setThisResult(testData.info);
-        //thisResult는 테스트 종료되면 삭제 처리
+        setThisResult(testData.info);
 
-        ShowResult();
+        let thisArr = [];
+        for(var i = 0; i < testData.info.length; i++){
+            thisArr.push(false);
+        }
+        
+        setResultModalShow(thisArr);
+        //thisResult는 테스트 종료되면 삭제 처리
+        
     },[])
 
+
+    useEffect(() => {
+        ShowResult();
+    },[resultModalShow])
+
+
+    const selectShowDetail = (e) => {
+        let target = e.target.id;
+
+        setResultModalShow(
+            resultModalShow.map((idx) => (idx === Number(target) ? true : false))
+        )
+        console.log('target:',target);
+        console.log('resultModalShow:',resultModalShow);
+    }
     
+    const selectDisableDetail = (e)  => {
+        let target = e.target.id;
+
+        setResultModalShow(
+            resultModalShow.map((idx) => (idx === Number(target) ? false : false))
+        )
+        console.log('target:',target);
+        console.log('resultModalShow:',resultModalShow);
+    }
+
 
     const ShowResult = () => {
         console.log('thisResult:',thisResult);
@@ -87,14 +138,100 @@ export default function Result() {
             );
         }
 
+        let index = 0;
+
         return(
             <>
                 <Accordion defaultActiveKey="0" flush>
                     {
-                        //testData.info.map(thisData => (
-                        thisResult.info.map(thisData => (
+                        testData.info.map(thisData => (
+                        //thisResult.info.map(thisData => (
                             <>
-                                <Accordion.Item eventKey={thisData.departmentName}>
+                                <Card key={thisData.departmentName} id={thisData.departmentName} style={{ width: '18rem' }} onClick={selectResult}>
+                                    {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
+                                    <Card.Body>
+                                        <Card.Title>{thisData.departmentName}</Card.Title>
+                                        <Card.Text>
+                                            {thisData.intro}
+                                        </Card.Text>
+                                        <Button variant="primary" id={index} onClick={selectShowDetail} >자세히 보기</Button>
+                                    </Card.Body>
+                                </Card>
+
+
+                                <Modal aria-labelledby="contained-modal-title-vcenter" show={resultModalShow[index]} onHide={selectDisableDetail}>
+                                    <Modal.Header closeButton onClick={selectDisableDetail}>
+                                    <Modal.Title id="contained-modal-title-vcenter" >
+                                        <Container>
+                                        <Row>
+                                            <Col md={12} xs={12} >
+                                            <h6><b>{thisData.departmentName}</b></h6>
+                                            </Col>
+                                        </Row>
+                                        </Container>
+                                    </Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body className="show-grid">
+                                    <Container>
+                                        <Row>
+                                        <Col xs={12} md={12}>
+                                            <small>{thisData.campus}</small>
+                                        </Col>
+                            
+                                        <Col xs={12} md={12}>
+                                            <small>{thisData.intro}</small>
+                                        </Col>
+
+                                        <Col xs={12} md={12}>
+                                            <small>{thisData.degree}</small>
+                                        </Col>
+
+                                        {
+                                            (thisData.career !== null)?
+                                            <Col xs={12} md={12}>
+                                                <small>{thisData.career }</small>
+                                            </Col>:
+                                            <></>
+                                        }
+                                        {
+                                            (thisData.curriculum !== null)?
+                                            <Col xs={12} md={12}>
+                                                <small>{thisData.curriculum}</small>
+                                            </Col>:
+                                            <></>
+                                        }
+                                        {
+                                            (thisData.certification!== null)?
+                                            <Col xs={12} md={12}>
+                                                <small>{thisData.certification}</small>
+                                            </Col>:
+                                            <></>                                                   
+                                        }
+                                        {
+                                            (thisData.webPage !== null)?
+                                            <Col xs={12} md={12}>
+                                                <small>{thisData.webPage}</small>
+                                            </Col>:
+                                            <></>
+                                        }
+                        
+                                        <PersonalButton>
+                                            <Col xs={12} md={12}>
+                                            <br/>
+                                            <Button className='recommend' id={thisData.departmentName} onClick={selectResult}>선택하기</Button>
+                                            </Col>
+                                        </PersonalButton>
+                                        </Row>
+                            
+                                    </Container>
+                                    </Modal.Body>
+                                </Modal>
+
+                                {
+                                index += 1
+                                }
+
+                                {/* <Accordion.Item eventKey={thisData.departmentName}>
                                     <div id={`${thisData.departmentName}`} onClick={selectResult}>
                                         <Accordion.Header>{thisData.departmentName}</Accordion.Header>
                                     </div>
@@ -125,8 +262,10 @@ export default function Result() {
                                                 }
                                         </ListGroup>
                                     </Accordion.Body>
-                                </Accordion.Item>
+                                </Accordion.Item> */}
                             </>
+                       
+                            
                         ))
                     }
                 </Accordion>
@@ -237,7 +376,7 @@ export default function Result() {
                             <FormControl onChange={() => briefReview()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="좋았던점이나 개선하면 좋을 것들 적어주세요😉"></FormControl>
                         </InputGroup>
                     </Col>
-                        
+    
                     <PersonalButton>
                         <Col xs={12} md={12}>
                         <br/>
@@ -294,7 +433,7 @@ const BodyBlock = styled.div`
         /*vertical-align: middle;*/
         row-gap: 10px;
 
-        // height: 70vh;
+        height: 70vh;
         width: 45vh;
     }
     
