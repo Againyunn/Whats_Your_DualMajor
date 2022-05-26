@@ -145,7 +145,7 @@ const submitSecondSectionAnswer = (questionNum, answer, testKey) =>{
 
 //2번째 섹션 결과 받아오기
 const getFinalResult = (resultType, testKey) =>{
-    return (axios.post(API_URL + "getFinalResult/", {
+    return (axios.post(API_URL + "finalResult/", {
         resultType,//앞선 2번째 섹션 질문 정보를 받아오는 API에서 반환된 문자열 값(어떤 result인지)
         testKey//테스트하는 사용자 식별 값
     })

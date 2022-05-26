@@ -205,7 +205,7 @@ export default function Question2Frame() {
                         }
 
                         <div className='statusBar'>
-                            <ProgressBar striped variant="success" animated now={progressPercent} />
+                            <ProgressBar now={progressPercent} label={`${progressPercent}%`} />
                         </div>
                     
                         <div className='nextButtonFrame'>
