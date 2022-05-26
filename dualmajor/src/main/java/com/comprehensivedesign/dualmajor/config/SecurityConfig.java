@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected CustomUsernamePasswordAuthenticationFilter getAuthenticationFilter() {
         CustomUsernamePasswordAuthenticationFilter filter = new CustomUsernamePasswordAuthenticationFilter();
         try {
-            filter.setFilterProcessesUrl("/login");
+            filter.setFilterProcessesUrl("/login/");
             filter.setAuthenticationManager(this.authenticationManagerBean());
             filter.setUsernameParameter("email");
             filter.setPasswordParameter("password");

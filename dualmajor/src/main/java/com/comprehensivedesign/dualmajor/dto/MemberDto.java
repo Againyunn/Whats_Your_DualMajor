@@ -15,6 +15,7 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     /*Spring의 MVC 패턴에서, Controller가 view와 model 사이에서 데이터를 주고받을 때 DTO를 주로 사용한다.
     * DTO에는 엔티터의 모든 정보를 담는 것이 아닌, 필요한 정보만을 취급하여 전송할 수 있다.*/
 
+    private String id; //프론트에서 넘어오는 아이디의 변수명("id")
     //회원 이름(닉네임)
     private String nickName;
     //회원 학번/사번
@@ -24,9 +25,11 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     //회원 비밀번호
     private String password;
     //회원 본전공(제 1전공)
-    private String firstMajorId;
+    //private String firstMajorId;
+    private Long firstMajorId;
     //회원 이중/부전공(제 2전공)
-    private String dualMajorId;
+    //private String dualMajorId;
+    private Long dualMajorId;
     //회원 학년
     private String grade;
     //회원 유형(멘토 or 멘티)
@@ -37,19 +40,19 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
      * 해당 데이터로 전공 테이블에 접근이 가능하기 때문*/
     /*이 DTO에서 전공 Id에 대한 타입 변환(Long->String, String->Long)은 모두 이루어주기에 비즈니스 로직에서는 신경 쓰지 않고 개발 가능*/
 
-    public Long getFirstMajorId() {
+    /*public Long getFirstMajorId() {
         return Long.parseLong(this.firstMajorId);
     }
 
     public Long getDualMajorId() {
         return Long.parseLong(this.dualMajorId);
-    }
+    }*/
 
     public void setLoginInfo(String nickName, String stdNum, Long firstMajorId, Long dualMajorId, String grade, String userType) {
         this.nickName = nickName;
         this.stdNum = stdNum;
-        this.firstMajorId = Long.toString(firstMajorId); //DB의 Long형태 -> Json의 String 형태
-        this.dualMajorId = Long.toString(dualMajorId);
+        this.firstMajorId = firstMajorId; //DB의 Long형태 -> Json의 String 형태
+        this.dualMajorId = dualMajorId;
         this.grade = grade;
         this.userType = userType;
     }
@@ -63,4 +66,15 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
         map.put("dualMajorId", dualMajorId);
         return map;
     }
+    /*회원 수정 API*/
+    public void setEditInfo(String stdNum) {
+        this.stdNum = stdNum;
+    }
+    public Map getEditInfo() {
+        LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+        map.put("is_success", true);
+        map.put("id", stdNum);
+        return map;
+    }
+
 }

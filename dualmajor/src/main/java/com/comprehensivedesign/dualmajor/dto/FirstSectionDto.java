@@ -14,6 +14,8 @@ import java.util.Map;
 public class FirstSectionDto {
 
     private String sectorName;
+    private String result1Type;
+    private String result2Type;
     private String resultType;
     private String testKey;
     private List<Sector> sectors;

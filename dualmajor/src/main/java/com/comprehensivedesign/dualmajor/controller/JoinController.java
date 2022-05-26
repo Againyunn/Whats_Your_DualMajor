@@ -43,7 +43,8 @@ public class JoinController {
             return map;
         }
         map.put("is_success", true);
-        map.put("email", memberRepository.findById(memberId).get().getEmail());
+        //map.put("email", memberRepository.findById(memberId).get().getEmail());
+        map.put("id", memberRepository.findById(memberId).get().getStdNum());
         return map;
     }
 

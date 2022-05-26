@@ -79,30 +79,30 @@ public class CarrierServiceImpl implements CarrierService{
         if (q.equals("2")) { //2번 e-i
             String mbti = carrierResponse.getMbti(); //현재 회원 응답 객체에 저장되어있는 mbti 상태 반환
             if (firstSectionQuestionDto.getAnswer().equals("2")) { //"e":"1" , "i":"2"
-                carrierResponse.setMbti(mbti += "i");
+                carrierResponse.setMbti(mbti += "I");
             }
-            else{carrierResponse.setMbti(mbti += "e");}
+            else{carrierResponse.setMbti(mbti += "E");}
         }
         else if (q.equals("3")) { //3번 n-s
             String mbti = carrierResponse.getMbti();
             if (firstSectionQuestionDto.getAnswer().equals("2")) { //"s":"1" , "n":"2"
-                carrierResponse.setMbti(mbti += "n");
+                carrierResponse.setMbti(mbti += "N");
             }
-            else{carrierResponse.setMbti(mbti += "s");}
+            else{carrierResponse.setMbti(mbti += "S");}
         }
         else if (q.equals("4")) { //4번 t-f
             String mbti = carrierResponse.getMbti();
             if (firstSectionQuestionDto.getAnswer().equals("2")) { //"f":"1" , "p":"2"
-                carrierResponse.setMbti(mbti += "t");
+                carrierResponse.setMbti(mbti += "T");
             }
-            else{carrierResponse.setMbti(mbti += "f");}
+            else{carrierResponse.setMbti(mbti += "F");}
         }
         else if (q.equals("5")) { //5번 p-j
             String mbti = carrierResponse.getMbti();
             if (firstSectionQuestionDto.getAnswer().equals("2")) { //"j":"1" , "p":"2"
-                carrierResponse.setMbti(mbti += "p");
+                carrierResponse.setMbti(mbti += "P");
             }
-            else{carrierResponse.setMbti(mbti += "j");}
+            else{carrierResponse.setMbti(mbti += "J");}
             return carrierResponse.getMbti(); //완성된 mbti 반환
         }
         return "ok"; //일반 결과

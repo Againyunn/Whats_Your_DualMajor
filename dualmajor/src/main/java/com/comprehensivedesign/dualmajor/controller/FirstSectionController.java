@@ -17,6 +17,7 @@ import com.comprehensivedesign.dualmajor.repository.firstSection.tendency.Tenden
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,8 +55,6 @@ public class FirstSectionController {
     @PostMapping("/firstSectionQuestion")
     public Object firstSectionQuestion(@RequestBody FirstSectionQuestionDto firstSectionQuestionDto) {
         FirstSectionQuestionDto questionAPI = new FirstSectionQuestionDto();
-        System.out.println("q num in q logic"+firstSectionQuestionDto.getQuestionNum());
-        System.out.println("testKey in q logic"+firstSectionQuestionDto.getTestKey());
         //String response = firstSectionDivisionService.findResponse(firstSectionQuestionDto.getTestKey());
         //1번 문제 요청이거나
         /*if (firstSectionQuestionDto.getQuestionNum().equals("0")) {
@@ -95,22 +94,17 @@ public class FirstSectionController {
             TendencyQuestion byQuestionNum = tendencyQuestionRepository.findByQuestionNum(firstSectionQuestionDto.getQuestionNum());//프론트에서 요청한 질문 번호를 기준으로 해당 질문으로 조회한 해당 질문 정보들
             if (firstSectionQuestionDto.getQuestionNum().equals("1")) { //1번 문제 요청 시 사용자의 임시 테스트값 생성 후  api에 반환
                 String testKey = createTestKey();//질문에 대한 첫 응답 처리 시 임의의 테스트 값을 생성하여 부여. 이 testKey로 추천 로직 마지막까지 진행
-                System.out.println("AtfirstQ"+testKey);
-                questionAPI.setQuestionData(testKey, byQuestionNum.getQuestionNum(), byQuestionNum.getQuestionContent(), byQuestionNum.getResponse1(), byQuestionNum.getResponse2());
+                questionAPI.setQuestionData(testKey, byQuestionNum.getQuestionNum(), "16", byQuestionNum.getQuestionContent(), byQuestionNum.getResponse1(), byQuestionNum.getResponse2());
             }
             else if(firstSectionDivisionService.findResponse(firstSectionQuestionDto.getTestKey()).equals("1")){// 1번 문제에서 성향 관련 응답을 한 경우
-                System.out.println("test");
-                questionAPI.setQuestionData(firstSectionQuestionDto.getTestKey(), byQuestionNum.getQuestionNum(), byQuestionNum.getQuestionContent(), byQuestionNum.getResponse1(), byQuestionNum.getResponse2());}
+                questionAPI.setQuestionData(firstSectionQuestionDto.getTestKey(), byQuestionNum.getQuestionNum(), "16", byQuestionNum.getQuestionContent(), byQuestionNum.getResponse1(), byQuestionNum.getResponse2());}
             return questionAPI.getQuestionData(); //요청한 질문 번호에 대한 질문 정보들 응답
         }
         else if(!firstSectionQuestionDto.getQuestionNum().equals("1") && firstSectionDivisionService.findResponse(firstSectionQuestionDto.getTestKey()).equals("2")){ //1번 문제 요청도 아니고, 1번 문항에 대하여 진로 관련 질문지를 고른 경우
-            System.out.println("test // careerQ");
-            System.out.println("qnum"+firstSectionQuestionDto.getQuestionNum());
             CareerQuestion byQuestionNum = carrierQuestionRepository.findByQuestionNum(firstSectionQuestionDto.getQuestionNum());
-            questionAPI.setQuestionData(firstSectionQuestionDto.getTestKey(), byQuestionNum.getQuestionNum(), byQuestionNum.getQuestionContent(), byQuestionNum.getResponse1(), byQuestionNum.getResponse2());
+            questionAPI.setQuestionData(firstSectionQuestionDto.getTestKey(), byQuestionNum.getQuestionNum(), "13", byQuestionNum.getQuestionContent(), byQuestionNum.getResponse1(), byQuestionNum.getResponse2());
             return questionAPI.getQuestionData(); //요청한 질문 번호에 대한 질문 정보들 응답
         }
-        System.out.println("false");
         return false;
     }
     /*사용자 응답 전송*/
@@ -154,8 +148,9 @@ public class FirstSectionController {
     }
 
     /*섹터 추천 최종 결과 요청*/
-    @PostMapping("/firstSectionResult")
+    @PostMapping("/getFirstSectionResult")
     public Map viewMemberSector(@RequestBody FirstSectionDto firstSectionDto) throws Exception {
+        System.out.println(firstSectionDto.getResultType());
         if(firstSectionDto.getResultType().equals("result20")){
             List<Sector> memberSector;
             Map<Long, List> dualMajor;

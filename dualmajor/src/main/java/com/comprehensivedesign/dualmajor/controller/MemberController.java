@@ -64,14 +64,15 @@ public class MemberController {
     public Map editMember(@RequestBody MemberDto memberDto) throws Exception{
         Member updatedMember = memberService.update(memberDto);
         MemberDto updatedMemberDto = new MemberDto();
-        updatedMemberDto.setLoginInfo(
+        /*updatedMemberDto.setLoginInfo(
                 updatedMember.getName(),
                 updatedMember.getStdNum(),
                 updatedMember.getFirstMajor().getId(), //회원 엔티티에 연관관계로 인해 저장된 전공 객체를 참조하여 id값 반환
                 updatedMember.getDualMajor().getId(),
                 updatedMember.getGrade(),
-                updatedMember.getType());
-        return updatedMemberDto.getLoginInfo(); //업데이트 성공 후 업데이트된 데이터 셋 반환
+                updatedMember.getType());*/
+        updatedMemberDto.setEditInfo(updatedMemberDto.getStdNum());
+        return updatedMemberDto.getEditInfo(); //업데이트 성공 후 업데이트된 데이터 셋 반환
     }
 
     @PostMapping("/test")

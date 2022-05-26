@@ -69,33 +69,33 @@ public class TendencyServiceImpl implements TendencyService{
         if (q.equals("4")) { //2,3,4번까지 문제 응답 후
             String mbti = tendencyResponse.getMbti(); //현재 회원 응답 객체에 저장되어있는 mbti 상태 반환
             if (tendencyResponse.getMbtiScore() > 4) { //"e"성향 질문에 두개 이상 응답했으면 회원 응답지 mbti항목에 "e"추가
-                tendencyResponse.setMbti(mbti += "i");
+                tendencyResponse.setMbti(mbti += "I");
             }
-            else{tendencyResponse.setMbti(mbti += "e");}
+            else{tendencyResponse.setMbti(mbti += "E");}
             tendencyResponse.clearMbtiScore(); //세 문제의 응답을 통한 mbti 요소 산출이 완료되면 저장되어있는 mbti점수 초기화
         }
         else if (q.equals("7")) { //5,6,7번까지 문제 응답 후
             String mbti = tendencyResponse.getMbti();
             if (tendencyResponse.getMbtiScore() > 4) { //"e"성향 질문에 두개 이상 응답했으면 회원 응답지 mbti항목에 "n"추가
-                tendencyResponse.setMbti(mbti += "n");
+                tendencyResponse.setMbti(mbti += "N");
             }
-            else{tendencyResponse.setMbti(mbti += "s");}
+            else{tendencyResponse.setMbti(mbti += "S");}
             tendencyResponse.clearMbtiScore();
         }
         else if (q.equals("10")) { //8,9,10번까지 문제 응답 후
             String mbti = tendencyResponse.getMbti();
             if (tendencyResponse.getMbtiScore() > 4) { //"e"성향 질문에 두개 이상 응답했으면 회원 응답지 mbti항목에 "t"추가
-                tendencyResponse.setMbti(mbti += "t");
+                tendencyResponse.setMbti(mbti += "T");
             }
-            else{tendencyResponse.setMbti(mbti += "f");}
+            else{tendencyResponse.setMbti(mbti += "F");}
             tendencyResponse.clearMbtiScore();
         }
         else if (q.equals("13")) { //11,12,13번까지 문제 응답 후
             String mbti = tendencyResponse.getMbti();
             if (tendencyResponse.getMbtiScore() > 4) { //"e"성향 질문에 두개 이상 응답했으면 회원 응답지 mbti항목에 "p"추가
-                tendencyResponse.setMbti(mbti += "p");
+                tendencyResponse.setMbti(mbti += "P");
             }
-            else{tendencyResponse.setMbti(mbti += "j");}
+            else{tendencyResponse.setMbti(mbti += "J");}
             tendencyResponse.clearMbtiScore();
             return tendencyResponse.getMbti(); //완성된 mbti 반환
         }

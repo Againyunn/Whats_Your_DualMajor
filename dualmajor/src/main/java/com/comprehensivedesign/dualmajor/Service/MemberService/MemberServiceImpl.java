@@ -78,7 +78,7 @@ public class MemberServiceImpl implements MemberService{
     public Member update(MemberDto memberDto) throws Exception{
         /*회원가입 -> 폼에서 몇개의 정보만 수정하는 것처럼 보이지만.
         사실 폼에 value에 박혀있는 모든 정보들이 다시 백으로 넘어오는 것*/
-        Member member = find(memberDto.getStdNum()+"@hufs.ac.kr");//로그인 된 회원의 이메일이므로 학교 주소가 붙어서 저장된 형태
+        Member member = find(memberDto.getEmail()+"@hufs.ac.kr");//로그인 된 회원의 이메일이므로 학교 주소가 붙어서 저장된 형태
         if (member == null) {
             return null;
         }
