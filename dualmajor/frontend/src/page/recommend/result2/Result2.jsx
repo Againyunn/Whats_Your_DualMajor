@@ -50,14 +50,16 @@ export default function Result() {
     useEffect(() => {
         //임시 아이디 설정
         let testKeyValidate = sessionStorage.getItem('testKey');
+        let resultType = sessionStorage.getItem('result2Type');
 
         //세션 스토리지에 저장된 결과값을 백엔드에 요청
-        RecommendService.getFirstSectionResult(sessionStorage.getItem('result2Type'), testKeyValidate).then(
+        RecommendService.getFinalResult(resultType, testKeyValidate).then(
             (response) => {
 
+                console.log("getData:", response.data)
 
                 //전달받은 값을 데이터로 저장
-                setThisResult(JSON.parse(response.data.info));
+                setThisResult(response.data.info);
                 //실행
                 ShowResult();
             }
@@ -75,8 +77,10 @@ export default function Result() {
         ShowResult();
     },[])
 
+    useEffect(() => {
+        ShowResult();
+    },[thisResult])
     
-
     const ShowResult = () => {
         console.log('thisResult:',thisResult);
         console.log('testData.list.academicName:',thisResult[0]);

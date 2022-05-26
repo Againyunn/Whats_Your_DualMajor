@@ -13,5 +13,4 @@ public class DualmajorApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DualmajorApplication.class, args);
 	}
-
 }

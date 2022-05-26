@@ -14,9 +14,9 @@ export default function MyModal(props) {
   const [userName, setUserName] = useState('닉네임')// 사용자 닉네임 
   const [userType, setUserType] = useState('mentee')// 유저유형(멘토/ 멘티)
   const [userstdNum, setUserstdNum] = useState('202200001')//사용자 학번(이메일의 앞부분)
-  const [userMajor, setUserMajor] = useState('GBT학부'); //사용자 본전공
+  const [userMajor, setUserMajor] = useState(''); //사용자 본전공
   const [userGrade, setUserGrade] = useState('1학년'); //사용자 학년
-  const [dualMajor, setDualMajor] = useState('컴퓨터공학'); //이중전공
+  const [dualMajor, setDualMajor] = useState(''); //이중전공
   const [dualMajorType, setDualMajorType] = useState('희망 이중전공'); //멘토, 멘티에 따른 이중전공의 상태값 변경
 
   //backend로 부터 userdata API받기
@@ -35,6 +35,12 @@ export default function MyModal(props) {
     //테스트용
     console.log("thisUser",thisUser);
 
+    AuthService.firstMajorList();
+    AuthService.dualMajorList();
+
+    let firstMajorList = [JSON.parse(localStorage.getItem('firstMajor'))];
+    let dualMajorList = [JSON.parse(localStorage.getItem('dualMajor'))];
+
     //세션에 저장된 유저 데이터의 value값만 배열로 반환하여 thisUser에 저장
     if (thisUser !== false){
       //각 항목별로 데이터 저장(순서변경되면 값이 깨지니 주의!)
@@ -42,10 +48,26 @@ export default function MyModal(props) {
       setUserName(thisUser[1]); //닉네임
       setUserGrade(thisUser[2]);  //학년
       setUserType(thisUser[3]);   //사용자 유형
-      setUserMajor(thisUser[4]);  //본전공 이름
-      setDualMajor(thisUser[6]);  //이중전공 이름
-    }
 
+      let firstMajorIndex = Number(thisUser[4]);
+      let dualMajorIndex = Number(thisUser[5]);
+
+      console.log('firstMajorName :',firstMajorList );
+      console.log('dualMajorIndex :',dualMajorList );
+      console.log('firstMajorIndex :',firstMajorIndex);
+      console.log('dualMajorIndex :',dualMajorIndex);
+
+      if(!firstMajorList && !dualMajorList){
+        let firstMajorName = firstMajorList.find((e) => {return e.id == firstMajorIndex;});
+        let dualMajorName = dualMajorList.find((e) => {return e.id == dualMajorIndex;});
+        setUserMajor(firstMajorName.name);//본전공 이름
+        setDualMajor(dualMajorName.name);//이중전공 이름
+      }
+
+
+      //setUserMajor(thisUser[4]);  
+      //setDualMajor(thisUser[6]);  
+    }
   },[])
 
 

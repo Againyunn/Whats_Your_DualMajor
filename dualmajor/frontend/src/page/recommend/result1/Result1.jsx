@@ -56,7 +56,7 @@ export default function Result() {
         ).catch(
             (Error) => {
                 //에러가 발생했음을 저장
-                //setIsError(true);
+                setIsError(true);
             }
         )
 
@@ -127,6 +127,7 @@ export default function Result() {
         console.log("thisAcademicName:",result);
         setAnswer(result);
 
+
         //선택한 전공에 대해 색 변경(프론트에 표시)
         document.getElementById(result).style.border = "1px solid #002F5A";
         document.getElementById(result).style.color = "white";
@@ -140,7 +141,7 @@ export default function Result() {
             let testKeyValidate = sessionStorage.getItem('testKey');
 
             //API전송
-            RecommendService.submitFirstSectionAnswer(answer, testKeyValidate);
+            RecommendService.submitFirstSectionResult(answer, testKeyValidate);
             console.log("answer:",answer);
 
             sessionStorage.setItem('recommendFirstResult', true);

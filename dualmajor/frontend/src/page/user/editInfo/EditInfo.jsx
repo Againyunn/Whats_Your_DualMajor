@@ -72,7 +72,7 @@ export default function SignupForm() {
     const [totalFirstMajor, setTotalFirstMajor] = useState(''); //전체 본전공 학과 데이터 리스트 저장
     const [totalDualMajor, setTotalDualMajor] = useState(''); //전체 본전공 학과 데이터 리스트 저장
     const [userType, setUserType] = useState('mentee'); //멘토 멘티 유형 값
-    const [dualmajor, setDualmajor] = useState('희망이중전공');//멘토 멘티 값에 따른 이중전공 노출 변경
+    const [showTypeDualMajor, setShowTypeDualMajor] = useState('희망이중전공');//멘토 멘티 값에 따른 이중전공 노출 변경
     const [show, setShow] = useState(false);//회원가입 약관 모달
     const [resign, setResign] = useState(false); //이용약관 동의여부 확인
 
@@ -130,8 +130,8 @@ export default function SignupForm() {
             setUsername(thisUser[1]);   //닉네임
             setGrade(thisUser[2]);      //학년
             setUserType(thisUser[3]);   //사용자 유형
-            setFirstMajor(thisUser[5]); //본전공 id
-            setDualMajor(thisUser[7]);  //이중전공  id
+            setFirstMajor(thisUser[4]); //본전공 id
+            setDualMajor(thisUser[5]);  //이중전공  id
 
             //백엔드 서버로부터 본전공/이중전공 정보받고 값을 찾아서 반환
 
@@ -196,12 +196,12 @@ export default function SignupForm() {
         //멘토로 유저 타입 변경
         if(selected.target.value === "mento"){
         setUserType("mento");
-        setDualmajor('이중(부)전공');
+        setShowTypeDualMajor('이중(부)전공');
         }
         //멘티로 유저 타입 변경
         else{
         setUserType("mentee");
-        setDualmajor('희망이중전공');
+        setShowTypeDualMajor('희망이중전공');
         }
     }
 
@@ -328,7 +328,7 @@ export default function SignupForm() {
                         !totalFirstMajor?  
                         <option value="0">학과 없음</option>:
                         totalFirstMajor.map(thisMajor => (
-                            <option key={thisMajor.id} value={thisMajor.id} >
+                            <option key={thisMajor.id} value={thisMajor.id}>
                             {thisMajor.name}
                             </option>
                         ))
@@ -365,7 +365,7 @@ export default function SignupForm() {
 
                     <Row>
                     <Col md={5} xs={12}>
-                        <span className='titleStyle'>{dualmajor}</span>
+                        <span className='titleStyle'>{showTypeDualMajor}</span>
                     </Col>
                     <Col md={7} xs={12}>
                         <Select className='inputStyle' onChange={onChangeUserDualMajor} defaultValue={dualMajor} key={uuid()}>
@@ -373,7 +373,7 @@ export default function SignupForm() {
                         !totalDualMajor?  
                         <option value="0">학과 없음</option>:
                         totalDualMajor.map(thisMajor => (
-                            <option key={thisMajor.name} value={thisMajor.name}>
+                            <option key={thisMajor.id} value={thisMajor.id}>
                             {thisMajor.name}
                             </option>
                         ))
@@ -440,7 +440,6 @@ export default function SignupForm() {
             </div>
             <div className='footer'><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
         </div>
-
     )
     }
 
