@@ -18,10 +18,10 @@ const register = (stdNum, password, nickName, grade, userType, firstMajorId, dua
 };
 
 //POST(username, password) & JWT를 LocalStorage에 저장
-const login = (stdNum, password) => {
+const login = (email, password) => {
   return axios
     .post(API_URL + "login/", {
-      stdNum, //문제가 있으면username으로 바꾸기
+      email, //문제가 있으면username으로 바꾸기
       password,
     })
     .then((response) => {
@@ -40,9 +40,9 @@ const logout = () => {
 };
 
 //POST 유저정보 수정
-const changeInfo = (stdNum, password, nickName, grade, userType, firstMajorId, dualMajorId) => {
+const changeInfo = (email, password, nickName, grade, userType, firstMajorId, dualMajorId) => {
   return axios.post(API_URL + "editInfo/", {
-    stdNum, //문제가 있으면username으로 바꾸기
+    email, //문제가 있으면username으로 바꾸기
     password,
     nickName,
     grade,
@@ -78,9 +78,9 @@ const dualMajorList = () =>{
 }
 
 //POST 서비스 탈퇴 신청
-const applyResign = (stdNum) =>{
+const applyResign = (email) =>{
   return axios.post(API_URL + "resign/", {
-    stdNum, //문제가 있으면username으로 바꾸기
+    email, //문제가 있으면username으로 바꾸기
   });
 } 
 
