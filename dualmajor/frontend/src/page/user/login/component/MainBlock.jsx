@@ -65,7 +65,7 @@ const vpassword = (value) => {
 
 
 //html render칸에 id와 ps 각각이 입력되지 않았을 때 띄울 얼럿 <div>로 작성하기
-export default function MainBlock() {
+export default function MainBlock({link}) {
   //상태값 처리
     let navigate = useNavigate();
     const form = useRef();
@@ -176,7 +176,7 @@ export default function MainBlock() {
             () => {
    
               //main page로 이동
-              navigate("/");
+              navigate(`${link}`);
               // window.location.reload();
             },
             (error) => {

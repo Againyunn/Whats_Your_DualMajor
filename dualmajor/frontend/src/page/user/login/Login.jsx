@@ -20,7 +20,7 @@ export default function Login() {
         <>
           <div className="mainContainer">
               <div className="header"><Header showMenu={showMenu}/></div>
-              <div className='mainBody'><MainBlock/></div>
+              <div className='mainBody'><MainBlock link={"/"}/></div>
               <div className='footer'><Footer  showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
           </div>
         </>

@@ -49,7 +49,7 @@ export default function Result() {
                 console.log("response.data.list",response.data.list);
 
                 //전달받은 값을 데이터로 저장
-                setThisResult(JSON.parse(response.data.list));
+                setThisResult(response.data.list);
                 //실행
                 //ShowResult();
             }

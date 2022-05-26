@@ -29,7 +29,7 @@ export default function Question2Frame() {
     const[questionContent, setQuestionContent] = useState('');
     const[response1, setResponse1] = useState('');
     const[response2, setResponse2] = useState('');
-    const[progressPercent, setProgressPercent] = useState(10);
+    const[progressPercent, setProgressPercent] = useState(0);
     const[nextQuestionNum, setNextQuestionNum] = useState(1);
     //const[questionChange, setQuestionChange] = useState(0);
     //const[id, setId] = useState("");

@@ -16,7 +16,6 @@ import GPAChart from '../component/GPAChart'
 import ApplyChart from "../component/ApplyChart";
 
 import Login from "../../../components/Login";
-import LoginModal from "../../main/component/LoginModal";
 
 function SeoulMain() {
     //상단바 컨트롤 : 메뉴바 노출 상태관리
@@ -168,7 +167,7 @@ function SeoulMain() {
     const applyMajor = () => {
         //로그인 유무 확인
         if(!login){
-            LoginModal();
+            //Login()
         }
         //모달창 열어서 GPA입력 받기
         modalShow();
@@ -241,10 +240,22 @@ function SeoulMain() {
                             </div>
                             <div className="applyBlock">
                                 {
-                                    !thisApply?
-                                    <Button type="button" className="applyButton" onClick={applyMajor}>지원하기</Button>:
-                                    <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
+                                    login?
+                                    <>
+                                    {
+                                        !thisApply?
+                                        <Button type="button" className="applyButton" onClick={applyMajor}>지원하기</Button>:
+                                        <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
+                                    }
+                                    </>:
+                                    <>
+                                    <span className="warning">지원하기 전, 로그인해주세요😊</span><br/>
+                                    <Button type="button" className="applyButton" onClick={()=>navigate("/login")}>Login</Button>
+                                    </>
+                                   
                                 }
+
+                                
                                 
                             </div>
                         </div>
@@ -380,11 +391,15 @@ const BodyBlock = styled.div`
 
         
         //가운데 정렬용 선언
-        display: flex;
+        // display: flex;
         justify-content: center;
         align-items: center;
 
         // padding-top: 5%;
+
+        .warning{
+            font-size: 10px;
+        }
 
         .applyButton{
 
