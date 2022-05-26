@@ -23,8 +23,10 @@ public class SecondSectionController {
     @Autowired private final SecondSectionService secondSectionService;
 
     @PostMapping("/submitFirstSectionResult")
-    public Map saveSector(@RequestBody SecondSectionQuestionDto secondSectionQuestionDto, @AuthenticationPrincipal MemberAdapter memberAdapter) {
+    public Map saveSector(@RequestBody SecondSectionQuestionDto secondSectionQuestionDto) {
         Map<String, Object> map = new LinkedHashMap<>();
+        System.out.println("academic name in submitfirstsectionresult : "+secondSectionQuestionDto.getAcademicName());
+        System.out.println("testKey in submitfirstsectionresult : "+secondSectionQuestionDto.getTestKey());
         SecondSectionResponse response = secondSectionService.createResponse(secondSectionQuestionDto.getTestKey(), secondSectionQuestionDto.getAcademicName());
         map.put("testKey", secondSectionQuestionDto.getTestKey());
         map.put("success", true);

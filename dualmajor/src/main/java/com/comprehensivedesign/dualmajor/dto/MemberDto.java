@@ -67,10 +67,10 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
         map.put("nickName", nickName);
         map.put("grade", grade);
         map.put("userType", userType);
-        map.put("firstMajor",firstMajor);
         map.put("firstMajorId", firstMajorId);
-        map.put("firstMajor",dualMajor);
         map.put("dualMajorId", dualMajorId);
+        map.put("firstMajor",firstMajor);
+        map.put("dualMajor",dualMajor);
         return map;
     }
     /*회원 수정 API*/

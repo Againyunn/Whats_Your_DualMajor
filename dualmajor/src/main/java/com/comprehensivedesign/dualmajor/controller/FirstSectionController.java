@@ -111,11 +111,7 @@ public class FirstSectionController {
     @PostMapping("/firstSectionAnswer")
     public Object firstSectionAnswer(@RequestBody FirstSectionQuestionDto firstSectionQuestionDto) throws Exception{//현재 인증된 회원이라면 회원 정보 불러오기
         Map<String, Object> map = new HashMap<>();
-        System.out.println("qnum in answer logic : "+firstSectionQuestionDto.getQuestionNum());
-        System.out.println("testKey in answer logic : "+firstSectionQuestionDto.getTestKey());
-        System.out.println("answer in answer logic :"+firstSectionQuestionDto.getAnswer());
         if (firstSectionQuestionDto.getQuestionNum().equals("1")) {
-            System.out.println("answer"+firstSectionQuestionDto.getTestKey());
             firstSectionDivisionService.createResponse(firstSectionQuestionDto.getTestKey(), firstSectionQuestionDto.getAnswer());
             map.put("testKey", firstSectionQuestionDto.getTestKey());
             map.put("success", true);
@@ -150,7 +146,6 @@ public class FirstSectionController {
     /*섹터 추천 최종 결과 요청*/
     @PostMapping("/getFirstSectionResult")
     public Map viewMemberSector(@RequestBody FirstSectionDto firstSectionDto) throws Exception {
-        System.out.println(firstSectionDto.getResultType());
         if(firstSectionDto.getResultType().equals("result20")){
             List<Sector> memberSector;
             Map<Long, List> dualMajor;
