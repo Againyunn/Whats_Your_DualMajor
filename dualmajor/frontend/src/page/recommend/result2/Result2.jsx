@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { Button, Col, Container, Row, ProgressBar, Accordion, ListGroup} from 'react-bootstrap';
+import { Button,  Modal, Row, Col, Container, ProgressBar, Accordion, ListGroup, InputGroup, FormControl} from 'react-bootstrap';
 import RecommendService from '../../../services/recommend.service';
 import { useNavigate } from 'react-router-dom';
 //import ReactTooltip from 'react-tooltip';
@@ -13,7 +13,9 @@ export default function Result() {
 
 
     //만족도 조사 변수
+    const [modalShow, setModalShow] = useState(false); //모달을 통해 만족도 수집
     const [satisfyingStar, setSatisfyingStar] = useState(1); //별점
+    const [reviewContent, setReviewContent] = useState("");//간략후기
 
     //테스트용
     // let testData = {
@@ -146,7 +148,7 @@ export default function Result() {
         document.getElementById(result).style.color = "white";
     }
 
-    const goToNext = () => {
+    const saveData = () => {
         //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
         if(answer !== false){
             //임시 아이디 설정
@@ -162,9 +164,7 @@ export default function Result() {
             //비회원이 차후에 회원가입 시 기존의 서비스 정보를 받을 수 있도록
             localStorage.setItem('recommendResult', answer);
 
-            //2차 질문 page로 이동
-            // navigate("/question2");
-            // window.location.reload();
+            alert("저장되었습니다.");
 
             //서비스 만족도 조사 모달 띄우기
 
@@ -172,30 +172,90 @@ export default function Result() {
         }
     }
 
-    const Star = () => {
-        const drawStar = (e) => {
-            document.getElementById("realStar").style.width = `${e.target.value * 10}%`;
-            // document.querySelector(`.star span`).style.width = `${e.target.value * 10}%`;
-
-            //별점 기록
-            //setSatisfyingStar(e.target.value);
-
-          }
+ 
+    function SatisfactionModal(props) {
     
-      return (
-        <>
-            <StarFrame >
-                <div class="star">
-                    ★★★★★
-                    <span id="realStar">★★★★★</span>
-                        <input type="range" onInput={drawStar} value="1" step="1" min="0" max="10"/>
-                </div>
-            </StarFrame>
-        </>
-      )
+        const Star = () => {
+            const drawStar = (e) => {
+                document.getElementById("realStar").style.width = `${e.target.value * 10}%`;
+                // document.querySelector(`.star span`).style.width = `${e.target.value * 10}%`;
+        
+                //별점 기록
+                //s/etSatisfyingStar(e.target.value);
+        
+            }
 
+          return (
+            <>
+                <StarFrame >
+                    <label>
+                        <span class="star">
+                            ★★★★★
+                            <span id="realStar">★★★★★</span>
+                                <input type="range" onChange={drawStar} value="1" step="1" min="0" max="10"/>
+                        </span>
+                    </label>
+                </StarFrame>
+            </>
+          )
+        }
+
+
+        const briefReview = (e) => {
+          let thisReview = e.target.value;
+          setReviewContent(thisReview);
+        }
       
-    }
+        return (
+            <Modal {...props} aria-labelledby="contained-modal-title-vcenter">
+                <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter" >
+                    <Container>
+                    <Row>
+                        <Col md={12} xs={12} >
+                        <h6><b>저희 서비스 어떠셨어요?</b></h6>
+                        </Col>
+                    </Row>
+                    </Container>
+                </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="show-grid">
+                <Container>
+                    <Row>
+                    <Col xs={12} md={12}>
+                        <small><b>만족도 별점</b></small>
+                    </Col>
+                    <Col xs={12} md={12}>
+                        <Star/>
+                    </Col>
+        
+                    <Col xs={12} md={12}>
+                        <small><b>간략 후기</b></small>
+                    </Col>
+                    <Col xs={12} md={12}>
+                        <InputGroup>
+                            <FormControl onChange={() => briefReview()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="좋았던점이나 개선하면 좋을 것들 적어주세요😉"></FormControl>
+                        </InputGroup>
+                    </Col>
+                        
+                    <PersonalButton>
+                        <Col xs={12} md={12}>
+                        <br/>
+                        <Button className='recommend' onClick={saveData}>저장하기</Button>
+                        </Col>
+        
+                        <Col xs={12} md={12}>
+                        <Button className='compete'>공유하기</Button>
+                        </Col>
+        
+                    </PersonalButton>
+                    </Row>
+        
+                </Container>
+                </Modal.Body>
+            </Modal>
+        )
+      }
 
 
   return (
@@ -203,11 +263,8 @@ export default function Result() {
         <div className="container">
             <div className='notice'>
                 <span><b>!!이중전공 추천 서비스 결과!!</b></span><br/>
-                <span>학과를 선택한 뒤 저장을 누르시면 sns에 공유할 수 있어요!</span>
+                <span>학과를 선택한 뒤 저장을 누르시면 sns에 공유할 수 있어요~</span>
             </div>
-            <br/>
-            <Star/>
-
             <div className='resultFrame'>
                 {
                     !thisResult?
@@ -216,9 +273,10 @@ export default function Result() {
                 }
             </div>
             <div className='nextButtonFrame'>
-            <Button className='nextButton' onClick={() => goToNext()}>저장하기</Button>
+            <Button className='nextButton' onClick={()=> setModalShow(true)}>저장하기</Button>
             </div>
         </div>
+        <SatisfactionModal show={modalShow} onHide={() => setModalShow(false)} />
     </BodyBlock>
   )
 }
@@ -360,7 +418,7 @@ const StarFrame =styled.div`
         input {
             width: 100%;
             height: 100%;
-            //position: absolute;
+            position: absolute;
             left: 0;
             opacity: 0;
             cursor: pointer;
@@ -375,4 +433,61 @@ const StarFrame =styled.div`
             pointer-events: none;
       }
     }
+`
+
+
+//개인별 기능 버튼 서식CSS
+const PersonalButton = styled.div`
+  text-align: center;
+
+  .recommend{
+    /*색*/
+    background-color: #002F5A;
+    opacity: 0.8;
+
+    font-size: 14px;
+    width: 90%;
+    height: 40%;
+    margin-bottom: 8px;
+
+    /*호버*/
+    &:hover {
+        background-color: #002F5A;
+        opacity: 0.9;
+      }
+  }
+
+  .compete{
+    /*색*/
+    background-color: #028799;
+    opacity: 0.9;
+
+    font-size: 14px;
+    width: 90%;
+    height: 40%;
+    margin-bottom: 8px;
+
+    /*호버*/
+    &:hover {
+        background-color: #028799;
+        opacity: 1;
+      }
+  }
+
+  .myPost{
+    /*색*/
+    background-color: #875100;
+    opacity: 0.8;
+
+    font-size: 14px;
+    width: 90%;
+    height: 40%;
+    margin-bottom: 5px;
+
+    /*호버*/
+    &:hover {
+        background-color: #875100;
+        opacity: 0.9;
+      }
+  }
 `
