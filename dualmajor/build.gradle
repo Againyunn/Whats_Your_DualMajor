@@ -25,9 +25,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-	implementation 'mysql:mysql-connector-java'
+	//implementation 'mysql:mysql-connector-java'
 	implementation 'com.h2database:h2'
-	//implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
 
 	compileOnly 'org.projectlombok:lombok'
 
