@@ -82,6 +82,10 @@ public class MemberServiceImpl implements MemberService{
         if (member == null) {
             return null;
         }
+        System.out.println("firstMajorId in update : "+memberDto.getFirstMajorId());
+        System.out.println("firstMajorId in update : "+memberDto.getFirstMajorId().getClass().getName());
+        System.out.println("dualMajorId in update: "+memberDto.getDualMajorId());
+        System.out.println("dualMajorId in update: "+memberDto.getDualMajorId().getClass().getName());
         member.updateMember(memberDto.getNickName()
                 , memberDto.getPassword()
                 , memberDto.getStdNum()

@@ -24,12 +24,15 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     private String email;
     //회원 비밀번호
     private String password;
+    private String firstMajor;
     //회원 본전공(제 1전공)
-    //private String firstMajorId;
-    private Long firstMajorId;
+    private String firstMajorId;
+    //private Long firstMajorId;
     //회원 이중/부전공(제 2전공)
-    //private String dualMajorId;
-    private Long dualMajorId;
+    private String dualMajor;
+    private String dualMajorId;
+    //private Long dualMajorId;
+    //private Long daulMajorId;
     //회원 학년
     private String grade;
     //회원 유형(멘토 or 멘티)
@@ -40,19 +43,21 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
      * 해당 데이터로 전공 테이블에 접근이 가능하기 때문*/
     /*이 DTO에서 전공 Id에 대한 타입 변환(Long->String, String->Long)은 모두 이루어주기에 비즈니스 로직에서는 신경 쓰지 않고 개발 가능*/
 
-    /*public Long getFirstMajorId() {
+    public Long getFirstMajorId() {
         return Long.parseLong(this.firstMajorId);
     }
 
     public Long getDualMajorId() {
         return Long.parseLong(this.dualMajorId);
-    }*/
+    }
 
-    public void setLoginInfo(String nickName, String stdNum, Long firstMajorId, Long dualMajorId, String grade, String userType) {
+    public void setLoginInfo(String nickName, String stdNum, String firstMajor, Long firstMajorId, String dualMajor, Long dualMajorId, String grade, String userType) {
         this.nickName = nickName;
         this.stdNum = stdNum;
-        this.firstMajorId = firstMajorId; //DB의 Long형태 -> Json의 String 형태
-        this.dualMajorId = dualMajorId;
+        this.firstMajor = firstMajor;
+        this.firstMajorId = Long.toString(firstMajorId); //DB의 Long형태 -> Json의 String 형태
+        this.dualMajor = dualMajor;
+        this.dualMajorId = Long.toString(dualMajorId);
         this.grade = grade;
         this.userType = userType;
     }
@@ -62,7 +67,9 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
         map.put("nickName", nickName);
         map.put("grade", grade);
         map.put("userType", userType);
+        map.put("firstMajor",firstMajor);
         map.put("firstMajorId", firstMajorId);
+        map.put("firstMajor",dualMajor);
         map.put("dualMajorId", dualMajorId);
         return map;
     }

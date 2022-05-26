@@ -28,7 +28,9 @@ public class AuthenticationController {
         memberDto.setLoginInfo(
                 memberAdapter.getMember().getName(),
                 memberAdapter.getMember().getStdNum(),
+                memberAdapter.getMember().getFirstMajor().getMajorName(),
                 memberAdapter.getMember().getFirstMajor().getId(), //회원 테이블이 참조하는 전공 객체의 Id값(Long) 반환, memberDto에서 Json형태를 위해 String으로 변환
+                memberAdapter.getMember().getDualMajor().getMajorName(),
                 memberAdapter.getMember().getDualMajor().getId(),
                 memberAdapter.getMember().getGrade(),
                 memberAdapter.getMember().getType()
