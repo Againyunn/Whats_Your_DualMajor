@@ -148,8 +148,8 @@ export default function SignupForm() {
     }
     setFirstMajor(false);
 
-    setMajorAlertModal(true);
-    //alert("본전공과 이중전공은 같을 수 없어요😭");
+    // setMajorAlertModal(true);
+    alert("본전공과 이중전공은 같을 수 없어요😭");
   }
 
   const onChangeUserDualMajor = (e) =>{
@@ -162,8 +162,8 @@ export default function SignupForm() {
     }
     setDualMajor(false);
 
-    setMajorAlertModal(true);
-    // alert("본전공과 이중전공은 같을 수 없어요😭");
+    // setMajorAlertModal(true);
+    alert("본전공과 이중전공은 같을 수 없어요😭");
   }
 
   //stdNum 중복검사
@@ -498,7 +498,7 @@ export default function SignupForm() {
           </div>
         <div className='footer'><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
 
-        <MyAlert title={""} alertContent={"본전공과 이중전공은 같을 수 없어요😭"}  show={majorAlertModal} onHide={() => setMajorAlertModal(false)}/>
+        {/* <MyAlert title={""} alertContent={"본전공과 이중전공은 같을 수 없어요😭"}  show={majorAlertModal} onHide={() => setMajorAlertModal(false)}/> */}
       </div>
   )
 }
