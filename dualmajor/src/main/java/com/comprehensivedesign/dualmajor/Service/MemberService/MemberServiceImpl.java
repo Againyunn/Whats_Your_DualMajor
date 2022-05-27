@@ -82,13 +82,9 @@ public class MemberServiceImpl implements MemberService{
         if (member == null) {
             return null;
         }
-        System.out.println("firstMajorId in update : "+memberDto.getFirstMajorId());
-        System.out.println("firstMajorId in update : "+memberDto.getFirstMajorId().getClass().getName());
-        System.out.println("dualMajorId in update: "+memberDto.getDualMajorId());
-        System.out.println("dualMajorId in update: "+memberDto.getDualMajorId().getClass().getName());
         member.updateMember(memberDto.getNickName()
-                , memberDto.getPassword()
-                , memberDto.getStdNum()
+                , bCryptPasswordEncoder.encode(memberDto.getPassword())
+                , memberDto.getEmail()
                 , majorService.findFirstMajorById(memberDto.getFirstMajorId())
                 , majorService.findDualMajorById(memberDto.getDualMajorId())
                 , memberDto.getGrade()
@@ -100,7 +96,7 @@ public class MemberServiceImpl implements MemberService{
     @Override
     @Transactional
     public String editPassword(MemberDto memberDto) throws Exception{
-        Member member = find(memberDto.getEmail());
+        Member member = find(memberDto.getEmail()+"@hufs.ac.kr");
         member.editPassword(bCryptPasswordEncoder.encode(memberDto.getPassword()));
         if(bCryptPasswordEncoder.matches(memberDto.getPassword(), member.getPassword())){
             return "success";

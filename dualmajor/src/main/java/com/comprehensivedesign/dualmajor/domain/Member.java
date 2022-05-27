@@ -39,6 +39,8 @@ public class Member {
     private String userType;
     //서비스 내 회원 지위
     private String role;
+    //회원 학점
+    private String gpa;
 
     //Getter
     public Long getId() {

@@ -4,10 +4,7 @@ package com.comprehensivedesign.dualmajor.domain.secondSection;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -18,11 +15,14 @@ public class MajorDetail {
     private Long id;
     private String majorName;
     private String webpage;
+    @Column(length = 1000)
     private String information;
     private String career;
+    @Column(length = 1000)
     private String curriculum;
     private String certification;
     private String degree;
     private String resultType;
     private String campus;
+    private String phoneNum;
 }
