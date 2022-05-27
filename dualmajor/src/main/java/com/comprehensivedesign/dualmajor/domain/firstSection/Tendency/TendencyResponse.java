@@ -16,6 +16,7 @@ public class TendencyResponse {//회원의 응답 결과 저장
     @GeneratedValue
     private Long id;
     //저장할 회원 객체 참조
+    @Column(name="tendency_response_testKey")
     private String testKey;
     //mbti 점수
     private int mbtiScore;

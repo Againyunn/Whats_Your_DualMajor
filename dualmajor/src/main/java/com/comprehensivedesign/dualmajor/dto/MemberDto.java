@@ -41,6 +41,8 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
 
     private String testKey;
 
+    private String resultType;
+
     /*===majorId type parsint(String->Long)===*/
     /*Json으로 넘어오는 majorId(String)을 회원 DB에 저장할 때에는 Long타입으로 넣어줘야 함.
      * 해당 데이터로 전공 테이블에 접근이 가능하기 때문*/
@@ -83,7 +85,7 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     public Map getEditInfo() {
         LinkedHashMap<String, Object> map = new LinkedHashMap<>();
         map.put("is_success", true);
-        map.put("id", stdNum);
+        map.put("stdNum", stdNum);
         return map;
     }
 

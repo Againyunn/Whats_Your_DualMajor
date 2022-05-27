@@ -12,5 +12,6 @@ public interface MajorService {
     FirstMajor findFirstMajorById(Long firstMajorId) throws Exception;
     DualMajor findDualMajorById(Long dualMajorId) throws Exception;
     Map<Long, List> findDualMajor(String testKey) throws Exception;
+    Map viewMajorDetail(String departmentName);
 
 }

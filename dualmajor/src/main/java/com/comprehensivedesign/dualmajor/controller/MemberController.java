@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,27 +32,32 @@ public class MemberController {
     //email 입력받은 후 가입된 회원인지 확인
     //비밀번호 찾기 기능중 회원 확인 절차용
     public Map checkJoinedMember(@RequestBody MemberDto memberDto) throws Exception{
-        HashMap<String, Object> map = new HashMap<>();
-        Member member = memberService.find(memberDto.getEmail());
-        if (member == null) {
+        HashMap<String, Object> map = new LinkedHashMap<>();
+        try {
+            memberService.find(memberDto.getStdNum()+"@hufs.ac.kr");
+        } catch (Exception e) {
             map.put("joinedMember", false);
+            return map;
         }
-        else{
-            map.put("joinMember", true);
-            map.put("email",member.getEmail());
-        }
+        map.put("joinedMember", true);
+        map.put("stdNum",memberDto.getStdNum()+"@hufs.ac.kr");
+        //map.put("email",member.getEmail());
+
         return map;
     }
     @PostMapping("/editPW") //비밀번호 수정 성공 여부 API
     public Map editPW(@RequestBody MemberDto memberDto) throws Exception{
-        System.out.println("controller edit pw");
         HashMap<String, Object> map = new HashMap<>();
-        String status = memberService.editPassword(memberDto);
+        String status;
+        try {
+            status = memberService.editPassword(memberDto);
+        } catch (Exception e) { //넘어온 학번(stdNum or email)로 회원 조회가 불가능한 경우
+            map.put("isEditPasswordSuccess", false);
+            return map;
+
+        }
         if (status == "success") {
             map.put("isEditPasswordSuccess", true);
-        }
-        else{
-            map.put("isEditPasswordSuccess", false);
         }
         return map;
     }

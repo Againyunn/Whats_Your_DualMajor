@@ -15,6 +15,7 @@ public class CareerResponse {
     @GeneratedValue
     private Long id;
     //저장할 회원 객체 참조
+    @Column(name="career_response_testKey")
     private String testKey;
     //mbti판별 로직에 의한 mbti
     private String mbti;

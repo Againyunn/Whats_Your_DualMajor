@@ -99,7 +99,8 @@ public class MemberServiceImpl implements MemberService{
         System.out.println("editPW getEMail"+memberDto.getEmail());
         System.out.println("editPW getStdnum"+memberDto.getStdNum());
         System.out.println("editPW getId"+memberDto.getId());
-        Member member = find(memberDto.getEmail()+"@hufs.ac.kr");
+        Member member = find(memberDto.getStdNum()+"@hufs.ac.kr");
+        //Member member = find(memberDto.getEmail()+"@hufs.ac.kr");
         member.editPassword(bCryptPasswordEncoder.encode(memberDto.getPassword()));
         if(bCryptPasswordEncoder.matches(memberDto.getPassword(), member.getPassword())){
             return "success";
