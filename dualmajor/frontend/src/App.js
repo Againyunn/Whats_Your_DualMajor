@@ -130,6 +130,7 @@ import RateMain from './page/rate/RateMain';
 import SeoulMain from './page/rate/seoul/SeoulMain';
 import GlobalMain from './page/rate/global/GlobalMain';
 import Result2Frame from './page/recommend/result2/Result2Frame';
+import SavedResult from './page/recommend/savedResult/SavedResult';
 
 function App() {
   return (
@@ -149,6 +150,7 @@ function App() {
         <Route path='/rate' element={<RateMain/>} />
         <Route path='/seoul' element={<SeoulMain/>} />
         <Route path='/global' element={<GlobalMain/>} />
+        <Route path='/recommendResult' element={<SavedResult/>}
       </Routes>
     </BrowserRouter>
   </>

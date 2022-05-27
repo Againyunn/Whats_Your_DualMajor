@@ -51,7 +51,7 @@ export default function Question2Frame() {
 
             //recommend page로 이동
             navigate("/recommend");
-            window.location.reload();
+            //window.location.reload();
         }
 
         //테스트 시작

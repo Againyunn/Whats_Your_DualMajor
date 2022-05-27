@@ -82,6 +82,21 @@ export default function MyModal(props) {
   },[userType]);
 
 
+  //이중전공 추천결과 처리 함수
+  const goToRecommendResult = () => {
+    let departmentName = localStorage.getItem('recommendResult');
+
+    //기존의 이중전공 추천결과가 있는 지 확인
+    if(!departmentName){
+      navigate('/recommendResult');
+    }
+
+    alert("이중전공 추천 서비스를 이용해주세요😁");
+
+    navigate('/recommend');
+  }
+
+
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter">
       <Modal.Header closeButton>
@@ -139,7 +154,7 @@ export default function MyModal(props) {
 
             <PersonalButton>
               <Col xs={12} md={12}>
-                <Button  className='recommend'>이중전공 추천 결과</Button>
+                <Button  className='recommend' onClick={goToRecommendResult}>이중전공 추천 결과</Button>
               </Col>
 
               <Col xs={12} md={12}>

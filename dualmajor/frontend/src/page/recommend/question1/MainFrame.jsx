@@ -23,7 +23,7 @@ export default function MainFrame() {
 
     const moveToQuestion = () => {
         //question page로 이동
-        navigate("/question1");
+        //navigate("/question1");
         window.location.reload();
     }
 

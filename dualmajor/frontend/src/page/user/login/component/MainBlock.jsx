@@ -146,19 +146,40 @@ export default function MainBlock({link}) {
     //id조회 후 비밀번호 재설정 기능 활성화 함수
     const activatePW = (validID) => {
       //ID값 조회 API 백엔드 
-      //validID
-
-      //입력받은 ID값을 전달받은 경우
-      setActivateResetPW(true);
-
+      AuthService.checkJoinedEmail(validID).then(
+        (response) => {
+          if(response.data.joinedMember == true){
+            //입력받은 ID값을 전달받은 경우
+            setActivateResetPW(true);
+          }
+          else{
+            alert("아이디를 다시 확인해주세요.");
+          }
+        }
+      )
     }
 
     //새로운PW를 저장 함수
     const saveNewPW = (validID, newPW) => {
       //ID값과 새로운 PW를 백엔드DB에 저장하는 API
-
-      //비밀번호 변경이 제대로 된 경우
-      alert("비밀번호가 재설정되었습니다.")
+      AuthService.editPW(validID, newPW).then(
+        (response) => {
+          if(response.data.isEditPasswordSuccess == true){
+              //비밀번호 변경이 제대로 된 경우
+              alert("비밀번호가 재설정되었습니다.")
+              
+              AuthService.login(validID, newPW).then( //login(stdNum, password)
+              () => {
+     
+                //main page로 이동
+                navigate(`${link}`);
+                // window.location.reload();
+              }
+            );
+          }
+        }
+      )
+    
     }
 
     const handleLogin = (e) => {

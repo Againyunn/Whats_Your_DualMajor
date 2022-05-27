@@ -196,7 +196,7 @@ const saveResult =(departmentName, user, testKey) =>{ //user : 사용자가 로�
     );
 }
 
-const saveSurvey = (question1, question2, question3, question4, question5, question6, question7, question8, starCount, user, testKey) => {
+const saveSurvey = (question1, question2, question3, question4, question5, question6, question7, starCount, user, testKey) => {
     return (axios.post(API_URL + "saveSurvey/", {
         question1, 
         question2, 
@@ -205,7 +205,6 @@ const saveSurvey = (question1, question2, question3, question4, question5, quest
         question5, 
         question6, 
         question7, 
-        question8, 
         starCount, 
         user, 
         testKey
@@ -215,7 +214,10 @@ const saveSurvey = (question1, question2, question3, question4, question5, quest
 
 
 const getDepartmentInfo = (departmentName) => {
-
+    return (axios.post(API_URL + "getDepartmentInfo/", {
+        departmentName
+    })
+    );  
 }
 
 const RecommendService = {

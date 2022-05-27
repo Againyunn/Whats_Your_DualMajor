@@ -96,6 +96,21 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
 
+//비밀번호 재설정 용 API
+//유효 Id체크
+const checkJoinedEmail = (stdNum) => {
+  return axios.post(API_URL + "checkJoinedEmail/", {
+    stdNum
+  })
+}
+
+//비밀번호 재설정
+const editPW = (stdNum, password) => {
+  return axios.post(API_URL + "/editPW", {
+    stdNum, password
+  })
+}
+
 const AuthService = {
   register,
   login,
@@ -106,5 +121,7 @@ const AuthService = {
   applyResign,
   checkDuplicate,
   getCurrentUser,
+  checkJoinedEmail,
+  editPW
 };
 export default AuthService;

@@ -22,8 +22,6 @@ export default function Result() {
     const [reviewQuestion5, setReviewQuestion5] = useState("");//후기 질문5
     const [reviewQuestion6, setReviewQuestion6] = useState("");//후기 질문6
     const [reviewQuestion7, setReviewQuestion7] = useState("");//후기 질문7
-    const [reviewQuestion8, setReviewQuestion8] = useState("");//후기 질문8
-
 
     //테스트용
     // let testData = {
@@ -135,6 +133,11 @@ export default function Result() {
                                                     <ListGroup.Item>{thisData.webPage}</ListGroup.Item>:
                                                     <></>
                                                 }
+                                                {
+                                                    (thisData.phoneNum !== null)?
+                                                    <ListGroup.Item>{thisData.phoneNum}</ListGroup.Item>:
+                                                    <></>
+                                                }
                                         </ListGroup>
                                     </Accordion.Body>
                                 </Accordion.Item>
@@ -190,7 +193,7 @@ export default function Result() {
 
 
             //설문API전송
-            RecommendService.saveSurvey(reviewQuestion1, reviewQuestion2, reviewQuestion3, reviewQuestion4, reviewQuestion5, reviewQuestion6, reviewQuestion7, reviewQuestion8, satisfyingStar, thisUser, testKey).then(
+            RecommendService.saveSurvey(reviewQuestion1, reviewQuestion2, reviewQuestion3, reviewQuestion4, reviewQuestion5, reviewQuestion6, reviewQuestion7, satisfyingStar, thisUser, testKey).then(
                 (response) => {
                     navigate('/') //메인 화면으로 이동
                 }
@@ -264,14 +267,7 @@ export default function Result() {
             let thisReview = e.target.value;
             setReviewQuestion7(thisReview);
         }
-        
-        const selectReviewQuestion8 = (e) => {
-            let thisReview = e.target.value;
-            setReviewQuestion8(thisReview);
-        }
-
-        
-      
+           
         return (
             <Modal {...props} aria-labelledby="contained-modal-title-vcenter">
                 <Modal.Header closeButton>
@@ -314,7 +310,7 @@ export default function Result() {
                     </Col>
 
                     <Col xs={12} md={12}>
-                        <small><b>학우님의 MBTI는 무엇인가요?</b></small>
+                        <small><b>학우님이 알고있는 자신의 MBTI 결과는 무엇인가요?</b></small>
                     </Col>
                     <Col xs={12} md={12}>
                         <InputGroup>

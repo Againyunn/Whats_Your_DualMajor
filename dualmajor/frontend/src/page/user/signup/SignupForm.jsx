@@ -136,13 +136,26 @@ export default function SignupForm() {
 
   const onChangeUserFirstMajor = (e) =>{
     const userFirstMajor = e.target.value;
-    setFirstMajor(userFirstMajor);
-
+    
+    //본전공과 동일한 전공을 이중전공으로 선택한 경우
+    if(userFirstMajor !== dualMajor){
+      setFirstMajor(userFirstMajor);
+      return;
+    }
+  
+    alert("본전공과 이중전공을 같을 수 없어요😭");
   }
 
   const onChangeUserDualMajor = (e) =>{
     const userDualMajor = e.target.value;
-    setDualMajor(userDualMajor);
+
+    //본전공과 동일한 전공을 이중전공으로 선택한 경우
+    if(userDualMajor !== firstMajor){
+      setDualMajor(userDualMajor);
+      return;
+    }
+    
+    alert("본전공과 이중전공을 같을 수 없어요😭");
   }
 
   //stdNum 중복검사
