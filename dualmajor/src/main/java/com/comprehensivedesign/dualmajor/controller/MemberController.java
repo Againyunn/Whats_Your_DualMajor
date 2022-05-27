@@ -48,6 +48,7 @@ public class MemberController {
     }
     @PostMapping("/editPW") //비밀번호 수정 성공 여부 API
     public Map editPW(@RequestBody MemberDto memberDto) throws Exception{
+        System.out.println("controller edit pw");
         HashMap<String, Object> map = new HashMap<>();
         String status = memberService.editPassword(memberDto);
         if (status == "success") {

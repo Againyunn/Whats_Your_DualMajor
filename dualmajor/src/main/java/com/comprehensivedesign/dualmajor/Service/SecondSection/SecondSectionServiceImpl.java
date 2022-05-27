@@ -258,7 +258,7 @@ public class SecondSectionServiceImpl implements SecondSectionService{
         }
         else{
             //캠퍼스 교차 여부 상관 없는 사용자에게 도출 조건
-            finalResults = majorDetailRepository.findByResultType(result.getResultType());
+            finalResults = majorDetailRepository.findByResultTypeWithoutCampus(result.getResultType());
         }
         List<Map> list = new ArrayList<>();
         for (int i = 0; i < finalResults.size(); i++) {

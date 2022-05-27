@@ -1,9 +1,12 @@
 package com.comprehensivedesign.dualmajor.controller;
 
 
+import ch.qos.logback.core.encoder.EchoEncoder;
+import com.comprehensivedesign.dualmajor.Service.MemberRecommendedMajor.MemberRecommendedMajorService;
 import com.comprehensivedesign.dualmajor.Service.SecondSection.SecondSectionService;
 import com.comprehensivedesign.dualmajor.config.auth.MemberAdapter;
 import com.comprehensivedesign.dualmajor.domain.secondSection.SecondSectionResponse;
+import com.comprehensivedesign.dualmajor.dto.MemberDto;
 import com.comprehensivedesign.dualmajor.dto.SecondSectionQuestionDto;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.annotation.RequiredTypes;
@@ -21,6 +24,7 @@ import java.util.Map;
 public class SecondSectionController {
 
     @Autowired private final SecondSectionService secondSectionService;
+    @Autowired private final MemberRecommendedMajorService memberRecommendedMajorService;
 
     @PostMapping("/submitFirstSectionResult")
     public Map saveSector(@RequestBody SecondSectionQuestionDto secondSectionQuestionDto) {
@@ -87,5 +91,15 @@ public class SecondSectionController {
         map.put("success", false);
         return map;
 
+    }
+
+    @PostMapping("/saveResult")
+    public Object saveResult(@RequestBody MemberDto memberDto, @RequestBody SecondSectionQuestionDto secondSectionQuestionDto) throws Exception {
+        if (secondSectionQuestionDto.getResultType().equals("result101")) {
+            memberRecommendedMajorService.saveResult(memberDto, secondSectionQuestionDto.getTestKey());
+        }
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("success", true);
+        return map;
     }
 }

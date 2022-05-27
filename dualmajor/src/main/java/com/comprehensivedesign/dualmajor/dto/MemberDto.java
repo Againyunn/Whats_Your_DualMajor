@@ -24,19 +24,22 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
     private String email;
     //회원 비밀번호
     private String password;
+
     private String firstMajor;
     //회원 본전공(제 1전공)
     private String firstMajorId;
-    //private Long firstMajorId;
     //회원 이중/부전공(제 2전공)
     private String dualMajor;
+
     private String dualMajorId;
-    //private Long dualMajorId;
-    //private Long daulMajorId;
     //회원 학년
     private String grade;
     //회원 유형(멘토 or 멘티)
     private String userType;
+
+    private String user;
+
+    private String testKey;
 
     /*===majorId type parsint(String->Long)===*/
     /*Json으로 넘어오는 majorId(String)을 회원 DB에 저장할 때에는 Long타입으로 넣어줘야 함.
