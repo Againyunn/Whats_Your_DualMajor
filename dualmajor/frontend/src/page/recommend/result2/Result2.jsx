@@ -15,7 +15,15 @@ export default function Result() {
     //만족도 조사 변수
     const [modalShow, setModalShow] = useState(false); //모달을 통해 만족도 수집
     const [satisfyingStar, setSatisfyingStar] = useState(1); //별점
-    const [reviewContent, setReviewContent] = useState("");//간략후기
+    const [reviewQuestion1, setReviewQuestion1] = useState("");//후기 질문1
+    const [reviewQuestion2, setReviewQuestion2] = useState("");//후기 질문2
+    const [reviewQuestion3, setReviewQuestion3] = useState("");//후기 질문3
+    const [reviewQuestion4, setReviewQuestion4] = useState("");//후기 질문4
+    const [reviewQuestion5, setReviewQuestion5] = useState("");//후기 질문5
+    const [reviewQuestion6, setReviewQuestion6] = useState("");//후기 질문6
+    const [reviewQuestion7, setReviewQuestion7] = useState("");//후기 질문7
+    const [reviewQuestion8, setReviewQuestion8] = useState("");//후기 질문8
+
 
     //테스트용
     // let testData = {
@@ -155,24 +163,41 @@ export default function Result() {
     const saveData = () => {
         //사용자가 값을 선택했을 경우에만 선택값을 백엔드로 전송
         if(answer !== false){
+
+
             //임시 아이디 설정
             let testKeyValidate = sessionStorage.getItem('testKey');
 
             //로그인 정보 받아오기
             let thisUser = sessionStorage.getItem("user");
 
-            //API전송
-            RecommendService.saveResult(answer, thisUser ,testKeyValidate);
+            //로그인 안되어 있으면 false로 값 지정
+            if(!thisUser){
+                thisUser = false;
+            }
             console.log("answer:",answer);
 
-            //비회원이 차후에 회원가입 시 기존의 서비스 정보를 받을 수 있도록
+            //비회원이 차후에 회원가입 시 기존의 서비스 정보를 받을 수 있도록 -> 선택한 학과 정보 저장
             localStorage.setItem('recommendResult', answer);
 
             alert("저장되었습니다.");
 
-            //서비스 만족도 조사 모달 띄우기
+            //선택결과 API전송
+            RecommendService.saveResult(answer, thisUser ,testKeyValidate).then(
+                (response) => {
+                }
+            );
 
-            //서비스 만족도 조사 이후 공유하기 활성화
+
+            //설문API전송
+            RecommendService.saveSurvey(reviewQuestion1, reviewQuestion2, reviewQuestion3, reviewQuestion4, reviewQuestion5, reviewQuestion6, reviewQuestion7, reviewQuestion8, satisfyingStar, thisUser, testKey).then(
+                (response) => {
+                    navigate('/') //메인 화면으로 이동
+                }
+            )
+        }
+        else{
+            alert("학과를 선택해주세요~😉");
         }
     }
 
@@ -185,7 +210,7 @@ export default function Result() {
                 // document.querySelector(`.star span`).style.width = `${e.target.value * 10}%`;
         
                 //별점 기록
-                //s/etSatisfyingStar(e.target.value);
+                setSatisfyingStar(e.target.value);
         
             }
 
@@ -204,11 +229,48 @@ export default function Result() {
           )
         }
 
-
-        const briefReview = (e) => {
-          let thisReview = e.target.value;
-          setReviewContent(thisReview);
+        //리뷰 질문 기록용 함수
+        const selectReviewQuestion1 = (e) => {
+            let thisReview = e.target.value;
+            setReviewQuestion1(thisReview);
         }
+
+        const selectReviewQuestion2 = (e) => {
+            let thisReview = e.target.value;
+            setReviewQuestion2(thisReview);
+        }
+
+        const selectReviewQuestion3 = (e) => {
+            let thisReview = e.target.value;
+            setReviewQuestion3(thisReview);
+        }
+
+        const selectReviewQuestion4 = (e) => {
+            let thisReview = e.target.value;
+            setReviewQuestion4(thisReview);
+        }
+
+        const selectReviewQuestion5 = (e) => {
+            let thisReview = e.target.value;
+            setReviewQuestion5(thisReview);
+        }
+
+        const selectReviewQuestion6 = (e) => {
+            let thisReview = e.target.value;
+            setReviewQuestion6(thisReview);
+        }
+
+        const selectReviewQuestion7 = (e) => {
+            let thisReview = e.target.value;
+            setReviewQuestion7(thisReview);
+        }
+        
+        const selectReviewQuestion8 = (e) => {
+            let thisReview = e.target.value;
+            setReviewQuestion8(thisReview);
+        }
+
+        
       
         return (
             <Modal {...props} aria-labelledby="contained-modal-title-vcenter">
@@ -234,11 +296,65 @@ export default function Result() {
                     </Col>
         
                     <Col xs={12} md={12}>
-                        <small><b>간략 후기</b></small>
+                        <small><b>현재 공부 하고 있는 본전공이 무엇인가요?</b></small>
                     </Col>
                     <Col xs={12} md={12}>
                         <InputGroup>
-                            <FormControl onChange={() => briefReview()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="좋았던점이나 개선하면 좋을 것들 적어주세요😉"></FormControl>
+                            <FormControl onChange={() => selectReviewQuestion1()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="본전공을 입력해주세요~"></FormControl>
+                        </InputGroup>
+                    </Col>
+
+                    <Col xs={12} md={12}>
+                        <small><b>이수하고 있는 이중(부)전공은 무엇인가요?</b></small>
+                    </Col>
+                    <Col xs={12} md={12}>
+                        <InputGroup>
+                            <FormControl onChange={() => selectReviewQuestion2()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="이중(부)전공이 없다면 x를 입력해주세요~"></FormControl>
+                        </InputGroup>
+                    </Col>
+
+                    <Col xs={12} md={12}>
+                        <small><b>학우님의 MBTI는 무엇인가요?</b></small>
+                    </Col>
+                    <Col xs={12} md={12}>
+                        <InputGroup>
+                            <FormControl onChange={() => selectReviewQuestion3()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="ex: ENTJ"></FormControl>
+                        </InputGroup>
+                    </Col>
+
+                    <Col xs={12} md={12}>
+                        <small><b>본 서비스의 결과값의 정확도는 어느정도 되는 것 같나요?</b></small>
+                    </Col>
+                    <Col xs={12} md={12}>
+                        <InputGroup>
+                            <FormControl onChange={() => selectReviewQuestion4()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="0 ~ 10 사이의 값을 입력해주세요~"></FormControl>
+                        </InputGroup>
+                    </Col>
+
+                    <Col xs={12} md={12}>
+                        <small><b>추후 필요하거나 추가되면 좋겠다는 서비스가 있으면 적어주세요</b></small>
+                    </Col>
+                    <Col xs={12} md={12}>
+                        <InputGroup>
+                            <FormControl onChange={() => selectReviewQuestion5()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="개선점이나 추가하면 좋을 것들~~"></FormControl>
+                        </InputGroup>
+                    </Col>
+
+                    <Col xs={12} md={12}>
+                        <small><b>본 서비스가 더 발전되면 사용할 용의가 있나요?</b></small>
+                    </Col>
+                    <Col xs={12} md={12}>
+                        <InputGroup>
+                            <FormControl onChange={() => selectReviewQuestion6()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="위 질문의 피드백까지 반영되었을 때로 가정해주세요😊"></FormControl>
+                        </InputGroup>
+                    </Col>
+
+                    <Col xs={12} md={12}>
+                        <small><b>커피 기프티콘을 받을 카카오톡 아이디를 남겨주세요</b></small>
+                    </Col>
+                    <Col xs={12} md={12}>
+                        <InputGroup>
+                            <FormControl onChange={() => selectReviewQuestion7()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="본전공을 입력해주세요~"></FormControl>
                         </InputGroup>
                     </Col>
                         

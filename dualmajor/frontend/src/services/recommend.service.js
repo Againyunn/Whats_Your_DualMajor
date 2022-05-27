@@ -190,7 +190,7 @@ const saveResult =(departmentName, user, testKey) =>{ //user : 사용자가 로�
     //로그인한 사용자는 DB에 이중전공 추천 서비스 결과 값을 저장할 수 있도록 조치
     return (axios.post(API_URL + "saveResult/", {
         departmentName,
-        user,
+        user, //로그인 안했으면 false전달
         testKey
     })
     );
@@ -198,7 +198,17 @@ const saveResult =(departmentName, user, testKey) =>{ //user : 사용자가 로�
 
 const saveSurvey = (question1, question2, question3, question4, question5, question6, question7, question8, starCount, user, testKey) => {
     return (axios.post(API_URL + "saveSurvey/", {
-        question1, question2, question3, question4, question5, question6, question7, question8, starCount, user, testKey
+        question1, 
+        question2, 
+        question3, 
+        question4, 
+        question5, 
+        question6, 
+        question7, 
+        question8, 
+        starCount, 
+        user, 
+        testKey
     })
     );
 }
