@@ -182,21 +182,31 @@ const getFinalResult = (resultType, testKey) =>{
 }
 
 //사용자가 결정한 값을 localStorage에 저장하고 로그인한 회원의 결과 값은 DB에 저장
-const saveResult =(resultType, user, testKey) =>{ //user : 사용자가 로그인한 상태인지 식별하기 위한 값(로그인 시 session으로 user값 자동 생성)
+const saveResult =(departmentName, user, testKey) =>{ //user : 사용자가 로그인한 상태인지 식별하기 위한 값(로그인 시 session으로 user값 자동 생성)
 
     //resultType(학과 결과 값의 DB유형)을 로컬스토리지에 저장하여 비회원도, 회원가입 시 기존의 이중전공 추천 서비스 결과를 불러올 수 있도록 저장
-    localStorage.setItem("recommendResult", resultType);
+    localStorage.setItem("recommendResult", departmentName);
     
     //로그인한 사용자는 DB에 이중전공 추천 서비스 결과 값을 저장할 수 있도록 조치
     return (axios.post(API_URL + "saveResult/", {
-        resultType,
+        departmentName,
         user,
         testKey
     })
     );
-
 }
 
+const saveSurvey = (question1, question2, question3, question4, question5, question6, question7, question8, starCount, user, testKey) => {
+    return (axios.post(API_URL + "saveSurvey/", {
+        question1, question2, question3, question4, question5, question6, question7, question8, starCount, user, testKey
+    })
+    );
+}
+
+
+const getDepartmentInfo = (departmentName) => {
+
+}
 
 const RecommendService = {
     getFirstSectionQuestion,
@@ -206,6 +216,8 @@ const RecommendService = {
     getSecondSectionQuestion,
     submitSecondSectionAnswer,
     getFinalResult,
-    saveResult
+    saveResult,
+    saveSurvey,
+    getDepartmentInfo
     };
     export default RecommendService;

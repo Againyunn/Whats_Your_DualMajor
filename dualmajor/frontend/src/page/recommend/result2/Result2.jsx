@@ -96,7 +96,7 @@ export default function Result() {
                 <Accordion defaultActiveKey="0" flush>
                     {
                         //testData.info.map(thisData => (
-                        thisResult.info.map(thisData => (
+                        thisResult.map(thisData => (
                             <>
                                 <Accordion.Item eventKey={thisData.departmentName}>
                                     <div id={`${thisData.departmentName}`} onClick={selectResult}>
