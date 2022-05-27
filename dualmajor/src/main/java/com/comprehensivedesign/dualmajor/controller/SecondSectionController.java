@@ -3,10 +3,12 @@ package com.comprehensivedesign.dualmajor.controller;
 
 import ch.qos.logback.core.encoder.EchoEncoder;
 import com.comprehensivedesign.dualmajor.Service.MemberRecommendedMajor.MemberRecommendedMajorService;
+import com.comprehensivedesign.dualmajor.Service.MemberService.MemberService;
 import com.comprehensivedesign.dualmajor.Service.SecondSection.SecondSectionService;
 import com.comprehensivedesign.dualmajor.config.auth.MemberAdapter;
 import com.comprehensivedesign.dualmajor.domain.secondSection.SecondSectionResponse;
 import com.comprehensivedesign.dualmajor.dto.MemberDto;
+import com.comprehensivedesign.dualmajor.dto.SaveFinalResultDto;
 import com.comprehensivedesign.dualmajor.dto.SecondSectionQuestionDto;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.annotation.RequiredTypes;
@@ -22,7 +24,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 public class SecondSectionController {
-
+    @Autowired private final MemberService memberService;
     @Autowired private final SecondSectionService secondSectionService;
     @Autowired private final MemberRecommendedMajorService memberRecommendedMajorService;
 
@@ -94,11 +96,13 @@ public class SecondSectionController {
     }
 
     @PostMapping("/saveResult")
-    public Object saveResult(@RequestBody MemberDto memberDto, @RequestBody SecondSectionQuestionDto secondSectionQuestionDto) throws Exception {
-        if (secondSectionQuestionDto.getResultType().equals("result101")) {
-            memberRecommendedMajorService.saveResult(memberDto, secondSectionQuestionDto.getTestKey());
-        }
+    public Object saveResult(@RequestBody SaveFinalResultDto saveFinalResultDto) throws Exception {
         Map<String, Object> map = new LinkedHashMap<>();
+        if (saveFinalResultDto.getUser().equals("false")) { //회원이 아닐 시  username에 false 도착
+            map.put("success", true);
+            return map;
+        }
+        memberRecommendedMajorService.saveResult(saveFinalResultDto);
         map.put("success", true);
         return map;
     }

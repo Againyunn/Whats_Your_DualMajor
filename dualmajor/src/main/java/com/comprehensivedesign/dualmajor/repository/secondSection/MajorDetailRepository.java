@@ -30,9 +30,13 @@ public interface MajorDetailRepository extends JpaRepository<MajorDetail, Long> 
     //List<MajorDetail> findByResultTypeAndCampus(@Param("result_type")String resultType, @Param("campus")String campus);
     List<MajorDetail> findByResultTypeAndCampus(String resultType, String campus);
 
-    /*이중전공 선택 시 캠퍼스 교차 가능*/
+    /**/
     //@Query(value = "select * from MAJOR_DETAIL m where m.resultType = :result_type", nativeQuery = true)
     //List<MajorDetail> findByResultType(@Param("result_type")String resultType);
     List<MajorDetail> findByResultType(String resultType);
+
+    /* 학과 정보 조회용 */
+    //@Query(value = "select m.majorName as departmentName, m.campus as campus, m.information as intro, m.degree as degree, m.career as career, m.curriculum as curriculum, m.certification as certification, m.webpage as webPage from MAJOR_DETAIL m where m.resultType = :result_type", nativeQuery = true)
+    MajorDetail findByMajorName(String departmentName);
 
 }

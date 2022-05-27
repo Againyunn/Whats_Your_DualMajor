@@ -3,12 +3,15 @@ package com.comprehensivedesign.dualmajor.Service.MajorService;
 
 import com.comprehensivedesign.dualmajor.domain.DualMajor;
 import com.comprehensivedesign.dualmajor.domain.FirstMajor;
+import com.comprehensivedesign.dualmajor.domain.secondSection.MajorDetail;
 import com.comprehensivedesign.dualmajor.domain.sector.MemberSector;
 import com.comprehensivedesign.dualmajor.dto.DualMajorName;
+import com.comprehensivedesign.dualmajor.dto.FinalResult;
 import com.comprehensivedesign.dualmajor.dto.MajorList;
 import com.comprehensivedesign.dualmajor.repository.MemberSectorRepository;
 import com.comprehensivedesign.dualmajor.repository.major.DualMajorRepository;
 import com.comprehensivedesign.dualmajor.repository.major.FirstMajorRepository;
+import com.comprehensivedesign.dualmajor.repository.secondSection.MajorDetailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,7 @@ public class MajorServiceImpl implements MajorService{
     @Autowired private final FirstMajorRepository firstMajorRepository;
     @Autowired private final DualMajorRepository dualMajorRepository;
     @Autowired private final MemberSectorRepository memberSectorRepository;
+    @Autowired private final MajorDetailRepository majorDetailRepository;
 
     /* 제1전공 리스트 */
     @Override
@@ -63,4 +67,22 @@ public class MajorServiceImpl implements MajorService{
         }
         return map;
     }
+
+    @Override
+    public Map viewMajorDetail(String departmentName) {
+        MajorDetail major = majorDetailRepository.findByMajorName(departmentName);
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("departmentName", major.getMajorName());
+        result.put("campus", major.getCampus());
+        result.put("intro", major.getInformation());
+        result.put("degree", major.getDegree());
+        result.put("career", major.getCareer());
+        result.put("curriculum",major.getCurriculum());
+        result.put("certification",major.getCertification());
+        result.put("webPage", major.getWebpage());
+        result.put("phoneNum", major.getPhoneNum());
+        return result;
+    }
+
+
 }

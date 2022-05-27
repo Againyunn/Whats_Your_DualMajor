@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class MemberFinalResult {
     @Id @GeneratedValue
     private Long id;
+    @Column(name="member_final_result_testKey")
     private String testKey;
     private String resultType;
 
