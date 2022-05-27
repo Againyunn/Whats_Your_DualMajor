@@ -150,7 +150,7 @@ function App() {
         <Route path='/rate' element={<RateMain/>} />
         <Route path='/seoul' element={<SeoulMain/>} />
         <Route path='/global' element={<GlobalMain/>} />
-        <Route path='/recommendResult' element={<SavedResult/>}
+        <Route path='/recommendResult' element={<SavedResult/>} />
       </Routes>
     </BrowserRouter>
   </>

@@ -193,7 +193,7 @@ export default function Result() {
 
 
             //설문API전송
-            RecommendService.saveSurvey(reviewQuestion1, reviewQuestion2, reviewQuestion3, reviewQuestion4, reviewQuestion5, reviewQuestion6, reviewQuestion7, satisfyingStar, thisUser, testKey).then(
+            RecommendService.saveSurvey(reviewQuestion1, reviewQuestion2, reviewQuestion3, reviewQuestion4, reviewQuestion5, reviewQuestion6, reviewQuestion7, satisfyingStar, thisUser, testKeyValidate).then(
                 (response) => {
                     navigate('/') //메인 화면으로 이동
                 }

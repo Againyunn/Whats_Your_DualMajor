@@ -88,12 +88,13 @@ export default function MyModal(props) {
 
     //기존의 이중전공 추천결과가 있는 지 확인
     if(!departmentName){
-      navigate('/recommendResult');
+      alert("이중전공 추천 서비스를 이용해주세요😁");
+
+      navigate('/recommend');
     }
 
-    alert("이중전공 추천 서비스를 이용해주세요😁");
-
-    navigate('/recommend');
+    navigate('/recommendResult');
+ 
   }
 
 
@@ -170,17 +171,7 @@ export default function MyModal(props) {
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Cancel>
-          <Button className="cancel" onClick={ ()=> {
-            //로그아웃처리
-            AuthService.logout();
 
-            //main page로 이동
-            navigate("/");
-            window.location.reload();
-          
-          }}>로그아웃</Button>
-        </Cancel>
       </Modal.Footer>
     </Modal>
   )

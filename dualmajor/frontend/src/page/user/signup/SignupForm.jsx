@@ -18,6 +18,7 @@ import Select from 'react-bootstrap/FormSelect'//bootstrap 경로에서 직접 S
 
 import '../../../media/css/commonFrame.css'
 import Footer from '../../main/component/Footer';
+import MyAlert from '../../main/component/MyAlert';
 
 //input 값에 대한 유효성 검사
 const required = (value) => {
@@ -79,8 +80,8 @@ export default function SignupForm() {
   const [userstdNum, setUserstdNum] = useState("");
   const [password, setPassword] = useState("");
   const [grade, setGrade] = useState("1학년");
-  const [firstMajor,  setFirstMajor] = useState("GBT학부");
-  const [dualMajor, setDualMajor] = useState("없음");
+  const [firstMajor,  setFirstMajor] = useState(false);
+  const [dualMajor, setDualMajor] = useState(false);
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -93,6 +94,9 @@ export default function SignupForm() {
   const showPrev = true;
   const showNext = false;
   const showDev = false;
+
+  //모달제어
+  const [majorAlertModal, setMajorAlertModal] = useState(false);
 
   let navigate = useNavigate();
 
@@ -136,14 +140,16 @@ export default function SignupForm() {
 
   const onChangeUserFirstMajor = (e) =>{
     const userFirstMajor = e.target.value;
-    
+
     //본전공과 동일한 전공을 이중전공으로 선택한 경우
     if(userFirstMajor !== dualMajor){
       setFirstMajor(userFirstMajor);
       return;
     }
-  
-    alert("본전공과 이중전공을 같을 수 없어요😭");
+    setFirstMajor(false);
+
+    setMajorAlertModal(true);
+    //alert("본전공과 이중전공은 같을 수 없어요😭");
   }
 
   const onChangeUserDualMajor = (e) =>{
@@ -154,8 +160,10 @@ export default function SignupForm() {
       setDualMajor(userDualMajor);
       return;
     }
-    
-    alert("본전공과 이중전공을 같을 수 없어요😭");
+    setDualMajor(false);
+
+    setMajorAlertModal(true);
+    // alert("본전공과 이중전공은 같을 수 없어요😭");
   }
 
   //stdNum 중복검사
@@ -198,8 +206,25 @@ export default function SignupForm() {
     //학번/사번 중복확인 여부 검사
     if (checkStdNum === false){
       alert("학번/사번 중복확인 해주세요.");
+      return;
     }
 
+    //본전공 선택 확인
+    if(firstMajor === false){
+      alert("본전공을 선택해주세요.");
+      return;
+    }
+
+    //이중전공 선택 확인
+    if(dualMajor === false){
+      alert("본전공을 선택해주세요.");
+      return;
+    }
+
+    if(firstMajor === dualMajor){
+      alert("본전공과 이중전공은 같을 수 없어요😭");
+      return;
+    }
 
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.register(userstdNum, password, username, grade, userType, firstMajor, dualMajor).then(
@@ -252,8 +277,12 @@ export default function SignupForm() {
     //전체 본전공 정보 저장
     setTotalFirstMajor(allFirstMajor);
     //전체 이중전공 정보 저장
-    setTotalDualMajor(allDualMajor);             
+    setTotalDualMajor(allDualMajor);   
     
+    
+    //각 정보 초기화
+    setFirstMajor(allFirstMajor[0].id);
+    setFirstMajor(allDualMajor[0].id);
 
     //임시 학과 처리용 백엔드 연결 후 삭제 예정
     // setTotalFirstMajor(exampleFirstMajor);
@@ -468,6 +497,8 @@ export default function SignupForm() {
           </div>
           </div>
         <div className='footer'><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
+
+        <MyAlert title={""} alertContent={"본전공과 이중전공은 같을 수 없어요😭"}  show={majorAlertModal} onHide={() => setMajorAlertModal(false)}/>
       </div>
   )
 }
