@@ -171,7 +171,17 @@ export default function MyModal(props) {
         </Container>
       </Modal.Body>
       <Modal.Footer>
+        <Cancel>
+          <Button className="cancel" onClick={ ()=> {
+            //로그아웃처리
+            AuthService.logout();
 
+            //main page로 이동
+            navigate("/");
+            window.location.reload();
+          
+          }}>로그아웃</Button>
+        </Cancel>
       </Modal.Footer>
     </Modal>
   )

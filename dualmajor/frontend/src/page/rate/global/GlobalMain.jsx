@@ -339,14 +339,14 @@ const BodyBlock = styled.div`
         flex-grow: 1;
         padding: 5px;
         background-color: #028799;
-        opacity: 1;
+        opacity: 0.7;
     }
 
     .selectGlobal{
         flex-grow: 1;
         padding: 5px;
         background-color: #028799;
-        opacity: 0.7;
+        opacity: 1;
     }
 
     .selectGlobal:hover{

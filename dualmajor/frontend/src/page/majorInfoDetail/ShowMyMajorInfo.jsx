@@ -2,18 +2,14 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
 import styled from "styled-components";
-import Header from "../../main/component/Header";
-import Footer from "../../main/component/Footer";
+import Header from "../main/component/Header";
+import Footer from "../main/component/Footer";
 
-import '../../../media/css/commonFrame.css';
-import MainFrame from "../MainFrame";
-import FilterMajor from "../component/FilterMajor";
+import '../../media/css/commonFrame.css';
 import { Form, Card, Button,  Modal, Row, Col, Container, ProgressBar, Accordion, ListGroup, ListGroupItem, InputGroup, FormControl} from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
-import RateService from '../../../services/rate.service';
+import RateService from '../../services/rate.service';
 
-import GPAChart from '../component/GPAChart'
-import ApplyChart from "../component/ApplyChart";
 import RecommendService from "../../services/recommend.service";
 
 // import Login from "../../../components/Login";
@@ -52,13 +48,14 @@ function SeoulMain() {
         //로컬에 기존의 majorDetailInfo가 있는 지 확인
         let preMajorDetailInfo = localStorage.getItem("majorDetailInfo");
 
-        //기존에 저장내역이 없는 경우
+        //기존에 저장내역이 있는 경우
         if(!preMajorDetailInfo === false){
             let preMajorDetailInfoArr = preMajorDetailInfo.split('/');
             setThisMajorList(preMajorDetailInfoArr);
+
+            setSelectedMajorId(preMajorDetailInfoArr[0]);
         }
 
-        
 
         //     RateService.getMajorListSeoul().then(
         //         (response) => {
@@ -78,7 +75,7 @@ function SeoulMain() {
     //select를 통해 전공을 선택하면 API를 요청
     useEffect(() => {
         //테스트
-        let majorData =`
+        let majorData =`[
                 {
                     "departmentName": "gbt",
                     "campus": "글로벌",
@@ -90,6 +87,7 @@ function SeoulMain() {
                     "webPage": "www.hufs.ac.kr",
                     "phoneNum": "031-0000-0000"
                 }
+            ]
         `
         // setMajorInfo(JSON.parse(majorData));
 
@@ -102,19 +100,20 @@ function SeoulMain() {
         //     (response) => {
         //         console.log("getData:", response.data);
 
-        //         let allMajorDetailInfo = JSON.parse(response.data);
-        //         let targetIndex = allMajorDetailInfo.findIndex(obj => obj.name == selectedMajorId)
         //         //전달받은 값을 데이터로 저장
-        //         setMajorDetailInfo(allMajorDetailInfo[targetIndex]);
+        //         // setMajorDetailInfo(response.data);
 
         //         //실행
         //         ShowMajorDetail();
         //     }
         // )
 
-        ShowMajorDetail();
-
     },[selectedMajorId])
+
+    useEffect(() =>{
+        ShowMajorDetail();
+    },[majorDetailInfo])
+
 
 
     //정보를 확인해볼 전공 확인 함수
@@ -143,7 +142,6 @@ function SeoulMain() {
                 </Card.Body>
                 <ListGroup className="list-group-flush">
                     <ListGroupItem>{majorDetailInfo.campus}</ListGroupItem>
-                    <ListGroupItem>{majorDetailInfo.intro}</ListGroupItem>
                     <ListGroupItem>{majorDetailInfo.degree}</ListGroupItem>
                     {
                         (majorDetailInfo.career !== null)?

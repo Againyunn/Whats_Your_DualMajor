@@ -24,7 +24,18 @@ export default function MainFrame() {
         window.location.reload();
     }
 
-  
+    //전체학과 정보 조회페이지로 이동
+    const moveToMajorDetail = () => {
+        navigate("/seoulMajorInfo");
+        window.location.reload();
+    }
+
+    //내가 찜한 학과 조회페이지로 이동
+    const moveToMyMajorInfo = () => {
+        navigate("/showMyMajorInfo");
+        window.location.reload();
+    }
+
     return (
     <>
         <BodyBlock>
@@ -37,8 +48,8 @@ export default function MainFrame() {
                         </div>
                     </ChooseBlock>
                 </div>
-                <div className='write'>우리학과 자랑하기</div>
-                <div className='review'>학우들의 생생 후기</div>
+                <div className='write' onClick={moveToMajorDetail}>전체 학과 알아보기</div>
+                <div className='review' onClick={moveToMyMajorInfo}>내가 찜한 학과</div>
                 <div className='notice'>
                     <span><b>공지사항</b></span>
 

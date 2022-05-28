@@ -133,6 +133,7 @@ import Result2Frame from './page/recommend/result2/Result2Frame';
 import SavedResult from './page/recommend/savedResult/SavedResult';
 import SeoulMajorInfo from './page/majorInfoDetail/SeoulMajorInfo';
 import GlobalMajorInfo from './page/majorInfoDetail/GlobalMajorInfo';
+import ShowMyMajorInfo from './page/majorInfoDetail/ShowMyMajorInfo';
 
 function App() {
   return (
@@ -155,6 +156,7 @@ function App() {
         <Route path='/recommendResult' element={<SavedResult/>} />
         <Route path="/seoulMajorInfo" element={<SeoulMajorInfo />} />
         <Route path="/globalMajorInfo" element={<GlobalMajorInfo />} />
+        <Route path="/showMyMajorInfo" element={<ShowMyMajorInfo/>} />
       </Routes>
     </BrowserRouter>
   </>
