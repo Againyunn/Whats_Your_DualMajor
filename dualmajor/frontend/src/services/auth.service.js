@@ -40,7 +40,7 @@ const logout = () => {
 };
 
 //POST 유저정보 수정
-const changeInfo = (email, password, nickName, grade, userType, firstMajorId, dualMajorId) => {
+const changeInfo = (email, password, nickName, grade, userType, firstMajorId, dualMajorId, gpa) => {
   return axios.post(API_URL + "editInfo/", {
     email, //문제가 있으면username으로 바꾸기
     password,
@@ -49,6 +49,7 @@ const changeInfo = (email, password, nickName, grade, userType, firstMajorId, du
     userType,
     firstMajorId,
     dualMajorId,
+    gpa
   });
 }
 

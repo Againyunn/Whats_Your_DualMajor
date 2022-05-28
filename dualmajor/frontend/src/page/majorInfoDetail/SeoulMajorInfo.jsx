@@ -47,42 +47,43 @@ function SeoulMain() {
     //해당학과에 대한 지원 여부 확인하기
     useEffect(() => {
 
-        //테스트용
-        console.log("rendering")
-        let data = `
-            [
-                {
-                    "id": "1",
-                    "name": "경영학부"
-                },
-                {
-                    "id": "2",
-                    "name": "국제학부"
-                },
-                {
-                    "id": "3",
-                    "name": "경제학부"
-                },
-                {
-                    "id": "4",
-                    "name": "미디어커뮤니케이션학부"
-                }
-            ]
-        `
-        let getData = Object.values(JSON.parse(data));
-        setThisMajorList(getData);
+        // //테스트용
+        // console.log("rendering")
+        // let data = `
+        //     [
+        //         {
+        //             "id": "1",
+        //             "name": "경영학부"
+        //         },
+        //         {
+        //             "id": "2",
+        //             "name": "국제학부"
+        //         },
+        //         {
+        //             "id": "3",
+        //             "name": "경제학부"
+        //         },
+        //         {
+        //             "id": "4",
+        //             "name": "미디어커뮤니케이션학부"
+        //         }
+        //     ]
+        // `
+        // let getData = Object.values(JSON.parse(data));
+        // setThisMajorList(getData);
 
-        setSelectedMajorId(getData[0].name);
+        // setSelectedMajorId(getData[0].name);
 
-        // RateService.getMajorListSeoul().then(
-        //     (response) => {
+        RateService.getMajorListSeoul().then(
+            (response) => {
 
-        //         let getData = Object.values(JSON.parse(response.data.majorListSeoul));
-        //         setThisMajorList(getData);
-        //         setSelectedMajorId(getData[0].name);
-        //         console.log(response.data.majorListSeoul);
-        //     }
-        // )
+                // let getData = Object.values(JSON.parse(response.data.majorListSeoul));
+                let getData = response.data.majorListSeoul;
+                setThisMajorList(getData);
+                setSelectedMajorId(getData[0].name);
+                console.log(response.data.majorListSeoul);
+            }
+        )
     },[])
 
     // useEffect(() => {
@@ -93,40 +94,38 @@ function SeoulMain() {
 
     //select를 통해 전공을 선택하면 API를 요청
     useEffect(() => {
-        //테스트
-        let majorData =`[
-                {
-                    "departmentName": "GBT학부",
-                    "campus": "글로벌",
-                    "intro": "inf4",
-                    "degree": "deg4",
-                    "career": "career4",
-                    "curriculum": "cur4",
-                    "certification": "cer4",
-                    "webPage": "www.hufs.ac.kr",
-                    "phoneNum": "031-0000-0000"
-                }
-            ]
-        `
-        // setMajorInfo(JSON.parse(majorData));
-        let allMajorData = JSON.parse(majorData);
-        console.log("allMajorData:",allMajorData);
-        let targetIndex = allMajorData.findIndex(obj => obj.departmentName == selectedMajorId);
-        console.log("targetIndex:",targetIndex);
-        setMajorDetailInfo(allMajorData[targetIndex]);
-
-        // setMajorDetailInfo(JSON.parse(majorData));
+        // //테스트
+        // let majorData =`[
+        //         {
+        //             "departmentName": "GBT학부",
+        //             "campus": "글로벌",
+        //             "intro": "inf4",
+        //             "degree": "deg4",
+        //             "career": "career4",
+        //             "curriculum": "cur4",
+        //             "certification": "cer4",
+        //             "webPage": "www.hufs.ac.kr",
+        //             "phoneNum": "031-0000-0000"
+        //         }
+        //     ]
+        // `
+        // // setMajorInfo(JSON.parse(majorData));
+        // let allMajorData = JSON.parse(majorData);
+        // console.log("allMajorData:",allMajorData);
+        // let targetIndex = allMajorData.findIndex(obj => obj.departmentName == selectedMajorId);
+        // console.log("targetIndex:",targetIndex);
+        // setMajorDetailInfo(allMajorData[targetIndex]);
         
-        // RecommendService.getDepartmentInfo(selectedMajorId).then(
-        //     (response) => {
+        RecommendService.getDepartmentInfo(selectedMajorId).then(
+            (response) => {
 
-        //         //전달받은 값을 데이터로 저장
-        //         // setMajorDetailInfo(response.data);
+                //전달받은 값을 데이터로 저장
+                setMajorDetailInfo(response.data);
 
-        //         //실행
-        //         ShowMajorDetail();
-        //     }
-        // )
+                //실행
+                // ShowMajorDetail();
+            }
+        )
 
         
 
@@ -219,6 +218,16 @@ function SeoulMain() {
 
             localStorage.setItem("majorDetailInfo", updateMajorDetailInfo);
         }    
+    }
+
+    //선택한 전공정보 쿠키에서 삭제
+    const deleteMajorDetailInfo = () => {
+
+    }
+
+    //전공 선택 버튼 생성 함수
+    const printMajorDetailInfo = () => {
+        
     }
 
 

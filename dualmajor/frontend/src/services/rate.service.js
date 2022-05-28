@@ -7,11 +7,11 @@ const API_URL = "http://localhost:8080/"
 /**캠퍼스별 전공 목록 받아오기*/
 //서울캠퍼스 개설 전공 목록
 const getMajorListSeoul = () => {
-    return (axios.get(API_URL + "majorList/seoul/"));
+    return (axios.post(API_URL + "majorList/seoul/"));
 }
 //글로벌캠퍼스 개설 전공 목록
 const getMajorListGlobal = () => {
-    return (axios.get(API_URL + "majorList/global/"));
+    return (axios.post(API_URL + "majorList/global/"));
 }
 
 //전공 별 경쟁률 정보 
@@ -47,8 +47,8 @@ const getApplyInfo = (stdNum) => {
 
 
 //지원정보 전달하기
-const postApply = (stdNum, majorName, gpa) => {
-    return(axios.post(API_URL + "postApply/"), {stdNum, majorName, gpa})
+const postApply = (stdNum, majorName) => {
+    return(axios.post(API_URL + "postApply/"), {stdNum, majorName})
 } //백엔드 value 반환 형식:  success(성공했다는 정보) or 에러 반환
 
 

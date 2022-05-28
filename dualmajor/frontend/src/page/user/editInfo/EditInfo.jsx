@@ -62,6 +62,17 @@ const vpassword = (value) => {
   }
 };
 
+//gpa
+const vgpa = (value) => {
+    if (value <= 0 || value > 4.5) {
+      return (
+        <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
+          올바른 학점을 입력해주세요.
+        </div>
+      );
+    }
+  };
+
 //key값으로부터 value반환 함수
 function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
@@ -84,6 +95,7 @@ export default function SignupForm() {
     const [grade, setGrade] = useState("1");
     const [firstMajor,  setFirstMajor] = useState("1");
     const [dualMajor, setDualMajor] = useState("0");
+    const [gpa, setGpa] = useState(false);
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
 
@@ -191,6 +203,11 @@ export default function SignupForm() {
         const userGrade = e.target.value;
         setGrade(userGrade);
     }
+
+    const onChangeUserGpa = (e) => {
+        const userGpa = e.target.value;
+        setGpa(userGpa);
+      }
 
     const SelectedUserType= (selected) => {
         //멘토로 유저 타입 변경
@@ -380,6 +397,22 @@ export default function SignupForm() {
                         }
                         </Select> 
                     </Col>
+                    </Row>
+
+                    <Row className='tableRow'>
+                        <Col md={5} xs={5}>
+                            <span className='titleStyle'>총 평균학점</span>
+                        </Col>
+                        <Col md={7} xs={7}>
+                            <Input
+                                type="gpa"
+                                className="form-control"
+                                name="gpa"
+                                value={gpa}
+                                onChange={onChangeUserGpa}
+                                validations={[required, vgpa]}
+                            />
+                        </Col>
                     </Row>
                 </div>
                 </Container>

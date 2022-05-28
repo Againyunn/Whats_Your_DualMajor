@@ -64,6 +64,17 @@ const vpassword = (value) => {
   }
 };
 
+//gpa
+const vgpa = (value) => {
+  if (value <= 0 || value > 4.5) {
+    return (
+      <div className="alert alert-danger" role="alert" style={{fontSize: "10px"}}>
+        올바른 학점을 입력해주세요.
+      </div>
+    );
+  }
+};
+
 export default function SignupForm() {
   //상태값 데이터 처리
 
@@ -82,10 +93,11 @@ export default function SignupForm() {
   const [grade, setGrade] = useState("1학년");
   const [firstMajor,  setFirstMajor] = useState(false);
   const [dualMajor, setDualMajor] = useState(false);
+  const [gpa, setGpa] = useState(false);
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
-  const [checkStdNum, setCheckStdNum] = useState(false);
+  const [checkStdNum, setCheckStdNum] = useState('');
 
   //메뉴바 노출 상태관리
   const showMenu = false;
@@ -122,6 +134,11 @@ export default function SignupForm() {
   const onChangeUserGrade = (e) => {
     const userGrade = e.target.value;
     setGrade(userGrade);
+  }
+
+  const onChangeUserGpa = (e) => {
+    const userGpa = e.target.value;
+    setGpa(userGpa);
   }
 
   const SelectedUserType= (selected) => {
@@ -227,12 +244,12 @@ export default function SignupForm() {
     }
 
     if (checkBtn.current.context._errors.length === 0) {
-      AuthService.register(userstdNum, password, username, grade, userType, firstMajor, dualMajor).then(
+      AuthService.register(userstdNum, password, username, grade, userType, firstMajor, dualMajor, gpa).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);
           
-          let newUser = {"stdNum":userstdNum, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "dualMajor": dualMajor};
+          let newUser = {"stdNum":userstdNum, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "dualMajor": dualMajor, "gpa": gpa};
           //세션에 저장
           sessionStorage.setItem("user", JSON.stringify(newUser));
 
@@ -428,6 +445,23 @@ export default function SignupForm() {
                       ))
                     }
                     </Select> 
+                  </Col>
+                </Row>
+
+                <Row className='tableRow'>
+                  <Col md={5} xs={5}>
+                    <span className='titleStyle'>총 평균학점</span>
+                  </Col>
+                  <Col md={7} xs={7}>
+                    <Input
+                        type="number" 
+                        step="0.01"
+                        className="form-control"
+                        name="gpa"
+                        value={gpa}
+                        onChange={onChangeUserGpa}
+                        validations={[required, vgpa]}
+                      />
                   </Col>
                 </Row>
               </Container>

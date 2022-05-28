@@ -14,7 +14,7 @@ export default function Result() {
 
     //만족도 조사 변수
     const [modalShow, setModalShow] = useState(false); //모달을 통해 만족도 수집
-    const [satisfyingStar, setSatisfyingStar] = useState(1); //별점
+    // const [satisfyingStar, setSatisfyingStar] = useState(1); //별점
     const [reviewQuestion1, setReviewQuestion1] = useState("");//후기 질문1
     const [reviewQuestion2, setReviewQuestion2] = useState("");//후기 질문2
     const [reviewQuestion3, setReviewQuestion3] = useState("");//후기 질문3
@@ -180,6 +180,13 @@ export default function Result() {
             }
             console.log("answer:",answer);
 
+            //별점 기록 받아오기
+            let starRecord = sessionStorage.getItem('starCount');
+
+            if(!starRecord){
+                sessionStorage.removeItem('starCount')
+            }
+
             //비회원이 차후에 회원가입 시 기존의 서비스 정보를 받을 수 있도록 -> 선택한 학과 정보 저장
             localStorage.setItem('recommendResult', answer);
 
@@ -193,7 +200,7 @@ export default function Result() {
 
 
             //설문API전송
-            RecommendService.saveSurvey(reviewQuestion1, reviewQuestion2, reviewQuestion3, reviewQuestion4, reviewQuestion5, reviewQuestion6, reviewQuestion7, satisfyingStar, thisUser, testKeyValidate).then(
+            RecommendService.saveSurvey(reviewQuestion1, reviewQuestion2, reviewQuestion3, reviewQuestion4, reviewQuestion5, reviewQuestion6, reviewQuestion7, starRecord, thisUser, testKeyValidate).then(
                 (response) => {
                     navigate('/') //메인 화면으로 이동
                 }
@@ -204,24 +211,25 @@ export default function Result() {
         }
     }
 
+
+
+
+
  
     function SatisfactionModal(props) {
-    
         const Star = () => {
             const drawStar = (e) => {
-                document.getElementById("realStar").style.width = `${e.target.value * 10}%`;
-                // document.querySelector(`.star span`).style.width = `${e.target.value * 10}%`;
-        
-                //별점 기록
-                setSatisfyingStar(e.target.value);
-        
-            }
+                let thisCount = e.target.value;
+                document.getElementById("realStar").style.width = `${thisCount * 10}%`;
 
+                sessionStorage.setItem("starCount",thisCount);
+            }
+    
           return (
             <>
                 <StarFrame >
                     <label>
-                        <span class="star">
+                        <span className="star">
                             ★★★★★
                             <span id="realStar">★★★★★</span>
                                 <input type="range" onChange={drawStar} value="1" step="1" min="0" max="10"/>

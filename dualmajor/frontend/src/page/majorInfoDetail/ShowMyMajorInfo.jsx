@@ -74,39 +74,39 @@ function SeoulMain() {
 
     //select를 통해 전공을 선택하면 API를 요청
     useEffect(() => {
-        //테스트
-        let majorData =`[
-                {
-                    "departmentName": "gbt",
-                    "campus": "글로벌",
-                    "intro": "inf4",
-                    "degree": "deg4",
-                    "career": "career4",
-                    "curriculum": "cur4",
-                    "certification": "cer4",
-                    "webPage": "www.hufs.ac.kr",
-                    "phoneNum": "031-0000-0000"
-                }
-            ]
-        `
-        // setMajorInfo(JSON.parse(majorData));
+        // //테스트
+        // let majorData =`[
+        //         {
+        //             "departmentName": "gbt",
+        //             "campus": "글로벌",
+        //             "intro": "inf4",
+        //             "degree": "deg4",
+        //             "career": "career4",
+        //             "curriculum": "cur4",
+        //             "certification": "cer4",
+        //             "webPage": "www.hufs.ac.kr",
+        //             "phoneNum": "031-0000-0000"
+        //         }
+        //     ]
+        // `
+        // // setMajorInfo(JSON.parse(majorData));
 
-        let allMajorDetailInfo = JSON.parse(majorData);
-        let targetIndex = allMajorDetailInfo.findIndex(obj => obj.name == selectedMajorId)
-        setMajorDetailInfo(allMajorDetailInfo[targetIndex]);
-        //테스트 끝
+        // let allMajorDetailInfo = JSON.parse(majorData);
+        // let targetIndex = allMajorDetailInfo.findIndex(obj => obj.name == selectedMajorId)
+        // setMajorDetailInfo(allMajorDetailInfo[targetIndex]);
+        // //테스트 끝
 
-        // RecommendService.getDepartmentInfo(selectedMajorId).then(
-        //     (response) => {
-        //         console.log("getData:", response.data);
+        RecommendService.getDepartmentInfo(selectedMajorId).then(
+            (response) => {
+                console.log("getData:", response.data);
 
-        //         //전달받은 값을 데이터로 저장
-        //         // setMajorDetailInfo(response.data);
+                //전달받은 값을 데이터로 저장
+                setMajorDetailInfo(response.data);
 
-        //         //실행
-        //         ShowMajorDetail();
-        //     }
-        // )
+                //실행
+                // ShowMajorDetail();
+            }
+        )
 
     },[selectedMajorId])
 
@@ -217,9 +217,10 @@ function SeoulMain() {
                                     {
                                         !thisMajorList?  
                                         <option value="0">학과 없음</option>:
-                                        thisMajorList.map(thisMajor => (
-                                            <option key={thisMajor.name} value={thisMajor.name}>
-                                            {thisMajor.name}
+
+                                        thisMajorList.map((value, index) => (
+                                            <option key={index} value={value}>
+                                            {value}
                                             </option>
                                         ))
                                     }
