@@ -51,7 +51,16 @@ function SeoulMain() {
         //기존에 저장내역이 있는 경우
         if(!preMajorDetailInfo === false){
             let preMajorDetailInfoArr = preMajorDetailInfo.split('/');
-            setThisMajorList(preMajorDetailInfoArr);
+            let tmpArr =[];
+            for(var i = 0; i < preMajorDetailInfoArr.length; i++){
+                tmpArr.push(
+                    {
+                        name:`${preMajorDetailInfoArr[i]}`
+                    }
+                )
+            }
+
+            setThisMajorList(tmpArr);
 
             setSelectedMajorId(preMajorDetailInfoArr[0]);
         }
@@ -65,12 +74,12 @@ function SeoulMain() {
         //     )
     },[])
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     //선택한 적이 있는 지 확인
-    //     setSelectedMajorId(thisMajorList);
+        //전공 filter 생성
+        PrintMajorList();
 
-    // },[thisMajorList])
+    },[thisMajorList])
 
     //select를 통해 전공을 선택하면 API를 요청
     useEffect(() => {
@@ -112,6 +121,7 @@ function SeoulMain() {
 
     useEffect(() =>{
         ShowMajorDetail();
+        
     },[majorDetailInfo])
 
 
@@ -174,29 +184,52 @@ function SeoulMain() {
         )
     }
 
-    //선택한 전공정보 쿠키로 저장
-    const saveMajorDetailInfo = () => {
+ //선택한 전공정보 쿠키에서 삭제
+ const deleteMajorDetailInfo = () => {
 
-        //로컬에 기존의 majorDetailInfo가 있는 지 확인
-        let preMajorDetailInfo = localStorage.getItem("majorDetailInfo");
+    //로컬에 기존의 majorDetailInfo가 있는 지 확인
+    let preMajorDetailInfo = localStorage.getItem("majorDetailInfo");
 
-        //기존에 저장내역이 없는 경우
-        if(!preMajorDetailInfo){
-            //로컬스토리지 생성
-            localStorage.setItem("majorDetailInfo",`${selectedMajorId}`);
+    //기존에 저장내역이 없는 경우
+    if(!preMajorDetailInfo){
+        return;
+    }
+    //기존에 저장내역이 있는 경우
+    else{
+                
+        let preMajorDetailInfoArr = preMajorDetailInfo.split('/');
+        let updateMajorDetailInfo;
+
+        if(selectedMajorId != preMajorDetailInfoArr[0]){
+            updateMajorDetailInfo = preMajorDetailInfoArr[0];
         }
-        //기존에 저장내역이 있는 경우
-        else{
-            
-            let preMajorDetailInfoArr = preMajorDetailInfo.split('/');
-            let updateMajorDetailInfo = preMajorDetailInfoArr[0];
 
-            for(var i = 1; i < preMajorDetailInfoArr.length; i++){
-                updateMajorDetailInfo += `${preMajorDetailInfoArr[i]}`;
+        for(var i = 1; i < preMajorDetailInfoArr.length; i++){
+
+            if(selectedMajorId != preMajorDetailInfoArr[i]){
+                updateMajorDetailInfo += `/${preMajorDetailInfoArr[i]}`;
             }
+        }
+        localStorage.setItem("majorDetailInfo", updateMajorDetailInfo);
+    }    
 
-            localStorage.setItem("majorDetailInfo", updateMajorDetailInfo);
-        }    
+    window.location.reload();
+
+}
+
+    //전공 리스트 filter 생성하는 객체
+    const PrintMajorList = () => {
+        let arr = [];
+         
+        for(let i = 0; i < thisMajorList.length; i++){
+            arr.push(
+                <option value={thisMajorList[i]}>
+                    {thisMajorList[i]}
+                </option>
+            )
+        }
+
+        return arr;
     }
 
 
@@ -217,10 +250,9 @@ function SeoulMain() {
                                     {
                                         !thisMajorList?  
                                         <option value="0">학과 없음</option>:
-
-                                        thisMajorList.map((value, index) => (
-                                            <option key={index} value={value}>
-                                            {value}
+                                        thisMajorList.map(thisMajor => (
+                                            <option key={thisMajor.name} value={thisMajor.name}>
+                                            {thisMajor.name}
                                             </option>
                                         ))
                                     }
@@ -230,7 +262,7 @@ function SeoulMain() {
                                 <ShowMajorDetail/>
                             </div>
                             <div className="applyBlock">                
-                                <Button type="button" className="applyButton" onClick={saveMajorDetailInfo}>저장하기</Button>
+                                <Button type="button" className="applyButton" onClick={deleteMajorDetailInfo}>저장취소</Button>
                             </div>
                         </div>
                     </BodyBlock>

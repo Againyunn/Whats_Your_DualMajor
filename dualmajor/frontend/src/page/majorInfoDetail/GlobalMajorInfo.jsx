@@ -124,6 +124,10 @@ function SeoulMain() {
                 //전달받은 값을 데이터로 저장
                 setMajorDetailInfo(response.data);
 
+                //선택된 전공에 맞는 버튼 노출
+                PrintMajorDetailInfo();
+
+                
                 //실행
                 // ShowMajorDetail();
             }
@@ -213,11 +217,84 @@ function SeoulMain() {
             let updateMajorDetailInfo = preMajorDetailInfoArr[0];
 
             for(var i = 1; i < preMajorDetailInfoArr.length; i++){
-                updateMajorDetailInfo += `${preMajorDetailInfoArr[i]}`;
+                updateMajorDetailInfo += `/${preMajorDetailInfoArr[i]}`;
+            }
+
+            updateMajorDetailInfo += `/${selectedMajorId}`;
+
+
+            localStorage.setItem("majorDetailInfo", updateMajorDetailInfo);
+        }    
+
+        window.location.reload();
+    }
+
+    //선택한 전공정보 쿠키에서 삭제
+    const deleteMajorDetailInfo = () => {
+
+        //로컬에 기존의 majorDetailInfo가 있는 지 확인
+        let preMajorDetailInfo = localStorage.getItem("majorDetailInfo");
+
+        //기존에 저장내역이 없는 경우
+        if(!preMajorDetailInfo){
+            return;
+        }
+        //기존에 저장내역이 있는 경우
+        else{
+                    
+            let preMajorDetailInfoArr = preMajorDetailInfo.split('/');
+            let updateMajorDetailInfo;
+
+            if(selectedMajorId != preMajorDetailInfoArr[0]){
+                updateMajorDetailInfo = preMajorDetailInfoArr[0];
+            }
+
+            for(var i = 1; i < preMajorDetailInfoArr.length; i++){
+
+                if(selectedMajorId != preMajorDetailInfoArr[i]){
+                    updateMajorDetailInfo += `/${preMajorDetailInfoArr[i]}`;
+                }
             }
 
             localStorage.setItem("majorDetailInfo", updateMajorDetailInfo);
         }    
+
+        window.location.reload();
+
+    }
+
+    //전공 선택 버튼 생성 함수
+    const PrintMajorDetailInfo = () => {
+        let check = false;//false : 저장된 전공 없음, true: 저장된 전공 있음
+
+        let preMajorDetailInfo = localStorage.getItem("majorDetailInfo");
+
+        //기존에 저장내역이 없는 경우
+        if(!preMajorDetailInfo){
+            check = false;
+        }
+        
+        //저장 내역이 있는 경우
+        else{
+            let preMajorDetailInfoArr = preMajorDetailInfo.split('/');
+
+            for(var i = 1; i < preMajorDetailInfoArr.length; i++){
+
+                if(selectedMajorId == preMajorDetailInfoArr[i]){
+                    check = true;
+                }
+            }
+        }
+
+        //화면에 랜더링할 버튼 지정
+        if(check === false){
+            return(<Button type="button" className="applyButton" onClick={saveMajorDetailInfo}>저장하기</Button>);
+        }
+
+        else if(check === true){
+            return(<Button type="button" className="applyButton" onClick={deleteMajorDetailInfo}>저장취소</Button>);
+        }
+
     }
 
 
@@ -250,7 +327,7 @@ function SeoulMain() {
                                 <ShowMajorDetail/>
                             </div>
                             <div className="applyBlock">                
-                                <Button type="button" className="applyButton" onClick={saveMajorDetailInfo}>저장하기</Button>
+                            <PrintMajorDetailInfo />
                             </div>
                         </div>
                     </BodyBlock>
