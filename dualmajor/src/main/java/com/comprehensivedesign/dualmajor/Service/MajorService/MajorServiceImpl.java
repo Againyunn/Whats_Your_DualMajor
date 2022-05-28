@@ -84,5 +84,12 @@ public class MajorServiceImpl implements MajorService{
         return result;
     }
 
+    /*캠퍼스별 전공 목록*/
+    @Override
+    public List viewMajorByCampus(String campus) {
+        //Map<String, Object> map = new LinkedHashMap<>();
+        return dualMajorRepository.viewMajorListByCampus(campus);
+    }
+
 
 }

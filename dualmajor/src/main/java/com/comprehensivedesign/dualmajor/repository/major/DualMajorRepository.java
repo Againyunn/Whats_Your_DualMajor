@@ -26,5 +26,8 @@ public interface DualMajorRepository extends JpaRepository<DualMajor, Long> {
 
     Optional<DualMajor> findByMajorName(String majorName);
 
+    @Query(value = "select d.id as id, d.majorName as name from DUAL_MAJOR d where d.campus = :campus",nativeQuery = true)
+    List<MajorList> viewMajorListByCampus(String campus);
+
 
 }

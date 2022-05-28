@@ -13,5 +13,6 @@ public interface MajorService {
     DualMajor findDualMajorById(Long dualMajorId) throws Exception;
     Map<Long, List> findDualMajor(String testKey) throws Exception;
     Map viewMajorDetail(String departmentName);
+    List viewMajorByCampus(String campus);
 
 }
