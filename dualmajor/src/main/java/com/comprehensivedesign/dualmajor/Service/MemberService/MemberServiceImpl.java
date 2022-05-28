@@ -54,7 +54,7 @@ public class MemberServiceImpl implements MemberService{
         FirstMajor firstMajor = majorService.findFirstMajorById(memberDto.getFirstMajorId()); //회원이 참조할 제1전공 객체
         DualMajor dualMajor = majorService.findDualMajorById(memberDto.getDualMajorId()); //회원이 참조할 이중전공 객체
         //DB의 회원 테이블과 매핑되는 회원 Entity 객체를 생성하여 가입할 회원의 정보 저장
-        member.CreateMember(memberDto.getNickName(), stdEmail, password, memberDto.getStdNum(), firstMajor, dualMajor, memberDto.getGrade(),memberDto.getUserType());
+        member.CreateMember(memberDto.getNickName(), stdEmail, password, memberDto.getStdNum(), firstMajor, dualMajor, memberDto.getGrade(),memberDto.getUserType(), memberDto.getGpa());
         return memberRepository.save(member).getId(); //가입될 회원 정보가 저장된 회원 객체를 DB의 회원 테이블에 매핑하여 저장
     }
     private void validateDuplicateEmail(String stdEmail) throws Exception{

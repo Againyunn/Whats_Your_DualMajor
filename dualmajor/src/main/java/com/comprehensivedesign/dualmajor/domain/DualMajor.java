@@ -20,5 +20,6 @@ public class DualMajor {
     @ManyToOne //하나의 이중전공은 하나의 섹터를 가지고, 하나의 섹터는 여러 이중전공을 포함함.
     @JoinColumn(name="sector_id") //섹터 테이블 참조하는 FK
     private Sector sector; //해당되는 섹터
+    private String totalNum;
 
 }
