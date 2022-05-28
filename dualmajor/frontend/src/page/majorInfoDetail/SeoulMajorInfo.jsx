@@ -2,20 +2,21 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
 import styled from "styled-components";
-import Header from "../../main/component/Header";
-import Footer from "../../main/component/Footer";
+import Header from "../main/component/Header";
+import Footer from "../main/component/Footer";
 
-import '../../../media/css/commonFrame.css';
+import '../../media/css/commonFrame.css';
 import MainFrame from "../MainFrame";
 import FilterMajor from "../component/FilterMajor";
-import { Button, Col, Container, Row, ProgressBar,Form, Modal } from 'react-bootstrap';
+import { Form, Card, Button,  Modal, Row, Col, Container, ProgressBar, Accordion, ListGroup, ListGroupItem, InputGroup, FormControl} from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
-import RateService from '../../../services/rate.service';
 
 import GPAChart from '../component/GPAChart'
 import ApplyChart from "../component/ApplyChart";
+import RecommendService from "../../services/recommend.service";
+import RateService from "../../services/rate.service";
 
-import Login from "../../../components/Login";
+// import Login from "../../../components/Login";
 
 function SeoulMain() {
     //상단바 컨트롤 : 메뉴바 노출 상태관리
@@ -33,7 +34,7 @@ function SeoulMain() {
     const selectCampus = (element) => {
         //글로벌 선택 시
         if(element.target.id === "global")
-            navigate("/global");
+            navigate("/globalMajorInfo");
     }
 
     //filter로 전공을 선택하면 해당 전공에 대한 정보 API로 받아오기
@@ -41,19 +42,9 @@ function SeoulMain() {
     //변수 선언
     const [thisMajorList, setThisMajorList] = useState([{id: "1", name: "2"}]);
     const [selectedMajorId, setSelectedMajorId] = useState("");
-    const [majorInfo, setMajorInfo] = useState("");
-
-    //로그인 여부 확인(기본 값: 로그인 false)
-    const [login, setLogin] = useState(false);
-    const [thisUser, setThisUser] = useState('');
-
-    //지원 여부 확인(기본 값: API통해서 받아오기)
-    const [applyInfo, setApplyInfo] = useState(false); //stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
-    const [thisApply, setThisApply] = useState(false);
-
-    //학점 정보 받아오기
-    const [showModal, setShowModal] = useState(false);
-    const [thisGpa, setThisGpa] = useState("");
+    // const [majorInfo, setMajorInfo] = useState("");
+    const [majorDetailInfo, setMajorDetailInfo] = useState(false);
+   
 
     //API통신 선언
     //처음 화면 랜더링 시 → 각 캠퍼스별 전공리스트 받아오기
@@ -84,115 +75,140 @@ function SeoulMain() {
         `
         setThisMajorList(Object.values(JSON.parse(data)));
 
-        
         //     RateService.getMajorListSeoul().then(
         //         (response) => {
-        //             setThisMajorList(JSON.parse(response.data.majorListSeoul)));
+        //             setThisMajorList(Object.values(JSON.parse(response.data.majorListSeoul)));
         //             console.log(response.data.majorListSeoul);
         //         }
         //     )
-
-        //로그인 되어있는 지 확인
-        if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
-            setThisUser(sessionStorage.getItem("user"));
-            setLogin(true);
-            }
-            else{
-            setLogin(false);
-            }
     },[])
 
-    useEffect(() => {
-        //major정보 초기화 or major를 선택한 경우
-        if(login){
-            //사용자의 지원 여부 정보 받아오기
-            RateService.getApplyInfo(thisUser).then(
-                (response) =>{
-                    //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
-                    setApplyInfo(Object.values(JSON.parse(response.data)));
-                }
-            )
-        }
+    // useEffect(() => {
+    //     //선택한 적이 있는 지 확인
+    //     setSelectedMajorId(thisMajorList);
 
-        //로그인 o and 사용자의 지원 정보가 있는 경우
-        if(login && applyInfo[2]!== null){
-            setSelectedMajorId(applyInfo[2]);
-        }
-        //둘 다 해당 x인 경우
-        else{
-            setSelectedMajorId(thisMajorList[0].name);
-        }
-
-    },[thisMajorList])
+    // },[thisMajorList])
 
     //select를 통해 전공을 선택하면 API를 요청
     useEffect(() => {
         //테스트
         let majorData =`
-            {
-                "id" : "1",
-                "name" : "GBT학부",
-                "applyNum" : "25",
-                "totalNum" : "100",
-                "avgGpa" : "4.05"
-            }
+                {
+                    "departmentName": "gbt",
+                    "campus": "글로벌",
+                    "intro": "inf4",
+                    "degree": "deg4",
+                    "career": "career4",
+                    "curriculum": "cur4",
+                    "certification": "cer4",
+                    "webPage": "www.hufs.ac.kr",
+                    "phoneNum": "031-0000-0000"
+                }
         `
-        setMajorInfo(JSON.parse(majorData));
-
-
-        // RateService.getRateInfo(selectedMajorId).then(
+        // setMajorInfo(JSON.parse(majorData));
+        setMajorDetailInfo(majorData);
+        
+        // RecommendService.getDepartmentInfo(selectedMajorId).then(
         //     (response) => {
-        //         setMajorInfo(JSON.parse(response));
+        //         console.log("getData:", response.data);
+
+        //         //전달받은 값을 데이터로 저장
+        //         setMajorDetailInfo(response.data);
+
+        //         //실행
+        //         ShowMajorDetail();
         //     }
         // )
 
+        ShowMajorDetail();
 
     },[selectedMajorId])
 
-    //사용자가 지원한 정보 백엔드로 전송
-    useEffect(() => {
-        //로그인 유무, 학점 입력 여부 확인
-        if(login&&(thisGpa !== '')){
-            RateService.postApply(thisUser, thisApply, thisGpa)
-        }
-        
-    },[thisApply])
 
     //정보를 확인해볼 전공 확인 함수
     const SelectMajorId = (e) =>{
         setSelectedMajorId(e.target.value);
     }
 
-    //지원 버튼 선택 시
-    const applyMajor = () => {
-        //로그인 유무 확인
-        if(!login){
-            //Login()
+    const ShowMajorDetail = () => {
+        console.log('thisResult:',majorDetailInfo);
+        console.log('testData.list.academicName:',majorDetailInfo);
+
+        if(!majorDetailInfo){
+            return(
+                <></>
+            );
         }
-        //모달창 열어서 GPA입력 받기
-        modalShow();
+
+        return(
+            <>
+                <Card style={{ width: '18rem' }}>
+                <Card.Body>
+                    <Card.Title>{majorDetailInfo.departmentName}</Card.Title>
+                    <Card.Text>
+                    {majorDetailInfo.intro}
+                    </Card.Text>
+                </Card.Body>
+                <ListGroup className="list-group-flush">
+                    <ListGroupItem>{majorDetailInfo.campus}</ListGroupItem>
+                    <ListGroupItem>{majorDetailInfo.intro}</ListGroupItem>
+                    <ListGroupItem>{majorDetailInfo.degree}</ListGroupItem>
+                    {
+                        (majorDetailInfo.career !== null)?
+                        <ListGroupItem>{majorDetailInfo.career}</ListGroupItem>:
+                        <></>
+                    }
+                    {
+                        (majorDetailInfo.curriculum !== null)?
+                            <ListGroupItem>{majorDetailInfo.curriculum}</ListGroupItem>:
+                            <></>
+                    }
+                    {
+                        (majorDetailInfo.certification!== null)?
+                        <ListGroupItem>{majorDetailInfo.certification}</ListGroupItem>:
+                        <></>                                                   
+                    }
+                    {
+                        (majorDetailInfo.webPage !== null)?
+                        <ListGroupItem>{majorDetailInfo.webPage}</ListGroupItem>:
+                        <></>
+                    }
+                    {
+                        (majorDetailInfo.phoneNum !== null)?
+                        <ListGroupItem>{majorDetailInfo.phoneNum}</ListGroupItem>:
+                        <></>
+                    }
+                </ListGroup>
+                </Card>
+            </>
+        )
     }
 
-    //지원취소 시
-    const cancelApplyMajor = () =>{
-        //지원정보 초기화(default => false)
-        setThisApply(false);
+    //선택한 전공정보 쿠키로 저장
+    const saveMajorDetailInfo = () => {
+
+        //로컬에 기존의 majorDetailInfo가 있는 지 확인
+        let preMajorDetailInfo = localStorage.getItem("majorDetailInfo");
+
+        //기존에 저장내역이 없는 경우
+        if(!preMajorDetailInfo){
+            //로컬스토리지 생성
+            localStorage.setItem("majorDetailInfo",`${selectedMajorId}`);
+        }
+        //기존에 저장내역이 있는 경우
+        else{
+            
+            let preMajorDetailInfoArr = preMajorDetailInfo.split('/');
+            let updateMajorDetailInfo = preMajorDetailInfoArr[0];
+
+            for(var i = 1; i < preMajorDetailInfoArr.length; i++){
+                updateMajorDetailInfo += `${preMajorDetailInfoArr[i]}`;
+            }
+
+            localStorage.setItem("majorDetailInfo", updateMajorDetailInfo);
+        }    
     }
 
-    //학점 입력받을 모달 제어
-    const modalClose = () => setShowModal(false);
-    const modalShow = () => setShowModal(true);
-
-    //학점정보 받아오기
-    const putGpa = (e)=> {
-        //학점정보 업데이트
-        setThisGpa(e.target.value);        
-    }
-
-    const postApplyInfo = () => {
-        //지원하기 버튼을 누른 majorName을 thisApply에 업데이트
-        setThisApply(selectedMajorId);
-    }
 
     return (
         <>
@@ -220,78 +236,15 @@ function SeoulMain() {
                                 </Form.Select>
                             </div>
                             <div className="majorBlock">
-                                {
-                                    !majorInfo?
-                                    <></>:
-                                    <>
-                                        <ApplyChart majorName={selectedMajorId} applyNum={majorInfo.applyNum} totalNum={majorInfo.totalNum} />
-                                        
-                                        {   
-                                            //로그인 여부 & 지원여부 검증 
-                                            login?
-                                            <GPAChart majorName={selectedMajorId} averageGPA={majorInfo.avgGpa}/>:
-                                            <>
-                                                <GPAChart majorName={"false"} averageGPA={majorInfo.avgGpa}/>
-                                                <div className="noticeAvgGpa" >평균학점은 지원 후 확인할 수 있습니다😊</div>
-                                            </>
-                                        }
-                                    </>
-                                }
+                                <ShowMajorDetail/>
                             </div>
-                            <div className="applyBlock">
-                                {
-                                    login?
-                                    <>
-                                    {
-                                        !thisApply?
-                                        <Button type="button" className="applyButton" onClick={applyMajor}>지원하기</Button>:
-                                        <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
-                                    }
-                                    </>:
-                                    <>
-                                    <span className="warning">지원하기 전, 로그인해주세요😊</span><br/>
-                                    <Button type="button" className="applyButton" onClick={()=>navigate("/login")}>Login</Button>
-                                    </>
-                                   
-                                }
-
-                                
-                                
+                            <div className="applyBlock">                
+                                <Button type="button" className="applyButton" onClick={saveMajorDetailInfo}>저장하기</Button>
                             </div>
                         </div>
                     </BodyBlock>
                 <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
             </div>
-            <>
-                <Modal show={showModal} onHide={modalClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title><b>{selectedMajorId} 지원하기</b></Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>나의 평균 학점</Form.Label>
-                        <Form.Control
-                        type="text"
-                        placeholder="학점을 입력해주세요."
-                        value={thisGpa}
-                        onChange={putGpa}
-                        autoFocus
-                        />
-                    </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={modalClose}>
-                    취소
-                    </Button>
-                    <Button variant="dark" onClick={postApplyInfo}>
-                    입력하기
-                    </Button>
-                    
-                </Modal.Footer>
-                </Modal>
-            </>
         </>
     );
     }

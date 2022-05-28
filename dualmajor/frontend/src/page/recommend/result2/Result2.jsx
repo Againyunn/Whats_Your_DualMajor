@@ -62,7 +62,7 @@ export default function Result() {
         RecommendService.getFinalResult(resultType, testKeyValidate).then(
             (response) => {
 
-                console.log("getData:", response.data)
+                console.log("getData:", response.data);
 
                 //전달받은 값을 데이터로 저장
                 setThisResult(response.data.info);
