@@ -16,8 +16,8 @@ const getMajorListGlobal = () => {
 
 //전공 별 경쟁률 정보 
 /**majorName(전공명)을 인자로 넘겨서 데이터 받기*/
-const getRateInfo = (majorName) => {
-    return (axios.post(API_URL + "majorList/global/"),{majorName});
+const getRateInfo = (name) => {
+    return (axios.post(API_URL + "rateInfo/",{name}));
 }
 
 //지원정보 받아오기
@@ -42,13 +42,13 @@ const getRateInfo = (majorName) => {
  * 차후 보완해야 할 점: 사진이나 캡쳐를 통해 업로드하고, 백엔드 단에서 AI의 사진 내 텍스트 인식 기술 기반으로 해당 학점과 학과 정보를 인식하는 방식으로 변경필요
  */
 const getApplyInfo = (stdNum) => {
-    return(axios.post(API_URL + "getApplyInfo/"), {stdNum});
+    return(axios.post(API_URL + "getApplyInfo/", {stdNum}));
 } //백엔드 value 반환 형식:  stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
 
 
 //지원정보 전달하기
-const postApply = (stdNum, majorName) => {
-    return(axios.post(API_URL + "postApply/"), {stdNum, majorName})
+const postApply = (stdNum, name) => {
+    return(axios.post(API_URL + "postApply/", {stdNum, name}));
 } //백엔드 value 반환 형식:  success(성공했다는 정보) or 에러 반환
 
 

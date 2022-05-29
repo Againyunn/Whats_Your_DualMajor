@@ -60,37 +60,39 @@ function SeoulMain() {
     //해당학과에 대한 지원 여부 확인하기
     useEffect(() => {
 
-        //테스트용
-        console.log("rendering")
-        let data = `
-            [
-                {
-                    "id": "1",
-                    "name": "GBT학부"
-                },
-                {
-                    "id": "2",
-                    "name": "컴퓨터공학부"
-                },
-                {
-                    "id": "3",
-                    "name": "세르비아크로아티아어과"
-                },
-                {
-                    "id": "4",
-                    "name": "브라질학과"
-                }
-            ]
-        `
-        setThisMajorList(Object.values(JSON.parse(data)));
+        // //테스트용
+        // console.log("rendering")
+        // let data = `
+        //     [
+        //         {
+        //             "id": "1",
+        //             "name": "GBT학부"
+        //         },
+        //         {
+        //             "id": "2",
+        //             "name": "컴퓨터공학부"
+        //         },
+        //         {
+        //             "id": "3",
+        //             "name": "세르비아크로아티아어과"
+        //         },
+        //         {
+        //             "id": "4",
+        //             "name": "브라질학과"
+        //         }
+        //     ]
+        // `
+        // setThisMajorList(Object.values(JSON.parse(data)));
 
         
-        //     RateService.getMajorListSeoul().then(
-        //         (response) => {
-        //             setThisMajorList(JSON.parse(response.data.majorListSeoul)));
-        //             console.log(response.data.majorListSeoul);
-        //         }
-        //     )
+        RateService.getMajorListSeoul().then(
+            (response) => {
+                let getData = response.data.majorListSeoul;
+                setThisMajorList(getData);
+                setSelectedMajorId(getData[0].name);
+                console.log(response.data.majorListSeoul);
+            }
+        )
 
         //로그인 되어있는 지 확인
         if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
@@ -109,7 +111,9 @@ function SeoulMain() {
             RateService.getApplyInfo(thisUser).then(
                 (response) =>{
                     //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
-                    setApplyInfo(Object.values(JSON.parse(response.data)));
+                    setApplyInfo(response.data);
+
+                    console.log("applyInfo data:", response.data)
                 }
             )
         }
@@ -127,24 +131,26 @@ function SeoulMain() {
 
     //select를 통해 전공을 선택하면 API를 요청
     useEffect(() => {
-        //테스트
-        let majorData =`
-            {
-                "id" : "1",
-                "name" : "GBT학부",
-                "applyNum" : "25",
-                "totalNum" : "100",
-                "avgGpa" : "4.05"
-            }
-        `
-        setMajorInfo(JSON.parse(majorData));
-
-
-        // RateService.getRateInfo(selectedMajorId).then(
-        //     (response) => {
-        //         setMajorInfo(JSON.parse(response));
+        // //테스트
+        // let majorData =`
+        //     {
+        //         "id" : "1",
+        //         "name" : "GBT학부",
+        //         "applyNum" : "25",
+        //         "totalNum" : "100",
+        //         "avgGpa" : "4.05"
         //     }
-        // )
+        // `
+        // setMajorInfo(JSON.parse(majorData));
+
+
+        RateService.getRateInfo(selectedMajorId).then(
+            (response) => {
+                setMajorInfo(response.data);
+
+                console.log("getRateInfo:", response.data);
+            }
+        )
 
 
     },[selectedMajorId])
@@ -153,7 +159,11 @@ function SeoulMain() {
     useEffect(() => {
         //로그인 유무, 학점 입력 여부 확인
         if(login&&(thisGpa !== '')){
-            RateService.postApply(thisUser, thisApply, thisGpa)
+            RateService.postApply(thisUser, thisApply, thisGpa).then().catch(
+                (error)=>{
+                    console.log("postApply:",error);
+                }
+            )
         }
         
     },[thisApply])
