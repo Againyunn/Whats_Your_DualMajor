@@ -36,7 +36,7 @@ public class ApplyServiceImpl implements ApplyService{
         DualMajor dualMajor = dualMajorRepository.findByMajorName(applyDto.getName()).get();
         int applyNum = memberRecommendedMajorRepository.findMajorCount(applyDto.getName());//같은 학과 명으로 저장된 수(count) 조회
         String avgGpa = getAvgGpa(applyDto.getName()); //해당 학과 지원한 학생 평균 학점 구하기
-        map.put("id", dualMajor.getId()); //해당 학과 id
+        map.put("id", Long.toString(dualMajor.getId())); //해당 학과 id
         map.put("name", dualMajor.getMajorName()); //해당 학과 명
         if(dualMajor.getTotalNum().equals("융합")){ //융합전공은 정원 정보를 알 수 없어서 지원 정원과 지원자 수 모두 false로 설정
             map.put("applyNum", false); //해당 학과에 지원한 학생 수
@@ -44,7 +44,7 @@ public class ApplyServiceImpl implements ApplyService{
         }
         else {
             map.put("applyNum", Integer.toString(applyNum)); //해당 학과에 지원한 학생 수
-            map.put("totalNum", dualMajor.getTotalNum()); //해당 학과 이중전공 정원}
+            map.put("totalNum", dualMajor.getTotalNum()); //해당 학과 이중전공 정원
         }
         map.put("avgGpa", avgGpa); //해당 학과 지원한 학생들의 평균 학점
         return map;
@@ -82,7 +82,7 @@ public class ApplyServiceImpl implements ApplyService{
         map.put("stdNum",member.getStdNum()); //회원 학번
         map.put("apply",true); //지원 여부
         map.put("majorName",memberRecommendedMajor.getMajorName()); //지원한 학과 명
-        map.put("gpa",member.getGpa()); //회원 학점
+        map.put("gpa", Double.toString(member.getGpa())); //회원 학점
         map.put("change",validateApplyPossibility(memberRecommendedMajor.getApplyDate(), currentTime)); //이중전공 지원 수정 여부
         return map;
     }
