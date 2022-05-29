@@ -40,7 +40,7 @@ public class Member {
     //서비스 내 회원 지위
     private String role;
     //회원 학점
-    private double gpa;
+    private Double gpa;
 
     //Getter
     public Long getId() {
@@ -80,7 +80,7 @@ public class Member {
     }
 
     /*Member 저장 로직*/
-    public void CreateMember(String nickName, String email, String password, String stdNum, FirstMajor firstMajor, DualMajor dualMajor, String grade, String userType, double gpa) {
+    public void CreateMember(String nickName, String email, String password, String stdNum, FirstMajor firstMajor, DualMajor dualMajor, String grade, String userType, Double gpa) {
         this.nickName = nickName;
         this.email = email;
         this.password = password;
@@ -94,7 +94,7 @@ public class Member {
     }
 
     /*Member 수정 로직*/
-    public void updateMember(String nickName, String password, String stdNum, FirstMajor firstMajor, DualMajor dualMajor, String grade, String userType, double gpa) {
+    public void updateMember(String nickName, String password, String stdNum, FirstMajor firstMajor, DualMajor dualMajor, String grade, String userType, Double gpa) {
         this.nickName = nickName;
         this.password = password;
         this.stdNum = stdNum;

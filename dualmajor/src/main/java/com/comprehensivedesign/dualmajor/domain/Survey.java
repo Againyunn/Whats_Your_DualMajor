@@ -36,37 +36,6 @@ public class Survey {
     private MemberFinalResult memberFinalResult;
 
     /*설문 응답 정보 생성 로직*/
-    public void createSurveyResponse1(String question1, String question2, String question3, String question4,
-                                     String question5, String question6, String question7, String starCount,
-                                     TendencyResponse tendencyResponse, MemberFinalResult memberFinalResult) {
-        this.question1 = question1;
-        this.question2 = question2;
-        this.question3 = question3;
-        this.question4 = question4;
-        this.question5 = question5;
-        this.question6 = question6;
-        this.question7 = question7;
-        this.starCount = starCount;
-        this.tendencyResponse = tendencyResponse;
-        this.memberFinalResult = memberFinalResult;
-    }
-    /*설문 응답 정보 생성 로직*/
-    public void createSurveyResponse2(String question1, String question2, String question3, String question4,
-                                     String question5, String question6, String question7, String starCount,
-                                     CareerResponse careerResponse, MemberFinalResult memberFinalResult) {
-        this.question1 = question1;
-        this.question2 = question2;
-        this.question3 = question3;
-        this.question4 = question4;
-        this.question5 = question5;
-        this.question6 = question6;
-        this.question7 = question7;
-        this.starCount = starCount;
-        this.careerResponse = careerResponse;
-        this.memberFinalResult = memberFinalResult;
-    }
-
-    /*설문 응답 정보 생성 로직*/
     public void createSurveyResponse(String question1, String question2, String question3, String question4,
                                       String question5, String question6, String question7, String starCount,
                                       TendencyResponse tendencyResponse, CareerResponse careerResponse,

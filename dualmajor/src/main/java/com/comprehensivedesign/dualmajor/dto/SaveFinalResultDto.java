@@ -11,4 +11,7 @@ public class SaveFinalResultDto {
     private String departmentName;
     private String user;
     private String testKey;
+
+    private String stdNum;
+    private String email;
 }

@@ -43,7 +43,7 @@ public class MemberDto { //데이터 저장 및 전송을 위한 데이터 처�
 
     private String resultType;
 
-    private double gpa;
+    private Double gpa;
 
     /*===majorId type parsint(String->Long)===*/
     /*Json으로 넘어오는 majorId(String)을 회원 DB에 저장할 때에는 Long타입으로 넣어줘야 함.

@@ -32,11 +32,8 @@ public class SurveyServiceImpl implements SurveyService{
         TendencyResponse tendencyResponse = tendencyResponseRepository.findByTestKey(surveyDto.getTestKey());
         CareerResponse careerResponse = careerResponseRepository.findByTestKey(surveyDto.getTestKey());
         MemberFinalResult memberFinalResult = memberFinalResultRepository.findByTestKey(surveyDto.getTestKey());
-        /*if (careerResponse == null) {
-            survey.createSurveyResponse1(survey.getQuestion1(), survey.getQuestion2(), survey.getQuestion3(), survey.getQuestion4(), survey.getQuestion5(), survey.getQuestion6(), survey.getQuestion7(), survey.getStarCount(), tendencyResponse, memberFinalResult);
-        }
-        else{
-            survey.createSurveyResponse2(survey.getQuestion1(), survey.getQuestion2(), survey.getQuestion3(), survey.getQuestion4(), survey.getQuestion5(), survey.getQuestion6(), survey.getQuestion7(), survey.getStarCount(), careerResponse, memberFinalResult);}*/
+        System.out.println("question1 in survey"+surveyDto.getQuestion1().getClass().getName());
+        System.out.println("question7 in survey"+surveyDto.getQuestion7().getClass().getName());
         survey.createSurveyResponse(surveyDto.getQuestion1(), surveyDto.getQuestion2(), surveyDto.getQuestion3(), surveyDto.getQuestion4(), surveyDto.getQuestion5(), surveyDto.getQuestion6(), surveyDto.getQuestion7(), surveyDto.getStarCount(), tendencyResponse, careerResponse, memberFinalResult);
         surveyRepository.save(survey);
     }
