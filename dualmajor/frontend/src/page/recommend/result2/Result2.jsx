@@ -15,13 +15,13 @@ export default function Result() {
     //만족도 조사 변수
     const [modalShow, setModalShow] = useState(false); //모달을 통해 만족도 수집
     // const [satisfyingStar, setSatisfyingStar] = useState(1); //별점
-    const [reviewQuestion1, setReviewQuestion1] = useState("");//후기 질문1
-    const [reviewQuestion2, setReviewQuestion2] = useState("");//후기 질문2
-    const [reviewQuestion3, setReviewQuestion3] = useState("");//후기 질문3
-    const [reviewQuestion4, setReviewQuestion4] = useState("");//후기 질문4
-    const [reviewQuestion5, setReviewQuestion5] = useState("");//후기 질문5
-    const [reviewQuestion6, setReviewQuestion6] = useState("");//후기 질문6
-    const [reviewQuestion7, setReviewQuestion7] = useState("");//후기 질문7
+    // const [reviewQuestion1, setReviewQuestion1] = useState("");//후기 질문1
+    // const [reviewQuestion2, setReviewQuestion2] = useState("");//후기 질문2
+    // const [reviewQuestion3, setReviewQuestion3] = useState("");//후기 질문3
+    // const [reviewQuestion4, setReviewQuestion4] = useState("");//후기 질문4
+    // const [reviewQuestion5, setReviewQuestion5] = useState("");//후기 질문5
+    // const [reviewQuestion6, setReviewQuestion6] = useState("");//후기 질문6
+    // const [reviewQuestion7, setReviewQuestion7] = useState("");//후기 질문7
 
     //테스트용
     // let testData = {
@@ -172,11 +172,11 @@ export default function Result() {
             let testKeyValidate = sessionStorage.getItem('testKey');
 
             //로그인 정보 받아오기
-            let thisUser = sessionStorage.getItem("user");
+            let thisUser = JSON.stringify(sessionStorage.getItem("user"));
 
             //로그인 안되어 있으면 false로 값 지정
             if(!thisUser){
-                thisUser = false;
+                thisUser = "false";
             }
             console.log("answer:",answer);
 
@@ -186,6 +186,15 @@ export default function Result() {
             if(!starRecord){
                 sessionStorage.removeItem('starCount')
             }
+
+            //설문조사 내용 받아오기
+            let reviewQuestion1 = sessionStorage.getItem("ReviewQuestion1");
+            let reviewQuestion2 = sessionStorage.getItem("ReviewQuestion2");
+            let reviewQuestion3 = sessionStorage.getItem("ReviewQuestion3");
+            let reviewQuestion4 = sessionStorage.getItem("ReviewQuestion4");
+            let reviewQuestion5 = sessionStorage.getItem("ReviewQuestion5");
+            let reviewQuestion6 = sessionStorage.getItem("ReviewQuestion6");
+            let reviewQuestion7 = sessionStorage.getItem("ReviewQuestion7");
 
             //비회원이 차후에 회원가입 시 기존의 서비스 정보를 받을 수 있도록 -> 선택한 학과 정보 저장
             localStorage.setItem('recommendResult', answer);
@@ -210,7 +219,6 @@ export default function Result() {
             alert("학과를 선택해주세요~😉");
         }
     }
-
 
 
 
@@ -243,37 +251,45 @@ export default function Result() {
         //리뷰 질문 기록용 함수
         const selectReviewQuestion1 = (e) => {
             let thisReview = e.target.value;
-            setReviewQuestion1(thisReview);
+            sessionStorage.setItem("ReviewQuestion1",thisReview);
+            //setReviewQuestion1(thisReview);
+
         }
 
         const selectReviewQuestion2 = (e) => {
             let thisReview = e.target.value;
-            setReviewQuestion2(thisReview);
+            sessionStorage.setItem("ReviewQuestion2",thisReview);
+            // setReviewQuestion2(thisReview);
         }
 
         const selectReviewQuestion3 = (e) => {
             let thisReview = e.target.value;
-            setReviewQuestion3(thisReview);
+            sessionStorage.setItem("ReviewQuestion3",thisReview);
+            // setReviewQuestion3(thisReview);
         }
 
         const selectReviewQuestion4 = (e) => {
             let thisReview = e.target.value;
-            setReviewQuestion4(thisReview);
+            sessionStorage.setItem("ReviewQuestion4",thisReview);
+            // setReviewQuestion4(thisReview);
         }
 
         const selectReviewQuestion5 = (e) => {
             let thisReview = e.target.value;
-            setReviewQuestion5(thisReview);
+            sessionStorage.setItem("ReviewQuestion5",thisReview);
+            // setReviewQuestion5(thisReview);
         }
 
         const selectReviewQuestion6 = (e) => {
             let thisReview = e.target.value;
-            setReviewQuestion6(thisReview);
+            sessionStorage.setItem("ReviewQuestion6",thisReview);
+            // setReviewQuestion6(thisReview);
         }
 
         const selectReviewQuestion7 = (e) => {
             let thisReview = e.target.value;
-            setReviewQuestion7(thisReview);
+            sessionStorage.setItem("ReviewQuestion7",thisReview);
+            // setReviewQuestion7(thisReview);
         }
            
         return (
@@ -304,7 +320,7 @@ export default function Result() {
                     </Col>
                     <Col xs={12} md={12}>
                         <InputGroup>
-                            <FormControl onChange={() => selectReviewQuestion1()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="본전공을 입력해주세요~"></FormControl>
+                            <FormControl onChange={(e) => selectReviewQuestion1(e)}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="본전공을 입력해주세요~"></FormControl>
                         </InputGroup>
                     </Col>
 
@@ -313,7 +329,7 @@ export default function Result() {
                     </Col>
                     <Col xs={12} md={12}>
                         <InputGroup>
-                            <FormControl onChange={() => selectReviewQuestion2()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="이중(부)전공이 없다면 x를 입력해주세요~"></FormControl>
+                            <FormControl onChange={(e) => selectReviewQuestion2(e)}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="이중(부)전공이 없다면 x를 입력해주세요~"></FormControl>
                         </InputGroup>
                     </Col>
 
@@ -322,7 +338,7 @@ export default function Result() {
                     </Col>
                     <Col xs={12} md={12}>
                         <InputGroup>
-                            <FormControl onChange={() => selectReviewQuestion3()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="ex: ENTJ"></FormControl>
+                            <FormControl onChange={(e) => selectReviewQuestion3(e)}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="ex: ENTJ"></FormControl>
                         </InputGroup>
                     </Col>
 
@@ -331,7 +347,7 @@ export default function Result() {
                     </Col>
                     <Col xs={12} md={12}>
                         <InputGroup>
-                            <FormControl onChange={() => selectReviewQuestion4()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="0 ~ 10 사이의 값을 입력해주세요~"></FormControl>
+                            <FormControl onChange={(e) => selectReviewQuestion4(e)}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="0 ~ 10 사이의 값을 입력해주세요~"></FormControl>
                         </InputGroup>
                     </Col>
 
@@ -340,7 +356,7 @@ export default function Result() {
                     </Col>
                     <Col xs={12} md={12}>
                         <InputGroup>
-                            <FormControl onChange={() => selectReviewQuestion5()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="개선점이나 추가하면 좋을 것들~~"></FormControl>
+                            <FormControl onChange={(e) => selectReviewQuestion5(e)}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="개선점이나 추가하면 좋을 것들~~"></FormControl>
                         </InputGroup>
                     </Col>
 
@@ -349,7 +365,7 @@ export default function Result() {
                     </Col>
                     <Col xs={12} md={12}>
                         <InputGroup>
-                            <FormControl onChange={() => selectReviewQuestion6()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="위 질문의 피드백까지 반영되었을 때로 가정해주세요😊"></FormControl>
+                            <FormControl onChange={(e) => selectReviewQuestion6(e)}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="위 질문의 피드백까지 반영되었을 때로 가정해주세요😊"></FormControl>
                         </InputGroup>
                     </Col>
 
@@ -358,7 +374,7 @@ export default function Result() {
                     </Col>
                     <Col xs={12} md={12}>
                         <InputGroup>
-                            <FormControl onChange={() => selectReviewQuestion7()}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="본전공을 입력해주세요~"></FormControl>
+                            <FormControl onChange={(e) => selectReviewQuestion7(e)}  aria-label="Username"  aria-describedby="basic-addon1"  placeholder="본전공을 입력해주세요~"></FormControl>
                         </InputGroup>
                     </Col>
                         
