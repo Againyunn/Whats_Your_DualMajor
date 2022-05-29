@@ -1,19 +1,16 @@
 spring:
   datasource:
-    url: jdbc:mysql://comprehensive-design-db.clxbgghrrksn.ap-northeast-2.rds.amazonaws.com:3306/comprehensive_design_db?serverTimezone=Asia/Seoul
-    username: eukkki210
-    password: Inter!0719
-    #url: jdbc:mysql://127.0.0.1:3306/dualmajor?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-    #username: root
-    #password: wnddnjs11@@
-    #url: jdbc:h2:tcp://localhost/~/dualmajor
-    #username: sa
-    #password:
-    #driver-class-name: org.h2.Driver
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://comprehensive-design-db.clxbgghrrksn.ap-northeast-2.rds.amazonaws.com:3306/comprehensive_design_db?serverTimezone=Asia/Seoul
+    #username: eukkki210
+    #password: Inter!0719
+    url: jdbc:h2:tcp://localhost/~/dualmajor
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    #driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
-    #database: MYSQL
+    database: MYSQL
     hibernate:
       ddl-auto: update
       naming:
