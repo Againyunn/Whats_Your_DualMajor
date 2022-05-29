@@ -10,4 +10,6 @@ public interface ApplyService {
 
     Map getApplyInfo(ApplyDto applyDto) throws Exception;
 
+    boolean postApply(ApplyDto applyDto) throws Exception;
+
 }

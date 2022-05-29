@@ -6,7 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -27,7 +30,8 @@ public class MemberRecommendedMajor {
     public void createMemberRecommendedMajor(String majorName, Member member) {
         this.member = member;
         this.majorName  = majorName;
-        this.applyDate = LocalDateTime.now();
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 날짜 데이터 포맷을 정함
+        this.applyDate = LocalDateTime.now(); // 정해진 날짜 데이터 포맷에 맞게 시간을 가져와서 적용함(String)
     }
 
 }

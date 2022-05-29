@@ -41,4 +41,18 @@ public class ApplyController {
         return applyService.getApplyInfo(applyDto);
     }
 
+    @PostMapping("/postApply")
+    public Object postApply(@RequestBody ApplyDto applyDto) throws Exception{
+        Map<String, Object> map = new LinkedHashMap<>();
+        try{
+            applyService.postApply(applyDto);
+        }
+        catch(Exception e){
+            map.put("is_success", false);
+            return map;
+        }
+        map.put("is_success", true);
+        return map;
+    }
+
 }

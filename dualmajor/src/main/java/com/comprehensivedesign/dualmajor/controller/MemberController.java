@@ -33,14 +33,17 @@ public class MemberController {
     //비밀번호 찾기 기능중 회원 확인 절차용
     public Map checkJoinedMember(@RequestBody MemberDto memberDto) throws Exception{
         HashMap<String, Object> map = new LinkedHashMap<>();
+        System.out.println("getEmail in check"+memberDto.getEmail());
+        System.out.println("getstdnum in check"+memberDto.getStdNum());
         try {
             memberService.find(memberDto.getStdNum()+"@hufs.ac.kr");
+            memberService.find(memberDto.getEmail()+"@hufs.ac.kr");
         } catch (Exception e) {
             map.put("joinedMember", false);
             return map;
         }
         map.put("joinedMember", true);
-        map.put("stdNum",memberDto.getStdNum()+"@hufs.ac.kr");
+        map.put("stdNum",memberDto.getEmail()+"@hufs.ac.kr");
         //map.put("email",member.getEmail());
 
         return map;

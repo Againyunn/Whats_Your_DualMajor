@@ -16,4 +16,6 @@ public interface MemberRecommendedMajorRepository extends JpaRepository <MemberR
 
     @Query(value = "select count(*) as applyNum from MEMBER_RECOMMENDED_MAJOR m where m.majorName = :name", nativeQuery = true)
     int findMajorCount(String name);
+
+    Optional<MemberRecommendedMajor> findByMajorNameAndMemberId(String majorName, Long memberId);
 }
