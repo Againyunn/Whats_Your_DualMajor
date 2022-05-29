@@ -94,7 +94,7 @@ public class Member {
     }
 
     /*Member 수정 로직*/
-    public void updateMember(String nickName, String password, String stdNum, FirstMajor firstMajor, DualMajor dualMajor, String grade, String userType) {
+    public void updateMember(String nickName, String password, String stdNum, FirstMajor firstMajor, DualMajor dualMajor, String grade, String userType, double gpa) {
         this.nickName = nickName;
         this.password = password;
         this.stdNum = stdNum;
@@ -102,6 +102,7 @@ public class Member {
         this.dualMajor = dualMajor;
         this.grade = grade;
         this.userType = userType;
+        this.gpa = gpa;
     }
 
     /*Member 비밀번호 재설정 로직*/

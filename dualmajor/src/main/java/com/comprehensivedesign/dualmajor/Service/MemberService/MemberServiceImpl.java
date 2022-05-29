@@ -88,7 +88,8 @@ public class MemberServiceImpl implements MemberService{
                 , majorService.findFirstMajorById(memberDto.getFirstMajorId())
                 , majorService.findDualMajorById(memberDto.getDualMajorId())
                 , memberDto.getGrade()
-                , memberDto.getUserType());
+                , memberDto.getUserType()
+                , memberDto.getGpa());
         return member;
     }
 

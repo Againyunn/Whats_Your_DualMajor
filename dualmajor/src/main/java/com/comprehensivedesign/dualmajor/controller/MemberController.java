@@ -37,15 +37,13 @@ public class MemberController {
         System.out.println("getstdnum in check"+memberDto.getStdNum());
         try {
             memberService.find(memberDto.getStdNum()+"@hufs.ac.kr");
-            memberService.find(memberDto.getEmail()+"@hufs.ac.kr");
         } catch (Exception e) {
             map.put("joinedMember", false);
             return map;
         }
         map.put("joinedMember", true);
-        map.put("stdNum",memberDto.getEmail()+"@hufs.ac.kr");
+        map.put("stdNum",memberDto.getStdNum()+"@hufs.ac.kr");
         //map.put("email",member.getEmail());
-
         return map;
     }
     @PostMapping("/editPW") //비밀번호 수정 성공 여부 API
