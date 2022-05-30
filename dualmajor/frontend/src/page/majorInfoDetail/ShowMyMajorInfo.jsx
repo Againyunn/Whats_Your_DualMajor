@@ -236,6 +236,12 @@ function SeoulMain() {
                 )
             }
         }
+        console.log("arr:",arr);
+        console.log("thisMajorList:", thisMajorList);
+
+        if(!arr){
+            return;
+        }
 
         return arr;
     }
@@ -266,6 +272,7 @@ function SeoulMain() {
                                                     !thisMajorList?  
                                                     <option value="0">학과 없음</option>:
                                                     thisMajorList.map(thisMajor => (
+                                                        
                                                         <option key={thisMajor.name} value={thisMajor.name}>
                                                         {thisMajor.name}
                                                         </option>

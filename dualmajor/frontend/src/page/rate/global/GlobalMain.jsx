@@ -85,12 +85,12 @@ function SeoulMain() {
         // setThisMajorList(Object.values(JSON.parse(data)));
 
         
-        RateService.getMajorListSeoul().then(
+        RateService.getMajorListGlobal().then(
             (response) => {
-                let getData = response.data.majorListSeoul;
+                let getData = response.data.majorListGlobal;
                 setThisMajorList(getData);
                 setSelectedMajorId(getData[0].name);
-                console.log(response.data.majorListSeoul);
+                console.log(response.data.majorListGlobal);
             }
         )
 

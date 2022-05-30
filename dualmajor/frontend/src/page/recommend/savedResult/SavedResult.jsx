@@ -73,45 +73,44 @@ export default function Result() {
                 <Accordion defaultActiveKey="0" flush>
                     {
                         //testData.info.map(thisData => (
-                        thisResult.map(thisData => (
                             <>
-                                <Accordion.Item eventKey={thisData.departmentName}>
-                                    <Accordion.Header>{thisData.departmentName}</Accordion.Header>
+                                <Accordion.Item eventKey={thisResult.departmentName}>
+                                    <Accordion.Header>{thisResult.departmentName}</Accordion.Header>
                                     <Accordion.Body>
                                         <ListGroup>
-                                            <ListGroup.Item>{thisData.campus}</ListGroup.Item>
-                                            <ListGroup.Item>{thisData.intro}</ListGroup.Item>
-                                            <ListGroup.Item>{thisData.degree}</ListGroup.Item>
+                                            <ListGroup.Item>{thisResult.campus}</ListGroup.Item>
+                                            <ListGroup.Item>{thisResult.intro}</ListGroup.Item>
+                                            <ListGroup.Item>{thisResult.degree}</ListGroup.Item>
                                                 {
-                                                    (thisData.career !== null)?
-                                                    <ListGroup.Item>{thisData.career}</ListGroup.Item>:
+                                                    (thisResult.career !== null)?
+                                                    <ListGroup.Item>{thisResult.career}</ListGroup.Item>:
                                                     <></>
                                                 }
                                                 {
-                                                    (thisData.curriculum !== null)?
-                                                     <ListGroup.Item>{thisData.curriculum}</ListGroup.Item>:
+                                                    (thisResult.curriculum !== null)?
+                                                     <ListGroup.Item>{thisResult.curriculum}</ListGroup.Item>:
                                                      <></>
                                                 }
                                                 {
-                                                    (thisData.certification!== null)?
-                                                    <ListGroup.Item>{thisData.certification}</ListGroup.Item>:
+                                                    (thisResult.certification!== null)?
+                                                    <ListGroup.Item>{thisResult.certification}</ListGroup.Item>:
                                                     <></>                                                   
                                                 }
                                                 {
-                                                    (thisData.webPage !== null)?
-                                                    <ListGroup.Item>{thisData.webPage}</ListGroup.Item>:
+                                                    (thisResult.webPage !== null)?
+                                                    <ListGroup.Item>{thisResult.webPage}</ListGroup.Item>:
                                                     <></>
                                                 }
                                                 {
-                                                    (thisData.phoneNum !== null)?
-                                                    <ListGroup.Item>{thisData.phoneNum}</ListGroup.Item>:
+                                                    (thisResult.phoneNum !== null)?
+                                                    <ListGroup.Item>{thisResult.phoneNum}</ListGroup.Item>:
                                                     <></>
                                                 }
                                         </ListGroup>
                                     </Accordion.Body>
                                 </Accordion.Item>
                             </>
-                        ))
+                        
                     }
                 </Accordion>
             </>
