@@ -149,7 +149,9 @@ function App() {
         <Route path='/question1' element={<Question1Frame/>}/>
         <Route path='/result1' element={<Result1Frame/>}/>
         <Route path='/question2' element={<Question2Frame/>}/>
-        <Route path='/result2' element={<Result2Frame/>}/>
+        <Route path='/result2' element={<Result2Frame/>}>
+          <Route path=':id' element={<Result2Frame/>} />
+        </Route>
         <Route path='/rate' element={<RateMain/>} />
         <Route path='/seoul' element={<SeoulMain/>} />
         <Route path='/global' element={<GlobalMain/>} />
@@ -157,6 +159,14 @@ function App() {
         <Route path="/seoulMajorInfo" element={<SeoulMajorInfo />} />
         <Route path="/globalMajorInfo" element={<GlobalMajorInfo />} />
         <Route path="/showMyMajorInfo" element={<ShowMyMajorInfo/>} />
+        <Route
+        path="*"
+        element={
+          <main style={{ padding: "1rem" }}>
+            <p>죄송합니다. 잘못된 페이지 입니다.</p>
+          </main>
+        }
+      />  
       </Routes>
     </BrowserRouter>
   </>

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Button,  Modal, Row, Col, Container, ProgressBar, Accordion, ListGroup, InputGroup, FormControl} from 'react-bootstrap';
 import RecommendService from '../../../services/recommend.service';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 //import ReactTooltip from 'react-tooltip';
 
 export default function Result() {
@@ -149,6 +149,11 @@ export default function Result() {
         )
     }
 
+
+    //get방식으로 url분석
+     
+    let params = useParams(); //url의 parameter를 변수로 저장
+    let productId = params.id; //이번 페이지에서 사용할 결과식별자
     
 
     const selectResult =(event) =>{
@@ -172,11 +177,14 @@ export default function Result() {
             let testKeyValidate = sessionStorage.getItem('testKey');
 
             //로그인 정보 받아오기
-            let thisUser = JSON.stringify(sessionStorage.getItem("user"));
+            let thisUser = sessionStorage.getItem("user");
 
             //로그인 안되어 있으면 false로 값 지정
             if(!thisUser){
                 thisUser = "false";
+            }
+            else{
+                thisUser = "true";
             }
             console.log("answer:",answer);
 

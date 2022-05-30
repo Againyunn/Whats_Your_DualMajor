@@ -220,6 +220,13 @@ const getDepartmentInfo = (departmentName) => {
     );  
 }
 
+//모든 결과 정보 받아오기
+
+
+//결과를 전달하면 해당 결과에 맞는 값 받아오기
+
+
+
 const RecommendService = {
     getFirstSectionQuestion,
     submitFirstSectionAnswer,
