@@ -70,9 +70,11 @@ function SeoulMain() {
     },[])
 
     useEffect(() => {
-
         //전공 filter 생성
         PrintMajorList();
+
+        //페이지 내용 랜더링
+        PrintFrame();
 
     },[thisMajorList])
 
@@ -226,55 +228,60 @@ function SeoulMain() {
         return arr;
     }
 
+    const PrintFrame = () =>{
+        return(
+                <>
+                <div className="mainContainer">
+                    <div className="header"><Header showMenu={showMenu}/></div>
+                        <BodyBlock className="mainBody">
+                            <div className='container'>
+                                <div className="selectCampus">
+                                    <div className="selectFlex">
+                                        <div className="selectedMajor" id="myMajor">내가 찜한 전공</div>
+                                    </div>
+                                </div>
+                                {
+                                    !thisMajorList?
+                                    <>
+                                        <div className="majorBlock">
+                                            <h6>찜한 전공이 없어요😭<br/>전공을 선택해주세요😉</h6>
+                                        </div>
+                                    </>:
+                                    <>
+                                        <div className="filterBlock">
+                                            <Form.Select onChange={SelectMajorId}>
+                                                {
+                                                    !thisMajorList?  
+                                                    <option value="0">학과 없음</option>:
+                                                    thisMajorList.map(thisMajor => (
+                                                        <option key={thisMajor.name} value={thisMajor.name}>
+                                                        {thisMajor.name}
+                                                        </option>
+                                                    ))
+                                                }
+                                            </Form.Select>
+                                        </div>
+                                        <div className="majorBlock">
+                                            <ShowMajorDetail/>
+                                        </div>
+                                        <div className="applyBlock">                
+                                            <Button type="button" className="applyButton" onClick={deleteMajorDetailInfo}>저장취소</Button>
+                                        </div>
+                                    </>
+                                    
+                                }
+                            </div>
+                        </BodyBlock>
+                    <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
+                </div>
+            </>
+        );
+    }
 
     return (
-        <>
-            <div className="mainContainer">
-                <div className="header"><Header showMenu={showMenu}/></div>
-                    <BodyBlock className="mainBody">
-                        <div className='container'>
-                            <div className="selectCampus">
-                                <div className="selectFlex">
-                                    <div className="selectedMajor" id="myMajor">내가 찜한 전공</div>
-                                </div>
-                            </div>
-                            {
-                                !thisMajorList?
-                                <>
-                                    <div className="majorBlock">
-                                        <h6>찜한 전공이 없어요😭<br/>전공을 선택해주세요😉</h6>
-                                    </div>
-                                </>:
-                                <>
-                                    <div className="filterBlock">
-                                        <Form.Select onChange={SelectMajorId}>
-                                            {
-                                                !thisMajorList?  
-                                                <option value="0">학과 없음</option>:
-                                                thisMajorList.map(thisMajor => (
-                                                    <option key={thisMajor.name} value={thisMajor.name}>
-                                                    {thisMajor.name}
-                                                    </option>
-                                                ))
-                                            }
-                                        </Form.Select>
-                                    </div>
-                                    <div className="majorBlock">
-                                        <ShowMajorDetail/>
-                                    </div>
-                                    <div className="applyBlock">                
-                                        <Button type="button" className="applyButton" onClick={deleteMajorDetailInfo}>저장취소</Button>
-                                    </div>
-                                </>
-                                
-                            }
-                        </div>
-                    </BodyBlock>
-                <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
-            </div>
-        </>
+        <PrintFrame/>
     );
-    }
+}
 export default SeoulMain;
 
 //CSS
