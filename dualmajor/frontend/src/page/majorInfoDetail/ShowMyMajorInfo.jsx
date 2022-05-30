@@ -241,8 +241,7 @@ function SeoulMain() {
                         <div className='container'>
                             <div className="selectCampus">
                                 <div className="selectFlex">
-                                    <div className="selectSeoul" id="seoul" onClick={selectCampus}>서울</div>
-                                    <div className="selectGlobal" id="global" onClick={selectCampus}>글로벌</div>
+                                    <div className="selectedMajor" id="myMajor">내가 찜한 전공</div>
                                 </div>
                             </div>
                             <div className="filterBlock">
@@ -311,24 +310,12 @@ const BodyBlock = styled.div`
         color: white;
     }
 
-    .selectSeoul{
+    .selectedMajor{
         flex-grow: 1;
         padding: 5px;
-        background-color: #028799;
-        opacity: 1;
+        background-color: #002F5A;
+        opacity: 0.57;
     }
-
-    .selectGlobal{
-        flex-grow: 1;
-        padding: 5px;
-        background-color: #028799;
-        opacity: 0.7;
-    }
-
-    .selectGlobal:hover{
-        opacity: 1;
-    }
-
 
     /*전공 선택 필터*/
     .filterBlock{
