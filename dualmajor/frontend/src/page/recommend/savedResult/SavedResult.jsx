@@ -10,13 +10,24 @@ export default function Result() {
     const [thisResult, setThisResult] = useState(false); //백엔드로부터 받아올 데이터
     const [isError, setIsError] = useState(false); //결과 값이 에러인지 여부 저장
     const [answer, setAnswer] = useState(false); //사용자가 선택한 학문 설정
-
+    const [testKey, setTestKey] = useState(false);
 
     //화면 이동 제어용 callback함수 정의
     let navigate = useNavigate();
 
-
+    //초기 식별자 지정
     useEffect(() => {
+        //테스트 키(식별자) 받기
+        RecommendService.getTestKey().then(
+            (response) => {
+                setTestKey(response.data);
+            }
+        )
+    },[])
+
+    //이중전공 추천 결과 받아오기
+    useEffect(() => {
+
         //임시 아이디 설정
         let departmentName = localStorage.getItem('recommendResult');
 
@@ -29,7 +40,7 @@ export default function Result() {
                 //전달받은 값을 데이터로 저장
                 setThisResult(response.data);
                 //실행
-                ShowResult();
+                // ShowResult();
             }
         ).catch(
             (Error) => {
@@ -37,13 +48,12 @@ export default function Result() {
                 // setIsError(true);
             }
         )
-
         //테스트용
         //setThisResult(testData.info);
         //thisResult는 테스트 종료되면 삭제 처리
 
         ShowResult();
-    },[])
+    },[testKey])
 
     useEffect(() => {
         ShowResult();
@@ -58,7 +68,6 @@ export default function Result() {
                 <></>
             );
         }
-
         return(
             <>
                 <Accordion defaultActiveKey="0" flush>
@@ -112,8 +121,6 @@ export default function Result() {
     const testAgain = () => {
         navigate("/recommend");
     }
-
-
  
   return (
     <BodyBlock>

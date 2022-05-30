@@ -212,20 +212,19 @@ const saveSurvey = (question1, question2, question3, question4, question5, quest
     );
 }
 
-
-const getDepartmentInfo = (departmentName) => {
+//학과 결과 받아오기
+const getDepartmentInfo = (departmentName, testKey) => {
     return (axios.post(API_URL + "getDepartmentInfo/", {
-        departmentName
+        departmentName,
+        testKey
     })
     );  
 }
 
-//모든 결과 정보 받아오기
-
-
-//결과를 전달하면 해당 결과에 맞는 값 받아오기
-
-
+//테스트 키 받아오기 
+const getTestKey = () => {
+    return (axios.post(API_URL + "testKey/"));
+}
 
 const RecommendService = {
     getFirstSectionQuestion,
@@ -237,6 +236,7 @@ const RecommendService = {
     getFinalResult,
     saveResult,
     saveSurvey,
-    getDepartmentInfo
+    getDepartmentInfo,
+    getTestKey
     };
     export default RecommendService;
