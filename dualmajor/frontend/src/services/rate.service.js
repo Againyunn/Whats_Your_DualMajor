@@ -48,8 +48,8 @@ const getApplyInfo = (stdNum) => {
 
 
 //지원하기
-const postApply = (stdNum, name) => {
-    return(axios.post(API_URL + "postApply/", {stdNum, name}));
+const postApply = (stdNum, name, apply) => {
+    return(axios.post(API_URL + "postApply/", {stdNum, name, apply}));
 } //백엔드 value 반환 형식:  success(성공했다는 정보) or 에러 반환
 
 

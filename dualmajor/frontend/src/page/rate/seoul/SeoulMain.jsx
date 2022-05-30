@@ -158,7 +158,7 @@ function SeoulMain() {
     useEffect(() => {
         //로그인 유무, 학점 입력 여부 확인
         if(login){
-            RateService.postApply(thisUser, selectedMajorId).then(
+            RateService.postApply(thisUser, selectedMajorId, thisApply).then(
                 (response) =>{
                     console.log("post selectedMajorId:", selectedMajorId);
                     // window.location.reload();
