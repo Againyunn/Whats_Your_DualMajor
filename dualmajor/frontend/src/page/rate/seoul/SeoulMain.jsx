@@ -84,7 +84,6 @@ function SeoulMain() {
         // `
         // setThisMajorList(Object.values(JSON.parse(data)));
 
-        
         RateService.getMajorListSeoul().then(
             (response) => {
                 let getData = response.data.majorListSeoul;
@@ -106,13 +105,13 @@ function SeoulMain() {
 
     useEffect(() => {
         //major정보 초기화 or major를 선택한 경우
-        if(login){
+        if(login && (!selectedMajorId == false)){
             //사용자의 지원 여부 정보 받아오기
             RateService.getApplyInfo(thisUser).then(
                 (response) =>{
                     //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
                     setApplyInfo(response.data);
-
+                    setThisApply(response.data.apply);
                     console.log("applyInfo data:", response.data)
                 }
             )
@@ -158,14 +157,18 @@ function SeoulMain() {
     //사용자가 지원한 정보 백엔드로 전송
     useEffect(() => {
         //로그인 유무, 학점 입력 여부 확인
-        if(login&&(thisGpa !== '')){
-            RateService.postApply(thisUser, thisApply, thisGpa).then().catch(
+        if(login && thisApply && (!selectedMajorId === false)){
+            RateService.postApply(thisUser, selectedMajorId).then(
+                (response) =>{
+                    console.log("post selectedMajorId:", selectedMajorId);
+                    alert("지원 성공했어요😄");
+                }
+            ).catch(
                 (error)=>{
                     console.log("postApply:",error);
                 }
             )
         }
-        
     },[thisApply])
 
     //정보를 확인해볼 전공 확인 함수
@@ -178,9 +181,13 @@ function SeoulMain() {
         //로그인 유무 확인
         if(!login){
             //Login()
+            alert("로그인을 해주세요!");
+            return;
         }
+
+        setThisApply(true);
         //모달창 열어서 GPA입력 받기
-        modalShow();
+        // modalShow();
     }
 
     //지원취소 시
