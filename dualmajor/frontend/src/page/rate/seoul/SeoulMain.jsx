@@ -157,11 +157,11 @@ function SeoulMain() {
     //사용자가 지원한 정보 백엔드로 전송
     useEffect(() => {
         //로그인 유무, 학점 입력 여부 확인
-        if(login && thisApply && (!selectedMajorId === false)){
+        if(login){
             RateService.postApply(thisUser, selectedMajorId).then(
                 (response) =>{
                     console.log("post selectedMajorId:", selectedMajorId);
-                    alert("지원 성공했어요😄");
+                    window.location.reload();
                 }
             ).catch(
                 (error)=>{
