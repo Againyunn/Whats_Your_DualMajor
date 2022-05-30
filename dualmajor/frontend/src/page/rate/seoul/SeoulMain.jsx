@@ -95,7 +95,7 @@ function SeoulMain() {
 
         //로그인 되어있는 지 확인
         if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
-            setThisUser(sessionStorage.getItem("user"));
+            setThisUser(JSON.parse(sessionStorage.getItem("user")).id);
             setLogin(true);
             }
             else{
