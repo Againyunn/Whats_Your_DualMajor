@@ -31,7 +31,7 @@ function SeoulMain() {
     //filter로 전공을 선택하면 해당 전공에 대한 정보 API로 받아오기
 
     //변수 선언
-    const [thisMajorList, setThisMajorList] = useState([{id: "1", name: "2"}]);
+    const [thisMajorList, setThisMajorList] = useState([{id: "1", name: ""}]);
     const [selectedMajorId, setSelectedMajorId] = useState(false);
     const [majorDetailInfo, setMajorDetailInfo] = useState(false);
    
@@ -58,6 +58,10 @@ function SeoulMain() {
             setThisMajorList(tmpArr);
 
             setSelectedMajorId(preMajorDetailInfoArr[0]);
+        }
+        else{
+            setThisMajorList(false);
+            setSelectedMajorId("");
         }
 
 
@@ -133,7 +137,11 @@ function SeoulMain() {
 
         if(!majorDetailInfo){
             return(
-                <></>
+                <>
+                 <div className="majorBlock">
+                    <h6>찜한 전공이 없어요😭<br/>전공을 선택해주세요😉</h6>
+                </div>
+                </>
             );
         }
 
@@ -216,13 +224,17 @@ function SeoulMain() {
     //전공 리스트 filter 생성하는 객체
     const PrintMajorList = () => {
         let arr = [];
-         
+
+        
         for(let i = 0; i < thisMajorList.length; i++){
-            arr.push(
-                <option value={thisMajorList[i]}>
-                    {thisMajorList[i]}
-                </option>
-            )
+
+            if(thisMajorList[i] !== undefined){
+                arr.push(
+                    <option value={thisMajorList[i]}>
+                        {thisMajorList[i]}
+                    </option>
+                )
+            }
         }
 
         return arr;
@@ -243,9 +255,9 @@ function SeoulMain() {
                                 {
                                     !thisMajorList?
                                     <>
-                                        <div className="majorBlock">
-                                            <h6>찜한 전공이 없어요😭<br/>전공을 선택해주세요😉</h6>
-                                        </div>
+                                        
+                                        <h6>찜한 전공이 없어요😭<br/>전공을 선택해주세요😉</h6>
+                                        
                                     </>:
                                     <>
                                         <div className="filterBlock">

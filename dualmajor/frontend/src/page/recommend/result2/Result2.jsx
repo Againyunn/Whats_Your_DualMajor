@@ -449,18 +449,25 @@ export default function Result() {
                 }
             </div>
             {
-                thisResult.map(thisData => (
-                    <>
-                        {
-                            (thisData.campus !== null)?
-                            <div className='nextButtonFrame'>
-                                <Button className='nextButton' onClick={()=> setModalShow(true)}>저장하기</Button>
-                            </div>:
-                            <></>
-                        }
-                    </>
-                ))
+                !thisResult?
+                <></>:
+                <>
+                    {
+                        thisResult.map(thisData => (
+                            <>
+                                {
+                                    (thisData.campus !== null)?
+                                    <div className='nextButtonFrame'>
+                                        <Button className='nextButton' onClick={()=> setModalShow(true)}>저장하기</Button>
+                                    </div>:
+                                    <></>
+                                }
+                            </>
+                        ))
+                    }
+                </>
             }
+          
            
         </div>
         <SatisfactionModal show={modalShow} onHide={() => setModalShow(false)} />
