@@ -112,7 +112,7 @@ function SeoulMain() {
                 (response) =>{
                     //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
                     setApplyInfo(response.data);
-
+                    setThisApply(response.data.apply);
                     console.log("applyInfo data:", response.data)
                 }
             )
@@ -158,8 +158,13 @@ function SeoulMain() {
     //사용자가 지원한 정보 백엔드로 전송
     useEffect(() => {
         //로그인 유무, 학점 입력 여부 확인
-        if(login&&(thisGpa !== '')){
-            RateService.postApply(thisUser, thisApply, thisGpa).then().catch(
+        if(login){
+            RateService.postApply(thisUser, selectedMajorId).then().catch(
+                (error)=>{
+                    console.log("post selectedMajorId:", selectedMajorId);
+                    // window.location.reload();
+                }
+            ).catch(
                 (error)=>{
                     console.log("postApply:",error);
                 }
@@ -178,9 +183,12 @@ function SeoulMain() {
         //로그인 유무 확인
         if(!login){
             //Login()
+            alert("로그인을 해주세요!");
+            return;
         }
+        setThisApply(true);
         //모달창 열어서 GPA입력 받기
-        modalShow();
+        // modalShow();
     }
 
     //지원취소 시

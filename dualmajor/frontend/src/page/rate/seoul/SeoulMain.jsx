@@ -161,7 +161,7 @@ function SeoulMain() {
             RateService.postApply(thisUser, selectedMajorId).then(
                 (response) =>{
                     console.log("post selectedMajorId:", selectedMajorId);
-                    window.location.reload();
+                    // window.location.reload();
                 }
             ).catch(
                 (error)=>{
