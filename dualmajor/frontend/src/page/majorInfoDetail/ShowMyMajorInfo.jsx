@@ -31,7 +31,7 @@ function SeoulMain() {
     //filter로 전공을 선택하면 해당 전공에 대한 정보 API로 받아오기
 
     //변수 선언
-    const [thisMajorList, setThisMajorList] = useState([{id: "1", name: ""}]);
+    const [thisMajorList, setThisMajorList] = useState([{id: "1", name: " "}]);
     const [selectedMajorId, setSelectedMajorId] = useState(false);
     const [majorDetailInfo, setMajorDetailInfo] = useState(false);
    
@@ -61,7 +61,7 @@ function SeoulMain() {
         }
         else{
             setThisMajorList(false);
-            setSelectedMajorId("");
+            setSelectedMajorId(" ");
         }
 
 
