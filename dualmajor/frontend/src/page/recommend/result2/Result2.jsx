@@ -184,7 +184,8 @@ export default function Result() {
                 thisUser = "false";
             }
             else{
-                thisUser = thisUser[0];
+                thisUser = thisUser.id;
+                console.log("thisUser:", thisUser);
             }
             console.log("answer:",answer);
 

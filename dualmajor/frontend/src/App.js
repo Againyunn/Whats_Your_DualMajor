@@ -159,6 +159,7 @@ function App() {
         <Route path="/seoulMajorInfo" element={<SeoulMajorInfo />} />
         <Route path="/globalMajorInfo" element={<GlobalMajorInfo />} />
         <Route path="/showMyMajorInfo" element={<ShowMyMajorInfo/>} />
+        
         <Route
         path="*"
         element={
