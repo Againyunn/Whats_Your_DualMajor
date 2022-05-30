@@ -96,6 +96,13 @@ export default function Result() {
                 <></>
             );
         }
+    
+        const goToStart = () => {
+            //이중전공 추천 첫 page로 이동
+            navigate("/recommend");
+            window.location.reload();
+            
+        }
 
         return(
             <>
@@ -110,9 +117,29 @@ export default function Result() {
                                     </div>
                                     <Accordion.Body>
                                         <ListGroup>
-                                            <ListGroup.Item>{thisData.campus}</ListGroup.Item>
-                                            <ListGroup.Item>{thisData.intro}</ListGroup.Item>
-                                            <ListGroup.Item>{thisData.degree}</ListGroup.Item>
+                                                {
+                                                    (thisData.campus !== null)?
+                                                    <ListGroup.Item>{thisData.campus}</ListGroup.Item>:
+                                                    <>
+                                                        <span>다시 한번 테스트 해보시겠어요?</span>
+                                                        <br/>
+                                                        <ReturnToRecommendStart>
+                                                            <div className='nextButtonFrame'>
+                                                                <Button className='nextButton' onClick={() => goToStart()}>다시 테스트 하기</Button>
+                                                            </div>
+                                                        </ReturnToRecommendStart>
+                                                    </>
+                                                }
+                                                {
+                                                    (thisData.intro !== null)?
+                                                    <ListGroup.Item>{thisData.intro}</ListGroup.Item>:
+                                                    <></>
+                                                }
+                                                   {
+                                                    (thisData.degree !== null)?
+                                                    <ListGroup.Item>{thisData.degree}</ListGroup.Item>:
+                                                    <></>
+                                                }
                                                 {
                                                     (thisData.career !== null)?
                                                     <ListGroup.Item>{thisData.career}</ListGroup.Item>:
@@ -421,9 +448,20 @@ export default function Result() {
                     <ShowResult/>  
                 }
             </div>
-            <div className='nextButtonFrame'>
-            <Button className='nextButton' onClick={()=> setModalShow(true)}>저장하기</Button>
-            </div>
+            {
+                thisResult.map(thisData => (
+                    <>
+                        {
+                            (thisData.campus !== null)?
+                            <div className='nextButtonFrame'>
+                                <Button className='nextButton' onClick={()=> setModalShow(true)}>저장하기</Button>
+                            </div>:
+                            <></>
+                        }
+                    </>
+                ))
+            }
+           
         </div>
         <SatisfactionModal show={modalShow} onHide={() => setModalShow(false)} />
     </BodyBlock>
@@ -639,4 +677,37 @@ const PersonalButton = styled.div`
         opacity: 0.9;
       }
   }
+`
+
+const ReturnToRecommendStart = styled.div`
+/* 버튼*/
+.nextButtonFrame{
+  flex-grow: 0;
+
+  //가운데 정렬용 선언
+  // display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .nextButton{
+
+      background-color: #002F5A;
+      opacity: 0.8;
+  
+      /*모양*/
+      border-radius: 5px;
+      width: 40%;
+  
+      /*글씨*/
+      font-size: 14px;
+      color: white;
+      font-weight: bold;
+
+      /*호버*/
+      &:hover {
+          background-color: #002F5A;
+          opacity: 0.9;
+      }
+  }
+}
 `

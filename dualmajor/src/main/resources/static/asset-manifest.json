@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.34c4f543.css",
-    "main.js": "/static/js/main.bfd0b72e.js",
+    "main.js": "/static/js/main.abf1542a.js",
     "static/media/부_원형.jpg": "/static/media/부_원형.5805b6bdda001e1ea22c.jpg",
     "static/media/백년관.jpg": "/static/media/백년관.bd21e048c71a7595f717.jpg",
     "static/media/본관.jpg": "/static/media/본관.0aded51d9fbabde40e00.jpg",
@@ -10,10 +10,10 @@
     "static/media/백경쟁률.png": "/static/media/백경쟁률.f93860284bd0e95e16c0.png",
     "index.html": "/index.html",
     "main.34c4f543.css.map": "/static/css/main.34c4f543.css.map",
-    "main.bfd0b72e.js.map": "/static/js/main.bfd0b72e.js.map"
+    "main.abf1542a.js.map": "/static/js/main.abf1542a.js.map"
   },
   "entrypoints": [
     "static/css/main.34c4f543.css",
-    "static/js/main.bfd0b72e.js"
+    "static/js/main.abf1542a.js"
   ]
 }
