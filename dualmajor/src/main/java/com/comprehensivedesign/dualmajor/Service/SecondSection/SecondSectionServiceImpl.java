@@ -254,6 +254,15 @@ public class SecondSectionServiceImpl implements SecondSectionService{
         List<FinalResult> finalResults;
         if (campus.equals("서울") || campus.equals("글로벌")) {
             //변수 campus에 캠퍼스명이 담겨있고, 해당 캠퍼스명과 같은 캠퍼스명을 갖는 학과 도출 조건
+            if(campus.equals("서울") && result.getResultType().equals("H1")){
+                return humanityCampusException(testKey); //인문학섹터 서울캠 존재 X 예외처리
+            }
+            else if ((campus.equals("서울") && result.getResultType().equals("SC1")) || (campus.equals("서울") && result.getResultType().equals("SC2"))) {
+                return scienceCampusException(testKey); //자연과학 섹터 서울캠 존재 X 예외처리
+            }
+            else if (campus.equals("글로벌") && result.getResultType().equals("SO3") || campus.equals("글로벌") && result.getResultType().equals("SO4")) {
+                return socialCampusException(testKey); //사회경제학 섹터 서울캠 존재 X 예외처리
+            }
             finalResults = majorDetailRepository.findByResultTypeWithCampus(result.getResultType(), campus);
         }
         else{
@@ -275,6 +284,67 @@ public class SecondSectionServiceImpl implements SecondSectionService{
             list.add(results);
         }
         Map<String, Object> map = new LinkedHashMap<>();
+        map.put("testKey", testKey);
+        map.put("info", list);
+        return map;
+    }
+    /*자연과학 섹터 서울 캠퍼스 존재 X 예외 처리*/
+    private Map scienceCampusException(String testKey) {
+        Map<String, Object> map = new LinkedHashMap<>();
+
+        List<Map> list = new ArrayList<>();
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("departmentName", "죄송해요! 선택하신 자연과학 섹터 추천 학과 결과는 서울 캠퍼스에 없어요.");
+        result.put("campus", null);
+        result.put("intro", null);
+        result.put("degree", null);
+        result.put("career", null);
+        result.put("curriculum",null);
+        result.put("certification",null);
+        result.put("webPage", null);
+        list.add(result);
+
+        map.put("testKey", testKey);
+        map.put("info", list);
+        return map;
+    }
+
+    /*사회경제학 섹터 글로벌 캠퍼스 존재 X 예외 처리*/
+    private Map socialCampusException(String testKey) {
+        Map<String, Object> map = new LinkedHashMap<>();
+
+        List<Map> list = new ArrayList<>();
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("departmentName", "죄송해요! 선택하신 사회경제학 섹터 추천 학과 결과는 서울 캠퍼스에 없어요.");
+        result.put("campus", null);
+        result.put("intro", null);
+        result.put("degree", null);
+        result.put("career", null);
+        result.put("curriculum",null);
+        result.put("certification",null);
+        result.put("webPage", null);
+        list.add(result);
+
+        map.put("testKey", testKey);
+        map.put("info", list);
+        return map;
+    }
+    /*인문학 섹터 서울 캠퍼스 존재 X 예외 처리*/
+    private Map humanityCampusException(String testKey) {
+        Map<String, Object> map = new LinkedHashMap<>();
+
+        List<Map> list = new ArrayList<>();
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("departmentName", "죄송해요! 선택하신 인문학 섹터의 추천 학과 결과는 서울 캠퍼스에 없어요.");
+        result.put("campus", null);
+        result.put("intro", null);
+        result.put("degree", null);
+        result.put("career", null);
+        result.put("curriculum",null);
+        result.put("certification",null);
+        result.put("webPage", null);
+        list.add(result);
+
         map.put("testKey", testKey);
         map.put("info", list);
         return map;
