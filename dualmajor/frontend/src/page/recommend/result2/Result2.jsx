@@ -177,14 +177,14 @@ export default function Result() {
             let testKeyValidate = sessionStorage.getItem('testKey');
 
             //로그인 정보 받아오기
-            let thisUser = sessionStorage.getItem("user");
+            let thisUser = JSON.parse(sessionStorage.getItem("user"));
 
             //로그인 안되어 있으면 false로 값 지정
             if(!thisUser){
                 thisUser = "false";
             }
             else{
-                thisUser = "true";
+                thisUser = thisUser[0];
             }
             console.log("answer:",answer);
 
