@@ -51,6 +51,14 @@ public class FirstSectionController {
         return testKey;
     }
 
+    /* 임의의 새로운 테스트 키 발급 */
+    @PostMapping("/testKey")
+    public Object getTestKey() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("testKey", createTestKey());
+        return map;
+    }
+
     /*질문 요청*/
     @PostMapping("/firstSectionQuestion")
     public Object firstSectionQuestion(@RequestBody FirstSectionQuestionDto firstSectionQuestionDto) {

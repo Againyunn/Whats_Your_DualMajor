@@ -36,6 +36,7 @@ public class MemberRecommendedMajorServiceImpl implements MemberRecommendedMajor
     @Override
     @Transactional
     public boolean saveResult(SaveFinalResultDto saveFinalResultDto) throws Exception { //회원 최종 추전 결과 저장 로직
+        System.out.println("user in memberrecommendedmajorservice : "+saveFinalResultDto.getUser());
         Member member = memberService.find(saveFinalResultDto.getUser() + "@hufs.ac.kr"); //요청된 회원의 id?로 회원 객체 조회
         MemberRecommendedMajor memberRecommendedMajor = new MemberRecommendedMajor();
         memberRecommendedMajor.createMemberRecommendedMajor(saveFinalResultDto.getDepartmentName(), member);
