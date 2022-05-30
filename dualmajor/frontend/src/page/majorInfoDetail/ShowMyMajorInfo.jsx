@@ -26,12 +26,7 @@ function SeoulMain() {
     //이동 제어
     let navigate = useNavigate();
 
-    //서울, 글로벌 선택 함수
-    const selectCampus = (element) => {
-        //글로벌 선택 시
-        if(element.target.id === "global")
-            navigate("/globalMajorInfo");
-    }
+
 
     //filter로 전공을 선택하면 해당 전공에 대한 정보 API로 받아오기
 
@@ -125,7 +120,6 @@ function SeoulMain() {
     },[majorDetailInfo])
 
 
-
     //정보를 확인해볼 전공 확인 함수
     const SelectMajorId = (e) =>{
         setSelectedMajorId(e.target.value);
@@ -184,38 +178,38 @@ function SeoulMain() {
         )
     }
 
- //선택한 전공정보 쿠키에서 삭제
- const deleteMajorDetailInfo = () => {
+    //선택한 전공정보 쿠키에서 삭제
+    const deleteMajorDetailInfo = () => {
 
-    //로컬에 기존의 majorDetailInfo가 있는 지 확인
-    let preMajorDetailInfo = localStorage.getItem("majorDetailInfo");
+        //로컬에 기존의 majorDetailInfo가 있는 지 확인
+        let preMajorDetailInfo = localStorage.getItem("majorDetailInfo");
 
-    //기존에 저장내역이 없는 경우
-    if(!preMajorDetailInfo){
-        return;
-    }
-    //기존에 저장내역이 있는 경우
-    else{
-                
-        let preMajorDetailInfoArr = preMajorDetailInfo.split('/');
-        let updateMajorDetailInfo;
-
-        if(selectedMajorId != preMajorDetailInfoArr[0]){
-            updateMajorDetailInfo = preMajorDetailInfoArr[0];
+        //기존에 저장내역이 없는 경우
+        if(!preMajorDetailInfo){
+            return;
         }
+        //기존에 저장내역이 있는 경우
+        else{
+                    
+            let preMajorDetailInfoArr = preMajorDetailInfo.split('/');
+            let updateMajorDetailInfo;
 
-        for(var i = 1; i < preMajorDetailInfoArr.length; i++){
-
-            if(selectedMajorId != preMajorDetailInfoArr[i]){
-                updateMajorDetailInfo += `/${preMajorDetailInfoArr[i]}`;
+            if(selectedMajorId != preMajorDetailInfoArr[0]){
+                updateMajorDetailInfo = preMajorDetailInfoArr[0];
             }
-        }
-        localStorage.setItem("majorDetailInfo", updateMajorDetailInfo);
-    }    
 
-    window.location.reload();
+            for(var i = 1; i < preMajorDetailInfoArr.length; i++){
 
-}
+                if(selectedMajorId != preMajorDetailInfoArr[i]){
+                    updateMajorDetailInfo += `/${preMajorDetailInfoArr[i]}`;
+                }
+            }
+            localStorage.setItem("majorDetailInfo", updateMajorDetailInfo);
+        }    
+
+        window.location.reload();
+
+    }
 
     //전공 리스트 filter 생성하는 객체
     const PrintMajorList = () => {
@@ -244,25 +238,36 @@ function SeoulMain() {
                                     <div className="selectedMajor" id="myMajor">내가 찜한 전공</div>
                                 </div>
                             </div>
-                            <div className="filterBlock">
-                                <Form.Select onChange={SelectMajorId}>
-                                    {
-                                        !thisMajorList?  
-                                        <option value="0">학과 없음</option>:
-                                        thisMajorList.map(thisMajor => (
-                                            <option key={thisMajor.name} value={thisMajor.name}>
-                                            {thisMajor.name}
-                                            </option>
-                                        ))
-                                    }
-                                </Form.Select>
-                            </div>
-                            <div className="majorBlock">
-                                <ShowMajorDetail/>
-                            </div>
-                            <div className="applyBlock">                
-                                <Button type="button" className="applyButton" onClick={deleteMajorDetailInfo}>저장취소</Button>
-                            </div>
+                            {
+                                !thisMajorList?
+                                <>
+                                    <div className="majorBlock">
+                                        <h6>찜한 전공이 없어요😭<br/>전공을 선택해주세요😉</h6>
+                                    </div>
+                                </>:
+                                <>
+                                    <div className="filterBlock">
+                                        <Form.Select onChange={SelectMajorId}>
+                                            {
+                                                !thisMajorList?  
+                                                <option value="0">학과 없음</option>:
+                                                thisMajorList.map(thisMajor => (
+                                                    <option key={thisMajor.name} value={thisMajor.name}>
+                                                    {thisMajor.name}
+                                                    </option>
+                                                ))
+                                            }
+                                        </Form.Select>
+                                    </div>
+                                    <div className="majorBlock">
+                                        <ShowMajorDetail/>
+                                    </div>
+                                    <div className="applyBlock">                
+                                        <Button type="button" className="applyButton" onClick={deleteMajorDetailInfo}>저장취소</Button>
+                                    </div>
+                                </>
+                                
+                            }
                         </div>
                     </BodyBlock>
                 <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
@@ -313,7 +318,7 @@ const BodyBlock = styled.div`
     .selectedMajor{
         flex-grow: 1;
         padding: 5px;
-        background-color: #002F5A;
+        background-color: #875100;
         opacity: 0.57;
     }
 
@@ -366,8 +371,8 @@ const BodyBlock = styled.div`
 
         .applyButton{
 
-            background-color: #002F5A;
-            opacity: 0.8;
+            background-color: #875100;
+            opacity: 0.57;
         
             /*모양*/
             border-radius: 5px;
@@ -380,14 +385,14 @@ const BodyBlock = styled.div`
     
             /*호버*/
             &:hover {
-                background-color: #002F5A;
-                opacity: 0.9;
+                background-color: #875100;
+                opacity: 0.8;
             }
         }
 
         .appliedButton{
             
-            // background-color: #002F5A;
+            // background-color: #875100;
             // opacity: 0.8;
         
             /*모양*/
@@ -401,7 +406,7 @@ const BodyBlock = styled.div`
     
             // /*호버*/
             // &:hover {
-            //     background-color: #002F5A;
+            //     background-color: #875100;
             //     opacity: 0.9;
             // }
         }
@@ -409,8 +414,8 @@ const BodyBlock = styled.div`
 
     #applyButton{
 
-        background-color: #002F5A;
-        opacity: 0.8;
+        background-color: #875100;
+        opacity: 0.57;
     
         /*모양*/
         border-radius: 5px;
@@ -423,8 +428,8 @@ const BodyBlock = styled.div`
 
         /*호버*/
         &:hover {
-            background-color: #002F5A;
-            opacity: 0.9;
+            background-color: #875100;
+            opacity: 0.8;
         }
     }
 `    
