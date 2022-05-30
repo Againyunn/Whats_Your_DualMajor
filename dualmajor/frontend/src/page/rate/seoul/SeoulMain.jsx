@@ -105,7 +105,7 @@ function SeoulMain() {
 
     useEffect(() => {
         //major정보 초기화 or major를 선택한 경우
-        if(login && (!selectedMajorId == false)){
+        if(login){ //&& (!selectedMajorId == false)){
             //사용자의 지원 여부 정보 받아오기
             RateService.getApplyInfo(thisUser).then(
                 (response) =>{
