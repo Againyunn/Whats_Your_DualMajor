@@ -96,8 +96,8 @@ public class SecondSectionController {
     @PostMapping("/saveResult")
     public Object saveResult(@RequestBody SaveFinalResultDto saveFinalResultDto) throws Exception {
         Map<String, Object> map = new LinkedHashMap<>();
-        System.out.println("user in savaeResult"+saveFinalResultDto.getUser());
-        if (saveFinalResultDto.getUser().equals("false")) { //회원이 아닐 시  username에 false 도착
+        System.out.println("user in save Result : "+saveFinalResultDto.getUser());
+        if (saveFinalResultDto.getUser().equals(false)) { //회원이 아닐 시  username에 false 도착
             map.put("success", true);
             return map;
         }
