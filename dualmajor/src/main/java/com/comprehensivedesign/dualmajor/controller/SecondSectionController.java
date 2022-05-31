@@ -101,7 +101,7 @@ public class SecondSectionController {
             map.put("success", true);
             return map;
         }
-        memberRecommendedMajorService.saveResult(saveFinalResultDto);
+        memberRecommendedMajorService.saveResult(saveFinalResultDto.getUser(), saveFinalResultDto.getDepartmentName());
         map.put("success", true);
         return map;
     }

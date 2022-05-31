@@ -27,32 +27,43 @@ public class ApplyController {
     @PostMapping("/getApplyInfo")
     public Object applyInfo(@RequestBody ApplyDto applyDto) throws Exception{
         Map<String, Object> map = new LinkedHashMap<>();
+
+        System.out.println("stdNum in controller"+applyDto.getStdNum());
         try{
-            applyService.getApplyInfo(applyDto);
+            map = applyService.getApplyInfo(applyDto);
         }
         catch(Exception e){
-            map.put("stdNum",applyDto.getStdNum());
-            map.put("apply",false);
-            map.put("majorName",null);
-            map.put("gpa",null);
-            map.put("change",true);
-            return map;
+            Map<String, Object> failedMap = new LinkedHashMap<>();
+            failedMap.put("stdNum",applyDto.getStdNum());
+            failedMap.put("apply",false);
+            failedMap.put("majorName",null);
+            failedMap.put("gpa",null);
+            failedMap.put("change",true);
+            return failedMap;
         }
-        return applyService.getApplyInfo(applyDto);
+        return map;
     }
 
     @PostMapping("/postApply")
     public Object postApply(@RequestBody ApplyDto applyDto) throws Exception{
         Map<String, Object> map = new LinkedHashMap<>();
-        try{
-            applyService.postApply(applyDto);
-        }
-        catch(Exception e){
-            map.put("is_success", false);
+        System.out.println("isApply"+applyDto.isApply());
+        if(applyDto.isApply()==true) { //지원하기 인 경우
+            try{
+                applyService.postApply(applyDto); //지원자의 학번과 지원 학과를 지원 정보에 저장
+            }
+            catch(Exception e){
+                map.put("is_success", false);
+                return map;
+            }
+            map.put("is_success", true);
             return map;
         }
-        map.put("is_success", true);
-        return map;
+        else{ //지원취소인 경우
+            applyService.deleteApply(applyDto); //지원자의 학번과 지원한 학과에 해당하는 지원 정보 삭제
+            map.put("is_success", true);
+            return map;
+        }
     }
 
 }

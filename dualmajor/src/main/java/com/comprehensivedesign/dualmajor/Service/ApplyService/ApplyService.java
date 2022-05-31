@@ -12,4 +12,6 @@ public interface ApplyService {
 
     boolean postApply(ApplyDto applyDto) throws Exception;
 
+    boolean deleteApply(ApplyDto applyDto) throws Exception;
+
 }

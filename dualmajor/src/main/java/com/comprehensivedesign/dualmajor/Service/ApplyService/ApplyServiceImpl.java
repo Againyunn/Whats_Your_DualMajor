@@ -1,6 +1,7 @@
 package com.comprehensivedesign.dualmajor.Service.ApplyService;
 
 
+import com.comprehensivedesign.dualmajor.Service.MemberRecommendedMajor.MemberRecommendedMajorService;
 import com.comprehensivedesign.dualmajor.Service.MemberService.MemberService;
 import com.comprehensivedesign.dualmajor.domain.DualMajor;
 import com.comprehensivedesign.dualmajor.domain.Member;
@@ -9,6 +10,7 @@ import com.comprehensivedesign.dualmajor.dto.ApplyCount;
 import com.comprehensivedesign.dualmajor.dto.ApplyDto;
 import com.comprehensivedesign.dualmajor.repository.MemberRecommendedMajorRepository;
 import com.comprehensivedesign.dualmajor.repository.major.DualMajorRepository;
+import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ public class ApplyServiceImpl implements ApplyService{
     @Autowired private final MemberService memberService;
     @Autowired private final DualMajorRepository dualMajorRepository;
     @Autowired private final MemberRecommendedMajorRepository memberRecommendedMajorRepository;
+    @Autowired private final MemberRecommendedMajorService memberRecommendedMajorService;
 
 
     /* 학과별 지원 정보(경쟁률 구하기 위함) */
@@ -62,12 +65,18 @@ public class ApplyServiceImpl implements ApplyService{
         return String.format("%.2f",index/list.size());
     }
 
+    /* 지원정보 전달 받아서 MemberRecommendedMajor에 지원 정보 저장하기 */
     @Override
+    @Transactional
     public boolean postApply(ApplyDto applyDto) throws Exception{
-        Member member = memberService.find(applyDto.getStdNum() + "@hufs.ac.kr");//이메일로 회원 조회
-        MemberRecommendedMajor byMajorNameAndMemberId = memberRecommendedMajorRepository.findByMajorNameAndMemberId(applyDto.getName(), member.getId()).orElseThrow(
-                ()->new Exception("not applied")
-        );
+        return memberRecommendedMajorService.saveResult(applyDto.getStdNum(), applyDto.getName()); //학번, 학과명
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteApply(ApplyDto applyDto) throws Exception {
+        Member member = memberService.find(applyDto.getStdNum() + "@hufs.ac.kr");
+        memberRecommendedMajorRepository.deleteByMajorNameAndMemberId(applyDto.getName(), member.getId());
         return true;
     }
 
@@ -75,9 +84,16 @@ public class ApplyServiceImpl implements ApplyService{
     @Override
     public Map getApplyInfo(ApplyDto applyDto)  throws Exception{
         Map<String, Object> map = new LinkedHashMap<>();
+        System.out.println("stdNum in getApplyInfo"+applyDto.getStdNum());
         Member member = memberService.find(applyDto.getStdNum() + "@hufs.ac.kr");//이메일로 회원 조회
-        MemberRecommendedMajor memberRecommendedMajor = memberRecommendedMajorRepository.findByMemberId(member.getId()).orElseThrow(
-                ()-> new Exception("not exists data")); //해당 회원으로 저장된 지원 정보가 없으면 exception 반환
+        System.out.println("member name in getApplyInfo"+member.getName());
+        System.out.println("member id in getApplyInfo"+member.getId());
+        //문제??발생
+        MemberRecommendedMajor memberRecommendedMajor = memberRecommendedMajorRepository.findByMemberId(member.getId()).get();
+        System.out.println("majorname founded"+memberRecommendedMajor.getMajorName());
+        System.out.println("memberid founded"+memberRecommendedMajor.getMember().getId());
+              /*  .orElseThrow(
+                ()-> new Exception("not exists data")); //해당 회원으로 저장된 지원 정보가 없으면 exception 반환*/
         LocalDateTime currentTime = LocalDateTime.now();
         map.put("stdNum",member.getStdNum()); //회원 학번
         map.put("apply",true); //지원 여부

@@ -5,5 +5,5 @@ import com.comprehensivedesign.dualmajor.dto.SaveFinalResultDto;
 
 public interface MemberRecommendedMajorService {
 
-    public boolean saveResult(SaveFinalResultDto saveFinalResultDto) throws  Exception;
+    public boolean saveResult(String user, String departmentName) throws  Exception;
 }

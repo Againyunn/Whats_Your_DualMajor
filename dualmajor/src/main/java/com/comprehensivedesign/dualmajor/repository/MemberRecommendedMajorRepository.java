@@ -18,4 +18,6 @@ public interface MemberRecommendedMajorRepository extends JpaRepository <MemberR
     int findMajorCount(String name);
 
     Optional<MemberRecommendedMajor> findByMajorNameAndMemberId(String majorName, Long memberId);
+
+    void deleteByMajorNameAndMemberId(String majorName, Long memberId);
 }
