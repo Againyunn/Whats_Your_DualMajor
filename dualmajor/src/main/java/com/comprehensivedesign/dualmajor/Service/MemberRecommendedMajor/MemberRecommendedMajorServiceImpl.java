@@ -37,6 +37,9 @@ public class MemberRecommendedMajorServiceImpl implements MemberRecommendedMajor
     @Transactional
     public boolean saveResult(String user, String departmentName) throws Exception { //회원 최종 추전 결과 저장 로직
         Member member = memberService.find(user + "@hufs.ac.kr"); //요청된 회원의 id?로 회원 객체 조회
+        if (memberRecommendedMajorRepository.findByMemberId(member.getId()).isPresent()) { //이미 해당 계정으로 지원한 정보 있으면 저장 x
+            return true;
+        }
         MemberRecommendedMajor memberRecommendedMajor = new MemberRecommendedMajor();
         memberRecommendedMajor.createMemberRecommendedMajor(departmentName, member);
         memberRecommendedMajorRepository.save(memberRecommendedMajor);
