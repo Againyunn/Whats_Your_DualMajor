@@ -50,6 +50,8 @@ function SeoulMain() {
     //지원 여부 확인(기본 값: API통해서 받아오기)
     const [applyInfo, setApplyInfo] = useState(false); //stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
     const [thisApply, setThisApply] = useState(false);
+    const [clicked, setClicked] = useState(false);
+    const [valid, setValid] = useState(true);
 
     //학점 정보 받아오기
     const [showModal, setShowModal] = useState(false);
@@ -111,6 +113,7 @@ function SeoulMain() {
                     //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
                     setApplyInfo(response.data);
                     setThisApply(response.data.apply);
+                    setValid(response.data.change);
                     console.log("applyInfo data:", response.data);
 
                     if(response.data.apply == true){
@@ -193,6 +196,7 @@ function SeoulMain() {
                     //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
                     setApplyInfo(response.data);
                     setThisApply(response.data.apply);
+                    setValid(response.data.change);
                     console.log("applyInfo data:", response.data);
 
                     if(response.data.apply == true){
@@ -213,7 +217,7 @@ function SeoulMain() {
     //사용자가 지원한 정보 백엔드로 전송
     useEffect(() => {
         //로그인 & thisApply === true인 경우
-        if(login && (thisApply == true)){
+        if(login && (thisApply == true) && (clicked === true)){
             RateService.postApply(thisUser, selectedMajorId, thisApply).then(
                 (response) =>{
                     console.log("post selectedMajorId:", selectedMajorId);
@@ -243,6 +247,7 @@ function SeoulMain() {
                     //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
                     setApplyInfo(response.data);
                     setThisApply(response.data.apply);
+                    setValid(response.data.change);
                     console.log("applyInfo data:", response.data);
 
                     if(response.data.apply == true){
@@ -275,6 +280,7 @@ function SeoulMain() {
         }
 
         setThisApply(true);
+        setClicked(true);
         //모달창 열어서 GPA입력 받기
         // modalShow();
     }
@@ -283,6 +289,7 @@ function SeoulMain() {
     const cancelApplyMajor = () =>{
         //지원정보 초기화(default => false)
         setThisApply(false);
+        setClicked(false);
     }
 
     //학점 입력받을 모달 제어
@@ -350,9 +357,15 @@ function SeoulMain() {
                                     login?
                                     <>
                                     {
-                                        thisApply == false?
+                                        thisApply == false && applyInfo.majorName != selectedMajorId?
                                         <Button type="button" className="applyButton" onClick={applyMajor}>지원하기</Button>:
-                                        <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
+                                        <>
+                                            {
+                                                valid == false?
+                                                <Button type="button"  className="appliedButton" variant="secondary" onClick={cancelApplyMajor} disabled>지원취소</Button>:
+                                                <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
+                                            }
+                                        </>
                                     }
                                     </>:
                                     <>
