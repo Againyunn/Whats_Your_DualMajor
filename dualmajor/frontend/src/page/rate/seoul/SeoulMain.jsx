@@ -361,9 +361,17 @@ function SeoulMain() {
                                         <Button type="button" className="applyButton" onClick={applyMajor}>지원하기</Button>:
                                         <>
                                             {
-                                                valid == false?
-                                                <Button type="button"  className="appliedButton" variant="secondary" onClick={cancelApplyMajor} disabled>지원취소</Button>:
-                                                <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
+                                                applyInfo.majorName === selectedMajorId?
+                                                <>
+                                                    {
+                                                        valid == false?
+                                                        <Button type="button"  className="appliedButton" variant="secondary" onClick={cancelApplyMajor} disabled>지원취소</Button>:
+                                                        <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
+                                                    }   
+                                                </>:
+                                                <>
+                                                  <small>{selectedMajorId}에 지원한 상태입니다.<br/>복수지원은 불가하니 양해부탁드려요😥</small> 
+                                                </>
                                             }
                                         </>
                                     }
