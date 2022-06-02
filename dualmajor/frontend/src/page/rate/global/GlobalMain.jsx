@@ -223,6 +223,7 @@ function SeoulMain() {
                       console.log("post selectedMajorId:", selectedMajorId);
                       console.log("user id:", thisUser);
                       // window.location.reload();
+                      alert(`${selectedMajorId}에 지원했어요😀`);
                   }
               ).catch(
                   (error)=>{
@@ -230,6 +231,9 @@ function SeoulMain() {
                   }
               )
           }
+
+        //지원하기 버튼 비활성화로 변경
+        setClicked(false);
   
               //로그인 되어있는 지 확인
           //로그인 되어 있는 경우
@@ -360,19 +364,20 @@ function SeoulMain() {
                                         thisApply == false && applyInfo.majorName != selectedMajorId?
                                         <Button type="button" className="applyButton" onClick={applyMajor}>지원하기</Button>:
                                         <>
+                                        {
+                                            valid == false?
+                                            <>
                                             {
                                                 applyInfo.majorName === selectedMajorId?
-                                                <>
-                                                    {
-                                                        valid == false?
-                                                        <Button type="button"  className="appliedButton" variant="secondary" onClick={cancelApplyMajor} disabled>지원취소</Button>:
-                                                        <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
-                                                    }   
-                                                </>:
+                                                <Button type="button"  className="appliedButton" variant="secondary" onClick={cancelApplyMajor} disabled>지원취소</Button>:
                                                 <>
                                                   <small>{selectedMajorId}에 지원한 상태입니다.<br/>복수지원은 불가하니 양해부탁드려요😥</small> 
                                                 </>
                                             }
+                                            </>:
+                                            <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
+                                        }   
+                                            
                                         </>
                                     }
                                     </>:
