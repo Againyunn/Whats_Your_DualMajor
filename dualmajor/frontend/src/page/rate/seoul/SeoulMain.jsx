@@ -98,9 +98,9 @@ function SeoulMain() {
         //로그인 되어있는 지 확인
         //로그인 되어 있는 경우
         if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
-            let tmp = JSON.parse(sessionStorage.getItem("user"));
-
-            let userId = tmp.stdNum;
+            let tmp = Object.values(JSON.parse(sessionStorage.getItem("user")));
+            console.log("sessionLog:", tmp);
+            let userId = tmp[0];
             setThisUser(userId);
             setLogin(true); 
 
@@ -183,8 +183,9 @@ function SeoulMain() {
         //로그인 되어있는 지 확인
         //로그인 되어 있는 경우
         if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
-            let tmp = JSON.parse(sessionStorage.getItem("user"));
-            let userId = tmp.stdNum;
+            let tmp = Object.values(JSON.parse(sessionStorage.getItem("user")));
+              console.log("sessionLog:", tmp);
+              let userId = tmp[0];
             setThisUser(userId);
             setLogin(true); 
 
@@ -238,8 +239,9 @@ function SeoulMain() {
             //로그인 되어있는 지 확인
         //로그인 되어 있는 경우
         if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
-            let tmp = JSON.parse(sessionStorage.getItem("user"));
-            let userId = tmp.stdNum;
+            let tmp = Object.values(JSON.parse(sessionStorage.getItem("user")));
+            console.log("sessionLog:", tmp);
+            let userId = tmp[0];
             setThisUser(userId);
             setLogin(true); 
 

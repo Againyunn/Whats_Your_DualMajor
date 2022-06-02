@@ -17,7 +17,7 @@ import ApplyChart from "../component/ApplyChart";
 
 import Login from "../../../components/Login";
 
-function SeoulMain() {
+function GlobalMain() {
       //상단바 컨트롤 : 메뉴바 노출 상태관리
       const showMenu = false;
 
@@ -91,16 +91,16 @@ function SeoulMain() {
                   let getData = response.data.majorListGlobal;
                   setThisMajorList(getData);
                   setSelectedMajorId(getData[0].name);
-                  console.log(response.data.majorListSeoul);
+                  console.log(response.data.majorListGlobal);
               }
           )
   
           //로그인 되어있는 지 확인
           //로그인 되어 있는 경우
           if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
-              let tmp = JSON.parse(sessionStorage.getItem("user"));
-  
-              let userId = tmp.stdNum;
+              let tmp = Object.values(JSON.parse(sessionStorage.getItem("user")));
+              console.log("sessionLog:", tmp);
+              let userId = tmp[0];
               setThisUser(userId);
               setLogin(true); 
   
@@ -183,8 +183,9 @@ function SeoulMain() {
           //로그인 되어있는 지 확인
           //로그인 되어 있는 경우
           if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
-              let tmp = JSON.parse(sessionStorage.getItem("user"));
-              let userId = tmp.stdNum;
+            let tmp = Object.values(JSON.parse(sessionStorage.getItem("user")));
+              console.log("sessionLog:", tmp);
+              let userId = tmp[0];
               setThisUser(userId);
               setLogin(true); 
   
@@ -238,8 +239,9 @@ function SeoulMain() {
               //로그인 되어있는 지 확인
           //로그인 되어 있는 경우
           if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
-              let tmp = JSON.parse(sessionStorage.getItem("user"));
-              let userId = tmp.stdNum;
+            let tmp = Object.values(JSON.parse(sessionStorage.getItem("user")));
+            console.log("sessionLog:", tmp);
+            let userId = tmp[0];
               setThisUser(userId);
               setLogin(true); 
   
@@ -426,7 +428,7 @@ function SeoulMain() {
           </>
       );
       }
-export default SeoulMain;
+export default GlobalMain;
 
 //CSS
 const BodyBlock = styled.div`
