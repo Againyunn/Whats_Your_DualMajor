@@ -94,39 +94,64 @@ function SeoulMain() {
         )
 
         //로그인 되어있는 지 확인
+        //로그인 되어 있는 경우
         if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
-            setThisUser(JSON.parse(sessionStorage.getItem("user")).id);
-            setLogin(true);
-            }
-            else{
-            setLogin(false);
-            }
-    },[])
+            let tmp = JSON.parse(sessionStorage.getItem("user"));
 
-    useEffect(() => {
-        //major정보 초기화 or major를 선택한 경우
-        if(login){ //&& (!selectedMajorId == false)){
+            let userId = tmp.stdNum;
+            setThisUser(userId);
+            setLogin(true); 
+
+            console.log("user id:", userId);
+
+            //06.01 수정
             //사용자의 지원 여부 정보 받아오기
-            RateService.getApplyInfo(thisUser).then(
+            RateService.getApplyInfo(userId).then(
                 (response) =>{
                     //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
                     setApplyInfo(response.data);
                     setThisApply(response.data.apply);
-                    console.log("applyInfo data:", response.data)
+                    console.log("applyInfo data:", response.data);
+
+                    if(response.data.apply == true){
+                        // 사용자의 지원 정보가 있는 경우
+                        setSelectedMajorId(response.data.majorName);
+                    }
+                    
                 }
             )
         }
-
-        //로그인 o and 사용자의 지원 정보가 있는 경우
-        if(login && applyInfo[2]!== null){
-            setSelectedMajorId(applyInfo[2]);
-        }
-        //둘 다 해당 x인 경우
+        //로그인이 안된 경우
         else{
-            setSelectedMajorId(thisMajorList[0].name);
+            setLogin(false);
         }
 
-    },[thisMajorList])
+    },[])
+
+    // useEffect(() => {
+    //     //major정보 초기화 or major를 선택한 경우
+    //     if(login){ //&& (!selectedMajorId == false)){
+    //         //사용자의 지원 여부 정보 받아오기
+    //         RateService.getApplyInfo(thisUser).then(
+    //             (response) =>{
+    //                 //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
+    //                 setApplyInfo(response.data);
+    //                 setThisApply(response.data.apply);
+    //                 console.log("applyInfo data:", response.data);
+    //             }
+    //         )
+    //     }
+
+    //     //로그인 o and 사용자의 지원 정보가 있는 경우
+    //     if(login && applyInfo[2]!== null){
+    //         setSelectedMajorId(applyInfo[2]);
+    //     }
+    //     //둘 다 해당 x인 경우
+    //     else{
+    //         setSelectedMajorId(thisMajorList[0].name);
+    //     }
+
+    // },[thisMajorList])
 
     //select를 통해 전공을 선택하면 API를 요청
     useEffect(() => {
@@ -142,25 +167,57 @@ function SeoulMain() {
         // `
         // setMajorInfo(JSON.parse(majorData));
 
+        if(selectedMajorId){
+            RateService.getRateInfo(selectedMajorId).then(
+                (response) => {
+                    setMajorInfo(response.data);
+    
+                    console.log("getRateInfo:", response.data);
+                }
+            )
+        }
 
-        RateService.getRateInfo(selectedMajorId).then(
-            (response) => {
-                setMajorInfo(response.data);
+        //로그인 되어있는 지 확인
+        //로그인 되어 있는 경우
+        if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
+            let tmp = JSON.parse(sessionStorage.getItem("user"));
+            let userId = tmp.stdNum;
+            setThisUser(userId);
+            setLogin(true); 
 
-                console.log("getRateInfo:", response.data);
-            }
-        )
+            console.log("user id:", userId);
+            //06.01 수정
+            //사용자의 지원 여부 정보 받아오기
+            RateService.getApplyInfo(userId).then(
+                (response) =>{
+                    //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
+                    setApplyInfo(response.data);
+                    setThisApply(response.data.apply);
+                    console.log("applyInfo data:", response.data);
 
+                    if(response.data.apply == true){
+                        // 사용자의 지원 정보가 있는 경우
+                        setSelectedMajorId(response.data.majorName);
+                    }
+                    
+                }
+            )
+        }
+        //로그인이 안된 경우
+        else{
+            setLogin(false);
+        }
 
     },[selectedMajorId])
 
     //사용자가 지원한 정보 백엔드로 전송
     useEffect(() => {
-        //로그인 유무, 학점 입력 여부 확인
-        if(login){
+        //로그인 & thisApply === true인 경우
+        if(login && (thisApply == true)){
             RateService.postApply(thisUser, selectedMajorId, thisApply).then(
                 (response) =>{
                     console.log("post selectedMajorId:", selectedMajorId);
+                    console.log("user id:", thisUser);
                     // window.location.reload();
                 }
             ).catch(
@@ -169,11 +226,43 @@ function SeoulMain() {
                 }
             )
         }
+
+            //로그인 되어있는 지 확인
+        //로그인 되어 있는 경우
+        if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
+            let tmp = JSON.parse(sessionStorage.getItem("user"));
+            let userId = tmp.stdNum;
+            setThisUser(userId);
+            setLogin(true); 
+
+            console.log("user id:", userId);
+            //06.01 수정
+            //사용자의 지원 여부 정보 받아오기
+            RateService.getApplyInfo(userId).then(
+                (response) =>{
+                    //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
+                    setApplyInfo(response.data);
+                    setThisApply(response.data.apply);
+                    console.log("applyInfo data:", response.data);
+
+                    if(response.data.apply == true){
+                        // 사용자의 지원 정보가 있는 경우
+                        setSelectedMajorId(response.data.majorName);
+                    }
+                    
+                }
+            )
+        }
+        //로그인이 안된 경우
+        else{
+            setLogin(false);
+        }
     },[thisApply])
 
     //정보를 확인해볼 전공 확인 함수
     const SelectMajorId = (e) =>{
         setSelectedMajorId(e.target.value);
+        console.log("selectedMajorId:", e.target.value) ;
     }
 
     //지원 버튼 선택 시
@@ -203,12 +292,13 @@ function SeoulMain() {
     //학점정보 받아오기
     const putGpa = (e)=> {
         //학점정보 업데이트
-        setThisGpa(e.target.value);        
+        setThisGpa(e.target.value);   
+            
     }
 
     const postApplyInfo = () => {
         //지원하기 버튼을 누른 majorName을 thisApply에 업데이트
-        setThisApply(selectedMajorId);
+        setThisApply(true);
     }
 
     return (
@@ -260,7 +350,7 @@ function SeoulMain() {
                                     login?
                                     <>
                                     {
-                                        !thisApply?
+                                        thisApply == false?
                                         <Button type="button" className="applyButton" onClick={applyMajor}>지원하기</Button>:
                                         <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
                                     }
