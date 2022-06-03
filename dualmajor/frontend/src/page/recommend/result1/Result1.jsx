@@ -84,7 +84,7 @@ export default function Result() {
 
         return(
             <>
-                <Accordion defaultActiveKey="0" flush>
+                <Accordion defaultActiveKey="0" flush style={{width: "100%"}}>
                     {
                         //testData.list.map(thisData => (
                         thisResult.map(thisData => (
@@ -94,9 +94,10 @@ export default function Result() {
                                         <Accordion.Header>{thisData.academicName}</Accordion.Header>
                                     </div>
                                     <Accordion.Body>
-                                        <ListGroup>
+                                        {thisData.departmentList}
+                                        {/* <ListGroup>
                                             <ListGroup.Item>{thisData.departmentList}</ListGroup.Item>
-                                        </ListGroup>
+                                        </ListGroup> */}
                                     {/* <div className='eachResult' key={thisData.academicName} data-tip data-for={`tooltip${thisData.academicName}`} onClick={()=>{selectAcademicName(thisData.academicName)}}>
                                         
                                             {thisData.academicName}
@@ -201,7 +202,7 @@ const BodyBlock = styled.div`
         /*vertical-align: middle;*/
         row-gap: 10px;
 
-        height: 70vh;
+        // height: 70vh;
         width: 45vh;
     }
     

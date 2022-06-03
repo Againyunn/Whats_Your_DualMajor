@@ -105,74 +105,94 @@ export default function Result() {
         }
 
         return(
-            <>
-                <Accordion defaultActiveKey="0" flush>
-                    {
-                        //testData.info.map(thisData => (
-                        thisResult.map(thisData => (
-                            <>
-                                <Accordion.Item eventKey={thisData.departmentName}>
-                                    <div id={`${thisData.departmentName}`} onClick={selectResult}>
-                                        <Accordion.Header>{thisData.departmentName}</Accordion.Header>
-                                    </div>
-                                    <Accordion.Body>
-                                        <ListGroup>
-                                                {
-                                                    (thisData.campus !== null)?
-                                                    <ListGroup.Item>{thisData.campus}</ListGroup.Item>:
-                                                    <>
-                                                        <span>다시 한번 테스트 해보시겠어요?</span>
-                                                        <br/>
-                                                        <ReturnToRecommendStart>
-                                                            <div className='nextButtonFrame'>
-                                                                <Button className='nextButton' onClick={() => goToStart()}>다시 테스트 하기</Button>
-                                                            </div>
-                                                        </ReturnToRecommendStart>
-                                                    </>
-                                                }
-                                                {
-                                                    (thisData.intro !== null)?
-                                                    <ListGroup.Item>{thisData.intro}</ListGroup.Item>:
-                                                    <></>
-                                                }
-                                                   {
-                                                    (thisData.degree !== null)?
-                                                    <ListGroup.Item>{thisData.degree}</ListGroup.Item>:
-                                                    <></>
-                                                }
-                                                {
-                                                    (thisData.career !== null)?
-                                                    <ListGroup.Item>{thisData.career}</ListGroup.Item>:
-                                                    <></>
-                                                }
-                                                {
-                                                    (thisData.curriculum !== null)?
-                                                     <ListGroup.Item>{thisData.curriculum}</ListGroup.Item>:
-                                                     <></>
-                                                }
-                                                {
-                                                    (thisData.certification!== null)?
-                                                    <ListGroup.Item>{thisData.certification}</ListGroup.Item>:
-                                                    <></>                                                   
-                                                }
-                                                {
-                                                    (thisData.webPage !== null)?
-                                                    <ListGroup.Item>{thisData.webPage}</ListGroup.Item>:
-                                                    <></>
-                                                }
-                                                {
-                                                    (thisData.phoneNum !== null)?
-                                                    <ListGroup.Item>{thisData.phoneNum}</ListGroup.Item>:
-                                                    <></>
-                                                }
-                                        </ListGroup>
-                                    </Accordion.Body>
-                                </Accordion.Item>
-                            </>
-                        ))
-                    }
-                </Accordion>
-            </>
+            <FinalResult>
+                <div className='resultFrame'>
+                    <Accordion defaultActiveKey="0" flush style={{width:"100%"}}>
+                        {
+                            //testData.info.map(thisData => (
+                            thisResult.map(thisData => (
+                                <>
+                                    <Accordion.Item eventKey={thisData.departmentName}>
+                                        <div id={`${thisData.departmentName}`} onClick={selectResult}>
+                                            <Accordion.Header>{thisData.departmentName}</Accordion.Header>
+                                        </div>
+                                        <Accordion.Body>
+                                            <ListGroup>
+                                                    {
+                                                        (thisData.campus !== null)?
+                                                        <ListGroup.Item>
+                                                            <div className="fw-bold">캠퍼스</div><br/>
+                                                            {thisData.campus}</ListGroup.Item>:
+                                                        <>
+                                                            <span>다시 한번 테스트 해보시겠어요?</span>
+                                                            <br/>
+                                                            <ReturnToRecommendStart>
+                                                                <div className='nextButtonFrame'>
+                                                                    <Button className='nextButton' onClick={() => goToStart()}>다시 테스트 하기</Button>
+                                                                </div>
+                                                            </ReturnToRecommendStart>
+                                                        </>
+                                                    }
+                                                    {
+                                                        (thisData.intro !== null)?
+                                                        <ListGroup.Item>
+                                                            <div className="fw-bold">학과소개</div><br/>
+                                                            {thisData.intro}</ListGroup.Item>:
+                                                        <></>
+                                                    }
+                                                    {
+                                                        (thisData.degree !== null)?
+                                                        <ListGroup.Item>
+                                                            <div className="fw-bold">졸업학위</div><br/>
+                                                            {thisData.degree}</ListGroup.Item>:
+                                                        <></>
+                                                    }
+                                                    {
+                                                        (thisData.career !== null)?
+                                                        <ListGroup.Item>
+                                                            <div className="fw-bold">진로</div><br/>
+                                                            {thisData.career}</ListGroup.Item>:
+                                                        <></>
+                                                    }
+                                                    {
+                                                        (thisData.curriculum !== null)?
+                                                        <ListGroup.Item>
+                                                            <div className="fw-bold">학과 커리큘럼</div><br/>
+                                                            {thisData.curriculum}</ListGroup.Item>:
+                                                        <></>
+                                                    }
+                                                    {
+                                                        (thisData.certification!== null)?
+                                                        <ListGroup.Item>
+                                                            <div className="fw-bold">관련 자격증</div><br/>
+                                                            {thisData.certification}</ListGroup.Item>:
+                                                        <></>                                                   
+                                                    }
+                                                    {
+                                                        (thisData.webPage !== null)?
+                                                        <ListGroup.Item>
+                                                            <div className="fw-bold">홈페이지</div><br/>
+                                                            <a href={`${thisData.webPage}`} target="_blank" rel="noreferrer">
+                                                            {thisData.webPage}</a></ListGroup.Item>:
+                                                        <></>
+                                                    }
+                                                    {
+                                                        (thisData.phoneNum !== null)?
+                                                        <ListGroup.Item>
+                                                            <div className="fw-bold">학과 사무실</div><br/>
+                                                            <a href={`tel:${thisData.phoneNum}`}>
+                                                                {thisData.phoneNum}</a></ListGroup.Item>:
+                                                        <></>
+                                                    }
+                                            </ListGroup>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </>
+                            ))
+                        }
+                    </Accordion>
+                </div>
+            </FinalResult>
         )
     }
 
@@ -451,21 +471,22 @@ export default function Result() {
             {
                 !thisResult?
                 <></>:
-                <>
-                    {
-                        thisResult.map(thisData => (
-                            <>
-                                {
-                                    (thisData.campus !== null)?
+                // <>
+                //     {
+                //         thisResult.map(thisData => (
+                //             <>
+                //                 {
+                //                     (thisData.campus !== null)?
                                     <div className='nextButtonFrame'>
                                         <Button className='nextButton' onClick={()=> setModalShow(true)}>저장하기</Button>
-                                    </div>:
-                                    <></>
-                                }
-                            </>
-                        ))
-                    }
-                </>
+                                    </div>
+                //                     :
+                //                     <></>
+                //                 }
+                //             </>
+                //         ))
+                //     }
+                // </>
             }
           
            
@@ -717,4 +738,10 @@ const ReturnToRecommendStart = styled.div`
       }
   }
 }
+`
+
+const FinalResult = styled.div`
+    .resultFrame{
+        display:flex;
+    }
 `

@@ -158,43 +158,68 @@ function SeoulMain() {
 
         return(
             <>
-                <Card style={{ width: '18rem' }}>
-                <Card.Body>
-                    <Card.Title>{majorDetailInfo.departmentName}</Card.Title>
-                    <Card.Text>
-                    {majorDetailInfo.intro}
-                    </Card.Text>
-                </Card.Body>
+                <h3>{majorDetailInfo.departmentName}</h3>
+    
                 <ListGroup className="list-group-flush">
-                    <ListGroupItem>{majorDetailInfo.campus}</ListGroupItem>
-                    <ListGroupItem>{majorDetailInfo.degree}</ListGroupItem>
+                    {
+                        (majorDetailInfo.campus !== null)?
+                        <ListGroup.Item>
+                            <div className="fw-bold">캠퍼스</div><br/>
+                            {majorDetailInfo.campus}</ListGroup.Item>:
+                        <></>
+                    }
+                    {
+                        (majorDetailInfo.intro !== null)?
+                        <ListGroup.Item>
+                            <div className="fw-bold">학과소개</div><br/>
+                            {majorDetailInfo.intro}</ListGroup.Item>:
+                        <></>
+                    }
+                    {
+                        (majorDetailInfo.degree !== null)?
+                        <ListGroup.Item>
+                            <div className="fw-bold">졸업학위</div><br/>
+                            {majorDetailInfo.degree}</ListGroup.Item>:
+                        <></>
+                    }
                     {
                         (majorDetailInfo.career !== null)?
-                        <ListGroupItem>{majorDetailInfo.career}</ListGroupItem>:
+                        <ListGroup.Item>
+                            <div className="fw-bold">진로</div><br/>
+                            {majorDetailInfo.career}</ListGroup.Item>:
                         <></>
                     }
                     {
                         (majorDetailInfo.curriculum !== null)?
-                            <ListGroupItem>{majorDetailInfo.curriculum}</ListGroupItem>:
-                            <></>
+                        <ListGroup.Item>
+                            <div className="fw-bold">학과 커리큘럼</div><br/>
+                            {majorDetailInfo.curriculum}</ListGroup.Item>:
+                        <></>
                     }
                     {
                         (majorDetailInfo.certification!== null)?
-                        <ListGroupItem>{majorDetailInfo.certification}</ListGroupItem>:
+                        <ListGroup.Item>
+                            <div className="fw-bold">관련 자격증</div><br/>
+                            {majorDetailInfo.certification}</ListGroup.Item>:
                         <></>                                                   
                     }
                     {
                         (majorDetailInfo.webPage !== null)?
-                        <ListGroupItem>{majorDetailInfo.webPage}</ListGroupItem>:
+                        <ListGroup.Item>
+                            <div className="fw-bold">홈페이지</div><br/>
+                            <a href={`${majorDetailInfo.webPage}`} target="_blank" rel="noreferrer">
+                            {majorDetailInfo.webPage}</a></ListGroup.Item>:
                         <></>
                     }
                     {
                         (majorDetailInfo.phoneNum !== null)?
-                        <ListGroupItem>{majorDetailInfo.phoneNum}</ListGroupItem>:
+                        <ListGroup.Item>
+                            <div className="fw-bold">학과 사무실</div><br/>
+                            <a href={`tel:${majorDetailInfo.phoneNum}`}>
+                                {majorDetailInfo.phoneNum}</a></ListGroup.Item>:
                         <></>
                     }
                 </ListGroup>
-                </Card>
             </>
         )
     }

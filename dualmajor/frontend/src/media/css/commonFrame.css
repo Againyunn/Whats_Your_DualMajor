@@ -1,5 +1,5 @@
 .mainContainer {
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     display: grid;
     grid-template-columns: 2fr 1fr 2fr;
@@ -15,7 +15,7 @@
 }
 
 .formMainContainer{
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

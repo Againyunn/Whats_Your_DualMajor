@@ -43,11 +43,6 @@
     font-weight: normal;
 }
 
-/*호버*/
-IDBlock::hover {
-    opacity: 0.7;
-}
-
 /*패스워드*/
 .PW {
     grid-column-start: 2;
@@ -83,10 +78,6 @@ IDBlock::hover {
     font-weight: normal;
 }
 
-/*호버*/
-.PWBlock:hover {
-    opacity: 0.7;
-}
 
 /*로그인 버튼*/
 .Login {
@@ -114,9 +105,9 @@ IDBlock::hover {
 }
 
 /*호버*/
-.Login::hover {
+.Login:hover {
     background-color: #002F5A;
-    opacity: 0.9;
+    opacity: 1;
 }
 
 /*안내 문구 */
@@ -149,9 +140,9 @@ IDBlock::hover {
 }
 
 /*호버*/
-.resetPW::hover {
+.resetPW:hover {
     background-color: #5a5a5a;
-    opacity: 0.9;
+    opacity: 1;
 }
 
 /*에러 값*/
