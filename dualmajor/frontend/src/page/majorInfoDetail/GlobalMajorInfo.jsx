@@ -356,7 +356,7 @@ function SeoulMain() {
                             </div>
                         </div>
                     </BodyBlock>
-                <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
+                {/* <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div> */}
             </div>
         </>
     );

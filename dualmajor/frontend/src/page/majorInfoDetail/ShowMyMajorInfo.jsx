@@ -138,9 +138,7 @@ function SeoulMain() {
         if(!majorDetailInfo){
             return(
                 <>
-                 <div className="majorBlock">
                     <h6>찜한 전공이 없어요😭<br/>전공을 선택해주세요😉</h6>
-                </div>
                 </>
             );
         }
@@ -316,7 +314,7 @@ function SeoulMain() {
                                 }
                             </div>
                         </BodyBlock>
-                    <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
+                    {/* <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div> */}
                 </div>
             </>
         );

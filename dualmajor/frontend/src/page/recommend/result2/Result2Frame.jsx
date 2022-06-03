@@ -24,7 +24,7 @@ export default function Result1Frame() {
       <div className="mainContainer">
         <div className="header"><Header showMenu={showMenu}/></div>
         <div className="mainBody"><Result2/></div>
-        <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
+        {/* <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div> */}
       </div>
     </>
   )

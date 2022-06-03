@@ -215,7 +215,7 @@ export default function Question2Frame() {
                 </BodyBlock>
 
             </div>
-            <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
+            {/* <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div> */}
         </div>
         </>
     );

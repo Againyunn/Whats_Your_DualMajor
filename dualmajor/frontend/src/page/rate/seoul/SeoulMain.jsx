@@ -446,7 +446,7 @@ const BodyBlock = styled.div`
         row-gap: 10px;
 
         height: 70vh;
-        width: 45vh;
+        // width: 45vh;
     }
     
 
