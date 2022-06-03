@@ -24,7 +24,7 @@ export default function SavedResultFrame() {
       <div className="mainContainer">
         <div className="header"><Header showMenu={showMenu}/></div>
         <div className="mainBody"><SavedResult/></div>
-        <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
+        {/* <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div> */}
       </div>
     </>
   )
