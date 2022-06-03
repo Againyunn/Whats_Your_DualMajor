@@ -405,7 +405,8 @@ export default function SignupForm() {
                         </Col>
                         <Col md={7} xs={7}>
                             <Input
-                                type="gpa"
+                                type="number" 
+                                step="0.01"
                                 className="form-control"
                                 name="gpa"
                                 value={gpa}
