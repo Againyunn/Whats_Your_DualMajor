@@ -5,7 +5,7 @@
     background-color: white;
     text-align: center;
 
-    row-gap: 15px;
+    row-gap: 5px;
     column-gap: 1px;
 
     height: 75vh;
@@ -96,6 +96,8 @@ IDBlock::hover {
     grid-row-start: 4;
     grid-row-end: 5;
 
+    /* justify-self:center; */
+
     /*색*/
     background-color: #002F5A;
     opacity: 0.8;
@@ -103,11 +105,12 @@ IDBlock::hover {
     /*모양*/
     border-radius: 5px;
 
-
     /*글씨*/
-    font-size: 19.5px;
+    font-size: 17.5px;
     color: white;
     font-weight: bold;
+    width: 100%;
+    height: 60%;
 }
 
 /*호버*/
@@ -132,6 +135,7 @@ IDBlock::hover {
     grid-row-end: 6;
 
 
+    /* justify-self:center; */
     /*모양*/
     border-radius: 5px;
     width: 80%;
@@ -159,5 +163,4 @@ IDBlock::hover {
 
     /*글씨*/
     font-size: 12px;
-
 }

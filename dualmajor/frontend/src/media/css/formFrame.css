@@ -1,5 +1,6 @@
 .formFrame {
-    width: 45vh;
+    height: 70vh;
+     width: 45vh;
     background-color: white;
 }
 
@@ -52,7 +53,7 @@
 }
 
 /*호버*/
-input::hover {
+input:hover {
     opacity: 0.7;
 }
 
@@ -75,12 +76,13 @@ input::hover {
 
     /*색*/
     background-color: #5a5a5a;
-    opacity: 1;
+    opacity: 0.9;
 }
 
 /*호버*/
-.buttonContract::hover {
-    opacity: 0.9;
+.buttonContract:hover {
+    background-color: #5a5a5a;
+    opacity: 1;
 }
 
 /*가입하기 버튼 활성화 안내 문구 */
@@ -107,10 +109,15 @@ input::hover {
 }
 
 /*호버*/
-.buttonRegister::hover {
+.buttonRegister:hover {
     background-color: #002F5A;
     opacity: 0.9;
 }
+
+.buttonRegister:disabled {
+    background: #5a5a5a;
+}
+
 
 /*stdNum 중복확인 버튼*/
 .buttonDuplicate {
@@ -124,10 +131,11 @@ input::hover {
 
     /*색*/
     background-color: #5a5a5a;
-    opacity: 1;
+    opacity: 0.9;
 }
 
 /*호버*/
-.buttonDuplicate::hover {
-    opacity: 0.9;
+.buttonDuplicate:hover {
+    background-color: #5a5a5a;
+    opacity: 1;
 }

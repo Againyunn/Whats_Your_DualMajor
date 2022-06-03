@@ -2,7 +2,7 @@
     height: 100vh;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 2fr;
     grid-template-rows: repeat(10, minmax(10%, auto));
     background-color: white;
     text-align: center;

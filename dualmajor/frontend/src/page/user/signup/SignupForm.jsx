@@ -15,7 +15,6 @@ import AuthService from '../../../services/auth.service';
 import { isEmail } from "validator";
 import { useNavigate} from 'react-router-dom';
 import Select from 'react-bootstrap/FormSelect'//bootstrap 경로에서 직접 Select만 빼오기(공식문서 상으로는 Form.select로만 사용 가능한 제약 극복)
-
 import '../../../media/css/commonFrame.css'
 import Footer from '../../main/component/Footer';
 import MyAlert from '../../main/component/MyAlert';
@@ -314,7 +313,7 @@ export default function SignupForm() {
 
 
   return (
-      <div className="formMainContainer">
+      <div className="mainContainer">
         <div className="header"><Header showMenu={showMenu}/></div>
         <div className='mainBody'>
         <div className='formFrame'>
