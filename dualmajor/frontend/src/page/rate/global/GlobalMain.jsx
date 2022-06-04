@@ -194,16 +194,21 @@ function GlobalMain() {
               //사용자의 지원 여부 정보 받아오기
               RateService.getApplyInfo(userId).then(
                   (response) =>{
-                      //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
-                      setApplyInfo(response.data);
-                      setThisApply(response.data.apply);
-                      setValid(response.data.change);
-                      console.log("applyInfo data:", response.data);
-  
-                      if(response.data.apply == true){
-                          // 사용자의 지원 정보가 있는 경우
-                          setSelectedMajorId(response.data.majorName);
-                      }
+
+                    //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
+                    setApplyInfo(response.data);
+                    //현재 선택된 전공이 지원자가 지원한 전공인 경우
+                    if(selectedMajorId == response.data.majorName){
+
+                        setThisApply(response.data.apply);
+                        setValid(response.data.change);
+                        console.log("applyInfo data:", response.data);
+    
+                        if(response.data.apply == true){
+                            // 사용자의 지원 정보가 있는 경우
+                            setSelectedMajorId(response.data.majorName);
+                        }
+                    }
                       
                   }
               )
@@ -223,13 +228,13 @@ function GlobalMain() {
                   (response) =>{
                       console.log("post selectedMajorId:", selectedMajorId);
                       console.log("user id:", thisUser);
-                      // window.location.reload();
                       Swal.fire({
                         text: `${selectedMajorId}에 지원했어요😉`,
                         icon: undefined,
-                        confirmButtonText: '확인',
-                        confirmButtonColor: '#002F5A'
+                        showConfirmButton: false,
                       });
+
+                      window.location.reload();
                   }
               ).catch(
                   (error)=>{
@@ -238,18 +243,19 @@ function GlobalMain() {
               )
           }
 
-          if(login && (thisApply == false) && (clicked === false)){
+          if(login && (thisApply == false) && (clicked === true)){
             RateService.postApply(thisUser, selectedMajorId, thisApply).then(
                 (response) =>{
                     console.log("post selectedMajorId:", selectedMajorId);
                     console.log("user id:", thisUser);
-                    // window.location.reload();
+                    
                     Swal.fire({
-                      text: `${selectedMajorId}에 지원취소했어요😀`,
-                      icon: undefined,
-                      confirmButtonText: '확인',
-                      confirmButtonColor: '#002F5A'
-                    });
+                        text: `${selectedMajorId}에 지원취소했어요😀`,
+                        icon: undefined,
+                        showConfirmButton: false,
+                      });
+  
+                      window.location.reload();
                 }
             ).catch(
                 (error)=>{
@@ -277,25 +283,31 @@ function GlobalMain() {
               //사용자의 지원 여부 정보 받아오기
               RateService.getApplyInfo(userId).then(
                   (response) =>{
-                      //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
-                      setApplyInfo(response.data);
-                      setThisApply(response.data.apply);
-                      setValid(response.data.change);
-                      console.log("applyInfo data:", response.data);
-  
-                      if(response.data.apply == true){
-                          // 사용자의 지원 정보가 있는 경우
-                          setSelectedMajorId(response.data.majorName);
-                      }
+
+                    //API의 데이터 형식 stdNum: 학번, apply: boolean, majorName: DB내의 학과명, gpa: 학점정보, change: boolean
+                    setApplyInfo(response.data);
+
+                    //현재 선택된 전공이 지원자가 지원한 전공인 경우
+                    if(selectedMajorId == response.data.majorName){
                       
+                        setThisApply(response.data.apply);
+                        setValid(response.data.change);
+                        console.log("applyInfo data:", response.data);
+    
+                        if(response.data.apply == true){
+                            // 사용자의 지원 정보가 있는 경우
+                            setSelectedMajorId(response.data.majorName);
+                        }
+                      
+                    }
                   }
-              )
-          }
-          //로그인이 안된 경우
-          else{
-              setLogin(false);
-          }
-      },[thisApply])
+                )
+            }
+            //로그인이 안된 경우
+            else{
+                setLogin(false);
+            }
+        },[clicked])//thisApply
   
       //정보를 확인해볼 전공 확인 함수
       const SelectMajorId = (e) =>{
@@ -308,7 +320,12 @@ function GlobalMain() {
         //로그인 유무 확인
         if(!login){
             //Login()
-            alert("로그인을 해주세요!");
+            Swal.fire({
+                text: "로그인 후 이용해주세요~",
+                icon: undefined,
+                confirmButtonText: '확인',
+                confirmButtonColor: '#002F5A'
+              });
             return;
         }
 
@@ -323,7 +340,7 @@ function GlobalMain() {
       const cancelApplyMajor = () =>{
         //지원정보 초기화(default => false)
         setThisApply(false);
-        setClicked(false);
+        setClicked(true);
       }
   
       //학점 입력받을 모달 제어
@@ -339,7 +356,7 @@ function GlobalMain() {
   
       const postApplyInfo = () => {
           //지원하기 버튼을 누른 majorName을 thisApply에 업데이트
-          setThisApply(true);
+        //   setThisApply(true);
       }
   
       return (
@@ -407,14 +424,19 @@ function GlobalMain() {
                                                     </Tooltip>
                                                 }
                                                 >
-                                                    <>
-                                                        <Button type="button"  className="appliedButton" variant="secondary" onClick={cancelApplyMajor} disabled>지원취소</Button>
+                                                    <div>
+                                                        <Button type="button"  className="appliedButton" variant="secondary"  disabled>지원취소</Button>
                                                         <br/>
-                                                        <small>{selectedMajorId}에 지원한 상태입니다.<br/>복수지원은 불가하니 양해부탁드려요😥</small>    
-                                                    </>
+                                                        <small>{applyInfo.majorName}에 지원한 상태입니다.<br/>복수지원은 불가하니 양해부탁드려요😥</small>    
+                                                    </div>
                                                 </OverlayTrigger>
                                             </>:
-                                            <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
+                                            <>
+                                                <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
+                                                <br/>
+                                                <small>{applyInfo.majorName}에 지원한 상태입니다.<br/>지원취소 후 변경 가능해요.</small><br/>
+                                            </>
+                                            
                                         }     
                                             
                                         </>

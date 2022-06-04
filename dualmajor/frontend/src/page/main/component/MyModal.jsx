@@ -194,7 +194,7 @@ export default function MyModal(props) {
 
             //main page로 이동
             navigate("/");
-            // window.location.reload();
+            window.location.reload();
           
           }}>로그아웃</Button>
         </Cancel>
