@@ -84,12 +84,13 @@ public class SecondSectionController {
 
     @PostMapping("/finalResult")
     public Map viewResult(@RequestBody SecondSectionQuestionDto secondSectionQuestionDto, @AuthenticationPrincipal MemberAdapter memberAdapter) {
-        if (secondSectionQuestionDto.getResultType().equals("result101")) {
+        /*if (secondSectionQuestionDto.getResultType().equals("result101")) {
             return secondSectionService.viewResult(secondSectionQuestionDto.getTestKey());
         }
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("success", false);
-        return map;
+        return map;*/
+        return secondSectionService.viewResult(secondSectionQuestionDto.getTestKey());
 
     }
 

@@ -155,9 +155,12 @@ public class FirstSectionController {
     @PostMapping("/getFirstSectionResult")
     public Map viewMemberSector(@RequestBody FirstSectionDto firstSectionDto) throws Exception {
         if(firstSectionDto.getResultType().equals("result20")){
-            List<Sector> memberSector;
-            Map<Long, List> dualMajor;
-            try {
+            List<Sector> memberSector = memberSectorService.findMemberSector(firstSectionDto.getTestKey());
+            Map<Long, List> dualMajor = majorService.findDualMajor(firstSectionDto.getTestKey());
+            FirstSectionDto firstSectionApi = new FirstSectionDto();
+            firstSectionApi.setMemberSectorApi(memberSector, dualMajor, firstSectionDto.getTestKey());
+            return firstSectionApi.getMemberSectorApi();
+            /*try {
                 memberSector = memberSectorService.findMemberSector(firstSectionDto.getTestKey());
                 dualMajor = majorService.findDualMajor(firstSectionDto.getTestKey());
             } catch (Exception e) {
@@ -167,7 +170,7 @@ public class FirstSectionController {
             }
             FirstSectionDto firstSectionApi = new FirstSectionDto();
             firstSectionApi.setMemberSectorApi(memberSector, dualMajor, firstSectionDto.getTestKey());
-            return firstSectionApi.getMemberSectorApi();
+            return firstSectionApi.getMemberSectorApi();*/
         }
         Map<String, Object> map = new HashMap<>();
         map.put("accessed",false);

@@ -30,7 +30,7 @@ public class JoinController {
     }*/
 
 
-    @PostMapping("/join")
+    @PostMapping("/join/")
     @ResponseBody
     public Object join(@RequestBody MemberDto memberDto) throws Exception {
         Map<Object, Object> map = new HashMap<>();
