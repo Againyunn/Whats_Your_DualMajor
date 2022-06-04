@@ -1,20 +1,20 @@
 //메인 홈 화면
 import {useState, useEffect} from "react";
-import axios from "axios";
+// import axios from "axios";
 import styled from "styled-components";
 import Header from "../main/component/Header";
-import Footer from "../main/component/Footer";
+// import Footer from "../main/component/Footer";
 
 import '../../media/css/commonFrame.css';
-import { Form, Card, Button,  Modal, Row, Col, Container, ProgressBar, Accordion, ListGroup, ListGroupItem, InputGroup, FormControl} from 'react-bootstrap';
+import { Form, Button,  ListGroup} from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
-import RateService from '../../services/rate.service';
+// import RateService from '../../services/rate.service';
 
 import RecommendService from "../../services/recommend.service";
-
+import Swal from 'sweetalert2'   
 // import Login from "../../../components/Login";
 
-function SeoulMain() {
+function ShowMyMajorInfo() {
     //상단바 컨트롤 : 메뉴바 노출 상태관리
     const showMenu = false;
 
@@ -31,7 +31,7 @@ function SeoulMain() {
     //filter로 전공을 선택하면 해당 전공에 대한 정보 API로 받아오기
 
     //변수 선언
-    const [thisMajorList, setThisMajorList] = useState([{id: "1", name: " "}]);
+    const [thisMajorList, setThisMajorList] = useState([]);
     const [selectedMajorId, setSelectedMajorId] = useState(false);
     const [majorDetailInfo, setMajorDetailInfo] = useState(false);
    
@@ -46,22 +46,39 @@ function SeoulMain() {
         //기존에 저장내역이 있는 경우
         if(!preMajorDetailInfo === false){
             let preMajorDetailInfoArr = preMajorDetailInfo.split('/');
-            let tmpArr =[];
-            for(var i = 0; i < preMajorDetailInfoArr.length; i++){
-                tmpArr.push(
-                    {
-                        name:`${preMajorDetailInfoArr[i]}`
+
+            if(preMajorDetailInfoArr.length >= 1){
+
+                let tmpArr =[];
+                for(var i = 0; i < preMajorDetailInfoArr.length; i++){
+                    tmpArr.push(
+                        {
+                            name:`${preMajorDetailInfoArr[i]}`
+                        }
+                    )
+                }
+
+                setThisMajorList(tmpArr);
+
+                setSelectedMajorId(preMajorDetailInfoArr[0]);
+
+                RecommendService.getDepartmentInfo(preMajorDetailInfoArr[0]).then(
+                    (response) => {
+                        console.log("getData:", response.data);
+        
+                        //전달받은 값을 데이터로 저장
+                        setMajorDetailInfo(response.data);
+        
+                        //실행
+                        // ShowMajorDetail();
                     }
                 )
             }
-
-            setThisMajorList(tmpArr);
-
-            setSelectedMajorId(preMajorDetailInfoArr[0]);
+            
         }
         else{
             setThisMajorList(false);
-            setSelectedMajorId(" ");
+            setSelectedMajorId(false);
         }
 
 
@@ -75,7 +92,7 @@ function SeoulMain() {
 
     useEffect(() => {
         //전공 filter 생성
-        PrintMajorList();
+        // PrintMajorList();
 
         //페이지 내용 랜더링
         PrintFrame();
@@ -105,18 +122,20 @@ function SeoulMain() {
         // let targetIndex = allMajorDetailInfo.findIndex(obj => obj.name == selectedMajorId)
         // setMajorDetailInfo(allMajorDetailInfo[targetIndex]);
         // //테스트 끝
-
-        RecommendService.getDepartmentInfo(selectedMajorId).then(
-            (response) => {
-                console.log("getData:", response.data);
-
-                //전달받은 값을 데이터로 저장
-                setMajorDetailInfo(response.data);
-
-                //실행
-                // ShowMajorDetail();
-            }
-        )
+        if(selectedMajorId !== false){
+            RecommendService.getDepartmentInfo(selectedMajorId).then(
+                (response) => {
+                    console.log("getData:", response.data);
+    
+                    //전달받은 값을 데이터로 저장
+                    setMajorDetailInfo(response.data);
+    
+                    //실행
+                    // ShowMajorDetail();
+                }
+            )
+        }
+        
 
     },[selectedMajorId])
 
@@ -129,6 +148,8 @@ function SeoulMain() {
     //정보를 확인해볼 전공 확인 함수
     const SelectMajorId = (e) =>{
         setSelectedMajorId(e.target.value);
+
+        console.log("thisSelectedMAjorId:", e.target.value);
     }
 
     const ShowMajorDetail = () => {
@@ -225,49 +246,79 @@ function SeoulMain() {
         else{
                     
             let preMajorDetailInfoArr = preMajorDetailInfo.split('/');
-            let updateMajorDetailInfo;
+            let updateMajorDetailInfo = '';
 
-            if(selectedMajorId != preMajorDetailInfoArr[0]){
-                updateMajorDetailInfo = preMajorDetailInfoArr[0];
-            }
-
-            for(var i = 1; i < preMajorDetailInfoArr.length; i++){
-
-                if(selectedMajorId != preMajorDetailInfoArr[i]){
-                    updateMajorDetailInfo += `/${preMajorDetailInfoArr[i]}`;
+            //학과정보가 1개만 저장되어 있을 때
+            if(preMajorDetailInfoArr.length == 1){
+                if(selectedMajorId == preMajorDetailInfoArr[0]){
+                    localStorage.removeItem("majorDetailInfo");
                 }
             }
-            localStorage.setItem("majorDetailInfo", updateMajorDetailInfo);
+            //학과정보가 여러 개 일 때
+            else{
+                //첫번째 원소가 삭제 대상인 경우
+                if(selectedMajorId == preMajorDetailInfoArr[0]){
+                    for(var i = 1; i < preMajorDetailInfoArr.length; i++){
+                        //첫번째 원소 삭제 후, 두번째 원소를 제일 앞으로 설정
+                        if(i === 1){
+                            updateMajorDetailInfo = preMajorDetailInfoArr[i];
+                        }
+                        else{
+                            if(selectedMajorId != preMajorDetailInfoArr[i]){
+                                updateMajorDetailInfo += `/${preMajorDetailInfoArr[i]}`;
+                            }
+                        }
+                    }
+                }
+                else{
+                    updateMajorDetailInfo = preMajorDetailInfoArr[0];
+
+                    for(var i = 1; i < preMajorDetailInfoArr.length; i++){
+    
+                        if(selectedMajorId != preMajorDetailInfoArr[i]){
+                            updateMajorDetailInfo += `/${preMajorDetailInfoArr[i]}`;
+                        }
+                    }
+                }
+               
+                localStorage.setItem("majorDetailInfo", updateMajorDetailInfo);
+            }
         }    
+
+        //알림창 띄우기
+        Swal.fire({
+            text: `${selectedMajorId}이 저장취소되었어요.`,
+            showConfirmButton: false,
+            });
 
         window.location.reload();
 
     }
 
-    //전공 리스트 filter 생성하는 객체
-    const PrintMajorList = () => {
-        let arr = [];
+    // //전공 리스트 filter 생성하는 객체
+    // const PrintMajorList = () => {
+    //     let arr = [];
 
         
-        for(let i = 0; i < thisMajorList.length; i++){
+    //     for(let i = 0; i < thisMajorList.length; i++){
 
-            if(thisMajorList[i] !== undefined){
-                arr.push(
-                    <option value={thisMajorList[i]}>
-                        {thisMajorList[i]}
-                    </option>
-                )
-            }
-        }
-        console.log("arr:",arr);
-        console.log("thisMajorList:", thisMajorList);
+    //         if(thisMajorList[i] != undefined){
+    //             arr.push(
+    //                 <option value={thisMajorList[i]}>
+    //                     {thisMajorList[i]}
+    //                 </option>
+    //             )
+    //         }
+    //     }
+    //     console.log("arr:",arr);
+    //     console.log("thisMajorList:", thisMajorList);
 
-        if(!arr){
-            return;
-        }
+    //     if(!arr){
+    //         return;
+    //     }
 
-        return arr;
-    }
+    //     return arr;
+    // }
 
     const PrintFrame = () =>{
         return(
@@ -294,10 +345,9 @@ function SeoulMain() {
                                                 {
                                                     !thisMajorList?  
                                                     <option value="0">학과 없음</option>:
-                                                    thisMajorList.map(thisMajor => (
-                                                        
+                                                    thisMajorList.map(thisMajor => (  
                                                         <option key={thisMajor.name} value={thisMajor.name}>
-                                                        {thisMajor.name}
+                                                            {thisMajor.name}
                                                         </option>
                                                     ))
                                                 }
@@ -324,7 +374,7 @@ function SeoulMain() {
         <PrintFrame/>
     );
 }
-export default SeoulMain;
+export default ShowMyMajorInfo;
 
 //CSS
 const BodyBlock = styled.div`

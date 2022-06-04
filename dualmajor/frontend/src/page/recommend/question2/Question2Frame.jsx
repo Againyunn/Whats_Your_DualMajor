@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../main/component/Header';
 // import MainFrame from './MainFrame';
-import Footer from '../../main/component/Footer';
+// import Footer from '../../main/component/Footer';
 import '../../../media/css/commonFrame.css';
 import RecommendService from '../../../services/recommend.service';
 import { useNavigate } from 'react-router-dom';
-import { Button, Col, Container, Row, ProgressBar } from 'react-bootstrap';
+import { Button, ProgressBar } from 'react-bootstrap';
 import styled from 'styled-components'
+import Swal from 'sweetalert2'   
+
+
 
 export default function Question2Frame() {
 
@@ -14,9 +17,9 @@ export default function Question2Frame() {
     const showMenu = false;
 
     //하단바 컨트롤 : 
-    const showPrev = false;
-    const showNext = false;
-    const showDev = false;
+    // const showPrev = false;
+    // const showNext = false;
+    // const showDev = false;
 
     //화면 이동 제어용 callback함수 정의
     let navigate = useNavigate();
@@ -47,7 +50,12 @@ export default function Question2Frame() {
 
         //비정상적인 방법으로 테스트 접근 시 이중전공 추천 서비스 첫 화면으로 강제 이동
         if(!firstValidate || !testKeyValidate){
-            alert("처음부터 테스트를 진행해주세요😁");
+            Swal.fire({
+                text: "처음부터 테스트를 진행해주세요😁",
+                icon: undefined,
+                confirmButtonText: '확인',
+                confirmButtonColor: '#002F5A'
+              });
 
             //recommend page로 이동
             navigate("/recommend");
@@ -92,29 +100,6 @@ export default function Question2Frame() {
 
     },[])
 
-    // //질문 순서 값이 변경되었는 지 확인 후, 다음 질문 랜더링
-    // useEffect(() => {
-    //     //질문받아오기
-    //     //임시 아이디 설정
-    //     let testKeyValidate = sessionStorage.getItem('testKey');
-    //     RecommendService.getSecondSectionQuestion(nextQuestionNum, testKeyValidate).then(
-    //         (response) => {
-
-    //             //테스트 사용자 식별용 세션 셋팅
-    //             sessionStorage.setItem('testKey', response.data.testKey);
-                
-    //             //현재 상태(질문)값 변경
-    //             setQuestionNum(JSON.parse(response.data.questionNum));
-    //             setTotalQuestionNum(JSON.parse(response.data.totalQuestionNum));
-    //             setQuestionContent(JSON.parse(response.data.questionContent));
-    //             setResponse1(JSON.parse(response.data.response1));
-    //             setResponse2(JSON.parse(response.data.response2));
-    //         }
-    //     )
-
-    //     setProgressPercent(Math.round(nextQuestionNum/totalQuestionNum *100)); //진행척도를 나타내기 위한 변수
-    // },[nextQuestionNum])
-
 
     //답변에 따라 값 변경
     const checkAnswer = (type) =>{
@@ -149,7 +134,7 @@ export default function Question2Frame() {
                                             
                         //2차 결과 page로 이동
                         navigate("/result2");
-                        window.location.reload();
+                        // window.location.reload();
                     }
                     else{
                         //다음질문을 받을 수 있도록 세션스토리지 값 변경

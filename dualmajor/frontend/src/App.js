@@ -134,6 +134,7 @@ import SeoulMajorInfo from './page/majorInfoDetail/SeoulMajorInfo';
 import GlobalMajorInfo from './page/majorInfoDetail/GlobalMajorInfo';
 import ShowMyMajorInfo from './page/majorInfoDetail/ShowMyMajorInfo';
 import SavedResultFrame from './page/recommend/savedResult/SavedResultFrame';
+import ShowMyRateInfo from './page/rate/ShowMyRateInfo';
 
 function App() {
   return (
@@ -155,6 +156,7 @@ function App() {
         <Route path='/rate' element={<RateMain/>} />
         <Route path='/seoul' element={<SeoulMain/>} />
         <Route path='/global' element={<GlobalMain/>} />
+        <Route path='/showMyRateInfo' element={<ShowMyRateInfo/>} />
         <Route path='/recommendResult' element={<SavedResultFrame/>} />
         <Route path="/seoulMajorInfo" element={<SeoulMajorInfo />} />
         <Route path="/globalMajorInfo" element={<GlobalMajorInfo />} />

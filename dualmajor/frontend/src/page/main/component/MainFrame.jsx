@@ -146,14 +146,14 @@ export default function MainFrame() {
 
      /*색*/
      background-color: white;
-     border: solid 1px #C4C4C4;
+     border: solid 1px #5a5a5a;
 
      /*모양*/
      border-radius: 10px;
 
      /*글씨*/
      font-size: 15px;
-     color: #C4C4C4;
+     color: #5a5a5a;
      font-weight: normal;
  }
 `

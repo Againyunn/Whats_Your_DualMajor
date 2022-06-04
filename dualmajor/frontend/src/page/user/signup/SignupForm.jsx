@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
-import { useForm, Controller} from 'react-hook-form';
-import styled from 'styled-components'
-import axios from 'axios'
+// import { useForm, Controller} from 'react-hook-form';
+// import styled from 'styled-components'
+// import axios from 'axios'
 import ShowContract from './component/ShowContract';
 import Header from '../../main/component/Header';
 import '../../../media/css/formFrame.css';
@@ -12,12 +12,12 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from '../../../services/auth.service';
-import { isEmail } from "validator";
+// import { isEmail } from "validator";
 import { useNavigate} from 'react-router-dom';
 import Select from 'react-bootstrap/FormSelect'//bootstrap 경로에서 직접 Select만 빼오기(공식문서 상으로는 Form.select로만 사용 가능한 제약 극복)
 import '../../../media/css/commonFrame.css'
 import Footer from '../../main/component/Footer';
-import MyAlert from '../../main/component/MyAlert';
+import Swal from 'sweetalert2'
 
 //input 값에 대한 유효성 검사
 const required = (value) => {
@@ -164,8 +164,12 @@ export default function SignupForm() {
     }
     setFirstMajor(false);
 
-    // setMajorAlertModal(true);
-    alert("본전공과 이중전공은 같을 수 없어요😭");
+    Swal.fire({
+      text: "본전공과 이중전공은 같을 수 없어요😭",
+      icon: undefined,
+      confirmButtonText: '확인',
+      confirmButtonColor: '#002F5A'
+    });
   }
 
   const onChangeUserDualMajor = (e) =>{
@@ -178,8 +182,12 @@ export default function SignupForm() {
     }
     setDualMajor(false);
 
-    // setMajorAlertModal(true);
-    alert("본전공과 이중전공은 같을 수 없어요😭");
+    Swal.fire({
+      text: "본전공과 이중전공은 같을 수 없어요😭",
+      icon: undefined,
+      confirmButtonText: '확인',
+      confirmButtonColor: '#002F5A'
+    });
   }
 
   //stdNum 중복검사
@@ -200,13 +208,29 @@ export default function SignupForm() {
           console.log(response.data.joinPossible)
           if(response.data.joinPossible === true){
             setCheckStdNum(true);
-            alert("가입가능한 학번/사번입니다.");
+
+            Swal.fire({
+              text: "가입가능한 학번/사번입니다.",
+              icon: undefined,
+              confirmButtonText: '확인',
+              confirmButtonColor: '#002F5A'
+            });
           }
           else
-            alert("이미 가입된 학번/사번입니다.");
+            Swal.fire({
+              text: "이미 가입된 학번/사번입니다.",
+              icon: undefined,
+              confirmButtonText: '확인',
+              confirmButtonColor: '#002F5A'
+            });
         },
         (error) => {
-          alert("오류가 발생했습니다.");
+          Swal.fire({
+            text: "오류가 발생했습니다.",
+            icon: undefined,
+            confirmButtonText: '확인',
+            confirmButtonColor: '#002F5A'
+          });
         }
       );
     }
@@ -221,24 +245,44 @@ export default function SignupForm() {
     
     //학번/사번 중복확인 여부 검사
     if (checkStdNum === false){
-      alert("학번/사번 중복확인 해주세요.");
+      Swal.fire({
+        text: "학번/사번 중복확인 해주세요.",
+        icon: undefined,
+        confirmButtonText: '확인',
+        confirmButtonColor: '#002F5A'
+      });
       return;
     }
 
     //본전공 선택 확인
     if(firstMajor === false){
-      alert("본전공을 선택해주세요.");
+      Swal.fire({
+        text: "본전공을 선택해주세요.",
+        icon: undefined,
+        confirmButtonText: '확인',
+        confirmButtonColor: '#002F5A'
+      });
       return;
     }
 
     //이중전공 선택 확인
     if(dualMajor === false){
-      alert("본전공을 선택해주세요.");
+      Swal.fire({
+        text: "본전공을 선택해주세요.",
+        icon: undefined,
+        confirmButtonText: '확인',
+        confirmButtonColor: '#002F5A'
+      });
       return;
     }
 
     if(firstMajor === dualMajor){
-      alert("본전공과 이중전공은 같을 수 없어요😭");
+      Swal.fire({
+        text: "본전공과 이중전공은 같을 수 없어요😭",
+        icon: undefined,
+        confirmButtonText: '확인',
+        confirmButtonColor: '#002F5A'
+      });
       return;
     }
 
@@ -251,6 +295,14 @@ export default function SignupForm() {
           let newUser = {"stdNum":userstdNum, "nickName": username, "grade": grade, "userType": userType, "firstMajor": firstMajor, "dualMajor": dualMajor, "gpa": gpa};
           //세션에 저장
           sessionStorage.setItem("user", JSON.stringify(newUser));
+
+          //가입 완료 알림창 띄우기
+          Swal.fire({
+            text: "너의 이중전공은? 가입을 환영합니다😊",
+            icon: undefined,
+            confirmButtonText: '확인',
+            confirmButtonColor: '#002F5A'
+          });
 
           //main page로 이동
           navigate("/");
@@ -510,7 +562,7 @@ export default function SignupForm() {
             <Modal.Header closeButton>
               <Modal.Title>이용약관</Modal.Title>
             </Modal.Header>
-            <Modal.Body>이용약관은 추후에 추가 예정입니다.</Modal.Body>
+            <Modal.Body><ShowContract/></Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={ () => {
                 handleClose();

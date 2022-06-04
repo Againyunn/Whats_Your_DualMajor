@@ -1,9 +1,10 @@
 //메인 프레임(틀) component
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import ReactTypingEffect from 'react-typing-effect';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+// import ReactTypingEffect from 'react-typing-effect';
+import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'   
 
 export default function MainFrame() {
 
@@ -22,9 +23,10 @@ export default function MainFrame() {
 
 
     const moveToQuestion = () => {
+
         //question page로 이동
         navigate("/question1");
-        window.location.reload();
+        // window.location.reload();
     }
 
     return (
@@ -40,10 +42,7 @@ export default function MainFrame() {
                 <div className='notice'>
                     <span>신중하게 선택해주세요.</span><br/>
                     <span>테스트 중 '뒤로가기' 불가합니다!</span><br/>
-                    <span>비회원은 본전공이 이중전공<br/> 
-                        추천 결과에 포함될 수 있습니다.<br/>
-                        정확한 결과를 원하시면<br/> 
-                        “로그인”후 이용 부탁드립니다.</span>
+                    
                 </div>
             </div>
         </BodyBlock>
@@ -145,7 +144,7 @@ const BodyBlock = styled.div`
      padding-top: 3%;
      font-size: 15px;
      color: #5a5a5a;
-     opacity: 0.8;
+     opacity: 1;
  }
 `
 

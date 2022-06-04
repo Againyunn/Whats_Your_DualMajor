@@ -2,8 +2,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import '../../../media/css/footer.css';
+import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 
 export default function Footer({showPrev, showNext, showDev}) {
+
   
   //showDev(제작자, 문의처 노출)
   //showPrev(이전 버튼 노출)
@@ -33,9 +35,10 @@ export default function Footer({showPrev, showNext, showDev}) {
             }
           </>:
           <>
-            <div className='title'><span><b>◽기획/개발:</b></span><br/><span><b>◽문의:</b></span></div>
-            <div className='content'><span>박동렬, 류승기, 정재윤, 최중원</span><br/><span>rangyun36@gmail.com</span></div>
+              <div className='title'><span><b>◽기획/개발:</b></span><br/><span><b>◽문의:</b></span></div>
+              <div className='content'><span>박동렬, 류승기, 정재윤, 최중원</span><br/><a href="mailto:rangyun36@gmail.com">rangyun36@gmail.com</a></div>
           </>
+
         }
       </div>
   )

@@ -25,6 +25,7 @@
     "react-uuid": "^1.0.2",
     "react-validation": "^3.0.7",
     "styled-components": "^5.3.5",
+    "sweetalert2": "^11.4.17",
     "validator": "^13.7.0",
     "web-vitals": "^2.1.4"
   },

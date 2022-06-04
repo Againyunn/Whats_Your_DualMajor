@@ -1,23 +1,7 @@
-import { Button, Modal } from 'bootstrap';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 export default function ShowContract() {
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
   return (
-    <>
-    <Button variant="primary" onClick={handleShow}>
-      Launch demo modal
-    </Button>
-
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>이용약관</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
         <pre>
         `
         제1장 총칙
@@ -317,16 +301,5 @@ export default function ShowContract() {
         제33조(분쟁의 해결) "회사"는 분쟁이 발생하였을 경우에 "이용자"가 제기하는 정당한 의견이나 불만을 반영하여 적절하고 신속한 조치를 취합니다. 다만, 신속한 처리가 곤란한 경우에 "회사"는 "이용자"에게 그 사유와 처리일정을 통보합니다. 
         `
         </pre>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={handleClose}>
-          Save Changes
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  </>
   )
 }

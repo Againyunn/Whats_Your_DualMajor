@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Button,  Modal, Row, Col, Container, ProgressBar, Accordion, ListGroup, InputGroup, FormControl} from 'react-bootstrap';
+import { Button, Accordion, ListGroup} from 'react-bootstrap';
 import RecommendService from '../../../services/recommend.service';
 import { useNavigate } from 'react-router-dom';
 //import ReactTooltip from 'react-tooltip';
@@ -298,87 +298,4 @@ const BodyBlock = styled.div`
             }
         }
     }
-`
-
-const StarFrame =styled.div`
-    .star {
-        position: relative;
-        font-size: 2rem;
-        color: #ddd;
-
-        input {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        span {
-            width: 0;
-            position: absolute; 
-            left: 0;
-            color: #002F5A;
-            overflow: hidden;
-            pointer-events: none;
-      }
-    }
-`
-
-
-//개인별 기능 버튼 서식CSS
-const PersonalButton = styled.div`
-  text-align: center;
-
-  .recommend{
-    /*색*/
-    background-color: #002F5A;
-    opacity: 0.8;
-
-    font-size: 14px;
-    width: 90%;
-    height: 40%;
-    margin-bottom: 8px;
-
-    /*호버*/
-    &:hover {
-        background-color: #002F5A;
-        opacity: 0.9;
-      }
-  }
-
-  .compete{
-    /*색*/
-    background-color: #028799;
-    opacity: 0.9;
-
-    font-size: 14px;
-    width: 90%;
-    height: 40%;
-    margin-bottom: 8px;
-
-    /*호버*/
-    &:hover {
-        background-color: #028799;
-        opacity: 1;
-      }
-  }
-
-  .myPost{
-    /*색*/
-    background-color: #875100;
-    opacity: 0.8;
-
-    font-size: 14px;
-    width: 90%;
-    height: 40%;
-    margin-bottom: 5px;
-
-    /*호버*/
-    &:hover {
-        background-color: #875100;
-        opacity: 0.9;
-      }
-  }
 `

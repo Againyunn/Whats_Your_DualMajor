@@ -1,6 +1,6 @@
 //로그인 창
 import React from 'react'
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import Header from '../../main/component/Header';
 import MainBlock from './component/MainBlock';
 import Footer from '../../main/component/Footer';

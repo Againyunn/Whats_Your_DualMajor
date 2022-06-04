@@ -1,16 +1,17 @@
 //메인 홈 화면
 import {useState, useEffect} from "react";
-import axios from "axios";
+// import axios from "axios";
 import styled from "styled-components";
 import Header from "../main/component/Header";
-import Footer from "../main/component/Footer";
+// import Footer from "../main/component/Footer";
 
 import '../../media/css/commonFrame.css';
-import { Form, Card, Button,  Modal, Row, Col, Container, ProgressBar, Accordion, ListGroup, ListGroupItem, InputGroup, FormControl} from 'react-bootstrap';
+import { Form, Button,  ListGroup} from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 
 import RecommendService from "../../services/recommend.service";
 import RateService from "../../services/rate.service";
+import Swal from 'sweetalert2'
 
 // import Login from "../../../components/Login";
 
@@ -19,9 +20,9 @@ function SeoulMain() {
     const showMenu = false;
 
     //하단바 컨트롤 
-    const showPrev = true;
-    const showNext = false;
-    const showDev = false;
+    // const showPrev = true;
+    // const showNext = false;
+    // const showDev = false;
 
     //이동 제어
     let navigate = useNavigate();
@@ -38,7 +39,7 @@ function SeoulMain() {
     //변수 선언
     const [thisMajorList, setThisMajorList] = useState([{id: "1", name: ""}]);
     const [selectedMajorId, setSelectedMajorId] = useState("");
-    const [majorInfo, setMajorInfo] = useState("");
+    // const [majorInfo, setMajorInfo] = useState("");
     const [majorDetailInfo, setMajorDetailInfo] = useState(false);
    
 
@@ -251,6 +252,15 @@ function SeoulMain() {
             localStorage.setItem("majorDetailInfo", updateMajorDetailInfo);
         }    
 
+        //알림창 띄우기
+        Swal.fire({
+            text: `${selectedMajorId}이 저장되었어요😊`,
+            icon: undefined,
+            showConfirmButton: false,
+            confirmButtonText: '확인',
+            confirmButtonColor: '#002F5A'
+        });
+
         window.location.reload();
     }
 
@@ -283,6 +293,16 @@ function SeoulMain() {
 
             localStorage.setItem("majorDetailInfo", updateMajorDetailInfo);
         }    
+
+
+        //알림창 띄우기
+        Swal.fire({
+        text: `${selectedMajorId}이 저장취소되었어요😀`,
+        icon: undefined,
+        showConfirmButton: false,
+        confirmButtonText: '확인',
+        confirmButtonColor: '#002F5A'
+        });
 
         window.location.reload();
 
@@ -352,7 +372,7 @@ function SeoulMain() {
                                 <ShowMajorDetail/>
                             </div>
                             <div className="applyBlock">                
-                            <PrintMajorDetailInfo />
+                                <PrintMajorDetailInfo />
                             </div>
                         </div>
                     </BodyBlock>

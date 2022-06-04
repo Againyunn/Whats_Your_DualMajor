@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Button, Col, Container, Row, ProgressBar, Accordion, ListGroup} from 'react-bootstrap';
+import { Button, Accordion} from 'react-bootstrap';
 import RecommendService from '../../../services/recommend.service';
 import { useNavigate } from 'react-router-dom';
 import Error from './Error';
+import Swal from 'sweetalert2'   
 // import ReactTooltip from 'react-tooltip';
 
 export default function Result() {
@@ -57,6 +58,7 @@ export default function Result() {
             (Error) => {
                 //에러가 발생했음을 저장
                 setIsError(true);
+                
             }
         )
 
@@ -152,6 +154,14 @@ export default function Result() {
             navigate("/question2");
             window.location.reload();
         }
+        else{
+            Swal.fire({
+                text: "섹터를 선택해주세요😉",
+                icon: undefined,
+                confirmButtonText: '확인',
+                confirmButtonColor: '#002F5A'
+              });
+        }
     }
 
 
@@ -160,8 +170,8 @@ export default function Result() {
     <BodyBlock>
         <div className="container">
             <div className='notice'>
-                <span>단과대학을 1개 골라주세요!</span><br/>
-                <span>선택한 단과대학에 따라 결과가 달라집니다.</span>
+                <span>공부하고 싶은 학문 섹터 1개를 골라주세요!</span><br/>
+                <span>선택 섹터에 따라 최종결과가 달라질 수 있어요.</span>
             </div>
             <div className='resultFrame'>
                 {

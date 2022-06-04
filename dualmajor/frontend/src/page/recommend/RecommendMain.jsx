@@ -1,8 +1,8 @@
 //메인 홈 화면
 import React from 'react'
-import {useState, useEffect} from "react";
-import axios from "axios";
-import styled from "styled-components";
+// import {useState, useEffect} from "react";
+// import axios from "axios";
+// import styled from "styled-components";
 import Header from "../main/component/Header";
 import Footer from "../main/component/Footer"
 
@@ -18,7 +18,7 @@ function RecommendMain() {
   //하단바 컨트롤 : 
   const showPrev = true;
   const showNext = false;
-  const showDev = false;
+  const showDev = true;
 
 
   return (

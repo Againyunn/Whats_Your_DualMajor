@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Button,  Modal, Row, Col, Container, ProgressBar, Accordion, ListGroup, InputGroup, FormControl} from 'react-bootstrap';
+import { Button,  Modal, Row, Col, Container, Accordion, ListGroup, InputGroup, FormControl} from 'react-bootstrap';
 import RecommendService from '../../../services/recommend.service';
 import { useNavigate, useParams } from 'react-router-dom';
 //import ReactTooltip from 'react-tooltip';
+import Swal from 'sweetalert2'   
 
 export default function Result() {
     //상태값 정의
@@ -86,6 +87,13 @@ export default function Result() {
     useEffect(() => {
         ShowResult();
     },[thisResult])
+
+    const goToStart = () => {
+        //이중전공 추천 첫 page로 이동
+        navigate("/recommend");
+        window.location.reload();
+        
+    }
     
     const ShowResult = () => {
         console.log('thisResult:',thisResult);
@@ -97,22 +105,15 @@ export default function Result() {
             );
         }
     
-        const goToStart = () => {
-            //이중전공 추천 첫 page로 이동
-            navigate("/recommend");
-            window.location.reload();
-            
-        }
+      
 
         return(
-            <FinalResult>
-                <div className='resultFrame'>
                     <Accordion defaultActiveKey="0" flush style={{width:"100%"}}>
                         {
                             //testData.info.map(thisData => (
                             thisResult.map(thisData => (
                                 <>
-                                    <Accordion.Item eventKey={thisData.departmentName}>
+                                    <Accordion.Item eventKey={thisData.departmentName} style={{width:"100%"}}>
                                         <div id={`${thisData.departmentName}`} onClick={selectResult}>
                                             <Accordion.Header>{thisData.departmentName}</Accordion.Header>
                                         </div>
@@ -191,8 +192,6 @@ export default function Result() {
                             ))
                         }
                     </Accordion>
-                </div>
-            </FinalResult>
         )
     }
 
@@ -255,7 +254,12 @@ export default function Result() {
             //비회원이 차후에 회원가입 시 기존의 서비스 정보를 받을 수 있도록 -> 선택한 학과 정보 저장
             localStorage.setItem('recommendResult', answer);
 
-            alert("저장되었습니다.");
+            Swal.fire({
+                text: "저장되었어요.\n로그인 후 내 페이지에서 결과를 다시 볼 수 있어요😊",
+                icon: undefined,
+                confirmButtonText: '확인',
+                confirmButtonColor: '#002F5A'
+              });
 
             //선택결과 API전송
             RecommendService.saveResult(answer, thisUser ,testKeyValidate).then(
@@ -272,7 +276,12 @@ export default function Result() {
             )
         }
         else{
-            alert("학과를 선택해주세요~😉");
+            Swal.fire({
+                text: "마음에 드는 학과를 선택해주세요~😉",
+                icon: undefined,
+                confirmButtonText: '확인',
+                confirmButtonColor: '#002F5A'
+              });
         }
     }
 
@@ -441,7 +450,7 @@ export default function Result() {
                         </Col>
         
                         <Col xs={12} md={12}>
-                        <Button className='compete'>공유하기</Button>
+                        <Button className='compete' onClick={goToStart}>다시 테스트하기</Button>
                         </Col>
         
                     </PersonalButton>
@@ -459,7 +468,7 @@ export default function Result() {
         <div className="container">
             <div className='notice'>
                 <span><b>!!이중전공 추천 서비스 결과!!</b></span><br/>
-                <span>학과를 선택한 뒤 저장을 누르시면 sns에 공유할 수 있어요~</span>
+                {/* <span>학과를 선택한 뒤 저장을 누르시면 sns에 공유할 수 있어요~</span> */}
             </div>
             <div className='resultFrame'>
                 {
@@ -488,8 +497,8 @@ export default function Result() {
                 //     }
                 // </>
             }
-          
-           
+            <br/>
+            <span>테스트 결과는 절대적 수치가 아니니,<br/>참고만 해주세요😊</span>
         </div>
         <SatisfactionModal show={modalShow} onHide={() => setModalShow(false)} />
     </BodyBlock>

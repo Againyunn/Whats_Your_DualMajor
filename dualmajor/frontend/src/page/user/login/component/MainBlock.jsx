@@ -1,15 +1,17 @@
 import React, {useState, useRef} from 'react';
-import styled from 'styled-components'
-import bootstrap from 'bootstrap/dist/css/bootstrap.css';
-import { Link } from 'react-router-dom';
-import { useForm, Controller} from 'react-hook-form';
-import { Button, Alert, Col, FormControl, Modal, Container, Row} from 'react-bootstrap';
+// import styled from 'styled-components'
+// import bootstrap from 'bootstrap/dist/css/bootstrap.css';
+// import { Link } from 'react-router-dom';
+// import { useForm, Controller} from 'react-hook-form';
+import { Button, Col, Modal, Container, Row} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../../../../services/auth.service';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import '../../../../media/css/login.css';
+import Swal from 'sweetalert2'   
+
 
 const required = (value) => {
   if (!value) {
@@ -153,7 +155,12 @@ export default function MainBlock({link}) {
             setActivateResetPW(true);
           }
           else{
-            alert("아이디를 다시 확인해주세요.");
+            Swal.fire({
+              text: "아이디를 다시 확인해주세요.",
+              icon: undefined,
+              confirmButtonText: '확인',
+              confirmButtonColor: '#002F5A'
+            });
           }
         }
       )
@@ -166,7 +173,13 @@ export default function MainBlock({link}) {
         (response) => {
           if(response.data.isEditPasswordSuccess == true){
               //비밀번호 변경이 제대로 된 경우
-              alert("비밀번호가 재설정되었습니다.")
+              Swal.fire({
+                text: "비밀번호가 재설정되었어요😉",
+                icon: undefined,
+                confirmButtonText: '확인',
+                confirmButtonColor: '#002F5A'
+              });
+              
               
               AuthService.login(validID, newPW).then( //login(stdNum, password)
               () => {

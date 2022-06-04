@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
-import { useForm, Controller} from 'react-hook-form';
-import styled from 'styled-components';
-import axios from 'axios';
+// import { useForm, Controller} from 'react-hook-form';
+// import styled from 'styled-components';
+// import axios from 'axios';
 import Header from '../../main/component/Header';
 import Footer from '../../main/component/Footer';
 import '../../../media/css/formFrame.css'
@@ -12,10 +12,13 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from '../../../services/auth.service';
-import { isEmail } from "validator";
+// import { isEmail } from "validator";
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-bootstrap/FormSelect'//bootstrap 경로에서 직접 Select만 빼오기(공식문서 상으로는 Form.select로만 사용 가능한 제약 극복)
-import uuid from "react-uuid"
+import uuid from "react-uuid";
+import Swal from 'sweetalert2';   
+
+
 
 
 //input 값에 대한 유효성 검사
@@ -162,6 +165,13 @@ export default function SignupForm() {
                 (response)=>{
                     //테스트 용
                     console.log("서비스 탈퇴 신청");
+
+                    Swal.fire({
+                        text: "서비스 탈퇴 신청되었어요.\n그동안 저희 서비스를 이용해주셔서 감사합니다.😊",
+                        icon: undefined,
+                        confirmButtonText: '확인',
+                        confirmButtonColor: '#002F5A'
+                      });
                     
                     //로그아웃처리
                     AuthService.logout();
@@ -171,7 +181,12 @@ export default function SignupForm() {
                     window.location.reload();
                 },
                 (error) => {
-                    alert("탈퇴신청 실패. 문의부탁드립니다.");
+                    Swal.fire({
+                        text: "오류가 발생했어요😭\n메일로 문의 부탁드립니다.",
+                        icon: undefined,
+                        confirmButtonText: '확인',
+                        confirmButtonColor: '#002F5A'
+                      });
                 }
             )
         }

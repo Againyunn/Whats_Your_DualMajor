@@ -5,7 +5,8 @@ import ReactTypingEffect from 'react-typing-effect';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-export default function MainFrame() {
+export default function 
+MainFrame() {
 
     //화면 이동 제어용 callback함수 정의
     let navigate = useNavigate();
@@ -40,7 +41,7 @@ export default function MainFrame() {
                 <br/><br/>
                 <span>
                     학과별 예상 경쟁률은 "지원하기"를<br/> 선택한 이용자의 통계입니다.<br/>
-                    한번 지원하면 12시간 후에 수정이<br/> 가능하니 참고부탁드립니다.
+                    한번 지원하면 <b>6시간</b> 후에 수정이<br/> 가능하니 참고부탁드립니다.
                 </span>
 
      
@@ -89,7 +90,7 @@ div.write{
  padding-top: 10%;
 
  font-size: 20px;
- color: #C4C4C4;
+ color: #5a5a5a;
  font-weight: bold;
 
 }
@@ -101,14 +102,14 @@ div.notice{
 
  /*색*/
  background-color: white;
- border: solid 1px #C4C4C4;
+ border: solid 1px #5a5a5a;
 
  /*모양*/
  border-radius: 10px;
 
  /*글씨*/
  font-size: 15px;
- color: #C4C4C4;
+ color: #5a5a5a;
  font-weight: normal;
 }
 `

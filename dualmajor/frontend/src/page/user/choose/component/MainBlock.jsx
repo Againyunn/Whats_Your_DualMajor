@@ -1,6 +1,6 @@
 //로그인 or 회원가입 선택 박스
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export default function MainBlock() {
