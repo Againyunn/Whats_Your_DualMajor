@@ -282,6 +282,7 @@ public class SecondSectionServiceImpl implements SecondSectionService{
             results.put("curriculum",finalResult.getCurriculum());
             results.put("certification",finalResult.getCertification());
             results.put("webPage", finalResult.getWebpage());
+            results.put("phoneNum", finalResult.getPhoneNum());
             list.add(results);
         }
         Map<String, Object> map = new LinkedHashMap<>();

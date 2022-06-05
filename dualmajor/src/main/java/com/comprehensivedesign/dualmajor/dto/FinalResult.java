@@ -10,5 +10,6 @@ public interface FinalResult {
     String getCampus();
     String getDegree();
     String getWebpage();
+    String getPhoneNum();
 
 }

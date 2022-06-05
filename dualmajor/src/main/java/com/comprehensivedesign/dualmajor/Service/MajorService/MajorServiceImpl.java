@@ -62,6 +62,7 @@ public class MajorServiceImpl implements MajorService{
             List<String> temp = new ArrayList<>(); //이중전공명만 따로 담기 위한 리스트
             for (int j = 0; j < dualMajorNames.size(); j++) { //회원에게 추천된 섹터 내의 이중전공들 대상으로 이중전공 명만 따로 뽑아내기
                 temp.add(dualMajorNames.get(j).getMajorName());
+                if(j!=dualMajorNames.size()-1){temp.add(", ");}
                 map.put(memberSectors.get(i).getSector().getId(), temp);
             }
         }

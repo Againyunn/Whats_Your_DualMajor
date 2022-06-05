@@ -15,11 +15,11 @@ public interface MajorDetailRepository extends JpaRepository<MajorDetail, Long> 
 
     /*이중전공 선택 시 캠퍼스 교차 불가*/
     //회원이 원하는 캠퍼스(서울or글로벌)에 따른 학과 도출
-    @Query(value = "select m.majorName as departmentName, m.campus as campus, m.information as intro, m.degree as degree, m.career as career, m.curriculum as curriculum, m.certification as certification, m.webpage as webPage from MAJOR_DETAIL m where m.resultType = :result_type and m.campus = :campus", nativeQuery = true)
+    @Query(value = "select m.majorName as departmentName, m.campus as campus, m.information as intro, m.degree as degree, m.career as career, m.curriculum as curriculum, m.certification as certification, m.webpage as webPage, m.phoneNum as phoneNum from MAJOR_DETAIL m where m.resultType = :result_type and m.campus = :campus", nativeQuery = true)
     List<FinalResult> findByResultTypeWithCampus(@Param("result_type")String resultType, @Param("campus")String campus);
 
     /*이중전공 선택 시 캠퍼스 교차 가능*/
-     @Query(value = "select m.majorName as departmentName, m.campus as campus, m.information as intro, m.degree as degree, m.career as career, m.curriculum as curriculum, m.certification as certification, m.webpage as webPage from MAJOR_DETAIL m where m.resultType = :result_type", nativeQuery = true)
+     @Query(value = "select m.majorName as departmentName, m.campus as campus, m.information as intro, m.degree as degree, m.career as career, m.curriculum as curriculum, m.certification as certification, m.webpage as webPage, m.phoneNum as phoneNum from MAJOR_DETAIL m where m.resultType = :result_type", nativeQuery = true)
     List<FinalResult> findByResultTypeWithoutCampus(@Param("result_type")String resultType);
 
      //testKey로 memberfinalresult (testkey,resultType) 찾고
