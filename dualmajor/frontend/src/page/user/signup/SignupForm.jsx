@@ -7,7 +7,7 @@ import Header from '../../main/component/Header';
 import '../../../media/css/formFrame.css';
 // import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Col,  Container, Modal, Row} from 'react-bootstrap';
+import { Button, Col,  Container, Modal, Row, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -16,7 +16,7 @@ import AuthService from '../../../services/auth.service';
 import { useNavigate} from 'react-router-dom';
 import Select from 'react-bootstrap/FormSelect'//bootstrap 경로에서 직접 Select만 빼오기(공식문서 상으로는 Form.select로만 사용 가능한 제약 극복)
 import '../../../media/css/commonFrame.css'
-import Footer from '../../main/component/Footer';
+// import Footer from '../../main/component/Footer';
 import Swal from 'sweetalert2'
 
 //input 값에 대한 유효성 검사
@@ -382,7 +382,17 @@ export default function SignupForm() {
                 <hr/>
                 <Row  className='tableRow'>
                   <Col md={5} xs={5}>
+                  <OverlayTrigger
+                  key='stdNumInfo'
+                  placement='top'
+                  overlay={
+                    <Tooltip id="stdNumInfo">
+                      학우님의 학번을 입력해주세요😉
+                    </Tooltip>
+                  }
+                  >
                     <span className='titleStyle'>학번/사번</span>
+                  </OverlayTrigger>
                   </Col>
                   <Col md={7} xs={7}>
                     <Input
@@ -394,6 +404,7 @@ export default function SignupForm() {
                       validations={[required, vuserstdNum]}
                     />
                   </Col>
+                  
                 </Row>
                 <Row  className='tableRow'>
                 <Col md={5} xs={5}>
@@ -469,15 +480,27 @@ export default function SignupForm() {
                 </Row>
 
                 <Row  className='tableRow'>
-                  <Col md={5} xs={12}>
-                    <span className='titleStyle'>이용유형</span>
-                  </Col>
-                  <Col md={7} xs={12}>
-                    <Select className='inputStyle' onChange={SelectedUserType}>
-                      <option value="mentee">멘티</option>
-                      <option value="mento">멘토</option>
-                    </Select>
-                  </Col>
+                    <Col md={5} xs={12}>
+                    <OverlayTrigger
+                      key='stdNumInfo'
+                      placement='top'
+                      overlay={
+                        <Tooltip id="stdNumInfo">
+                          선택해주세요😄<br/>
+                          멘토: 이중(부)전공을 이수하고 있어요.<br/>
+                          멘티: 아직 이중(부)전공이 없어요.
+                        </Tooltip>
+                      }
+                      >
+                      <span className='titleStyle'>이용유형</span>
+                    </OverlayTrigger>
+                    </Col>
+                    <Col md={7} xs={12}>
+                      <Select className='inputStyle' onChange={SelectedUserType}>
+                        <option value="mentee">멘티</option>
+                        <option value="mento">멘토</option>
+                      </Select>
+                    </Col> 
                 </Row>
 
                 <Row  className='tableRow'>
@@ -581,7 +604,7 @@ export default function SignupForm() {
           
           </div>
           </div>
-        <div className='footer'><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
+        {/* <div className='footer'><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div> */}
 
         {/* <MyAlert title={""} alertContent={"본전공과 이중전공은 같을 수 없어요😭"}  show={majorAlertModal} onHide={() => setMajorAlertModal(false)}/> */}
       </div>

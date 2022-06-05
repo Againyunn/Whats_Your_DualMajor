@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.6cd09d74.css",
-    "main.js": "/static/js/main.38ed9b3c.js",
+    "main.css": "/static/css/main.b154973e.css",
+    "main.js": "/static/js/main.215dce71.js",
     "static/media/부_원형.jpg": "/static/media/부_원형.5805b6bdda001e1ea22c.jpg",
     "static/media/aniMajor.gif": "/static/media/aniMajor.60afe298b5b7c72d0087.gif",
     "static/media/백년관.jpg": "/static/media/백년관.bd21e048c71a7595f717.jpg",
@@ -9,11 +9,11 @@
     "static/media/백이중추천.png": "/static/media/백이중추천.299c099e6d836db153ff.png",
     "static/media/백경쟁률.png": "/static/media/백경쟁률.f93860284bd0e95e16c0.png",
     "index.html": "/index.html",
-    "main.6cd09d74.css.map": "/static/css/main.6cd09d74.css.map",
-    "main.38ed9b3c.js.map": "/static/js/main.38ed9b3c.js.map"
+    "main.b154973e.css.map": "/static/css/main.b154973e.css.map",
+    "main.215dce71.js.map": "/static/js/main.215dce71.js.map"
   },
   "entrypoints": [
-    "static/css/main.6cd09d74.css",
-    "static/js/main.38ed9b3c.js"
+    "static/css/main.b154973e.css",
+    "static/js/main.215dce71.js"
   ]
 }

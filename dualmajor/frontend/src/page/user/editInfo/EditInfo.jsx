@@ -3,7 +3,7 @@ import React, {useEffect, useState, useRef} from 'react';
 // import styled from 'styled-components';
 // import axios from 'axios';
 import Header from '../../main/component/Header';
-import Footer from '../../main/component/Footer';
+// import Footer from '../../main/component/Footer';
 import '../../../media/css/formFrame.css'
 // import OnlyPrevFooter from '../../../common/footer/OnlyPrevFooter';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -487,7 +487,7 @@ export default function SignupForm() {
 
               </div>
             </div>
-            <div className='footer'><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
+            {/* <div className='footer'><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div> */}
         </div>
     )
     }

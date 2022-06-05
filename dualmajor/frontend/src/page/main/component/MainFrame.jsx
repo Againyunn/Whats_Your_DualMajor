@@ -2,8 +2,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import ReactTypingEffect from 'react-typing-effect';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 export default function MainFrame() {
 
@@ -36,6 +37,24 @@ export default function MainFrame() {
         window.location.reload();
     }
 
+    const firstNotice = () => {
+        Swal.fire({
+            text: `mbti를 포함한 개인의 성향, 선호와\n우리학교의 학과 정보를 활용한\n정보제공 서비스에요~\n테스트 후 '저장하기'버튼을 눌러\n설문에 참여하시면 추첨을 통해\n커피 기프티콘을 드립니다!😊`,
+            icon: undefined,
+            confirmButtonText: '확인',
+            confirmButtonColor: '#002F5A'
+          });
+    }
+
+    const secondNotice = () => {
+        Swal.fire({
+            text: `현재 시범 운영 중이며,\n이용자 증가 시 서버 과부하로\n인해 서비스의 속도 저하가\n발생할 수 있어요😥\n이슈 발생 시 하단의 이메일로\n문의부탁드려요~`,
+            icon: undefined,
+            confirmButtonText: '확인',
+            confirmButtonColor: '#002F5A'
+        });
+    }
+
     return (
     <>
         <BodyBlock>
@@ -52,8 +71,10 @@ export default function MainFrame() {
                 <div className='review' onClick={moveToMyMajorInfo}>내가 찜한 학과</div>
                 <div className='notice'>
                     <span><b>공지사항</b></span>
-
-         
+                    <br/>
+                    <small id="noticeItem" onClick={firstNotice}>1. 이중전공추천서비스 관련 공지</small>
+                    <br/>
+                    <small id="noticeItem" onClick={secondNotice}>2. 전체 서비스 이슈 관련 공지</small>
                 </div>
             </div>
         </BodyBlock>
@@ -154,8 +175,17 @@ export default function MainFrame() {
      /*글씨*/
      font-size: 15px;
      color: #5a5a5a;
+     opacity: 0.8;
      font-weight: normal;
  }
+
+ #noticeItem{
+    /*호버*/
+    &:hover {
+        color: black;
+    }
+ }
+
 `
 
 
