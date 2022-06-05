@@ -85,9 +85,9 @@ export default function Result() {
         ShowResult();
     },[])
 
-    useEffect(() => {
-        ShowResult();
-    },[thisResult])
+    // useEffect(() => {
+    //     ShowResult();
+    // },[thisResult])
 
     const goToStart = () => {
         //이중전공 추천 첫 page로 이동
@@ -115,7 +115,7 @@ export default function Result() {
                     <>
                         {thisResult[0].departmentName}
                     </>:
-                    <Accordion defaultActiveKey="0" flush style={{width:"100%"}}>
+                    <Accordion style={{width:"90%"}}>
                     {
                         //testData.info.map(thisData => (
                         thisResult.map(thisData => (
@@ -479,49 +479,56 @@ export default function Result() {
                 }
             </div>
             {
-                !thisResult.intro?
+                !thisResult?
+                <></>:
                 <>
-                    <span>다시 한번 테스트 해보시겠어요?</span>
-                    <br/>
-                    <ReturnToRecommendStart>
-                        <div className='nextButtonFrame'>
-                            <Button className='nextButton' onClick={() => goToStart()}>다시하기</Button>
-                        </div>
-                    </ReturnToRecommendStart>
-                </>:
-                // <>
-                //     {
-                //         thisResult.map(thisData => (
-                //             <>
-                //                 {
-                //                     (thisData.campus !== null)?
-                <>
-                    <OverlayTrigger
-                        key='dev'
-                        placement='top'
-                        overlay={
-                        <Tooltip id="dev">
-                                <span>테스트 결과는 참고만 해주세요😊</span>
-                        </Tooltip>
-                        }
-                        >
-                        <div className='nextButtonFrame'>
-                            <Button className='nextButton' onClick={()=> setModalShow(true)}>저장하기</Button>
-                        </div>
-                    </OverlayTrigger>
+                {
+                    !thisResult[0].intro?
+                    <>
+                        <span>다시 한번 테스트 해보시겠어요?</span>
+                        <br/>
+                        <ReturnToRecommendStart>
+                            <div className='nextButtonFrame'>
+                                <Button className='nextButton' onClick={() => goToStart()}>다시하기</Button>
+                            </div>
+                        </ReturnToRecommendStart>
+                    </>:
+                    // <>
+                    //     {
+                    //         thisResult.map(thisData => (
+                    //             <>
+                    //                 {
+                    //                     (thisData.campus !== null)?
+                    <>
+                        <OverlayTrigger
+                            key='dev'
+                            placement='top'
+                            overlay={
+                            <Tooltip id="dev">
+                                    <span>테스트 결과는 참고만 해주세요😊</span>
+                            </Tooltip>
+                            }
+                            >
+                            <div className='nextButtonFrame'>
+                                <Button className='nextButton' onClick={()=> setModalShow(true)}>저장하기</Button>
+                            </div>
+                        </OverlayTrigger>
 
-                    <br/>
-                    <span>저장하기 버튼을 눌러 설문에 참여하면<br/> 추첨을 통해 커피 기프티콘을 드려요!!😁</span>
+                        <br/>
+                        <span>저장하기 버튼을 눌러 설문에 참여하면<br/> 추첨을 통해 커피 기프티콘을 드려요!!😁</span>
+                    </>
+                                        
+                    //                     :
+                    //                     <></>
+                    //                 }
+                    //             </>
+                    //         ))
+                    //     }
+                    // </>
+                }
                 </>
-                                    
-                //                     :
-                //                     <></>
-                //                 }
-                //             </>
-                //         ))
-                //     }
-                // </>
             }
+            
 
         </div>
         <SatisfactionModal show={modalShow} onHide={() => setModalShow(false)} />
@@ -542,7 +549,7 @@ const BodyBlock = styled.div`
         /*vertical-align: middle;*/
         row-gap: 10px;
 
-        // height: 70vh;
+        height: 70vh;
         width: 45vh;
     }
     

@@ -70,9 +70,9 @@ export default function Result() {
     },[])
 
 
-    useEffect(() => {
-        ShowResult();
-    },[thisResult])
+    // useEffect(() => {
+    //     ShowResult();
+    // },[thisResult])
 
 
     const ShowResult = () => {
@@ -86,7 +86,7 @@ export default function Result() {
 
         return(
             <>
-                <Accordion defaultActiveKey="0" flush style={{width: "100%"}}>
+                <Accordion style={{width: "90%"}}>
                     {
                         //testData.list.map(thisData => (
                         thisResult.map(thisData => (
@@ -212,7 +212,7 @@ const BodyBlock = styled.div`
         /*vertical-align: middle;*/
         row-gap: 10px;
 
-        // height: 70vh;
+        height: 70vh;
         width: 45vh;
     }
     
