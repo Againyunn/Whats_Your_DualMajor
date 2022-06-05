@@ -88,7 +88,7 @@ const BodyBlock = styled.div`
 
 
         img{
-            width: 40%;
+            width: 70%;
             border-radius: 10px;
             // vertical-align: middle;        
         }

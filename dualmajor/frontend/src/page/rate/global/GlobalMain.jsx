@@ -85,13 +85,15 @@ function GlobalMain() {
           //     ]
           // `
           // setThisMajorList(Object.values(JSON.parse(data)));
-  
+          let majorFirstSetting = '';
           RateService.getMajorListGlobal().then(
               (response) => {
                   let getData = response.data.majorListGlobal;
                   setThisMajorList(getData);
                   setSelectedMajorId(getData[0].name);
                   console.log(response.data.majorListGlobal);
+
+                  majorFirstSetting = getData[0].name;
               }
           )
   
@@ -116,7 +118,7 @@ function GlobalMain() {
                       setValid(response.data.change);
                       console.log("applyInfo data:", response.data);
   
-                      if(response.data.apply == true){
+                      if(response.data.apply == true  && response.data.majorName == majorFirstSetting){
                           // 사용자의 지원 정보가 있는 경우
                           setSelectedMajorId(response.data.majorName);
                       }
@@ -242,15 +244,15 @@ function GlobalMain() {
                   }
               )
           }
-
+          //지원취소
           if(login && (thisApply == false) && (clicked === true)){
-            RateService.postApply(thisUser, selectedMajorId, thisApply).then(
+            RateService.postApply(thisUser, applyInfo.majorName, thisApply).then(
                 (response) =>{
-                    console.log("post selectedMajorId:", selectedMajorId);
+                    console.log("post selectedMajorId:", applyInfo.majorName);
                     console.log("user id:", thisUser);
                     
                     Swal.fire({
-                        text: `${selectedMajorId}에 지원취소했어요😀`,
+                        text: `${applyInfo.majorName}에 지원취소했어요😀`,
                         icon: undefined,
                         showConfirmButton: false,
                       });
@@ -393,7 +395,7 @@ function GlobalMain() {
                                           
                                           {   
                                               //로그인 여부 & 지원여부 검증 
-                                              login?
+                                              login && thisApply == true && selectedMajorId == applyInfo.majorName?
                                               <GPAChart majorName={selectedMajorId} averageGPA={majorInfo.avgGpa}/>:
                                               <>
                                                   <GPAChart majorName={"false"} averageGPA={majorInfo.avgGpa}/>

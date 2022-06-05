@@ -8,6 +8,7 @@ import Footer from "../main/component/Footer"
 
 import '../../media/css/commonFrame.css';
 import MainFrame from "./question1/MainFrame";
+import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 
 
 function RecommendMain() {
@@ -26,7 +27,20 @@ function RecommendMain() {
       <div className="mainContainer">
         <div className="header"><Header showMenu={showMenu}/></div>
         <div className="mainBody"><MainFrame/> </div>
-        <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
+        <OverlayTrigger
+              key='dev'
+              placement='top'
+              overlay={
+                <Tooltip id="dev">
+                  <strong>DB설계:</strong> GBT학부 박동렬<br/>
+                  <strong>FE개발:</strong> GBT학부 정재윤<br/>
+                  <strong>BE개발:</strong> 세르비아크로아티아어과 최중원<br/>
+                  <strong>BE개발:</strong> 브라질학과 류승기
+                </Tooltip>
+              }
+            >
+              <div className="footer"><Footer showPrev={showPrev} showNext={showNext} showDev={showDev}/></div>
+            </OverlayTrigger>
       </div>
     </>
   );

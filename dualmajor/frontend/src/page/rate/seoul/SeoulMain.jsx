@@ -86,12 +86,15 @@ function SeoulMain() {
         //     ]
         // `
         // setThisMajorList(Object.values(JSON.parse(data)));
+        let majorFirstSetting = '';
         RateService.getMajorListSeoul().then(
             (response) => {
                 let getData = response.data.majorListSeoul;
                 setThisMajorList(getData);
                 setSelectedMajorId(getData[0].name);
                 console.log(response.data.majorListSeoul);
+
+                majorFirstSetting = getData[0].name;
             }
         )
 
@@ -116,7 +119,7 @@ function SeoulMain() {
                     setValid(response.data.change);
                     console.log("applyInfo data:", response.data);
 
-                    if(response.data.apply == true){
+                    if(response.data.apply == true && response.data.majorName == majorFirstSetting){
                         // 사용자의 지원 정보가 있는 경우
                         setSelectedMajorId(response.data.majorName);
                     }
@@ -244,15 +247,15 @@ function SeoulMain() {
                 }
             )
         }
-
+        //지원 취소
         if(login && (thisApply == false) && (clicked === true)){
-            RateService.postApply(thisUser, selectedMajorId, thisApply).then(
+            RateService.postApply(thisUser, applyInfo.majorName, thisApply).then(
                 (response) =>{
-                    console.log("post selectedMajorId:", selectedMajorId);
+                    console.log("post selectedMajorId:", applyInfo.majorName);
                     console.log("user id:", thisUser);
                     
                     Swal.fire({
-                      text: `${selectedMajorId}에 지원취소했어요😀`,
+                      text: `${applyInfo.majorName}에 지원취소했어요😀`,
                       icon: undefined,
                       showConfirmButton: false,
                     });
@@ -392,7 +395,7 @@ function SeoulMain() {
                                         
                                         {   
                                             //로그인 여부 & 지원여부 검증 
-                                            login?
+                                            login && thisApply == true && selectedMajorId == applyInfo.majorName?
                                             <GPAChart majorName={selectedMajorId} averageGPA={majorInfo.avgGpa}/>:
                                             <>
                                                 <GPAChart majorName={"false"} averageGPA={majorInfo.avgGpa}/>
@@ -423,11 +426,11 @@ function SeoulMain() {
                                                     </Tooltip>
                                                 }
                                                 >
-                                                    <>
+                                                    <div>
                                                         <Button type="button"  className="appliedButton" variant="secondary"  disabled>지원취소</Button>
                                                         <br/>
                                                         <small>{applyInfo.majorName}에 지원한 상태입니다.<br/>복수지원은 불가하니 양해부탁드려요😥</small>    
-                                                    </>
+                                                    </div>
                                                 </OverlayTrigger>
                                                 
                                             </>:

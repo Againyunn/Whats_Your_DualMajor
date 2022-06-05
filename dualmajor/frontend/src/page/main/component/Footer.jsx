@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import '../../../media/css/footer.css';
 import {OverlayTrigger, Tooltip} from 'react-bootstrap';
+import Swal from 'sweetalert2';
 
 export default function Footer({showPrev, showNext, showDev}) {
 

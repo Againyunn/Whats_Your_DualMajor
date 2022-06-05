@@ -6,7 +6,7 @@ import Header from "../main/component/Header";
 import Footer from "../main/component/Footer";
 
 import '../../media/css/commonFrame.css';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import RateService from '../../services/rate.service';
 
@@ -410,17 +410,35 @@ function ShowMyRateInfo() {
                                                 <Button type="button" className="applyButton" onClick={applyMajor}>지원하기</Button>:
                                                 <>
                                                 {
-                                                    valid == false?
-                                                    <>
-                                                        <Button type="button"  className="appliedButton" variant="secondary" onClick={cancelApplyMajor} disabled>지원취소</Button>
-                                                        <br/>
-                                                        <small>{selectedMajorId}에 지원한 상태입니다.<br/>타학과의 예상지원 결과를 보시려면, 지원취소해주세요😄</small>    
-                                                    </>:
-                                                    <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
-                                                }   
-                                                    
-                                                </>
-                                            }
+                                                          valid == false?
+                                                          <>
+                                                           <OverlayTrigger
+                                                              key='wait'
+                                                              placement='top'
+                                                              overlay={
+                                                                  <Tooltip id="wait">
+                                                                  <strong>지원 후 6시간 뒤에 취소가능해요.</strong><br/>
+                                                                  <span>조금만 더 기다려주세요😉</span>
+                                                                  </Tooltip>
+                                                              }
+                                                              >
+                                                                  <div>
+                                                                      <Button type="button"  className="appliedButton" variant="secondary"  disabled>지원취소</Button>
+                                                                      <br/>
+                                                                      <small>{applyInfo.majorName}에 지원한 상태입니다.<br/>복수지원은 불가하니 양해부탁드려요😥</small>    
+                                                                  </div>
+                                                              </OverlayTrigger>
+                                                              
+                                                          </>:
+                                                          <>
+                                                              <Button type="button" className="appliedButton" variant="secondary" onClick={cancelApplyMajor}>지원취소</Button>
+                                                              <br/>
+                                                              <small>{applyInfo.majorName}에 지원한 상태입니다.<br/>지원취소 후 변경 가능해요.</small><br/>
+                                                          </>
+                                                      }   
+                                                          
+                                                      </>
+                                                  }
                                             </>:
                                             <>
                                             <span className="warning">지원하기 전, 로그인해주세요😊</span><br/>
