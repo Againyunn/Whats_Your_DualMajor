@@ -581,7 +581,7 @@ export default function SignupForm() {
             </Container>
           </Form>
 
-          <Modal show={show} onHide={handleClose}>
+          <Modal show={show} fullscreen={true} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>이용약관</Modal.Title>
             </Modal.Header>

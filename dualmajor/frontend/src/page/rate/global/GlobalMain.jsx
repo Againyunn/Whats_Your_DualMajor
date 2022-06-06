@@ -391,8 +391,11 @@ function GlobalMain() {
                                       !majorInfo?
                                       <></>:
                                       <>
-                                          <ApplyChart majorName={selectedMajorId} applyNum={majorInfo.applyNum} totalNum={majorInfo.totalNum} />
-                                          
+                                        {
+                                            !majorInfo.totalNum?
+                                            <div className="noticeApply">인원 제한이 없는 학과입니다.<br/></div>:
+                                            <ApplyChart majorName={selectedMajorId} applyNum={majorInfo.applyNum} totalNum={majorInfo.totalNum} />
+                                        }    
                                           {   
                                               //로그인 여부 & 지원여부 검증 
                                               login && thisApply == true && selectedMajorId == applyInfo.majorName?
@@ -563,6 +566,13 @@ const BodyBlock = styled.div`
         grid-row-end: 4;
 
         border: 1px solid #C4C4C4;
+
+        .noticeApply{
+            color: #002F5A;
+            opacity:0.8;
+
+            font-size: 13px;
+        }
 
         .noticeAvgGpa{
             color: #028799;
