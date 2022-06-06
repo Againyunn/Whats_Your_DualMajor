@@ -515,7 +515,7 @@ export default function Result() {
                         </OverlayTrigger>
 
                         <br/>
-                        <span>저장하기 버튼을 눌러 설문에 참여하면<br/> 추첨을 통해 커피 기프티콘을 드려요!!😁</span>
+                        <span>저장하기 버튼을 눌러 설문에 참여하면<br/> 추첨을 통해 베라 기프티콘을 드려요!!😁</span>
                     </>
                                         
                     //                     :

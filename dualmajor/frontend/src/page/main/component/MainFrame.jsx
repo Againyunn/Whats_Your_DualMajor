@@ -39,7 +39,7 @@ export default function MainFrame() {
 
     const firstNotice = () => {
         Swal.fire({
-            text: `mbti를 포함한 개인의 성향, 선호와\n우리학교의 학과 정보를 활용한\n정보제공 서비스에요~\n테스트 후 '저장하기'버튼을 눌러\n설문에 참여하시면 추첨을 통해\n커피 기프티콘을 드립니다!😊`,
+            text: `mbti를 포함한 개인의 성향, 선호와\n우리학교의 학과 정보를 활용한\n정보제공 서비스에요~\n테스트 후 '저장하기'버튼을 눌러\n설문에 참여하시면 추첨을 통해\n베라 기프티콘을 드립니다!😊`,
             icon: undefined,
             confirmButtonText: '확인',
             confirmButtonColor: '#002F5A'
@@ -183,6 +183,7 @@ export default function MainFrame() {
     /*호버*/
     &:hover {
         color: black;
+        font-weight: bold;
     }
  }
 

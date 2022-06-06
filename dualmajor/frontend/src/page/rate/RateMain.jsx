@@ -30,10 +30,11 @@ function RateMain() {
               placement='top'
               overlay={
                 <Tooltip id="dev">
-                  <strong>DB설계:</strong> GBT학부 박동렬<br/>
-                  <strong>FE개발:</strong> GBT학부 정재윤<br/>
-                  <strong>BE개발:</strong> 세르비아크로아티아어과 최중원<br/>
-                  <strong>BE개발:</strong> 브라질학과 류승기
+                  <strong>DB설계:</strong>&nbsp;GBT학부 박동렬<br/>
+                  <strong>FE개발:</strong>&nbsp;GBT학부 정재윤<br/>
+                  <strong>BE개발:</strong><br/>
+                   &nbsp;&nbsp;세르비아크로아티아어과 최중원,<br/>
+                   &nbsp;&nbsp;브라질학과 류승기
                 </Tooltip>
               }
             >
