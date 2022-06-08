@@ -42,12 +42,12 @@ export default function Result() {
         RecommendService.getFirstSectionResult(resultType, testKeyValidate).then(
             (response) => {
 
-                console.log("getData:", response.data)
+                // console.log("getData:", response.data)
 
                 //테스트 사용자 식별용 세션 셋팅
                 sessionStorage.setItem('testKey', response.data.testKey);
 
-                console.log("response.data.list",response.data.list);
+                // console.log("response.data.list",response.data.list);
 
                 //전달받은 값을 데이터로 저장
                 setThisResult(response.data.list);
@@ -76,8 +76,8 @@ export default function Result() {
 
 
     const ShowResult = () => {
-        console.log('thisResult:',thisResult);
-        console.log('testData.list.academicName:',thisResult[0]);
+        // console.log('thisResult:',thisResult);
+        // console.log('testData.list.academicName:',thisResult[0]);
         // console.log('testData.list.academicName:',testData.list[0]);
 
         if(!thisResult){
@@ -127,7 +127,7 @@ export default function Result() {
     const selectResult =(event) =>{
         let result = event.currentTarget.id;
 
-        console.log("thisAcademicName:",result);
+        // console.log("thisAcademicName:",result);
         setAnswer(result);
 
 
@@ -145,7 +145,7 @@ export default function Result() {
 
             //API전송
             RecommendService.submitFirstSectionResult(answer, testKeyValidate);
-            console.log("answer:",answer);
+            // console.log("answer:",answer);
 
             sessionStorage.setItem('recommendFirstResult', true);
             sessionStorage.setItem('questionNum', 1);

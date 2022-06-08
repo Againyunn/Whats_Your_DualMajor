@@ -205,7 +205,7 @@ export default function SignupForm() {
       AuthService.checkDuplicate(userstdNum).then(
         (response) => {
           //입력된 stdNum으로 상태값 변경
-          console.log(response.data.joinPossible)
+          // console.log(response.data.joinPossible)
           if(response.data.joinPossible === true){
             setCheckStdNum(true);
 

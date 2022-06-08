@@ -2,7 +2,7 @@ import React from 'react';
 import { Toast } from 'react-bootstrap';
 
 export default function Toaster(title, content) {
-    console.log("test in");
+    // console.log("test in");
 
   return (
     <Toast>

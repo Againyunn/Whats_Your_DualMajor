@@ -35,7 +35,7 @@ export default function Result() {
         RecommendService.getDepartmentInfo(departmentName).then(
             (response) => {
 
-                console.log("getData:", response.data)
+                // console.log("getData:", response.data)
 
                 //전달받은 값을 데이터로 저장
                 setThisResult(response.data);
@@ -60,8 +60,8 @@ export default function Result() {
     },[thisResult])
     
     const ShowResult = () => {
-        console.log('thisResult:',thisResult);
-        console.log('testData.list.academicName:',thisResult[0]);
+        // console.log('thisResult:',thisResult);
+        // console.log('testData.list.academicName:',thisResult[0]);
 
         if(!thisResult){
             return(

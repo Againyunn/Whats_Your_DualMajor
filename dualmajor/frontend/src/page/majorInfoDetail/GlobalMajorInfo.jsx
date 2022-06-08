@@ -83,7 +83,7 @@ function SeoulMain() {
                 let getData = response.data.majorListGlobal;
                 setThisMajorList(getData);
                 setSelectedMajorId(getData[0].name);
-                console.log(response.data.majorListSeoul);
+                // console.log(response.data.majorListSeoul);
             }
         )
     },[])
@@ -148,8 +148,8 @@ function SeoulMain() {
     }
 
     const ShowMajorDetail = () => {
-        console.log('thisResult:',majorDetailInfo);
-        console.log('testData.list.academicName:',majorDetailInfo);
+        // console.log('thisResult:',majorDetailInfo);
+        // console.log('testData.list.academicName:',majorDetailInfo);
 
         if(!majorDetailInfo){
             return(

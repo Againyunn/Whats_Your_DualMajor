@@ -92,7 +92,7 @@ function SeoulMain() {
                 let getData = response.data.majorListSeoul;
                 setThisMajorList(getData);
                 setSelectedMajorId(getData[0].name);
-                console.log(response.data.majorListSeoul);
+                // console.log(response.data.majorListSeoul);
 
                 majorFirstSetting = getData[0].name;
             }
@@ -102,12 +102,12 @@ function SeoulMain() {
         //로그인 되어 있는 경우
         if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
             let tmp = Object.values(JSON.parse(sessionStorage.getItem("user")));
-            console.log("sessionLog:", tmp);
+            // console.log("sessionLog:", tmp);
             let userId = tmp[0];
             setThisUser(userId);
             setLogin(true); 
 
-            console.log("user id:", userId);
+            // console.log("user id:", userId);
 
             //06.01 수정
             //사용자의 지원 여부 정보 받아오기
@@ -117,7 +117,7 @@ function SeoulMain() {
                     setApplyInfo(response.data);
                     setThisApply(response.data.apply);
                     setValid(response.data.change);
-                    console.log("applyInfo data:", response.data);
+                    // console.log("applyInfo data:", response.data);
 
                     if(response.data.apply == true && response.data.majorName == majorFirstSetting){
                         // 사용자의 지원 정보가 있는 경우
@@ -178,7 +178,7 @@ function SeoulMain() {
                 (response) => {
                     setMajorInfo(response.data);
     
-                    console.log("getRateInfo:", response.data);
+                    // console.log("getRateInfo:", response.data);
                 }
             )
         }
@@ -187,12 +187,12 @@ function SeoulMain() {
         //로그인 되어 있는 경우
         if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
             let tmp = Object.values(JSON.parse(sessionStorage.getItem("user")));
-              console.log("sessionLog:", tmp);
+            //   console.log("sessionLog:", tmp);
               let userId = tmp[0];
             setThisUser(userId);
             setLogin(true); 
 
-            console.log("user id:", userId);
+            // console.log("user id:", userId);
             //06.01 수정
             //사용자의 지원 여부 정보 받아오기
             RateService.getApplyInfo(userId).then(
@@ -205,7 +205,7 @@ function SeoulMain() {
                         
                         setThisApply(response.data.apply);
                         setValid(response.data.change);
-                        console.log("applyInfo data:", response.data);
+                        // console.log("applyInfo data:", response.data);
     
                         if(response.data.apply == true){
                             // 사용자의 지원 정보가 있는 경우
@@ -230,8 +230,8 @@ function SeoulMain() {
         if(login && (thisApply == true) && (clicked === true)){
             RateService.postApply(thisUser, selectedMajorId, thisApply).then(
                 (response) =>{
-                    console.log("post selectedMajorId:", selectedMajorId);
-                    console.log("user id:", thisUser);
+                    // console.log("post selectedMajorId:", selectedMajorId);
+                    // console.log("user id:", thisUser);
                     
                     Swal.fire({
                         text: `${selectedMajorId}에 지원했어요😉`,
@@ -243,7 +243,7 @@ function SeoulMain() {
                 }
             ).catch(
                 (error)=>{
-                    console.log("postApply:",error);
+                    // console.log("postApply:",error);
                 }
             )
         }
@@ -251,8 +251,8 @@ function SeoulMain() {
         if(login && (thisApply == false) && (clicked === true)){
             RateService.postApply(thisUser, applyInfo.majorName, thisApply).then(
                 (response) =>{
-                    console.log("post selectedMajorId:", applyInfo.majorName);
-                    console.log("user id:", thisUser);
+                    // console.log("post selectedMajorId:", applyInfo.majorName);
+                    // console.log("user id:", thisUser);
                     
                     Swal.fire({
                       text: `${applyInfo.majorName}에 지원취소했어요😀`,
@@ -264,7 +264,7 @@ function SeoulMain() {
                 }
             ).catch(
                 (error)=>{
-                    console.log("postApply:",error);
+                    // console.log("postApply:",error);
                 }
             )
         }
@@ -276,12 +276,12 @@ function SeoulMain() {
         //로그인 되어 있는 경우
         if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
             let tmp = Object.values(JSON.parse(sessionStorage.getItem("user")));
-            console.log("sessionLog:", tmp);
+            // console.log("sessionLog:", tmp);
             let userId = tmp[0];
             setThisUser(userId);
             setLogin(true); 
 
-            console.log("user id:", userId);
+            // console.log("user id:", userId);
             //06.01 수정
             //사용자의 지원 여부 정보 받아오기
             RateService.getApplyInfo(userId).then(
@@ -294,7 +294,7 @@ function SeoulMain() {
                         
                         setThisApply(response.data.apply);
                         setValid(response.data.change);
-                        console.log("applyInfo data:", response.data);
+                        // console.log("applyInfo data:", response.data);
 
                         if(response.data.apply == true){
                             // 사용자의 지원 정보가 있는 경우
@@ -314,7 +314,7 @@ function SeoulMain() {
     //정보를 확인해볼 전공 확인 함수
     const SelectMajorId = (e) =>{
         setSelectedMajorId(e.target.value);
-        console.log("selectedMajorId:", e.target.value) ;
+        // console.log("selectedMajorId:", e.target.value) ;
     }
 
     //지원 버튼 선택 시

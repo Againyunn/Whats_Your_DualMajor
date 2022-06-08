@@ -124,7 +124,7 @@ export default function SignupForm() {
     //기존의 회원정보를 value값으로 자동 입력
     useEffect(() => {
         //테스트용
-        console.log("thisUser",thisUser);
+        // console.log("thisUser",thisUser);
 
         AuthService.firstMajorList();
         AuthService.dualMajorList();
@@ -164,7 +164,7 @@ export default function SignupForm() {
             AuthService.applyResign(userstdNum).then(
                 (response)=>{
                     //테스트 용
-                    console.log("서비스 탈퇴 신청");
+                    // console.log("서비스 탈퇴 신청");
 
                     Swal.fire({
                         text: "서비스 탈퇴 신청되었어요.\n그동안 저희 서비스를 이용해주셔서 감사합니다.😊",

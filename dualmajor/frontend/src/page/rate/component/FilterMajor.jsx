@@ -12,7 +12,7 @@ export default function FilterMajor({campus}) { //어떤 캠퍼스인지 전달�
     useEffect(() => {
 
         //테스트용
-        console.log("rendering")
+        // console.log("rendering")
         let data = `
             [
                 {

@@ -64,7 +64,7 @@ function ShowMyMajorInfo() {
 
                 RecommendService.getDepartmentInfo(preMajorDetailInfoArr[0]).then(
                     (response) => {
-                        console.log("getData:", response.data);
+                        // console.log("getData:", response.data);
         
                         //전달받은 값을 데이터로 저장
                         setMajorDetailInfo(response.data);
@@ -125,7 +125,7 @@ function ShowMyMajorInfo() {
         if(selectedMajorId !== false){
             RecommendService.getDepartmentInfo(selectedMajorId).then(
                 (response) => {
-                    console.log("getData:", response.data);
+                    // console.log("getData:", response.data);
     
                     //전달받은 값을 데이터로 저장
                     setMajorDetailInfo(response.data);
@@ -149,12 +149,12 @@ function ShowMyMajorInfo() {
     const SelectMajorId = (e) =>{
         setSelectedMajorId(e.target.value);
 
-        console.log("thisSelectedMAjorId:", e.target.value);
+        // console.log("thisSelectedMAjorId:", e.target.value);
     }
 
     const ShowMajorDetail = () => {
-        console.log('thisResult:',majorDetailInfo);
-        console.log('testData.list.academicName:',majorDetailInfo);
+        // console.log('thisResult:',majorDetailInfo);
+        // console.log('testData.list.academicName:',majorDetailInfo);
 
         if(!majorDetailInfo){
             return(

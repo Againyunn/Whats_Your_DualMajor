@@ -64,7 +64,7 @@ export default function Result() {
         RecommendService.getFinalResult(resultType, testKeyValidate).then(
             (response) => {
 
-                console.log("getData:", response.data);
+                // console.log("getData:", response.data);
 
                 //전달받은 값을 데이터로 저장
                 setThisResult(response.data.info);
@@ -97,8 +97,8 @@ export default function Result() {
     }
     
     const ShowResult = () => {
-        console.log('thisResult:',thisResult);
-        console.log('testData.list.academicName:',thisResult[0]);
+        // console.log('thisResult:',thisResult);
+        // console.log('testData.list.academicName:',thisResult[0]);
 
         if(!thisResult){
             return(
@@ -207,7 +207,7 @@ export default function Result() {
         let result = event.currentTarget.id;
         // let result = selectedElement.current.id;
 
-        console.log("selectedResult:",result);
+        // console.log("selectedResult:",result);
         setAnswer(result);
 
         //선택한 전공에 대해 색 변경(프론트에 표시)
@@ -232,9 +232,9 @@ export default function Result() {
             }
             else{
                 thisUser = thisUser.id;
-                console.log("thisUser:", thisUser);
+                // console.log("thisUser:", thisUser);
             }
-            console.log("answer:",answer);
+            // console.log("answer:",answer);
 
             //별점 기록 받아오기
             let starRecord = sessionStorage.getItem('starCount');

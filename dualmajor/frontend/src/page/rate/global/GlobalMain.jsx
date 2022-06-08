@@ -91,7 +91,7 @@ function GlobalMain() {
                   let getData = response.data.majorListGlobal;
                   setThisMajorList(getData);
                   setSelectedMajorId(getData[0].name);
-                  console.log(response.data.majorListGlobal);
+                //   console.log(response.data.majorListGlobal); 
 
                   majorFirstSetting = getData[0].name;
               }
@@ -101,12 +101,12 @@ function GlobalMain() {
           //로그인 되어 있는 경우
           if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
               let tmp = Object.values(JSON.parse(sessionStorage.getItem("user")));
-              console.log("sessionLog:", tmp);
+            //   console.log("sessionLog:", tmp);
               let userId = tmp[0];
               setThisUser(userId);
               setLogin(true); 
   
-              console.log("user id:", userId);
+            //   console.log("user id:", userId);
   
               //06.01 수정
               //사용자의 지원 여부 정보 받아오기
@@ -116,7 +116,7 @@ function GlobalMain() {
                       setApplyInfo(response.data);
                       setThisApply(response.data.apply);
                       setValid(response.data.change);
-                      console.log("applyInfo data:", response.data);
+                    //   console.log("applyInfo data:", response.data);
   
                       if(response.data.apply == true  && response.data.majorName == majorFirstSetting){
                           // 사용자의 지원 정보가 있는 경우
@@ -177,7 +177,7 @@ function GlobalMain() {
                   (response) => {
                       setMajorInfo(response.data);
       
-                      console.log("getRateInfo:", response.data);
+                    //   console.log("getRateInfo:", response.data);
                   }
               )
           }
@@ -186,12 +186,12 @@ function GlobalMain() {
           //로그인 되어 있는 경우
           if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
             let tmp = Object.values(JSON.parse(sessionStorage.getItem("user")));
-              console.log("sessionLog:", tmp);
+            //   console.log("sessionLog:", tmp);
               let userId = tmp[0];
               setThisUser(userId);
               setLogin(true); 
   
-              console.log("user id:", userId);
+            //   console.log("user id:", userId);
               //06.01 수정
               //사용자의 지원 여부 정보 받아오기
               RateService.getApplyInfo(userId).then(
@@ -204,7 +204,7 @@ function GlobalMain() {
 
                         setThisApply(response.data.apply);
                         setValid(response.data.change);
-                        console.log("applyInfo data:", response.data);
+                        // console.log("applyInfo data:", response.data);
     
                         if(response.data.apply == true){
                             // 사용자의 지원 정보가 있는 경우
@@ -228,8 +228,8 @@ function GlobalMain() {
           if(login && (thisApply == true) && (clicked === true)){
               RateService.postApply(thisUser, selectedMajorId, thisApply).then(
                   (response) =>{
-                      console.log("post selectedMajorId:", selectedMajorId);
-                      console.log("user id:", thisUser);
+                    //   console.log("post selectedMajorId:", selectedMajorId);
+                    //   console.log("user id:", thisUser);
                       Swal.fire({
                         text: `${selectedMajorId}에 지원했어요😉`,
                         icon: undefined,
@@ -240,7 +240,7 @@ function GlobalMain() {
                   }
               ).catch(
                   (error)=>{
-                      console.log("postApply:",error);
+                    //   console.log("postApply:",error);
                   }
               )
           }
@@ -248,8 +248,8 @@ function GlobalMain() {
           if(login && (thisApply == false) && (clicked === true)){
             RateService.postApply(thisUser, applyInfo.majorName, thisApply).then(
                 (response) =>{
-                    console.log("post selectedMajorId:", applyInfo.majorName);
-                    console.log("user id:", thisUser);
+                    // console.log("post selectedMajorId:", applyInfo.majorName);
+                    // console.log("user id:", thisUser);
                     
                     Swal.fire({
                         text: `${applyInfo.majorName}에 지원취소했어요😀`,
@@ -261,7 +261,7 @@ function GlobalMain() {
                 }
             ).catch(
                 (error)=>{
-                    console.log("postApply:",error);
+                    // console.log("postApply:",error);
                 }
             )
         }
@@ -275,12 +275,12 @@ function GlobalMain() {
           //로그인 되어 있는 경우
           if(sessionStorage.getItem("user")!==null && sessionStorage.getItem("user")!==undefined){
             let tmp = Object.values(JSON.parse(sessionStorage.getItem("user")));
-            console.log("sessionLog:", tmp);
+            // console.log("sessionLog:", tmp);
             let userId = tmp[0];
               setThisUser(userId);
               setLogin(true); 
   
-              console.log("user id:", userId);
+            //   console.log("user id:", userId);
               //06.01 수정
               //사용자의 지원 여부 정보 받아오기
               RateService.getApplyInfo(userId).then(
@@ -294,7 +294,7 @@ function GlobalMain() {
                       
                         setThisApply(response.data.apply);
                         setValid(response.data.change);
-                        console.log("applyInfo data:", response.data);
+                        // console.log("applyInfo data:", response.data);
     
                         if(response.data.apply == true){
                             // 사용자의 지원 정보가 있는 경우
@@ -314,7 +314,7 @@ function GlobalMain() {
       //정보를 확인해볼 전공 확인 함수
       const SelectMajorId = (e) =>{
           setSelectedMajorId(e.target.value);
-          console.log("selectedMajorId:", e.target.value) ;
+        //   console.log("selectedMajorId:", e.target.value) ;
       }
   
       //지원 버튼 선택 시

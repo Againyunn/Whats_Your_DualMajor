@@ -81,7 +81,7 @@ function SeoulMain() {
                 let getData = response.data.majorListSeoul;
                 setThisMajorList(getData);
                 setSelectedMajorId(getData[0].name);
-                console.log(response.data.majorListSeoul);
+                // console.log(response.data.majorListSeoul);
             }
         )
     },[])
@@ -143,13 +143,13 @@ function SeoulMain() {
 
     //정보를 확인해볼 전공 확인 함수
     const SelectMajorId = (e) =>{
-        console.log("selectedMajor:",e.target.value)
+        // console.log("selectedMajor:",e.target.value)
         setSelectedMajorId(e.target.value);
     }
 
     const ShowMajorDetail = () => {
-        console.log('thisResult:',majorDetailInfo);
-        console.log('testData.list.academicName:',majorDetailInfo);
+        // console.log('thisResult:',majorDetailInfo);
+        // console.log('testData.list.academicName:',majorDetailInfo);
 
         if(!majorDetailInfo){
             return(

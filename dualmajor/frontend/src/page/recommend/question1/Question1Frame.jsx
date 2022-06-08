@@ -80,8 +80,8 @@ export default function Question2Frame() {
         //질문받아오기
         RecommendService.getFirstSectionQuestion(thisQuestionNum, testKeyValidate).then(
             (response) => {
-                console.log("thisData", response.data);
-                console.log("thisData Type:", typeof(response.data));
+                // console.log("thisData", response.data);
+                // console.log("thisData Type:", typeof(response.data));
 
                 //테스트 사용자 식별용 세션 셋팅
                 sessionStorage.setItem('testKey', response.data.testKey);
@@ -132,7 +132,7 @@ export default function Question2Frame() {
 
             RecommendService.submitFirstSectionAnswer(thisQuestionNum, testKeyValidate, thisAnswer).then(
                 (response) => {
-                    console.log("submitData", response.data);
+                    // console.log("submitData", response.data);
 
                     //테스트 사용자 식별용 세션 셋팅
                     sessionStorage.setItem('testKey', response.data.testKey);

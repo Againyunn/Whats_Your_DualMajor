@@ -34,7 +34,7 @@ export default function MyModal(props) {
   useEffect(() => {
     
     //테스트용
-    console.log("thisUser",thisUser);
+    // console.log("thisUser",thisUser);
 
     AuthService.firstMajorList();
     AuthService.dualMajorList();
@@ -53,10 +53,10 @@ export default function MyModal(props) {
       let firstMajorIndex = Number(thisUser[4]);
       let dualMajorIndex = Number(thisUser[5]);
 
-      console.log('firstMajorName :',firstMajorList );
-      console.log('dualMajorIndex :',dualMajorList );
-      console.log('firstMajorIndex :',firstMajorIndex);
-      console.log('dualMajorIndex :',dualMajorIndex);
+      // console.log('firstMajorName :',firstMajorList );
+      // console.log('dualMajorIndex :',dualMajorList );
+      // console.log('firstMajorIndex :',firstMajorIndex);
+      // console.log('dualMajorIndex :',dualMajorIndex);
 
       if(!firstMajorList && !dualMajorList){
         let firstMajorName = firstMajorList.find((e) => {return e.id == firstMajorIndex;});
