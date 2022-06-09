@@ -144,15 +144,18 @@ export default function Result() {
             let testKeyValidate = sessionStorage.getItem('testKey');
 
             //API전송
-            RecommendService.submitFirstSectionResult(answer, testKeyValidate);
+            RecommendService.submitFirstSectionResult(answer, testKeyValidate).then(
+                (response) => {
+                    sessionStorage.setItem('recommendFirstResult', true);
+                    sessionStorage.setItem('questionNum', 1);
+        
+                    //2차 질문 page로 이동
+                    navigate("/question2");
+                    window.location.reload();
+                }
+            );
             // console.log("answer:",answer);
 
-            sessionStorage.setItem('recommendFirstResult', true);
-            sessionStorage.setItem('questionNum', 1);
-
-            //2차 질문 page로 이동
-            navigate("/question2");
-            window.location.reload();
         }
         else{
             Swal.fire({
