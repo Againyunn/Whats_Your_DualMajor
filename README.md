@@ -46,8 +46,13 @@
   <li>
     <b>서비스 URL:</b><br/>
     http://43.200.48.156:8080/
+    
+    <b>서비스 소개:</b><br/>
+    https://www.miricanvas.com/v/116urx9
   </li>
 </ul>
+
+
 
   
 
