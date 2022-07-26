@@ -136,31 +136,70 @@ import ShowMyMajorInfo from './page/majorInfoDetail/ShowMyMajorInfo';
 import SavedResultFrame from './page/recommend/savedResult/SavedResultFrame';
 import ShowMyRateInfo from './page/rate/ShowMyRateInfo';
 
+// pc버전 레이아웃 테스트
+import PMainPage from './pc_page/main/PMainPage';
+import PLogin from './pc_page/login/PLogin';
+import PSignup from './pc_page/userInfo/PSignup';
+import PEditUserInfo from './pc_page/userInfo/PEditUserInfo';
+import PRecommendMain from './pc_page/recommend/PRecommendMain';
+import PQuestion1 from './pc_page/recommend/PQuestion1';
+import PQuestion2 from './pc_page/recommend/PQuestion2';
+import PResult1 from './pc_page/recommend/PResult1';
+import PResult2 from './pc_page/recommend/PResult2';
+import PRateMain from './pc_page/rate/PRateMain';
+import PRateSeoul from './pc_page/rate/PRateSeoul';
+import PRateGlobal from './pc_page/rate/PRateGlobal';
+import PShowMyRateInfo from './pc_page/rate/PShowMyRateInfo';
+import PRecommendResult from './pc_page/recommend/PRecommendResult';
+import PSeoulMajorInfo from './pc_page/majorInfoDetail/PSeoulMajorInfo';
+import PGlobalMajorInfo from './pc_page/majorInfoDetail/PGlobalMajorInfo';
+import PShowMyMajorInfo from './pc_page/majorInfoDetail/PShowMyMajorInfo';
+
 function App() {
   return (
     <>
     <BrowserRouter>
       <Routes>
-        <Route path='/' element ={<Main/>} />
-        <Route path='/choose' element={<Choose/>} />
-        <Route path='/login' element={<Login/>} />
-        <Route path='/signup' element={<SignupForm/>} />
-        <Route path='/editInfo' element={<EditInfo/>} />
-        <Route path='/recommend' element={<RecommendMain/>}/>
-        <Route path='/question1' element={<Question1Frame/>}/>
-        <Route path='/result1' element={<Result1Frame/>}/>
-        <Route path='/question2' element={<Question2Frame/>}/>
-        <Route path='/result2' element={<Result2Frame/>}>
+        {/* pc버전 레이아웃 테스트 */}
+        <Route path='/' element={<PMainPage/>}/>
+        <Route path='/login' element={<PLogin/>}/>
+        <Route path='/signup' element={<PSignup/>}/>
+        <Route path='/editInfo' element={<PEditUserInfo/>}/>
+        <Route path='/recommend' element={<PRecommendMain/>}/>
+        <Route path='/question1' element={<PQuestion1/>}/>
+        <Route path='/question2' element={<PQuestion2/>}/>
+        <Route path='/result1' element={<PResult1/>}/>
+        <Route path='/result2' element={<PResult2/>}/>
+        <Route path='/rate' element={<PRateMain/>}/>
+        <Route path='/rate/seoul' element={<PRateSeoul/>}/>
+        <Route path='/rate/global' element={<PRateGlobal/>}/>
+        <Route path='/showMyRateInfo' element={<PShowMyRateInfo/>}/>
+        <Route path='/recommendResult' element={<PRecommendResult/>}/>
+        <Route path="/seoulMajorInfo" element={<PSeoulMajorInfo />} />
+        <Route path="/globalMajorInfo" element={<PGlobalMajorInfo />} />
+        <Route path='/showMyMajorInfo' element={<PShowMyMajorInfo/>}/>
+
+        {/* 구버전 레이아웃 */}
+        <Route path='/m' element ={<Main/>} />
+        <Route path='/m/choose' element={<Choose/>} />
+        <Route path='/m/login' element={<Login/>} />
+        <Route path='/m/signup' element={<SignupForm/>} />
+        <Route path='/m/editInfo' element={<EditInfo/>} />
+        <Route path='/m/recommend' element={<RecommendMain/>}/>
+        <Route path='/m/question1' element={<Question1Frame/>}/>
+        <Route path='/m/result1' element={<Result1Frame/>}/>
+        <Route path='/m/question2' element={<Question2Frame/>}/>
+        <Route path='/m/result2' element={<Result2Frame/>}>
           <Route path=':id' element={<Result2Frame/>} />
         </Route>
-        <Route path='/rate' element={<RateMain/>} />
-        <Route path='/seoul' element={<SeoulMain/>} />
-        <Route path='/global' element={<GlobalMain/>} />
-        <Route path='/showMyRateInfo' element={<ShowMyRateInfo/>} />
-        <Route path='/recommendResult' element={<SavedResultFrame/>} />
-        <Route path="/seoulMajorInfo" element={<SeoulMajorInfo />} />
-        <Route path="/globalMajorInfo" element={<GlobalMajorInfo />} />
-        <Route path="/showMyMajorInfo" element={<ShowMyMajorInfo/>} />
+        <Route path='/m/rate' element={<RateMain/>} />
+        <Route path='/m/seoul' element={<SeoulMain/>} />
+        <Route path='/m/global' element={<GlobalMain/>} />
+        <Route path='/m/showMyRateInfo' element={<ShowMyRateInfo/>} />
+        <Route path='/m/recommendResult' element={<SavedResultFrame/>} />
+        <Route path="/m/seoulMajorInfo" element={<SeoulMajorInfo />} />
+        <Route path="/m/globalMajorInfo" element={<GlobalMajorInfo />} />
+        <Route path="/m/showMyMajorInfo" element={<ShowMyMajorInfo/>} />
 
         <Route
         path="*"

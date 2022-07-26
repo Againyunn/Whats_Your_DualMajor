@@ -1,7 +1,7 @@
 import axios from "axios";
 //const API_URL = "https://81e0af5c-fa2e-4ea9-b93f-8d63072a71dc.mock.pstmn.io/";
 // const API_URL = "localhost:8080/"
-const API_URL = "http://localhost:8080/"
+const API_URL = "http://127.0.0.1:8080/"
 
 
 /**캠퍼스별 전공 목록 받아오기*/

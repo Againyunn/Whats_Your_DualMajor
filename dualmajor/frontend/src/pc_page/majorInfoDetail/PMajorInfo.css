@@ -1,0 +1,314 @@
+
+/* 전공정보 페이지 - 서울 */
+.common-info-main-wrap{
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 0.5fr 0.5fr 7fr 0.5fr;
+    justify-content: center;
+    background-color: #FFF;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 110px;
+    margin-bottom: 20px;
+}
+.common-info-select-campus-wrap{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    font-weight: bold;
+    font-size: 20px;
+}
+.common-info-select-flex-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    
+    color: white;
+}
+.my-selected-Major{
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #8d7150;
+    opacity: 1;
+}
+.seoul-info-select-seoul-campus{
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #8d7150;
+    opacity: 1;
+}
+.seoul-info-select-global-campus{
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #8d7150;
+    opacity: 0.7;
+}
+.seoul-info-select-global-campus:hover{
+    opacity: 0.9;
+}
+.global-info-select-global-campus{
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #8d7150;
+    opacity: 1;
+}
+.global-info-select-seoul-campus{
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #8d7150;
+    opacity: 0.7;
+}
+.global-info-select-seoul-campus:hover{
+    opacity: 0.9;
+}
+.common-info-major-selection-filter{
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    font-weight: normal;
+    font-size: 15px;
+}
+.common-info-major-info-wrap{
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    border: 1px solid #C4C4C4;
+}
+.common-info-major-info-notice-apply{
+    color: #002d56;
+    opacity:0.8;
+
+    font-size: 13px;
+}
+.common-info-major-info-notice-avg-gpa{
+    color: #028799;
+    opacity:0.9;
+
+    font-size: 12px;
+}
+.common-info-apply-wrap{
+    grid-row-start:4;
+    grid-row-end:5;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    font-weight: bold;
+    font-size: 18px;
+    justify-content: center;
+    align-items: center;
+}
+.common-info-apply-warning{
+    font-size: 10px;
+}
+.common-info-apply-button{
+    background-color: #8d7150;
+    opacity: 0.9;
+    /*모양*/
+    border-radius: 5px;
+    width: 40%;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+}
+.common-info-apply-button:hover{
+    background-color: #8d7150;
+    opacity: 1;
+}
+.common-info-apply-button:focus{
+    background-color: #8d7150;
+    opacity: 1;
+}
+.common-info-applied-btn{
+    border-radius: 5px;
+    width: 40%;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+}
+
+/*** 전공정보 메인 반응형 적용 ***/
+/* 반응형 */
+/* 화면너비 0 ~ 960px */
+@media (max-width: 960px){
+    .common-info-main-wrap{
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+        grid-template-rows: 0.5fr 0.5fr 7fr 0.5fr;
+        justify-content: center;
+        background-color: #FFF;
+        text-align: center;
+        vertical-align: middle;
+        margin-top: 110px;
+        margin-bottom: 20px;
+    }
+}
+/* 화면너비 0 ~ 600px */
+@media (max-width: 600px){
+    .common-info-main-wrap{
+        display: grid;
+        grid-template-columns: 0.5fr 3fr 0.5fr;
+        grid-template-rows: 0.5fr 0.5fr 7fr 0.5fr;
+        justify-content: center;
+        background-color: #FFF;
+        text-align: center;
+        vertical-align: middle;
+        margin-top: 110px;
+        margin-bottom: 20px;
+    }
+    .common-info-select-campus-wrap{
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    
+        font-weight: bold;
+        font-size: 18px;
+    }
+    .common-info-major-selection-filter{
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    
+        font-weight: normal;
+        font-size: 13px;
+    }
+    .common-info-major-info-notice-apply{
+        color: #002d56;
+        opacity:0.8;
+    
+        font-size: 12px;
+    }
+    .common-info-major-info-notice-avg-gpa{
+        color: #028799;
+        opacity:0.9;
+    
+        font-size: 11px;
+    }
+    .common-info-apply-wrap{
+        grid-row-start:4;
+        grid-row-end:5;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        font-weight: bold;
+        font-size: 15px;
+        justify-content: center;
+        align-items: center;
+    }
+    .common-info-apply-warning{
+        font-size: 10px;
+    }
+    .common-info-apply-button{
+        background-color: #8d7150;
+        opacity: 0.9;
+        /*모양*/
+        border-radius: 5px;
+        width: 40%;
+        font-size: 14px;
+        color: white;
+        font-weight: bold;
+    }
+    .common-info-apply-button:hover{
+        background-color: #8d7150;
+        opacity: 1;
+    }
+    .common-info-apply-button:focus{
+        background-color: #8d7150;
+        opacity: 1;
+    }
+    .common-info-applied-btn{
+        border-radius: 5px;
+        width: 40%;
+        font-size: 12px;
+        color: white;
+        font-weight: bold;
+    }
+}
+/* 화면너비 0 ~ 480px */
+@media (max-width: 480px){
+    .common-info-main-wrap{
+        display: grid;
+        grid-template-columns: 0.3fr 3fr 0.3fr;
+        grid-template-rows: 0.5fr 0.5fr 7fr 0.5fr;
+        justify-content: center;
+        background-color: #FFF;
+        text-align: center;
+        vertical-align: middle;
+        margin-top: 110px;
+        margin-bottom: 20px;
+    }
+    .common-info-select-campus-wrap{
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    
+        font-weight: bold;
+        font-size: 15px;
+    }
+    .common-info-major-selection-filter{
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    
+        font-weight: normal;
+        font-size: 11px;
+    }
+    .common-info-major-info-notice-apply{
+        color: #002d56;
+        opacity:0.8;
+    
+        font-size: 10px;
+    }
+    .common-info-major-info-notice-avg-gpa{
+        color: #028799;
+        opacity:0.9;
+    
+        font-size: 11px;
+    }
+    .common-info-apply-wrap{
+        grid-row-start:4;
+        grid-row-end:5;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        font-weight: bold;
+        font-size: 12px;
+        justify-content: center;
+        align-items: center;
+    }
+    .common-info-apply-warning{
+        font-size: 10px;
+    }
+    .common-info-apply-button{
+        background-color: #8d7150;
+        opacity: 0.9;
+        /*모양*/
+        border-radius: 5px;
+        width: 40%;
+        font-size: 12px;
+        color: white;
+        font-weight: bold;
+    }
+    .common-info-apply-button:hover{
+        background-color: #8d7150;
+        opacity: 1;
+    }
+    .common-info-apply-button:focus{
+        background-color: #8d7150;
+        opacity: 1;
+    }
+    .common-info-applied-btn{
+        border-radius: 5px;
+        width: 40%;
+        font-size: 10px;
+        color: white;
+        font-weight: bold;
+    }
+}

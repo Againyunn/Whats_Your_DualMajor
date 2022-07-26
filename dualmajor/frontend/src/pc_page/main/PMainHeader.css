@@ -1,0 +1,312 @@
+/* 메인 헤더(고정) */
+.main-header{
+    width: 100%;
+    height: 100px;
+    background-color: #002d56;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    z-index: 10;
+}
+
+.main-icon{
+    overflow: hidden;
+}
+#hufs-icon-white{
+    float: left;
+    margin-top: 20px;
+    height: 60px;
+}
+#main-name{
+    float: left;
+    margin-left: auto; 
+    margin-right: auto;
+
+    margin-top: 35px;
+    margin-left: 5px;
+    text-align: center;
+    font-size: 22px;
+    color: #FFF;
+    font-weight: bold;
+}
+
+#main-name:hover{
+    color: #FdFfF2;
+    text-shadow: -0.4px 0 #9d9fa2, 0 0.4px #9d9fa2, 0.4px 0 #9d9fa2, 0 -0.4px #9d9fa2;
+}
+.main-select-service-wrap{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.main-select-service-tab{
+    margin-left: 10px;
+}
+.main-select-service-tab > span{
+    color: #FFF;
+    /* font-weight: bold; */
+    font-size: 20px;
+
+    display: inline-block;
+    margin-top: 40px;
+    margin-left: 10px;
+}
+
+.main-select-service-tab > span:hover{
+    color: #FFF;
+    font-weight: bold;
+    font-size: 21px;
+
+    display: inline-block;
+    margin-top: 39px;
+    margin-left: 10px;
+
+    border-bottom: solid 2px #8d7150;
+}
+
+/* 메인-로그인 버튼 영역 */
+.login-wrap{
+    width: 100px;
+}
+
+.login-tab{
+    color: #FFF;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 39px;
+    margin-left: 10px;
+}
+.login-tab:hover{
+    color: #FdFfF2;
+    text-shadow: -0.4px 0 #9d9fa2, 0 0.4px #9d9fa2, 0.4px 0 #9d9fa2, 0 -0.4px #9d9fa2;
+}
+
+/* 내 정보 확인 Modal */
+.menu-tab {
+    margin-top: 25px;
+    margin-left: 10px;
+    opacity: 1;
+}
+/*이미지*/
+.menu-tab img {
+    width: 50px;
+    height: 50px;
+}
+/*호버*/
+.menu-tab:hover {
+    opacity: 0.6;
+}
+
+/* 특정 서비스(탭)이 선택된 상태일 때 -> 리엑트 상태관리로 처리 예정 */
+.selected-main-select-service{
+    margin-left: 10px;
+}
+.selected-main-select-service > span{
+    color: #FFF;
+    font-weight:900;
+    font-size: 21px;
+
+    display: inline-block;
+    margin-top: 39px;
+    margin-left: 10px;
+
+    border-bottom: solid 2px #8d7150;
+}
+
+.menu-dropdown-btn{
+    margin-top: 23px;
+    font-size: 10px;
+    background-color: #002d56 !important;
+    color: #FFF !important;
+}
+.menu-dropdown-btn:hover{
+    background-color: #002d56;
+}
+.menu-dropdown-btn:focus{
+    background-color: #002d56;
+}
+
+/* 반응형 */
+/* 화면너비 0 ~ 960px */
+@media (max-width: 960px){
+    #main-name{
+        float: left;
+        margin-left: auto; 
+        margin-right: auto;
+    
+        margin-top: 35px;
+        margin-left: 5px;
+        text-align: center;
+        font-size: 18px;
+        color: #FFF;
+        font-weight: bold;
+    }
+    .main-select-service-tab > span{
+        color: #FFF;
+        /* font-weight: bold; */
+        font-size: 15px;
+    
+        display: inline-block;
+        margin-top: 45px;
+        margin-left: 10px;
+    }
+    .main-select-service-tab > span:hover{
+        color: #FFF;
+        font-weight: bold;
+        font-size: 16px;
+    
+        display: inline-block;
+        margin-top: 44px;
+        margin-left: 10px;
+    
+        border-bottom: solid 2px #8d7150;
+    }
+}
+/* 화면너비 0 ~ 600px */
+@media (max-width: 600px){
+    .main-header{
+        width: 100%;
+        height: 80px;
+        background-color: #002d56;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+    
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        z-index: 10;
+    }
+    #main-name{
+        float: left;
+        margin-left: auto; 
+        margin-right: auto;
+    
+        margin-top: 15px;
+        margin-left: 5px;
+        text-align: center;
+        font-size: 18px;
+        color: #FFF;
+        font-weight: bold;
+    }
+    #hufs-icon-white{
+        float: left;
+        margin-top: 10px;
+        height: 60px;
+    }
+    #main-name{
+        float: left;
+        margin-left: auto; 
+        margin-right: auto;
+    
+        margin-top: 25px;
+        margin-left: 5px;
+        text-align: center;
+        font-size: 14px;
+        color: #FFF;
+        font-weight: bold;
+    }
+    .main-select-service-tab > span{
+        color: #FFF;
+        /* font-weight: bold; */
+        font-size: 10px;
+    
+        display: inline-block;
+        margin-top: 28px;
+        margin-left: 10px;
+    }
+    .main-select-service-tab > span:hover{
+        color: #FFF;
+        font-weight: bold;
+        font-size: 13px;
+    
+        display: inline-block;
+        margin-top: 27px;
+        margin-left: 10px;
+    
+        border-bottom: solid 2px #8d7150;
+    }
+    
+    /* 메인-로그인 버튼 영역 */
+    .login-wrap{
+        width: 60px;
+    }
+
+    .login-tab{
+        color: #FFF;
+        font-size: 10px;
+        font-weight: bold;
+        margin-top: 30px;
+        margin-left: 10px;
+    }
+    /* 내 정보 확인 Modal */
+    .menu-tab {
+        margin-top: 20px;
+        margin-left: 10px;
+        opacity: 1;
+    }
+    /*이미지*/
+    .menu-tab img {
+        width: 30px;
+        height: 30px;
+    }
+    .selected-main-select-service > span{
+        color: #FFF;
+        font-weight:900;
+        font-size: 13px;
+    
+        display: inline-block;
+        margin-top: 27px;
+        margin-left: 10px;
+    
+        border-bottom: solid 2px #8d7150;
+    }
+}
+/* 화면너비 0 ~ 480px */
+@media (max-width: 480px){
+    .main-select-service-tab > span{
+        color: #FFF;
+        /* font-weight: bold; */
+        font-size: 10px;
+    
+        display: none;
+        margin-top: 28px;
+        margin-left: 10px;
+    }
+    .main-select-service-tab > span:hover{
+        color: #FFF;
+        font-weight: bold;
+        font-size: 13px;
+    
+        display: none;
+        margin-top: 27px;
+        margin-left: 10px;
+    
+        border-bottom: solid 2px #8d7150;
+    }
+    .selected-main-select-service > span{
+        visibility: none;
+        color: #FFF;
+        font-weight:900;
+        font-size: 13px;
+    
+        display: none;
+        margin-top: 27px;
+        margin-left: 10px;
+    
+        border-bottom: solid 2px #8d7150;
+    }
+    /* 내 정보 확인 Modal */
+    .menu-tab {
+        margin-top: 25px;
+        margin-left: 10px;
+        opacity: 1;
+    }
+}

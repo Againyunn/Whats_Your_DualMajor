@@ -1,7 +1,7 @@
 import axios from "axios";
 //const API_URL = "https://81e0af5c-fa2e-4ea9-b93f-8d63072a71dc.mock.pstmn.io/";
 // const API_URL = "localhost:8080/"
-const API_URL = "http://localhost:8080/"
+const API_URL = "http://127.0.0.1:8080/"
 
 //POST 회원가입
 const register = (stdNum, password, nickName, grade, userType, firstMajorId, dualMajorId, gpa) => {

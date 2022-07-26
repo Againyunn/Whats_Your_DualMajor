@@ -1,0 +1,569 @@
+/* 경쟁률 페이지 - 메인 */
+.start-main-page{
+    padding-top: 5vh;
+    /* width: 100%;
+    height: 100%; */
+    /* display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap; */
+}
+.rate-main-wrap{
+    display: grid;
+    grid-template-rows: 2fr 0.3fr;
+    background-color: white;
+    text-align: center;
+    vertical-align: middle;
+    row-gap: 10px;
+    margin-top: 120px;
+}
+.rate-choose-campus{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /* align-items: stretch; */
+    background-color: white;
+    justify-content: center;
+}
+.rate-seoul-campus-btn{
+    position: relative;
+    width: 50%;
+    z-index: 1;
+    opacity: 0.7;
+    background: url('../../media/main/W설캠본관.jpg') no-repeat;
+    background-size: cover;
+    margin: 0 auto;
+}
+.rate-global-campus-btn{
+    position: relative;
+    width: 50%;
+    z-index: 1;
+    opacity: 0.7;
+    background: url('../../media/main/W글캠백년관.jpg') no-repeat;
+    background-size: cover;
+    margin: 0 auto;
+}
+.rate-seoul-campus-btn .campus-btn-tit{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 30px;
+    font-weight: bold;
+    color: #145f7a;
+    z-index: 1;
+}
+.rate-global-campus-btn .campus-btn-tit{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 30px;
+    font-weight: bold;
+    color: #145f7a;
+    z-index: 1;
+}
+.rate-seoul-campus-btn:hover{
+    opacity: 1;
+    border-radius: 10px;
+}
+.rate-global-campus-btn:hover{
+    opacity: 1;
+    border-radius: 10px;
+}
+.rate-sub-tit-wrap{
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+.rate-sub-tit{
+    margin-top: 5vh;
+    font-size: 20px;
+    color: #145f7a;
+    font-weight: bold;
+}
+.rate-notice{
+    margin-top: 5vh;
+    color: #C4C4C4;
+}
+/* 경쟁률 페이지 - 서울 */
+.common-rate-main-wrap{
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 0.5fr 0.5fr 6fr 0.5fr;
+    justify-content: center;
+    background-color: #FFF;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 110px;
+}
+.common-select-campus-wrap{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    font-weight: bold;
+    font-size: 20px;
+}
+.common-select-flex-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    
+    color: white;
+}
+.seoul-select-seoul-campus{
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #145f7a;
+    opacity: 1;
+}
+.seoul-select-global-campus{
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #145f7a;
+    opacity: 0.7;
+}
+.seoul-select-global-campus:hover{
+    opacity: 0.9;
+}
+.global-select-global-campus{
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #145f7a;
+    opacity: 1;
+}
+.global-select-seoul-campus{
+    flex-grow: 1;
+    padding: 5px;
+    background-color: #145f7a;
+    opacity: 0.7;
+}
+.global-select-seoul-campus:hover{
+    opacity: 0.9;
+}
+.common-major-selection-filter{
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    font-weight: normal;
+    font-size: 15px;
+}
+.common-major-info-wrap{
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    border: 1px solid #C4C4C4;
+}
+.common-major-info-notice-apply{
+    color: #002d56;
+    opacity:0.8;
+
+    font-size: 13px;
+}
+.common-major-info-notice-avg-gpa{
+    color: #028799;
+    opacity:0.9;
+
+    font-size: 12px;
+}
+.common-apply-wrap{
+    grid-row-start:4;
+    grid-row-end:5;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    font-weight: bold;
+    font-size: 18px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.common-apply-warning{
+    font-size: 10px;
+}
+.common-apply-button{
+    background-color: #002d56;
+    opacity: 0.9;
+    /*모양*/
+    border-radius: 5px;
+    width: 40%;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+}
+.common-apply-button:hover{
+    background-color: #002d56;
+    opacity: 1;
+}
+.common-apply-button:focus{
+    background-color: #002d56;
+    opacity: 1;
+}
+.common-applied-btn{
+    border-radius: 5px;
+    width: 40%;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+}
+
+/*** 경쟁률 메인 반응형 적용 ***/
+/* 반응형 */
+/* 화면너비 0 ~ 960px */
+@media (max-width: 960px){
+    .rate-main-wrap{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        background-color: white;
+        text-align: center;
+        justify-content: center;
+        row-gap: 3px;
+        margin-top: 90px;
+    }
+    .rate-choose-campus{
+        display: inline-block;
+    }
+    .rate-seoul-campus-btn{
+        position: relative;
+        height: 300px;
+        width: 600px;
+        z-index: 1;
+        opacity: 0.7;
+        background: url('../../media/main/W설캠본관.jpg') no-repeat;
+        background-size: cover;
+        margin: 0 auto;
+    }
+    .rate-global-campus-btn{
+        position: relative;
+        height: 300px;
+        width: 600px;
+        z-index: 1;
+        opacity: 0.7;
+        background: url('../../media/main/W글캠백년관.jpg') no-repeat;
+        background-size: cover;
+    }
+}
+
+/* 화면너비 0 ~ 600px */
+@media (max-width: 600px){
+    .rate-main-wrap{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        background-color: white;
+        text-align: center;
+        justify-content: center;
+        row-gap: 3px;
+        margin-top: 20px;
+    }
+    .rate-choose-campus{
+        display: inline-block;
+    }
+    .rate-seoul-campus-btn{
+        position: relative;
+        height: 200px;
+        width: 400px;
+        z-index: 1;
+        opacity: 0.7;
+        background: url('../../media/main/W설캠본관.jpg') no-repeat;
+        background-size: cover;
+        margin: 0 auto;
+    }
+    .rate-global-campus-btn{
+        position: relative;
+        height: 200px;
+        width: 400px;
+        z-index: 1;
+        opacity: 0.7;
+        background: url('../../media/main/W글캠백년관.jpg') no-repeat;
+        background-size: cover;
+    }
+    .rate-seoul-campus-btn .campus-btn-tit{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    
+        font-size: 20px;
+        font-weight: bold;
+        color: #145f7a;
+        z-index: 1;
+    }
+    .rate-global-campus-btn .campus-btn-tit{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    
+        font-size: 20px;
+        font-weight: bold;
+        color: #145f7a;
+        z-index: 1;
+    }.rate-sub-tit-wrap{
+        grid-row-start: 2;
+        grid-row-end: 3;
+    }
+    .rate-sub-tit{
+        margin-top: 2vh;
+        font-size: 15px;
+        color: #145f7a;
+        font-weight: bold;
+    }
+    .rate-notice{
+        margin-top: 2vh;
+        font-size: 12px;
+        color: #C4C4C4;
+    }
+}
+/* 화면너비 0 ~ 480px */
+@media (max-width: 480px){
+    .rate-main-wrap{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        background-color: white;
+        text-align: center;
+        justify-content: center;
+        row-gap: 2px;
+        margin-top: 1px;
+    }
+    .rate-seoul-campus-btn{
+        position: relative;
+        height: 150px;
+        width: 300px;
+        z-index: 1;
+        opacity: 0.7;
+        background: url('../../media/main/W설캠본관.jpg') no-repeat;
+        background-size: cover;
+        margin: 0 auto;
+    }
+    .rate-global-campus-btn{
+        position: relative;
+        height: 150px;
+        width: 300px;
+        z-index: 1;
+        opacity: 0.7;
+        background: url('../../media/main/W글캠백년관.jpg') no-repeat;
+        background-size: cover;
+    }
+    .rate-seoul-campus-btn .campus-btn-tit{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    
+        font-size: 18px;
+        font-weight: bold;
+        color: #145f7a;
+        z-index: 1;
+    }
+    .rate-global-campus-btn .campus-btn-tit{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    
+        font-size: 18px;
+        font-weight: bold;
+        color: #145f7a;
+        z-index: 1;
+    }.rate-sub-tit-wrap{
+        grid-row-start: 2;
+        grid-row-end: 3;
+    }
+    .rate-sub-tit{
+        margin-top: 2vh;
+        font-size: 12px;
+        color: #145f7a;
+        font-weight: bold;
+    }
+    .rate-notice{
+        margin-top: 2vh;
+        font-size: 10px;
+        color: #C4C4C4;
+    }
+}
+
+
+/*** 경쟁률 서울 반응형 적용 ***/
+/* 화면너비 0 ~ 600px */
+@media (max-width: 600px){
+    .common-rate-main-wrap{
+        display: grid;
+        grid-template-columns: 0.5fr 3fr 0.5fr;
+        grid-template-rows: 0.5fr 0.5fr 6fr 1fr;
+        justify-content: center;
+        background-color: #FFF;
+        text-align: center;
+        vertical-align: middle;
+        margin-top: 100px;
+    }
+    .common-select-campus-wrap{
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    
+        font-weight: bold;
+        font-size: 18px;
+    }
+    .common-major-selection-filter{
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    
+        font-weight: normal;
+        font-size: 13px;
+    }
+    .common-major-info-wrap{
+        grid-row-start: 3;
+        grid-row-end: 4;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    
+        border: 1px solid #C4C4C4;
+    }
+    .common-major-info-notice-apply{
+        color: #002d56;
+        opacity:0.8;
+    
+        font-size: 12px;
+    }
+    .common-major-info-notice-avg-gpa{
+        color: #028799;
+        opacity:0.9;
+    
+        font-size: 11px;
+    }
+    .common-apply-wrap{
+        grid-row-start:4;
+        grid-row-end:5;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        font-weight: bold;
+        font-size: 15px;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .common-apply-warning{
+        font-size: 10px;
+    }
+    .common-apply-button{
+        background-color: #002d56;
+        opacity: 0.9;
+        /*모양*/
+        border-radius: 5px;
+        width: 40%;
+        font-size: 14px;
+        color: white;
+        font-weight: bold;
+    }
+    .common-apply-button:hover{
+        background-color: #002d56;
+        opacity: 1;
+    }
+    .common-apply-button:focus{
+        background-color: #002d56;
+        opacity: 1;
+    }
+    .common-applied-btn{
+        border-radius: 5px;
+        width: 40%;
+        font-size: 12px;
+        color: white;
+        font-weight: bold;
+    }
+}
+/* 화면너비 0 ~ 480px */
+@media (max-width: 480px){
+    .common-rate-main-wrap{
+        display: grid;
+        grid-template-columns: 0.3fr 3fr 0.3fr;
+        grid-template-rows: 0.5fr 0.5fr 6fr 1fr;
+        justify-content: center;
+        background-color: #FFF;
+        text-align: center;
+        vertical-align: middle;
+        margin-top: 100px;
+    }
+    .common-select-campus-wrap{
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    
+        font-weight: bold;
+        font-size: 15px;
+    }
+    .common-major-selection-filter{
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    
+        font-weight: normal;
+        font-size: 11px;
+    }
+    .common-major-info-notice-apply{
+        color: #002d56;
+        opacity:0.8;
+    
+        font-size: 10px;
+    }
+    .common-major-info-notice-avg-gpa{
+        color: #028799;
+        opacity:0.9;
+    
+        font-size: 11px;
+    }
+    .common-apply-wrap{
+        grid-row-start:4;
+        grid-row-end:5;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        font-weight: bold;
+        font-size: 12px;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .common-apply-warning{
+        font-size: 10px;
+    }
+    .common-apply-button{
+        background-color: #002d56;
+        opacity: 0.9;
+        /*모양*/
+        border-radius: 5px;
+        width: 40%;
+        font-size: 12px;
+        color: white;
+        font-weight: bold;
+    }
+    .common-apply-button:hover{
+        background-color: #002d56;
+        opacity: 1;
+    }
+    .common-apply-button:focus{
+        background-color: #002d56;
+        opacity: 1;
+    }
+    .common-applied-btn{
+        border-radius: 5px;
+        width: 40%;
+        font-size: 10px;
+        color: white;
+        font-weight: bold;
+    }
+}

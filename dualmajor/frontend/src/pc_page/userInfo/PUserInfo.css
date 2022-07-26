@@ -1,0 +1,207 @@
+/* 페이지의 메인 레이아웃 */
+.container-wrap{
+    margin-top: 15vh;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+.main-tit-wrap{
+    text-align: center;
+    margin-bottom: 2em;
+}
+.main-tit{
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 5vh;
+    display: inline-block;
+    text-align: left;
+}
+.main-row{
+    margin-bottom: 2vh;
+}
+
+/* 입력창 제어 */
+.input-label{
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.inputStyle{
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.check-dup-btn-wrap{
+    position: relative;
+}
+.check-btn{
+    position: absolute;
+    background-color: #9d9fa2;
+    border: solid 0px #9d9fa2;
+    opacity: 0.9;
+}
+.check-dup{ 
+    /* grid내부 정렬용 간격 */
+    margin-top: 22px;
+}
+.term-service-btn{
+    margin-left: 3vw;
+    width: 10vw;
+    margin-bottom: 2vh;
+}
+.check-btn:hover{
+    background-color: #9d9fa2;
+    opacity: 1;
+}
+.check-btn:focus{
+    background-color: #9d9fa2;
+    opacity: 1;
+}
+
+/* 안내 문자 서식 */
+.notice-style{
+    font-size: 15px;
+    color: #9d9fa2;
+    display: inline-block;
+    margin-bottom: 1vh;
+}
+
+/* 버튼 레이어 */
+.notice-wrap{
+    text-align: center;
+    margin-top: 5vh;
+}
+/* .notice-container{
+    font-size: 15px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+} */
+
+/* 확인버튼 */
+.confirm-btn{
+    background-color: #145f7a;
+    color: #FFF;
+    opacity: 0.9;
+    width: 20vw;
+    height: 2.5em;
+    border: solid 0px;
+}
+.confirm-btn:hover{
+    background-color: #145f7a;
+    opacity: 1;
+}
+.confirm-btn:focus{
+    background-color: #145f7a;
+    opacity: 1;
+}
+.confirm-btn:disabled{
+    background-color: #145f7a;
+    opacity: 0.7;
+}
+
+/* 탈퇴 버튼 */
+.gray-btn{
+    background-color: #4d4f4f !important;
+}
+
+.withdrawal-btn{
+    background-color: #4d4f4f;
+    color: #FFF;
+    opacity: 0.9;
+    width: 20vw;
+    height: 2.5em;
+    border: solid 0px;
+}
+.withdrawal-btn:hover{
+    background-color: #4d4f4f;
+    opacity: 1;
+}
+.withdrawal-btn:focus{
+    background-color: #4d4f4f;
+    opacity: 1;
+}
+.whtidrawal-btn:disabled{
+    background-color: #4d4f4f;
+    opacity: 0.7;
+}
+
+/* 화면너비 0 ~ 600px */
+@media (max-width: 600px){
+    .main-tit-wrap{
+        text-align: center;
+    }
+    .main-tit{
+        font-size: 15px;
+        font-weight: bold;
+        margin-top: 1vh;
+        display: inline-block;
+        text-align: left;
+    }
+    .main-row{
+        margin-bottom: 1vh;
+    }
+    .confirm-btn{
+        background-color: #145f7a;
+        color: #FFF;
+        opacity: 0.9;
+        width: 10em;
+        height: 2.5em;
+        border: solid 0px;
+    }
+    .term-service-btn{
+        margin-left: 3vw;
+        width: 10em;
+        margin-bottom: 2vh;
+    }
+    /* 탈퇴 버튼 */
+    .withdrawal-btn{
+        background-color: #4d4f4f;
+        color: #FFF;
+        opacity: 0.9;
+        width: 10em;
+        height: 2.5em;
+        border: solid 0px;
+    }
+}
+/* 화면너비 0 ~ 480px */
+@media (max-width: 480px){
+    .main-tit{
+        font-size: 15px;
+        font-weight: bold;
+        margin-top: 0.5vh;
+        display: inline-block;
+        text-align: left;
+    }
+    .main-row{
+        margin-bottom: 0.5vh;
+    }
+    .confirm-btn{
+        background-color: #145f7a;
+        color: #FFF;
+        opacity: 0.9;
+        width: 10em;
+        font-size: 12px;
+        height: 2.5em;
+        border: solid 0px;
+    }
+    .term-service-btn{
+        margin-left: 3vw;
+        width: 6em;
+        margin-bottom: 2vh;
+        font-size: 12px;
+    }
+    /* 탈퇴 버튼 */
+    .withdrawal-btn{
+        background-color: #4d4f4f;
+        color: #FFF;
+        opacity: 0.9;
+        width: 10em;
+        font-size: 12px;
+        height: 2.5em;
+        border: solid 0px;
+    }
+}

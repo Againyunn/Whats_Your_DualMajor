@@ -479,7 +479,6 @@ export default function SignupForm() {
                     </Select>
                   </Col>
                 </Row>
-
                 <Row  className='tableRow'>
                     <Col md={5} xs={12}>
                     <OverlayTrigger

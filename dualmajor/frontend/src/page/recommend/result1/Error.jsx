@@ -39,7 +39,9 @@ const BodyBlock = styled.div`
         display: flex;
         background-color: white;
         text-align: center;
-        /*justify-content: center;*/
+        flex-direction: column;
+        justify-content: space-between;
+        height: 60vh;
         
         
         /*vertical-align: middle;*/

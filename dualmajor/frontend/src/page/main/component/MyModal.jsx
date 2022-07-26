@@ -97,6 +97,7 @@ export default function MyModal(props) {
       });
 
       navigate('/recommend');
+      return
     }
 
     navigate('/recommendResult');
