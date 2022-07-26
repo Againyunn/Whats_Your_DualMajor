@@ -52,6 +52,11 @@
     <b>서비스 소개:</b><br/>
     https://www.miricanvas.com/v/116urx9
   </li>
+  <br/>
+  <li>
+    <b>전체 UI/UX 개선 + 반응형 레이아웃 적용</b><br/>
+    <div>22.07.15 - 22.07.26(정재윤)</div>
+  </li>
 </ul>
 
 
