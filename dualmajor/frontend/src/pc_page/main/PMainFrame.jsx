@@ -67,7 +67,6 @@ function PMainFrame(){
 
     useEffect(() => {
         handleMoveToScrollIndex();
-        console.log("moveToScrollIndex:",moveToScrollIndex)
         // $(document).ready( function(){
         //   $(".background-img .content-title .content-subtitle").fadeIn(2000);
         // })
@@ -263,8 +262,6 @@ function PMainFrame(){
         if (deltaY > 0) {
           // 스크롤 내릴 때
           if (scrollTop >= 0 && scrollTop < pageHeight) {
-            //현재 1페이지
-            console.log("현재 1페이지, down");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("r", true);
@@ -274,12 +271,9 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(2);
-            console.log("현재 scrollTop",scrollTop);
           } 
         
           else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-            //현재 2페이지
-            console.log("현재 2페이지, down");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("p", true);
@@ -289,10 +283,8 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(3);
-            console.log("현재 scrollTop",scrollTop);
+
           } else if (scrollTop >= pageHeight && scrollTop >= (pageHeight * 2) && scrollTop < (pageHeight * 3)) {
-            //현재 3페이지
-            console.log("현재 3페이지, down");
             
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("m", true);
@@ -302,10 +294,8 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(4);
-            console.log("현재 scrollTop",scrollTop);
+
           } else if (scrollTop >= pageHeight && scrollTop >= (pageHeight * 3) && scrollTop < (pageHeight * 4)) {
-            //현재 3페이지
-            console.log("현재 3페이지, down");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("i", true);
@@ -315,10 +305,8 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(5);
-            console.log("현재 scrollTop",scrollTop);
+
           } else if (scrollTop >= pageHeight && scrollTop >= (pageHeight * 4) && scrollTop < (pageHeight * 5)) {
-            //현재 3페이지
-            console.log("현재 3페이지, down");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("i", true);
@@ -328,11 +316,8 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(6);
-            console.log("현재 scrollTop",scrollTop);
 
           } else if (scrollTop >= pageHeight && scrollTop >= (pageHeight * 5) && scrollTop < (pageHeight * 6)) {
-            //현재 3페이지
-            console.log("현재 3페이지, down");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("i", true);
@@ -342,11 +327,8 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(7);
-            console.log("현재 scrollTop",scrollTop);
 
           } else {
-            // 현재 5페이지
-            console.log("현재 4페이지, down");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("i", true);
@@ -356,13 +338,10 @@ function PMainFrame(){
               behavior: "smooth",
             });
             setScrollIndex(7);
-            console.log("현재 scrollTop",scrollTop);
           }
         } else {
           // 스크롤 올릴 때
           if (scrollTop >= 0 && scrollTop < pageHeight) {
-            //현재 1페이지
-            console.log("현재 1페이지, up");
 
             handleSelectService(false, false);
             outerDivRef.current.scrollTo({
@@ -372,8 +351,6 @@ function PMainFrame(){
             });
             setScrollIndex(1);
           } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-            //현재 2페이지
-            console.log("현재 2페이지, up");
 
             handleSelectService(false, false);
             outerDivRef.current.scrollTo({
@@ -383,8 +360,6 @@ function PMainFrame(){
             });
             setScrollIndex(1);
           } else if (scrollTop >= pageHeight && pageHeight * 2 < scrollTop && scrollTop < pageHeight * 3) {
-            //현재 2페이지
-            console.log("현재 3페이지, up");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("r", true);
@@ -395,8 +370,6 @@ function PMainFrame(){
             });
             setScrollIndex(2);
           } else if (scrollTop >= pageHeight && pageHeight * 3 < scrollTop && scrollTop < pageHeight * 4) {
-            //현재 2페이지
-            console.log("현재 3페이지, up");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("p", true);
@@ -407,8 +380,6 @@ function PMainFrame(){
             });
             setScrollIndex(3);
           } else if (scrollTop >= pageHeight && pageHeight * 4 < scrollTop && scrollTop < pageHeight * 5) {
-            //현재 2페이지
-            console.log("현재 3페이지, up");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("m", true);
@@ -419,8 +390,6 @@ function PMainFrame(){
             });
             setScrollIndex(4);
           } else if (scrollTop >= pageHeight && pageHeight * 5 < scrollTop && scrollTop < pageHeight * 6) {
-            //현재 2페이지
-            console.log("현재 3페이지, up");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("i", true);
@@ -432,8 +401,6 @@ function PMainFrame(){
             setScrollIndex(5);
           } 
           else {
-            // 현재 3페이지
-            console.log("현재 4페이지, up");
 
             //현재 선택된 탭의 기존 상태 변경
             handleSelectService("i", true);
@@ -450,8 +417,6 @@ function PMainFrame(){
       /**글씨 fade-in*/
       const useFadeIn = (duration = 0, delay = 0) => {
         const element = useRef();
-
-        console.log("useFadeIn 실행")
 
         useEffect(() => {
           if(element.current){
@@ -559,9 +524,11 @@ function PMainFrame(){
                     <div {...fadeInEffect}>
                       <span className='content-title'>너무 많은 전공,<br/>어떤 전공을 이중전공으로 할까<br/>언제까지 고민하실건가요?</span>
                       <span className='content-subtitle-no-hover'>학생들에 의해, 학생에게 필요한 서비스를<br/>고민하고 개발했습니다.</span>
+                      {/* <img className='move-down-page-icon' src={require("../../media/main/down.png")} alt="페이지 이동 화살표" /> */}
                     </div>:
                     <></>
                   }
+                  
                 </div>
                 <div className="divider"></div>
                 <div className="inner recommand-service">
@@ -569,8 +536,10 @@ function PMainFrame(){
                   {
                     moveToScrollIndex === "r"?
                     <div {...fadeInEffect}>
+                      {/* <img className='move-up-page-icon' src={require("../../media/main/up.png")} alt="페이지 이동 화살표" /> */}
                       <span className='content-title'>내 성향과 관심사에 맞게<br/>알고리즘이 추천해드립니다.</span>
                       <span className='content-subtitle' onClick={() => handleMoveRecommendService()}>💡이중전공추천 서비스 바로가기</span>
+                      {/* <img className='move-down-page-icon' src={require("../../media/main/down.png")} alt="페이지 이동 화살표" /> */}
                     </div>:
                     <></>
                   }
@@ -581,8 +550,10 @@ function PMainFrame(){
                   {
                     moveToScrollIndex === "p"?
                     <div {...fadeInEffect}>
+                      {/* <img className='move-up-page-icon' src={require("../../media/main/up.png")} alt="페이지 이동 화살표" />                       */}
                       <span className='content-title'>제한적인 이중전공 신청 기회,<br/>정보를 통해 합격률을 높이세요.</span>
                       <span className='content-subtitle' onClick={() => handleMoveRateService()}>📊예상경쟁률 서비스 바로가기<br/>*예상경쟁률 서비스는 이중전공 신청/변경 기간에만 오픈됩니다.</span>
+                      {/* <img className='move-down-page-icon' src={require("../../media/main/down.png")} alt="페이지 이동 화살표" /> */}
                     </div>:
                     <></>
                   }
@@ -593,26 +564,34 @@ function PMainFrame(){
                   {
                     moveToScrollIndex === "m"?
                     <div {...fadeInEffect}>
+                      {/* <img className='move-up-page-icon' src={require("../../media/main/up.png")} alt="페이지 이동 화살표" />                       */}
                       <span className='content-title'>외대에 개설된 이중전공,<br/>모든 학과를 한 눈에 살펴보세요.</span>
                       <span className='content-subtitle' onClick={() => handleMoveMajorInfoService()}>🔎학과정보 보러가기</span>
+                      {/* <img className='move-down-page-icon' src={require("../../media/main/down.png")} alt="페이지 이동 화살표" /> */}
                     </div>:
                     <></>
                   }
                 </div>
                 <div className="divider"></div>
                 <div className="inner service-intro">
+                  {/* <img className='move-up-page-icon' src={require("../../media/main/up.png")} alt="페이지 이동 화살표" />                   */}
                   <div className='info-title'>기획의도</div>
-                  <img className='background-img-info' src={require("../../media/main/기획의도.png")} alt="기획의도" />
+                  <img className='background-img-info' src={require("../../media/main/기획의도.png")} alt="기획의도" />                  
+                  {/* <img className='move-down-page-icon' src={require("../../media/main/down.png")} alt="페이지 이동 화살표" /> */}
                 </div>
                 <div className="divider"></div>
                 <div className="inner service-intro">
+                  {/* <img className='move-up-page-icon' src={require("../../media/main/up.png")} alt="페이지 이동 화살표" />                   */}
                   <div className='info-title'>수요</div>
-                  <img className='background-img-info' src={require("../../media/main/수요.png")} alt="기획의도" />
+                  <img className='background-img-info' src={require("../../media/main/수요.png")} alt="수요" />
+                  {/* <img className='move-down-page-icon' src={require("../../media/main/down.png")} alt="페이지 이동 화살표" /> */}
                 </div>
                 <div className="divider"></div>
                 <div className="inner service-intro">
+                  {/* <img className='move-up-page-icon' src={require("../../media/main/up.png")} alt="페이지 이동 화살표" />                   */}
                   <div className='info-title'>개발자 소개</div>
-                  <img className='background-img-info' src={require("../../media/main/개발자 소개.png")} alt="기획의도" />
+                  <img className='background-img-info' src={require("../../media/main/개발자 소개.png")} alt="개발자 소개" />
+                  {/* <img className='move-down-page-icon' src={require("../../media/main/down.png")} alt="페이지 이동 화살표" /> */}
                 </div>
             </div>
         </div>
@@ -621,5 +600,6 @@ function PMainFrame(){
       </div>
     );
 };
+
 
 export default PMainFrame;

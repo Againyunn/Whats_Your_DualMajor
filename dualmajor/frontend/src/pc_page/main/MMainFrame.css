@@ -1,0 +1,153 @@
+.container{
+    display: grid;
+    grid-template-rows: 3fr 1fr 1fr 5fr;
+    background-color: white;
+    text-align: center;
+    vertical-align: middle;
+    row-gap: 10px;
+
+    height: 70vh;
+    width: 45vh;
+}
+
+.choose{
+    grid-row-start: 0;
+    grid-row-start: 1;
+
+    grid-template-rows: repeat(auto-fit, minmax(300px, auto));
+}
+
+.write{
+    grid-row-start: 1;
+    grid-row-start: 2;
+    grid-template-rows: repeat(auto-fit, minmax(300px, auto));
+
+    /*색*/
+    background-color: #875100;
+    opacity: 0.57;
+
+    /*모양*/
+    border-radius: 10px;
+    
+
+    /*글씨*/
+    padding-top: 3%;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+}
+
+.write:hover{
+    background-color: #875100;
+    opacity: 0.67;
+}
+
+.review{
+    grid-row-start: 2;
+    grid-row-start: 3;    
+
+    /*색*/
+    background-color: #875100;
+    opacity: 0.8;
+
+    /*모양*/
+    border-radius: 10px;
+
+    /*글씨*/
+    padding-top: 3%;
+    font-size: 20px;
+    color: white;
+    font-weight: bold; 
+}
+.review:hover{
+    background-color: #875100;
+    opacity: 0.9;
+}
+
+.notice{
+    grid-row-start: 3;
+    grid-row-start: 4;
+
+    /*색*/
+    background-color: white;
+    border: solid 1px #5a5a5a;
+
+    /*모양*/
+    border-radius: 10px;
+
+    /*글씨*/
+    font-size: 15px;
+    color: #5a5a5a;
+    opacity: 0.8;
+    font-weight: normal;
+}
+
+#notice-item:hover{
+    color: black;
+    font-weight: bold;
+}
+
+.container-flex{
+    min-height: 24vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    background-color: white;
+}
+
+.recommend{
+    flex-grow: 1;
+    align-self: stretch;
+
+    /*색*/
+    background-color: #002F5A;
+    opacity: 0.8;
+
+    /*모양*/
+    margin-right: 5px;
+    border-radius: 10px;
+
+    /*글씨*/
+    padding-top: 10%;
+    font-size: 19.5px;
+    color: white;
+    font-weight: bold;
+}
+
+.recommend:hover{
+    background-color: #002F5A;
+    opacity: 0.9;
+}
+
+.recommend img{
+    width: 45px;
+    height: 45px;
+}
+
+.compete{
+    flex-grow: 1;
+    align-self: stretch;
+    
+    /*색*/
+    background-color: #028799;
+    opacity: 0.9;
+
+    /*모양*/
+    margin-left: 5px;
+    border-radius: 10px;
+
+    /*글씨*/
+    padding-top: 10%;
+    font-size: 19.5px;
+    color: white;
+    font-weight: bold;
+}
+.compete:hover{
+    background-color: #028799;
+    opacity: 1;
+}
+.compete img{
+    width: 45px;
+    height: 45px;
+}
