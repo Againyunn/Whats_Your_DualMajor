@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e8f70ef9.css",
+    "main.js": "/static/js/main.171b2511.js",
+    "static/media/개발자 소개.png": "/static/media/개발자 소개.77e52b8916254cf4e5d1.png",
+    "static/media/기획의도.png": "/static/media/기획의도.97599b3cf8f2efe37406.png",
+    "static/media/수요.png": "/static/media/수요.90691af972a93628d2c7.png",
+    "static/media/E글캠도서관.jpg": "/static/media/E글캠도서관.c4a64167917e0e690dd8.jpg",
+    "static/media/E설캠본관.jpg": "/static/media/E설캠본관.bba6a94deda9eda0a31f.jpg",
+    "static/media/부_원형.jpg": "/static/media/부_원형.5805b6bdda001e1ea22c.jpg",
+    "static/media/W설캠본관.jpg": "/static/media/W설캠본관.ee82bea58659bc456505.jpg",
+    "static/media/E글캠백년관.jpg": "/static/media/E글캠백년관.c1ff48cec213e0e896d8.jpg",
+    "static/media/aniMajor.gif": "/static/media/aniMajor.60afe298b5b7c72d0087.gif",
+    "static/media/백년관.jpg": "/static/media/백년관.bd21e048c71a7595f717.jpg",
+    "static/media/W글캠백년관.jpg": "/static/media/W글캠백년관.baf69c0fb7f1fa5f3281.jpg",
+    "static/media/E설캠도서관.jpg": "/static/media/E설캠도서관.129cc48ea45436064a89.jpg",
+    "static/media/본관.jpg": "/static/media/본관.0aded51d9fbabde40e00.jpg",
+    "static/media/south-korea.png": "/static/media/south-korea.0ac467513ba128b7e909.png",
+    "static/media/백이중추천.png": "/static/media/백이중추천.299c099e6d836db153ff.png",
+    "static/media/백경쟁률.png": "/static/media/백경쟁률.f93860284bd0e95e16c0.png",
+    "static/media/백메뉴.png": "/static/media/백메뉴.c3f1e610b466ce67847c.png",
+    "index.html": "/index.html",
+    "main.e8f70ef9.css.map": "/static/css/main.e8f70ef9.css.map",
+    "main.171b2511.js.map": "/static/js/main.171b2511.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e8f70ef9.css",
+    "static/js/main.171b2511.js"
+  ]
+}
