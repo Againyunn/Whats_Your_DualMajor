@@ -507,7 +507,7 @@ function PShowMyRateInfo() {
                     <br/><br/>
                 {
                     !thisApply?
-                    <Button type="button" className="common-apply-button" onClick={()=>navigate("/recommend")}>경쟁률 서비스로 이동</Button>:
+                    <Button type="button" className="common-apply-button" onClick={()=>navigate("/rate")}>경쟁률 서비스로 이동</Button>:
                     <>
                         {
                             login?

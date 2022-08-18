@@ -154,12 +154,18 @@ import PRecommendResult from './pc_page/recommend/PRecommendResult';
 import PSeoulMajorInfo from './pc_page/majorInfoDetail/PSeoulMajorInfo';
 import PGlobalMajorInfo from './pc_page/majorInfoDetail/PGlobalMajorInfo';
 import PShowMyMajorInfo from './pc_page/majorInfoDetail/PShowMyMajorInfo';
+// 지민 테스트
+import Test from './test/Test';
+
 
 function App() {
   return (
     <>
     <BrowserRouter>
       <Routes>
+        {/* 지민 테스트 */}
+        <Route path='/test' element={<Test/>}/>
+
         {/* pc버전 레이아웃 테스트 */}
         <Route path='/' element={<PMainPage/>}/>
         <Route path='/login' element={<PLogin/>}/>

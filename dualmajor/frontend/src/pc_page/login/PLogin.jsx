@@ -106,12 +106,12 @@ function PLogin(){
         else if(type === "p"){
             //현재 선택된 탭의 기존 상태 변경
             selectsetPredictedRate(state);
-            showPageMovePopUp("예상경쟁률 서비스");
+            showPageMovePopUp("예상경쟁률 서비스","/rate");
         }
         else if(type === "m"){
             //현재 선택된 탭의 기존 상태 변경
             selectMajorInfo(state);
-            showPageMovePopUp("학과정보 조회 서비스");
+            showPageMovePopUp("학과정보 조회 서비스", "/seoulMajorInfo");
         }
         else if(type === "i"){
             //현재 선택된 탭의 기존 상태 변경
